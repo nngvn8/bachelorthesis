@@ -1,0 +1,86 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PACKAGES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{inputenc,fontenc}
+\usepackage[a4paper,margin=3cm]{geometry}
+\usepackage[english,german]{babel}
+%\usepackage[german]{babel}
+%\usepackage[fixlanguage]{babelbib}
+
+
+\usepackage{bbold}
+\usepackage{amsthm}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{standalone}
+\usepackage{tikz}
+\usepackage{cite}
+\usepackage{xspace}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% THEOREMSTYLES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+
+\theoremstyle{theorem}
+\newtheorem{theorem}{Satz}[section]
+
+\theoremstyle{korollary}
+\newtheorem{korollary}{Korollar}[section]
+
+\theoremstyle{definition}
+\newtheorem{exmp}{Beispiel}[section]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MY MACROS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%filepath
+\newcommand{\mypath}{/home/martin/University/06_BAB/document}
+
+
+%namings
+\newcommand{\nm}[1]{#1\xspace}
+\newcommand{\viewN}{view}
+\newcommand{\viewNC}{View}
+\newcommand{\grpfctN}{\nm{grouping function}}
+\newcommand{\grpfctNC}{\nm{Grouping function}}
+\newcommand{\grpfctNCC}{\nm{Grouping Function}}
+
+
+%formatting
+\newcommand{\comment}[2]{{\color{#1}#2}}
+\newcommand{\redcomment}[1]{{\color{red}#1}}
+\newcommand{\mt}[1]{\ensuremath{#1}\xspace}
+\newcommand{\mynewcommand}[2]{\newcommand{#1}{\mt{#2}}} %% currently not used becaue of ide highlighting
+
+%Transitionsystem
+\newcommand{\state}{\mt{s}}
+\newcommand{\action}{\mt{\alpha}}
+\newcommand{\actionb}{\mt{\beta}}
+\newcommand{\actionc}{\mt{\alpha}}
+\newcommand{\atomicprop}{\mt{ap}}
+
+\newcommand{\states}{\mt{S}}
+\newcommand{\actions}{\mt{Act}}
+\newcommand{\transitionrel}{\mt{\longrightarrow}}
+\newcommand{\initstates}{\mt{I}}
+\newcommand{\atomicprops}{\mt{AP}}
+\newcommand{\labelingfct}{\mt{L}}
+\newcommand{\transitionsystem}{\mt
+	{(\states, \actions, \transitionrel, \initstates, \atomicprops, \labelingfct)}
+}
+\newcommand{\eqrelview}{\mt{R}}
+\newcommand{\eqclassv}[1]{\mt{\eqclass{#1}{\eqrelview}}}
+
+\newcommand{\grpfct}{\mt{F}}
+
+%maths
+\newcommand{\powerset}[1]{\mt{\mathcal{P}(#1)}}
+\newcommand{\map}[2]{\mt{#1 \rightarrow #2}}
+\newcommand{\eqclass}[2]{\mt{[#1]_{#2}}}%{\mt{#1 / #2}}
+\newcommand{\impr}{\mt{\hspace{3mm}\Rightarrow\hspace{2mm}}}
+\newcommand{\impl}{\mt{\hspace{3mm}\Leftarrow\hspace{2mm}}}
+\newcommand{\natnums}{\mt{\mathbb{N}}} 
+
+%tickz
+%% \definecolor{darkred}{RGB}{196, 42, 42}

@@ -1,0 +1,35 @@
+\documentclass[preview]{standalone}
+\usepackage{import}
+
+\include{prelude}
+
+\begin{document}
+	
+\section{Preliminaries}
+
+\subsection{Transition Systems}
+\redcomment{Motivation of transition systems} 
+
+\redcomment{The following definition is directly taken form Principles of Modelchecking, Baier p. 20}
+
+\begin{definition}
+	A \emph{transition system} TS is a tuple \transitionsystem where
+	\begin{itemize}
+		\item \states is a set of states,
+		\item \actions is a set of actions,
+		\item $\transitionrel \subseteq \states \times \actions \times \states$ is transition relation,
+		\item $\initstates \subseteq \states$ is a set of initial states,
+		\item \atomicprops is a set of atomic propositions, and
+		\item $\labelingfct : \map{\states}{\powerset{\atomicprops}}$
+	\end{itemize}
+\end{definition}
+
+A transition system is called \emph{finite} if \states, \atomicprops and \labelingfct are finite.
+
+\subsection{Markov Chain}
+
+\subsection{Markov Decision Process} 
+
+	
+\end{document}
+

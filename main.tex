@@ -1,0 +1,104 @@
+\documentclass[a4paper,12pt,leqno]{article}
+\usepackage{import}
+
+\input{prelude}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PERSONAL INFORMATION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\name}{Schmidt}
+\newcommand{\vorname}{Franz Martin}
+\newcommand{\gebdatum}{7. April 1999}
+\newcommand{\ort}{Halle (Saale)}
+\newcommand{\betreuer}{Dipl. Inf Max Korn}
+\newcommand{\institut}{Theoretische Informatik}
+\newcommand{\thema}{Titel der Arbeit}
+\newcommand{\datum}{\today} %Format tt.\ mm.\ jjjj
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{document}
+\selectlanguage{english}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TITLEPAGE AND TOC %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\thispagestyle{empty}
+
+\begin{center}
+{\Large Technische Universit\"{a}t Dresden\  \ \textbullet\ \ Fakult\"{a}t Informatik}
+
+\vfil
+
+{\bfseries\Huge\thema}
+
+\vfil
+%{\LARGE
+%Bachelorarbeit \\[\bigskipamount]
+%zur Erlangung des ersten Hochschulgrades\\[\bigskipamount]
+%\bfseries{\itshape Bachelor of Science  \textup{(}B.Sc.\textup{)}}\\[\bigskipamount]
+%}
+{\LARGE
+Bachelorarbeit zur Erlangung des ersten Hochschulgrades \\[\bigskipamount]
+\bfseries{\itshape Bachelor of Science (B.Sc.)}\\[\bigskipamount]
+}
+
+\vfil\vfil
+
+\vfil
+
+vorgelegt von
+\\[\bigskipamount]
+\textsc{\vorname\ } \MakeUppercase{\name}
+\\[\bigskipamount]
+(geboren am \gebdatum\ in \textsc{\ort})
+\\[\bigskipamount]
+Tag der Einreichung: \datum
+\\[\bigskipamount]
+\betreuer\ (\institut)
+\end{center}
+
+\cleardoublepage
+
+\tableofcontents
+
+\thispagestyle{empty}
+\cleardoublepage
+
+
+\setcounter{page}1
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\include{./00_Abstract/00_Abstract}
+
+
+\include{./01_Introduction/01_Introduction}
+
+
+\include{./02_Preliminaries/02_Preliminaries}
+
+
+\include{./03_View/03_View}
+
+
+\include{./04_ViewExamples/04_ViewExamples}
+
+
+\include{./05_Outlook/05_Outlook}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% REFERENCES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\bibliographystyle{unsrt}
+%\bibliographystyle{babunsrt}
+\bibliography{references}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
+
+
+
