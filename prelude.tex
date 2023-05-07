@@ -10,11 +10,13 @@
 
 \usepackage{bbold}
 \usepackage{amsthm}
+\usepackage{amsmath}
 \usepackage[dvipsnames]{xcolor}
 \usepackage{standalone}
 \usepackage{tikz}
 \usepackage{cite}
 \usepackage{xspace}
+\usepackage{relsize}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% THEOREMSTYLES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -33,25 +35,32 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MY MACROS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%filepath
-\newcommand{\mypath}{/home/martin/University/06_BAB/document}
-
+%formatting
+\newcommand{\comment}[2]{{\color{#1}#2}}
+\newcommand{\redcomment}[1]{{\color{red}#1}}
+\newcommand{\mt}[1]{\ensuremath{{#1}}\xspace}
+\newcommand{\mynewcommand}[2]{\newcommand{#1}{\mt{#2}}} %% currently not used becaue of ide highlighting
 
 %namings
 \newcommand{\nm}[1]{#1\xspace}
-\newcommand{\viewN}{view}
-\newcommand{\viewNC}{View}
+\newcommand{\viewN}{\nm{view}}
+\newcommand{\viewNC}{\nm{View}}
 \newcommand{\grpfctN}{\nm{grouping function}}
 \newcommand{\grpfctNC}{\nm{Grouping function}}
 \newcommand{\grpfctNCC}{\nm{Grouping Function}}
 
+%shortcuts
+\newcommand{\ts}{\nm{TS}}
 
-%formatting
-\newcommand{\comment}[2]{{\color{#1}#2}}
-\newcommand{\redcomment}[1]{{\color{red}#1}}
-\newcommand{\mt}[1]{\ensuremath{#1}\xspace}
-\newcommand{\mynewcommand}[2]{\newcommand{#1}{\mt{#2}}} %% currently not used becaue of ide highlighting
+%Identifiers for self created definitions
+\newcommand{\grpfct}{\mt{F}}
+\newcommand{\view}[2]{\mt{#1_#2}}
+\newcommand{\imggrp}{\mt{\arbset}}
+\newcommand{\viewppty}{\mt{\grpfct}}
+\newcommand{\viewid}{\mt{\ts}}
+
+
+
 
 %Transitionsystem
 \newcommand{\state}{\mt{s}}
@@ -59,6 +68,8 @@
 \newcommand{\actionb}{\mt{\beta}}
 \newcommand{\actionc}{\mt{\alpha}}
 \newcommand{\atomicprop}{\mt{ap}}
+
+\newcommand{\smstate}{\mt{\tilde{\state}}}
 
 \newcommand{\states}{\mt{S}}
 \newcommand{\actions}{\mt{Act}}
@@ -72,15 +83,22 @@
 \newcommand{\eqrelview}{\mt{R}}
 \newcommand{\eqclassv}[1]{\mt{\eqclass{#1}{\eqrelview}}}
 
-\newcommand{\grpfct}{\mt{F}}
+%Markov chains
+\newcommand{\autm}{\mt{\mathcal{M}}}
+\newcommand{\probtfunc}{\mt{\textbf{P}}}
+\newcommand{\initdist}{\redcomment{\mt{l_{init}}}}
+
+
 
 %maths
 \newcommand{\powerset}[1]{\mt{\mathcal{P}(#1)}}
-\newcommand{\map}[2]{\mt{#1 \rightarrow #2}}
 \newcommand{\eqclass}[2]{\mt{[#1]_{#2}}}%{\mt{#1 / #2}}
 \newcommand{\impr}{\mt{\hspace{3mm}\Rightarrow\hspace{2mm}}}
 \newcommand{\impl}{\mt{\hspace{3mm}\Leftarrow\hspace{2mm}}}
 \newcommand{\natnums}{\mt{\mathbb{N}}} 
+\newcommand{\arbset}{\mt{M}}
+\newcommand{\bigsum}[2][]{\mt{\mathlarger{\sum}_{#2}^{#1}}}
+\newcommand{\bbigsum}[2][]{\mt{\mathlarger{\mathlarger{\sum}}_{#2}^{#1}}}
 
 %tickz
 %% \definecolor{darkred}{RGB}{196, 42, 42}

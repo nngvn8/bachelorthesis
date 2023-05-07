@@ -1,13 +1,11 @@
 \documentclass[preview]{standalone}
-\usepackage{import}
-
 \input{prelude}
 
 
 \begin{document}
 
 \section{View}
-Views are the central objective of this thesis. The purpose of a \viewN is to obtain a simplification of a given transition system (TS).  It is an independend TS derived from a given TS and represents a (simpliefied) \viewN on the given one - hence the name. Thereby the original TS is retained. 
+Views are the central objective of this thesis. The purpose of a \viewN is to obtain a simplification of a given transition system (TS).  It is an independent TS derived from a given TS and represents a (simplified) \viewN on the given one - hence the name. Thereby the original TS is retained. 
 
 \subsection{Grouping Function}
 
@@ -16,33 +14,33 @@ Views are the central objective of this thesis. The purpose of a \viewN is to ob
 The conceptional idea of a \viewN is to group states by some criteria and structure the rest of the system accordingly. To formalize the grouping we define a dedicated function.
 
 \begin{definition}
-	Let TS = \transitionsystem be a transition system. We call any function $F : \map{\states}{\natnums}$ a \emph{\grpfctN}.
+	Let TS = \transitionsystem be a transition system an \arbset be an arbitrary set. We call any function $F : \states \to \imggrp$ a \emph{\grpfctN}. \redcomment{switched to \arbset instead of \natnums}
 	
 	\label{def:grpfct}
 \end{definition}
 
 
-Two states are grouped to a new state if and only if the grouping function maps them to the same value. The definition offers an easy way of defining groups of states and labels them with a natural number. It is also very close to the actual implementation later on. The exact mapping depends on the desired grouping. In order to define a new set of states for the \viewN, we define an equivalence relation \eqrelview based on a given grouping function \grpfct.
+Two states are \redcomment{grouped (should be Definition?)} to a new state if and only if the grouping function maps them to the same value. The definition offers an easy way of defining groups of states and labels them with a natural number. It is also very close to the actual implementation later on. The exact mapping depends on the desired grouping. In order to define a new set of states for the \viewN, we define an equivalence relation \eqrelview based on a given grouping function \grpfct.
 
 \begin{definition}
 	Let \grpfct be a grouping function. We define the equivalence relation $\eqrelview :=\{ (\state_1, \state_2) \in \states \times \states \mid \grpfct(\state_1) = \grpfct(\state_2)\}$
 	
-	\label{def:R}
+	\label{def:eqrelview}
 \end{definition}
 
-\eqrelview is an equivalence relation because the equality relation is one. The property directly conveys to \eqrelview. We observe that two states $\state_1, \state_2$ are grouped to a new state if and only if $(\state_1, \state_2) \in \eqrelview$. This is if and only if the case when $\state_1, \state_2 \in \eqclassv{\state_1} = \eqclassv{\state_2}$ where $\eqclassv{\state_i}$ denotes the equivalence class of \eqrelview.
+\eqrelview is an equivalence relation because the equality relation is one. The property directly conveys to \eqrelview. We observe that two states $\state_1, \state_2$ are grouped to a new state if and only if $(\state_1, \state_2) \in \eqrelview$. This is the case if and only if $\state_1, \state_2 \in \eqclassv{\state_1} = \eqclassv{\state_2}$ where $\eqclassv{\state_i}$ for $i \in \{1,2\}$ denotes the equivalence class of \eqrelview.
 
-	\subsection{Formal Definition}
+\subsection{Formal Definition}
 
-The definition of a \viewN is dependend on a given transition system and a grouping function \grpfct. We derive the equivalnce relation \eqrelview as in Definition \ref{def:R} and use its equivalence classes \eqclassv{s} as states for the \viewN. The rest of the transition system is structured accordingly.
+The definition of a \viewN is dependent on a given transition system and a grouping function \grpfct. We derive the equivalence relation \eqrelview as in Definition \ref{def:eqrelview} and use its equivalence classes \eqclassv{s} as states for the \viewN. The rest of the transition system is structured accordingly.
 
 
 \begin{definition}
 	
-	Let TS = \transitionsystem be a transition system and \grpfct a grouping function. A \emph{\viewN} is a transition system $(\states', \actions',\transitionrel', \initstates', \labelingfct')$ that is derived from TS where
+	Let TS = \transitionsystem be a transition system and \grpfct a grouping function. A \emph{\viewN} \view{TS}{\viewppty} is a transition system $(\states', \actions',\transitionrel', \initstates', \labelingfct')$ \redcomment{that is derived from TS with the \grpfctN \grpfct} where
 	
 	\begin{itemize}
-		\item $\states' = \{ \eqclass{\state}{\eqrelview} \mid \state \in \states \}$ where \eqrelview is an equivilance relation according to Defintion \ref{def:R},
+		\item $\states' = \{ \eqclass{\state}{\eqrelview} \mid \state \in \states \}$
 		%\eqclass{s}
 		
 		\item $\actions' = \actions$
@@ -51,13 +49,17 @@ The definition of a \viewN is dependend on a given transition system and a group
 		
 		\item $\initstates' = \{\eqclassv{\state'} \in \states' \mid \exists \state \in \eqclassv{\state'} : \state \in \initstates \}$
 		
-		\item $\labelingfct': \map{\states'}{\powerset{\atomicprops}}, \eqclassv{\state}\mapsto \bigcup_{\state \in \eqclassv{\state}} \{\labelingfct(\state)\}$
+		\item $\labelingfct': \states' \to \powerset{\atomicprops}, \eqclassv{\state}\mapsto \bigcup_{\state \in \eqclassv{\state}} \{\labelingfct(\state)\}$
 		
 	\end{itemize}
 	
+	and \eqrelview is the equivalence relation according to Definition \ref{def:eqrelview}.
+	
+
+	\label{def:view}	
 \end{definition}
 
-Note that the definition is in a most general form in the sense that if in a \viewN a property accounts to one part of some entity the whole entity recieves the property i.e. 
+Note that the definition is in a most general form in the sense that if in a \viewN a property accounts to one part of some entity the whole entity receives the property i.e. 
 \begin{itemize}	
 	\item $(\state_1, \action, \state_2) \in \transitionrel \impr (\eqclassv{\state_1}, \action, \eqclassv{\state_2}) \in \transitionrel'$
 	\item $\state \in \initstates \impr \eqclassv{\state} \in \initstates'$

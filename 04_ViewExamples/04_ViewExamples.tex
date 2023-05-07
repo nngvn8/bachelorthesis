@@ -1,12 +1,40 @@
 \documentclass[preview]{standalone}
-\usepackage{import}
-
 \input{prelude}
 
 
 \begin{document}
 \section{View Examples}
 \subsection{Transition Systems}
+\subsubsection{Atomic Propositions}
+The \emph{Atomic Propositions \viewNC} groups all states to a new state that have the same set of atomic propositions.
+
+We define its \grpfctN with $\grpfct_\atomicprops : \states \to \imggrp, {\state}\mapsto{\labelingfct(\state)}$ i.e. $\forall \state \in \states : \grpfct(\state) = \labelingfct(\state)$. According to definition \ref{def:eqrelview} for $\smstate \in \states$ it is $\eqclassv{\smstate} = \{\state \in \states \mid \labelingfct(\state) = \labelingfct(\smstate)\}$.
+%$\forall \state_1, \state_2 \in \states :
+
+By this we obtain the \viewN $\view{\viewid}{{\viewppty_\atomicprops}}$ for a given transition system \ts where: $\states' = \bigcup_{\state \in \states} \{\eqclassv{\state}\} =  \bigcup_{label \in \atomicprops} \{\{\state \in \states \mid \labelingfct(\state) = label\}\}$. All other components are constructed as in definition \ref{def:view}.
+
+\redcomment{tikz example}
+
+\redcomment{example from the database of max}
+
+\subsubsection{Initial States}
+The \emph{Initial State \viewNC}  groups all initial states into one single state. All other states are left untouched.
+We define its \grpfctN with $\grpfct_\initstates : \states \to \imggrp$ with 
+
+\[
+\state \mapsto
+\begin{cases}
+	\emptyset,				& \text{if } \state \in \initstates \\
+	\{\state\},          	& \text{otherwise}
+\end{cases}
+\]
+
+According to definition \ref{def:eqrelview} it is $\eqclassv{\state} = \{\state \in \states \mid \grpfct(\state) = \emptyset\}$ for $\state \in \initstates$ and $\eqclassv{\state} = \{\state \in \states \mid \grpfct(\state) = \{\state\} \} = \{\state\}$ for $\state \notin \initstates$.
+
+By this we obtain the \viewN $\view{TS}{{\viewppty_\initstates}}$ for a given transition system \ts where: $\states' = \bigcup_{\state \in \states} \{\eqclassv{\state}\} = \{\state \in \states \mid \state \in \initstates\}\cup \bigcup_{\state \in \states \setminus \initstates}\{\{\state\}\}$.
+
+All other components are constructed as in definition \ref{def:view}.
+
 \subsection{Markov Chain}
 \subsection{Markov Decision Process}
 \subsection{Comparison of the Examples}

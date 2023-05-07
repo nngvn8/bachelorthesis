@@ -1,11 +1,16 @@
 \documentclass[preview]{standalone}
-\usepackage{import}
-
-\include{prelude}
+\input{prelude}
 
 \begin{document}
 	
 \section{Preliminaries}
+
+\subsection{\redcomment{Mathematical Fundamentals}}
+\redcomment{e.g.strongly connected components, equivalence relation, more?}
+
+\redcomment{we denote \eqclass{a}{R} for the equivalence class with the representative a under the equivalence relation R}
+
+\redcomment{how much should be included? ...probably no set theory}
 
 \subsection{Transition Systems}
 \redcomment{Motivation of transition systems} 
@@ -20,16 +25,110 @@
 		\item $\transitionrel \subseteq \states \times \actions \times \states$ is transition relation,
 		\item $\initstates \subseteq \states$ is a set of initial states,
 		\item \atomicprops is a set of atomic propositions, and
-		\item $\labelingfct : \map{\states}{\powerset{\atomicprops}}$
+		\item $\labelingfct : \states \to \powerset{\atomicprops}$
 	\end{itemize}
+
+	A transition system is called \emph{finite} if \states, \atomicprops and \labelingfct are finite.
 \end{definition}
 
-A transition system is called \emph{finite} if \states, \atomicprops and \labelingfct are finite.
+\redcomment{explanation of components}
 
 \subsection{Markov Chain}
 
+\redcomment{NOTES BEGIN}
+\begin{itemize}
+	\item Markov Chain (MC)
+	\item transition systems to markov chains: nondeterministic choices replaced by probablistic
+	\item successor chosen according to probability distribution
+	\item distribution only dependent on current state s (not path)
+	\item system evolution not dependent on history but only current state $\to$ \emph{memoryless property}
+\end{itemize}
+
+\redcomment{NOTES END}
+
+\begin{definition}
+	A \emph{(discrete-time) Markov chain} is a tuple $\autm = (\states, \probtfunc, \initdist, \atomicprops, \labelingfct)$ where 
+	\begin{itemize}
+		\item \states is a countable, nonempty set of states,
+		\item $\probtfunc : \states \times \states \to [0,1]$ is the \emph{transition probability function}, such that for all states \state:
+		\begin{center}
+			$\bbigsum{\state' \in \states}\probtfunc(\state,\states') = 1$.	
+		\end{center}
+		\item $\initdist : \states \to [0,1]$ is the \emph{initial distribution}, such that $\mathlarger{\sum_{\state \in \states}} \initdist(\state) = 1$, and
+		\item \atomicprops is a set of atomic propositions and,
+		\item $\labelingfct : \states \to \powerset{\atomicprops}$ a labeling function.		
+	\end{itemize}
+
+	\autm is called \emph{finite} if \states and \atomicprops are finite. For finite \autm, the \emph{size} of \autm, denoted \emph{size}(\autm),  is the number of states plus the number of pairs $(\state, \state') \in \states \times \states$ with $\probtfunc(\state, \state') > 0.$
+\end{definition}
+
+\redcomment{NOTES BEGIN}
+\begin{itemize}
+	\item Probability Function \probtfunc specifies for each state \state the probability \probtfunc(\state,\state') of moving from \state to \state' in one step.
+	\item constraint on \probtfunc ensures that \probtfunc is distribution
+	\item \initdist(\state) specifies system evolution starts in \state
+	\item states \state with $\initdist(\state) > 0$ are  considered \emph{initial states}
+	\item states \state' with $\probtfunc(\state, \state') > 0$ are view as possible successors of \state
+	\item has no actions \\ "As compositional approaches for Markov models are outside the scope of this monograph,
+	actions are irrelevant in this chapter and are therefore omitted."
+\end{itemize}
+
+\redcomment{NOTES END}
+	
+
 \subsection{Markov Decision Process} 
 
+\redcomment{NOTES BEGIN}
+
+\begin{itemize}
+	\item Markov decision process (MDP) 
+	\item idea: Adding nondeterminism to markov chains. MDPs permit both probabilistic and nondeterministic choices 
+	\item probabilistic choices: possible outcomes for of randomized actions -> requires statistical experiments to obtain adequate distributions that model average behavior of the environment
+	\item information not available or guarantee about system properties is required -> nondeterminism
+	\item Another example: randomized distributed algorithms. Non-determinism: interleaving behavior: nondeterministic choice which process, probabilistic: have rather restricted set of actions that have a random nature
+	\item used for abstraction in markov chains: states grouped by \atomicprops and have a wide range of transition probabilities -> essentially nondeterminism -> transition probabilities are replaced by nondeterminism		
+\end{itemize}
+
+\redcomment{NOTES END}
+
+\begin{definition}
+	A \emph{Markov decision process} is a tuple $\autm = (\states, \actions, \probtfunc, \initdist, \atomicprops, \labelingfct)$ where
+	\begin{itemize}
+		\item \states is a countable set of states,
+		\item \actions is a set of actions,
+		\item $\probtfunc : \states \times \actions \times \states \to [0,1]$ is the transition probability function such that for all states $\state \in \states$ and actions $\action \in \actions$:
+		\begin{center}
+			$\bbigsum{\state' \in \states}\probtfunc(\state,\action,\state') \in \{0,1\}$,
+		\end{center}
+	\item $\initdist : \states \to [0,1]$ is the initial distribution such that $\sum_{\state \in \states} \initdist(\state) = 1$,
+	\item \atomicprops is  a set of atomic propositions and
+	\item $\labelingfct : \states \to \powerset{\atomicprops}$ a labeling function.
+	\end{itemize}
+	An action \action is \emph{enabled} in state \state if and only if $\sum_{\state' \in \states} \probtfunc(\state,\action,\state') = 1$. Let $\actions(\state)$ denote the set of enabled actions in \state. For any state $\state \in \states$, it is required that $\actions(\state) \neq \emptyset$. Each state \state' for which $\probtfunc(\state,\action,\state') > 0$ is called an \emph{\action-successor} of \state.
+\end{definition}
+
+An MDP is called \emph{finite} if \states, \actions and \atomicprops are finite.
+\\
+
+\redcomment{NOTES BEGIN}
+
+\begin{itemize}
+	\item $\probtfunc(\state, \action, t)$ can be arbitrary real numbers in $[0,1]$ (sum up to 1 or 0 for fixed \state and \action), for algorithmic purposes rational
+	\item unique initial distribution \initdist. Could be generalized to set of \initdist with nondeterministic choice at the beginning. For sake of simplicity: one single distribution
+	\item operational behavior:
+	\begin{itemize}
+		\item starting state $\state_0$ yielded by \initdist with $\initdist(\state_0) > 0$
+		\item nondeterministic choice of enabled action (i.e. Probability sums up to one)
+		\item probabilistic choice of state (action fixed by nondeterministic selection)
+	\end{itemize}
+	
+	\item $MC = MDP \iff \forall \state \in \states : |\actions(\state)| = 1$
+	
+	\item $\implies$ MCs are a proper subset of MDPs
+	
+\end{itemize}
+
+\redcomment{NOTES END}
 	
 \end{document}
 
