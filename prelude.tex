@@ -17,6 +17,8 @@
 \usepackage{cite}
 \usepackage{xspace}
 \usepackage{relsize}
+\usepackage{scrextend}
+%\usepackage{titlecaps}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% THEOREMSTYLES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -44,13 +46,20 @@
 %namings
 \newcommand{\nm}[1]{#1\xspace}
 \newcommand{\viewN}{\nm{view}}
-\newcommand{\viewNC}{\nm{View}}
+\newcommand{\viewNC}{{View}}
 \newcommand{\grpfctN}{\nm{grouping function}}
 \newcommand{\grpfctNC}{\nm{Grouping function}}
 \newcommand{\grpfctNCC}{\nm{Grouping Function}}
+\newcommand{\chosengraphtypeNC}{\nm{Transitionssytem}}
+\newcommand{\chosengraphtypeN}{\nm{transitionsystem}}
+\newcommand{\parllcompN}{\nm{parallel composition}}
+\newcommand{\parllcompNC}{\nm{Parallel composition}}
+\newcommand{\parllcompNCC}{\nm{Parallel Composition}}
+\newcommand{\iffN}{\nm{if and only if}}
 
 %shortcuts
 \newcommand{\ts}{\nm{TS}}
+\newcommand{\n}{\mt{n}}
 
 %Identifiers for self created definitions
 \newcommand{\grpfct}{\mt{F}}
@@ -58,8 +67,20 @@
 \newcommand{\imggrp}{\mt{\arbset}}
 \newcommand{\viewppty}{\mt{\grpfct}}
 \newcommand{\viewid}{\mt{\ts}}
+\newcommand{\pll}{\mt{||}}
+\newcommand{\arbitraryts}{\mt{TS}}
+
+%example views
+\newcommand{\gfctatomicprops}{\mt{{\viewppty_\atomicprops}}}
+\newcommand{\gfcinitstates}{\mt{{\viewppty_\initstates}}}
+\newcommand{\gfcthasoutaction}{\mt{{\viewppty_{\exists\alpha}}}}
+\newcommand{\gfctminoutaction}{\mt{{\viewppty_{\n\leq\alpha}}}}
 
 
+\newcommand{\viewatomicprops}{\mt{\view{\viewid}{\gfctatomicprops}}}
+\newcommand{\viewinitstates}{\mt{\view{\viewid}{\gfcinitstates}}}
+\newcommand{\viewhasoutaction}{\mt{\view{\viewid}{\gfcthasoutaction}}}
+\newcommand{\viewminoutaction}{\mt{\view{\viewid}{\gfctminoutaction}}}
 
 
 %Transitionsystem
@@ -99,6 +120,7 @@
 \newcommand{\arbset}{\mt{M}}
 \newcommand{\bigsum}[2][]{\mt{\mathlarger{\sum}_{#2}^{#1}}}
 \newcommand{\bbigsum}[2][]{\mt{\mathlarger{\mathlarger{\sum}}_{#2}^{#1}}}
+\newcommand{\invimage}[2]{#1^{\mt{-1}(#2)}}
 
 %tickz
 %% \definecolor{darkred}{RGB}{196, 42, 42}

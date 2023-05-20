@@ -4,14 +4,21 @@
 
 \begin{document}
 \section{View Examples}
+In this chapter we will introduce and discuss some view examples created by the author. Their purpose is to understand the idea and concept of a view and get to know some views that might be useful in real world applications i.e. in the Project of Dr. Max Korn.
 \subsection{Transition Systems}
+First we will take a look at views that can be applied to transition systems, MCs and MDPs and hence only use the properties of transition systems. That is they neither utilize any probabilistic properties of an MC nor any properties that arise from the combination of nondeterminism and the probability distribution.
 \subsubsection{Atomic Propositions}
 The \emph{Atomic Propositions \viewNC} groups all states to a new state that have the same set of atomic propositions.
 
-We define its \grpfctN with $\grpfct_\atomicprops : \states \to \imggrp, {\state}\mapsto{\labelingfct(\state)}$ i.e. $\forall \state \in \states : \grpfct(\state) = \labelingfct(\state)$. According to definition \ref{def:eqrelview} for $\smstate \in \states$ it is $\eqclassv{\smstate} = \{\state \in \states \mid \labelingfct(\state) = \labelingfct(\smstate)\}$.
+\begin{definition}
+	\redcomment{
+	For a given \ts let \states be the set its states, \labelingfct its labeling function and \arbset an arbitrary set. The \grpfctN for the Atomic Propositions View is defined with $\gfctatomicprops : \states \to \imggrp, {\state}\mapsto{\labelingfct(\state)}$.}
+\end{definition}
+
+We define its \grpfctN with $\gfctatomicprops : \states \to \imggrp, {\state}\mapsto{\labelingfct(\state)}$ i.e. for all $\state \in \states : \gfctatomicprops(\state) = \labelingfct(\state)$. So it is $\gfctatomicprops(\state_1) = \gfctatomicprops(\state_2) \iff \labelingfct(\state_1) = \labelingfct(\state_2)$. According to definition \ref{def:eqrelview} for $\smstate \in \states$ it is $\eqclassv{\smstate} = \{\state \in \states \mid \labelingfct(\state) = \labelingfct(\smstate)\}$.
 %$\forall \state_1, \state_2 \in \states :
 
-By this we obtain the \viewN $\view{\viewid}{{\viewppty_\atomicprops}}$ for a given transition system \ts where: $\states' = \bigcup_{\state \in \states} \{\eqclassv{\state}\} =  \bigcup_{label \in \atomicprops} \{\{\state \in \states \mid \labelingfct(\state) = label\}\}$. All other components are constructed as in definition \ref{def:view}.
+By this we obtain the \viewN $\viewatomicprops$ for a given transition system \ts where: $\states' = \bigcup_{\state \in \states} \{\eqclassv{\state}\} =  \bigcup_{a \in \atomicprops} \{\{\state \in \states \mid \labelingfct(\state) = a\}\}$. All other components are constructed as in definition \ref{def:view}.
 
 \redcomment{tikz example}
 
@@ -29,11 +36,51 @@ We define its \grpfctN with $\grpfct_\initstates : \states \to \imggrp$ with
 \end{cases}
 \]
 
-According to definition \ref{def:eqrelview} it is $\eqclassv{\state} = \{\state \in \states \mid \grpfct(\state) = \emptyset\}$ for $\state \in \initstates$ and $\eqclassv{\state} = \{\state \in \states \mid \grpfct(\state) = \{\state\} \} = \{\state\}$ for $\state \notin \initstates$.
+For $\state_1,\state_2 \in \states$ it is $\gfcinitstates(\state_1) = \gfcinitstates(\state_2)$ \iffN $\state_1, \state_2 \in \initstates$ or $\state_1 = \state_2$. According to definition \ref{def:eqrelview} it is $\eqclassv{\state} = \{\state \in \states \mid \grpfct(\state) = \emptyset\}$ for $\state \in \initstates$ and $\eqclassv{\state} = \{\state \in \states \mid \grpfct(\state) = \{\state\} \} = \{\state\}$ for $\state \notin \initstates$.
 
-By this we obtain the \viewN $\view{TS}{{\viewppty_\initstates}}$ for a given transition system \ts where: $\states' = \bigcup_{\state \in \states} \{\eqclassv{\state}\} = \{\state \in \states \mid \state \in \initstates\}\cup \bigcup_{\state \in \states \setminus \initstates}\{\{\state\}\}$.
+By this we obtain the \viewN $\viewinitstates$ for a given transition system \ts where: $\states' = \bigcup_{\state \in \states} \{\eqclassv{\state}\} = \{\state \in \states \mid \state \in \initstates\}\cup \bigcup_{\state \in \states \setminus \initstates}\{\{\state\}\}$.
 
 All other components are constructed as in definition \ref{def:view}.
+
+\subsubsection{Outgoing Actions}
+The \emph{OutAction View} groups states that share some property regarding their outgoing actions. Several variants are feasible. The most obvious one is to group states that \emph{have} a given outgoing action. Its grouping function looks as follow: $\grpfct_{\exists\action} : \states \to \arbset$ with 
+
+
+\[
+\state \mapsto
+\begin{cases}
+	\action,				& \text{if } \exists \state' \in \states: (\state, \action, \state') \in \redcomment{\transitionrel} \\
+	\state,          	& \text{otherwise}
+\end{cases}
+\]
+
+For $\state_1,\state_2 \in \states$ it is $\gfcthasoutaction(\state_1) = \gfcthasoutaction(\state_2)$ \iffN 
+there exist $\state_{a},\state_{b} \in \states$ with 
+$(\state_1, \action, \state_{a}), (\state_2, \action, \state_{b}) \in \transitionrel$ (i.e. they have the same outgoing action \action) or $\state_1 = \state_2$. 
+In accordance with definition \ref{def:eqrelview} it is 
+$\eqclassv{\state} = \{\state \in \states \mid \gfcthasoutaction(\state) = \action\}$ if 
+there exists $\state' \in \states$ so that $(\state, \action, \state') \in \transitionrel$ and it is
+$\eqclassv{\state} = \{\state \in \states \mid \gfcthasoutaction(\state) = \state\} = \{s\}$ otherwise. %if for all $\state' \in \states : (\state,\action,\state') \notin \transitionrel$.
+
+Thereby we obtain the \viewN \viewhasoutaction for a given transition system \ts where $\states' = \bigcup_{\state \in \states} \{\eqclassv{\state}\} =: \states_1 \cup \states_2$ where $\states_1 := \{\state \in \states \mid \exists \state' \in \states: (\state, \action, \state') \in \transitionrel\} = \{\state \in \states \mid \state$ has outgoing action $\action\}$ and $\states_2 := \bigcup_{\state \in \states \setminus \states_1}\{\state\}$.
+
+Since actions are a very important part of transition systems as well as of its more powerful siblings MDPs and MCs it seems useful to further enhance this view and look at variants of it. Instead of only grouping states that only \emph{have} outgoing actions we could also quantify the amount of times that action should be outgoing.
+
+For example we could require that a given action has to be outgoing a minimum amount of times. For this we define the \grpfctN $\gfctminoutaction : \states \to \arbset$ with
+
+\[
+\state \mapsto
+\begin{cases}
+	\action,				& \text{if } \exists \state_1, \dots, \state_\n \in \states: (\state, \action, \state_1), \dots, (\state, \action, \state_\n) \in \redcomment{\transitionrel} \\
+	\state,          	& \text{otherwise}
+\end{cases}
+\]
+ 
+where $\n \in \natnums$ and $|\{\state_1, \dots, \state_\n\}| = n$. \\
+For $\state_1,\state_2 \in \states$ it is $\gfctminoutaction(\state_1) = \gfctminoutaction(\state_2)$ \iffN there exist distinct $\state_{a_1}, \dots, \state_{a_\n} \in \states$ and distinct $\state_{b_1}, \dots, \state_{b_\n} \in \states$ so that $(\state_1, \action, \state_{a_1}), \dots, (\state_1, \action, \state_{a_\n}) \in \redcomment{\transitionrel}$ and $(\state_2, \action, \state_{b_1}), \dots, (\state_2, \action, \state_{b_\n}) \in \redcomment{\transitionrel}$ or $\state_1 = \state_2$. According to \ref{def:eqrelview} it is $\eqclassv{\state} = \{\state \in \states \mid \gfctminoutaction(\state) = \action\}$ and $\eqclassv{\state} = \{\state \in \states \mid \gfctminoutaction(\state) = \state\} = \{\state\}$ otherwise. \\
+By this we obtain the \viewN $\viewminoutaction$ for a given transition system \ts where $\states' = \bigcup_{\state \in \states} \{\eqclassv{\state}\} =: \states_1 \cup \states_2$ where $\states_1 := \{\state \in \states \mid \exists \state_1, \dots, \state_\n \in \states: (\state, \action, \state_1), \dots, (\state, \action, \state_\n) \in \redcomment{\transitionrel}, |\{\state_1, \dots, \state_\n\}| = n\} = \{\state \in \states \mid$ the action \action is outgoing at least \n times $\}$ and $\states_2 := \bigcup_{\state \in \states \setminus \states_1}\{\state\}$.
+
+
 
 \subsection{Markov Chain}
 \subsection{Markov Decision Process}
