@@ -17,7 +17,8 @@
 \usepackage{cite}
 \usepackage{xspace}
 \usepackage{relsize}
-\usepackage{scrextend}
+\usepackage{mathtools} %mathclap
+%\usepackage{xparse} % \newDocumentCommand for multiple optional arguments
 %\usepackage{titlecaps}
 
 
@@ -50,6 +51,9 @@
 \newcommand{\grpfctN}{\nm{grouping function}}
 \newcommand{\grpfctNC}{\nm{Grouping function}}
 \newcommand{\grpfctNCC}{\nm{Grouping Function}}
+\newcommand{\grpfctsN}{\nm{grouping functions}}
+\newcommand{\grpfctsNC}{\nm{Grouping functions}}
+\newcommand{\grpfctsNCC}{\nm{Grouping Functions}}
 \newcommand{\chosengraphtypeNC}{\nm{Transitionssytem}}
 \newcommand{\chosengraphtypeN}{\nm{transitionsystem}}
 \newcommand{\parllcompN}{\nm{parallel composition}}
@@ -73,14 +77,26 @@
 %example views
 \newcommand{\gfctatomicprops}{\mt{{\viewppty_\atomicprops}}}
 \newcommand{\gfcinitstates}{\mt{{\viewppty_\initstates}}}
-\newcommand{\gfcthasoutaction}{\mt{{\viewppty_{\exists\alpha}}}}
-\newcommand{\gfctminoutaction}{\mt{{\viewppty_{\n\leq\alpha}}}}
+\newcommand{\gfcthasoutaction}{\mt{{\viewppty_{\exists\action}}}}
+\newcommand{\gfctminoutaction}{\mt{{\viewppty_{\numoutact\leq\action}}}}
+\newcommand{\gfctmaxoutaction}{\mt{{\viewppty_{\action\leq\numoutact}}}}
+\newcommand{\gfctspanoutaction}{\mt{{\viewppty_{\numoutactb\leq\action\leq\numoutact}}}}
 
 
 \newcommand{\viewatomicprops}{\mt{\view{\viewid}{\gfctatomicprops}}}
 \newcommand{\viewinitstates}{\mt{\view{\viewid}{\gfcinitstates}}}
 \newcommand{\viewhasoutaction}{\mt{\view{\viewid}{\gfcthasoutaction}}}
 \newcommand{\viewminoutaction}{\mt{\view{\viewid}{\gfctminoutaction}}}
+\newcommand{\viewmaxoutaction}{\mt{\view{\viewid}{\gfctmaxoutaction}}}
+\newcommand{\viewspanoutaction}{\mt{\view{\viewid}{\gfctspanoutaction}}}
+
+\newcommand{\numoutact}{\mt{n}}
+\newcommand{\numoutactb}{\mt{m}}
+\newcommand{\setoutact}{\mt{\actions \cup \states}}
+
+\newcommand{\predmaxoutact}[1][\numoutact]{\mt{Q_{\action\leq#1}(\state,\state_1, \dots, \state_{#1+1})}}
+\newcommand{\predminoutact}[1][\numoutact]{\mt{Q_{#1\leq\action}(\state,\state_1, \dots, \state_{#1})}}
+\newcommand{\formoutact}[1][\state]{\mt{C_{#1,\action}}}
 
 
 %Transitionsystem
