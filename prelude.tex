@@ -44,52 +44,73 @@
 \newcommand{\mt}[1]{\ensuremath{{#1}}\xspace}
 \newcommand{\mynewcommand}[2]{\newcommand{#1}{\mt{#2}}} %% currently not used becaue of ide highlighting
 
-%namings
+%own names
 \newcommand{\nm}[1]{#1\xspace}
 \newcommand{\viewN}{\nm{view}}
-\newcommand{\viewNC}{{View}}
+\newcommand{\viewNC}{\nm{View}}
+\newcommand{\viewsN}{\nm{views}}
+\newcommand{\viewsNC}{\nm{Views}}
 \newcommand{\grpfctN}{\nm{grouping function}}
 \newcommand{\grpfctNC}{\nm{Grouping function}}
 \newcommand{\grpfctNCC}{\nm{Grouping Function}}
 \newcommand{\grpfctsN}{\nm{grouping functions}}
 \newcommand{\grpfctsNC}{\nm{Grouping functions}}
 \newcommand{\grpfctsNCC}{\nm{Grouping Functions}}
-\newcommand{\chosengraphtypeNC}{\nm{Transitionssytem}}
-\newcommand{\chosengraphtypeN}{\nm{transitionsystem}}
+\newcommand{\chosengraphtypeNCC}{\nm{Transition System}}
+\newcommand{\chosengraphtypeNC}{\nm{Transition system}}
+\newcommand{\chosengraphtypeN}{\nm{transition system}}
+\newcommand{\chosengraphtypesNCC}{\nm{Transition Systems}}
+\newcommand{\chosengraphtypesNC}{\nm{Transition systems}}
+\newcommand{\chosengraphtypesN}{\nm{transition systems}}
 \newcommand{\parllcompN}{\nm{parallel composition}}
 \newcommand{\parllcompNC}{\nm{Parallel composition}}
 \newcommand{\parllcompNCC}{\nm{Parallel Composition}}
-\newcommand{\iffN}{\nm{if and only if}}
 
-%shortcuts
-\newcommand{\ts}{\nm{TS}}
-\newcommand{\n}{\mt{n}}
+\newcommand{\outactident}{\nm{OutActionsIdent}}
+
+%names
+\newcommand{\iffN}{\nm{if and only if}}
+\newcommand{\tsN}{\nm{TS}}
+
+%% outactions identical
+\newcommand{\outactidentstrong}{\nm{strong}}
+\newcommand{\outactidentweak}{\nm{weak}}
 
 %Identifiers for self created definitions
 \newcommand{\grpfct}{\mt{F}}
-\newcommand{\view}[2]{\mt{#1_#2}}
+\newcommand{\view}[2][\viewid]{\mt{#1_#2}}
 \newcommand{\imggrp}{\mt{\arbset}}
 \newcommand{\viewppty}{\mt{\grpfct}}
 \newcommand{\viewid}{\mt{\ts}}
 \newcommand{\pll}{\mt{||}}
-\newcommand{\arbitraryts}{\mt{TS}}
+
 
 %example views
 \newcommand{\gfctatomicprops}{\mt{{\viewppty_\atomicprops}}}
-\newcommand{\gfcinitstates}{\mt{{\viewppty_\initstates}}}
+\newcommand{\gfctinitstates}{\mt{{\viewppty_\initstates}}}
 \newcommand{\gfcthasoutaction}{\mt{{\viewppty_{\exists\action}}}}
 \newcommand{\gfctminoutaction}{\mt{{\viewppty_{\numoutact\leq\action}}}}
 \newcommand{\gfctmaxoutaction}{\mt{{\viewppty_{\action\leq\numoutact}}}}
 \newcommand{\gfctspanoutaction}{\mt{{\viewppty_{\numoutactb\leq\action\leq\numoutact}}}}
+\newcommand{\gfctstrongoutactident}{\mt{{\viewppty_{\actions(\state)_=}}}}
+\newcommand{\gfctweakoutactident}{\mt{{\viewppty_{\actions(\state)_\approx}}}}
+\newcommand{\gfctparamvalues}{\mt{\viewppty_{\param = \paramval}}}
+\newcommand{\gfctparamvaluesopt}[1][\paramval]{\mt{\viewppty_{\param = #1}}}
+\newcommand{\gfctparamvaleq}{\mt{\viewppty_{\parameval(\state,\param)}}}
 
 
-\newcommand{\viewatomicprops}{\mt{\view{\viewid}{\gfctatomicprops}}}
-\newcommand{\viewinitstates}{\mt{\view{\viewid}{\gfcinitstates}}}
-\newcommand{\viewhasoutaction}{\mt{\view{\viewid}{\gfcthasoutaction}}}
-\newcommand{\viewminoutaction}{\mt{\view{\viewid}{\gfctminoutaction}}}
-\newcommand{\viewmaxoutaction}{\mt{\view{\viewid}{\gfctmaxoutaction}}}
-\newcommand{\viewspanoutaction}{\mt{\view{\viewid}{\gfctspanoutaction}}}
+\newcommand{\viewatomicprops}{\mt{\view{\gfctatomicprops}}}
+\newcommand{\viewinitstates}{\mt{\view{\gfctinitstates}}}
+\newcommand{\viewhasoutaction}{\mt{\view{\gfcthasoutaction}}}
+\newcommand{\viewminoutaction}{\mt{\view{\gfctminoutaction}}}
+\newcommand{\viewmaxoutaction}{\mt{\view{\gfctmaxoutaction}}}
+\newcommand{\viewspanoutaction}{\mt{\view{\gfctspanoutaction}}}
+\newcommand{\viewstrongoutactident}{\mt{\view{\gfctstrongoutactident}}}
+\newcommand{\viewweakoutactident}{\mt{\view{\gfctweakoutactident}}}
+\newcommand{\viewparamvalues}{\mt{\view{\gfctparamvalues}}}
+\newcommand{\viewparamvaleq}{\mt{\view{\gfctparamvaleq}}}
 
+%%OutAct
 \newcommand{\numoutact}{\mt{n}}
 \newcommand{\numoutactb}{\mt{m}}
 \newcommand{\setoutact}{\mt{\actions \cup \states}}
@@ -98,8 +119,16 @@
 \newcommand{\predminoutact}[1][\numoutact]{\mt{Q_{#1\leq\action}(\state,\state_1, \dots, \state_{#1})}}
 \newcommand{\formoutact}[1][\state]{\mt{C_{#1,\action}}}
 
+%%Parameters
+\newcommand{\params}{\mt{Par}}
+\newcommand{\param}{\mt{x}}
+\newcommand{\paramval}{\mt{a}}
+\newcommand{\parameval}{\mt{ParEval}}
+\newcommand{\paramevalimg}{\mt{\arbset}}
+\newcommand{\someparam}{\mt{\tilde{x}}}
 
 %Transitionsystem
+\newcommand{\ts}{\mt{TS}}
 \newcommand{\state}{\mt{s}}
 \newcommand{\action}{\mt{\alpha}}
 \newcommand{\actionb}{\mt{\beta}}
@@ -120,7 +149,7 @@
 \newcommand{\eqrelview}{\mt{R}}
 \newcommand{\eqclassv}[1]{\mt{\eqclass{#1}{\eqrelview}}}
 
-%Markov chains
+%Markov chains and MDP
 \newcommand{\autm}{\mt{\mathcal{M}}}
 \newcommand{\probtfunc}{\mt{\textbf{P}}}
 \newcommand{\initdist}{\redcomment{\mt{l_{init}}}}

@@ -38,13 +38,14 @@ We define its \grpfctN with $\grpfct_\initstates : \states \to \imggrp$ with
 
 and $\imggrp := \{\emptyset\} \cup \{\{\state\} \mid \state \in \states\}$.
 
-For $\state_1,\state_2 \in \states$ it is $\gfcinitstates(\state_1) = \gfcinitstates(\state_2)$ \iffN $\state_1, \state_2 \in \initstates$ or $\state_1 = \state_2$. According to definition \ref{def:eqrelview} it is $\eqclassv{\state} = \{\state \in \states \mid \grpfct(\state) = \emptyset\}$ for $\state \in \initstates$ and $\eqclassv{\state} = \{\state \in \states \mid \grpfct(\state) = \{\state\} \} = \{\state\}$ for $\state \notin \initstates$.
+For $\state_1,\state_2 \in \states$ it is $\gfctinitstates(\state_1) = \gfctinitstates(\state_2)$ \iffN $\state_1, \state_2 \in \initstates$ or $\state_1 = \state_2$. According to definition \ref{def:eqrelview} it is $\eqclassv{\state} = \{\state \in \states \mid \grpfct(\state) = \emptyset\}$ for $\state \in \initstates$ and $\eqclassv{\state} = \{\state \in \states \mid \grpfct(\state) = \{\state\} \} = \{\state\}$ for $\state \notin \initstates$.
 
 By this we obtain the \viewN $\viewinitstates$ for a given transition system \ts where: $\states' = \bigcup_{\state \in \states} \{\eqclassv{\state}\} = \{\state \in \states \mid \state \in \initstates\}\cup \bigcup_{\state \in \states \setminus \initstates}\{\{\state\}\}$.
 
 All other components are constructed as in definition \ref{def:view}.
 
 \subsubsection{Outgoing Actions}
+\redcomment{define outgoing transition and outgoing action}
 The \emph{OutAction View} groups states that share some property regarding their actions  of the outgoing transitions. Several variants are feasible. In the following we will use the expression "outgoing action \action" equivalent with "transition with outgoing action \action".
 
 The most obvious variant to group states is to group states that \emph{have} a given outgoing action. Its grouping function looks as follow: $\grpfct_{\exists\action} : \states \to \imggrp$ with 
@@ -113,7 +114,7 @@ where $\imggrp := \setoutact$, $\numoutact \in \natnums$ is the maximal number o
 \[
 	\predmaxoutact := ((\state, \action, \state_1), \dots, (\state, \action, \state_{\numoutact+1}) \in \redcomment{\transitionrel}) \implies \bigvee_{\mathclap{\substack{i,j \in \{1,\dots, \numoutact+1\} \\ i < j}}} \state_i = \state_j
 \]
-is a first order logic predicate. It ensures that if there are one more than \numoutact outgoing transitions with an action \action at least two of the states where the transitions \redcomment{end} are in fact the same. Since this is required for all possible combinations of $\numoutact + 1$ states by the grouping function only states that have at most \numoutact outgoing actions will be assigned with \action by the grouping function. The reasoning about the equality of the \grpfctN values, the obtained equivalence classes and the resulting set of states $\states'$ of the view is analogous to \viewminoutaction.
+is a first order logic predicate. It ensures that if there are one more than \numoutact outgoing transitions with an action \action at least two of the states where the transitions \redcomment{end} are in fact the same. Since this is required for all possible combinations of $\numoutact + 1$ states by the grouping function, only states that have at most \numoutact outgoing actions will be assigned with \action by the grouping function. The reasoning about the equality of the \grpfctN values, the obtained equivalence classes and the resulting set of states $\states'$ of the view is analogous to \viewminoutaction.
 
 Since we already defined \grpfctsN and hence views for a required minimal and maximal amount of times an action has to be outgoing it is now easily possible to define a view that groups states where the amount of outgoing actions at least \numoutact and at most \numoutactb. We define its \grpfctN $\gfctspanoutaction : \states \to \arbset$ with
 
@@ -134,14 +135,14 @@ For a given state \state and action \action we set
 \forall \state_1, \dots, \state_{\numoutact+1} \in \states: \predmaxoutact
 \]
 
-for convenience. \formoutact is true  \iffN the number of outgoing actions is in the span. For $\state \in \states$ it is $\gfctspanoutaction(\state_1) = \gfctspanoutaction(\state_2)$ \iffN $\formoutact[\state_1] \land \formoutact[\state_2]$ or $\state_1 = \state_2$. Then its equivalence classes are
+for convenience. \formoutact is true  \iffN the number of outgoing actions is in the span. For $\state_1, \state_2 \in \states$ it is $\gfctspanoutaction(\state_1) = \gfctspanoutaction(\state_2)$ \iffN $\formoutact[\state_1] \land \formoutact[\state_2]$ or $\state_1 = \state_2$. Then its equivalence classes are
 
 \begin{align*}
-	\eqclassv{\state} &= \{\state \in \states \mid \gfctspanoutaction(\state) = \action\} &\text{ for } \state \in \states \text{ and } \formoutact \text{ true} \\
+	\eqclassv{\state} &= \{\state \in \states \mid \gfctspanoutaction(\state) = \action\} &\redcomment{\text{ for } \state \in \states} \text{ and } \formoutact \text{ true} \\
 	\eqclassv{\state} &= \{\state \in \states \mid \gfctspanoutaction(\state) = \state\} = \{\state\} &\text{ otherwise}	
 \end{align*}
 
-The new set of states \states' of the view \viewspanoutaction is the Union of the equivalence classes of equivalence relation \eqrelview on the set of states \states of the original transition system. Hence it is $\states' = \bigcup_{\state \in \states} \eqclassv{\state} =: \states_1 \cup \states_2$ where
+The new set of states $\states'$ of the view \viewspanoutaction is the union of the equivalence classes of equivalence relation \eqrelview on the set of states \states of the original transition system. Hence it is $\states' = \bigcup_{\state \in \states} \eqclassv{\state} =: \states_1 \cup \states_2$ where
 
 \begin{align*}
 	\states_1 &:= \{\state \in \states \mid \gfctspanoutaction(\state) = \action\} \\
@@ -149,6 +150,102 @@ The new set of states \states' of the view \viewspanoutaction is the Union of th
 	&\hspace{1.15mm}= \{\state \in \states \mid \text{the action } \action \text{ is outgoing } \numoutactb \text{ to } \numoutact \text{ times}\} \text{ and} \\
 	\states_2 &:= \bigcup_{\state \in \states \setminus \states_1}\{\state\}.
 \end{align*}
+
+\redcomment{The views above could be expanded to several actions with requirements}
+
+Instead of making requirements about states and group them based on whether they meet these requirements it also possible to group states that are very similar or even identical in regard to their outaction. We consider this idea with the \emph{\outactident \viewNC} in two variants: \outactidentstrong and \outactidentweak (idententiy). Firstly we will consider the variant of strong identity.
+
+\begin{definition}
+	Let $\ts = \transitionsystem$ be a \chosengraphtypeN. The \outactidentstrong \outactident \viewNC \viewstrongoutactident is defined by its \grpfctN $\gfctstrongoutactident : \states \to \imggrp$ with
+	\[
+	\state \mapsto	
+	\{(\action, \numoutact) \mid \action \in \actions, \numoutact \text{ is the number of times that \action is outgoing from } \state\}
+	\]
+	and $\imggrp := \actions \times \natnums_0$.
+\end{definition}
+
+The \grpfctN asserts to each state a set of pairs. Note that a pair is contained for each action $\action \in \actions$. In case there is no outgoing transition from state \state with an action \action it is $(\action, 0) \in \gfctstrongoutactident$. For $\state_1, \state_2 \in \states$ it is $\gfctstrongoutactident(\state_1) = \gfctstrongoutactident(\state_2)$ \iffN $\state_1$ and $\state_2$ are mapped to the same set of pairs. By definition \ref{def:eqrelview} the obtained equivalence classes of \eqrelview are
+\[
+	\eqclassv{\state} := \{\state \in \states \mid \gfctstrongoutactident(\state) = \{(\action_1, \numoutact_1), \dots, (\action_l, \numoutact_l)\}, l = |\actions|\}
+\]
+According to definition \ref{def:view} the set $\states' := \bigcup_{\states \in \state} \eqclassv{\state}$ is the set of states of \viewstrongoutactident. All other components of \viewstrongoutactident are as usual structured in accordance with the definition \ref{def:view}.
+As mentioned earlier a \outactidentweak variant of the \outactident \viewN is also conceivable.
+
+\begin{definition}
+	Let $\ts = \transitionsystem$ be a \chosengraphtypeN. The \outactidentweak \outactident \viewNC \viewweakoutactident is defined by its \grpfctN $\gfctweakoutactident : \states \to \imggrp$ with
+	\[
+	\state \mapsto \{\action \in \actions \mid \exists \state' \in \states : (\state, \action, \state') \in \transitionrel\} 	
+	\]
+	and $\imggrp := \actions$.
+\end{definition}
+\redcomment{condition of image-set written in inconsistent style to strong identity. Swap strong and weak (order)?}
+
+For $\state_1, \state_2 \in \states$ it is $\gfctweakoutactident(\state_1) = \gfctweakoutactident(\state_2)$ \iffN they are mapped to the same set of actions. Hence the equivalence classes of \eqrelview are
+\[
+	\eqclassv{\smstate} = \{ \state \in \states \mid \gfctweakoutactident(\state) = \gfctweakoutactident(\smstate) =: \{\action_1, \dots, \action_l\}, l \in \natnums\}.
+\]
+According to definition \ref{def:view} the set $\states' := \bigcup_{\states \in \state} \eqclassv{\state}$ is the set of states of \viewweakoutactident.
+
+\subsubsection{Parameters}
+The concept of parameters is not part of the definitions of neither transition systems, MCs or MDPs. Even though, it is of great importance in practical applications. Parameters are used to represent states (in more detail). Since transitions systems MCs and MDPs in practice are used to model, analyze and check real world systems it is very practical to not only name states but also describe the properties of the state in more detail. For a basic notion parameters are to be imagined as a set of variables that may have different values in different states thereby describing the characteristics of the state more thoroughly. Because of the vast importance in practical applications we will consider some \viewsN that utilize them. To do so and being able to describe them formally we define we will formalize the notion of parameters by considering them as a subset of the atomic propositions \atomicprops that is assigned a value by a function.
+
+\begin{definition}
+	The set $\params \subseteq \atomicprops$ is called \emph{parameters}.
+\end{definition}
+
+\begin{definition}
+	Let \paramevalimg be an arbitrary set. The function $\parameval : \states \times \params \to \paramevalimg$ is called parameter evaluation function.
+\end{definition} 
+
+Most of the time we will use \parameval to refer to the parameter evaluation function. When we speak about the value of a parameter in a state we refer to the image of $\parameval$ for that state and value. The set \paramevalimg is arbitrary so that arbitrary values can be assigned to a parameter. Speaking in terms of computer science and programming this loosens as an example the restriction of only being able to assign numbers and no booleans.
+
+The most apparent idea for a \viewN utilizing parameters is to group states that meet some requirement regarding the values of the parameters.
+
+\redcomment{state has parameter not here uptil now because probably not used}
+
+\begin{definition}
+	Let $\ts = \transitionsystem$ be a \chosengraphtypeN. The view \viewparamvalues is defined by its \grpfctN $\gfctparamvalues : \states \to \imggrp$ with
+	\[
+	\state \mapsto
+	\begin{cases}
+		\paramval, &\text{if } \parameval(\state, \param) = \paramval\\
+		\state, 	&\text{otherwise}
+	\end{cases}
+	\]
+	where \imggrp is an arbitrary set with $\paramval \in \imggrp$.
+\end{definition}
+
+The view \viewparamvalues groups states that share the same value for a given parameter. For $\state_1, \state_2$ it is $\gfctparamvalues(\state_1) = \gfctparamvalues(\state_2)$ \iffN $\parameval(\state_1, \param) = \parameval(\state_2, \param)$ or $\state_1 = \state_2$. The obtained equivalence classes are
+\begin{align*}
+	\eqclassv{\state} &= \{\state \in \states \mid \parameval(\state, \param) = \paramval\} \\
+	\eqclassv{\state} &= \{\state \in \states \mid \gfctparamvalues(\state) = \state\} = \{\state\}
+\end{align*}
+
+The set of states $\states'$ of \viewparamvalues is the union of the equivalence classes of \eqrelview. It is $\states' = \bigcup_{\state \in \states} \eqclassv{\state} =: \states_1 \cup \states_2$ where
+
+\begin{align*}
+	\states_1 &:= \{\state \in \states \mid \gfctparamvalues(\state) = \paramval\} \\
+	&\hspace{1.15mm}= \{\state \in \states  \mid \parameval(\state, \param) = \paramval\} \text{ and} \\
+	\states_2 &:= \bigcup_{\state \in \states \setminus \states_1}\{\state\}.
+\end{align*}
+If states are to be grouped with the requirement of several parameters equaling specified values this can be achieved by using \parllcompN. \redcomment{disjunctive??}
+
+The view above reduces the \chosengraphtypeN in a very precise but also manual manner, because it not only dictates the parameter but also its value. A more general approach is to stipulate only the parameter but not its value. This way states will be grouped that have the same value for that parameter with no regard to the actual value of that parameter. This idea could be achieved with a view based on the \grpfctN $\grpfct_{\gfctparamvaluesopt[\paramval_1] \pll \dots \pll \gfctparamvaluesopt[\paramval_n]}$ with $\redcomment{\parameval(\states, \param)} = \{\paramval_1, \dots, \paramval_n\}$ and $|\parameval(\states,\param)| = n$. This grouping function just groups on every possible value for the parameter \param. Since this is \redcomment{not very practical} we define a view that achieves this result in a more direct and more efficient way.
+
+\begin{definition}
+	Let $\ts = \transitionsystem$ be a \chosengraphtypeN. The view \viewparamvaleq is defined by its \grpfctN $\gfctparamvaleq : \states \to \imggrp$ with
+	\[
+	\state \mapsto \parameval(\state,\param)
+	\]
+	and $\imggrp := \parameval(\states, \param)$.
+\end{definition}
+
+With this grouping function we directly map to the value of the parameter. Hence for $\state_1, \state_2 \in \states$ it is $\gfctparamvaleq(\state_1) = \gfctparamvaleq(\state_2)$ \iffN they are mapped to the value $\paramval \in \imggrp$. Hence the equivalence classes of \eqrelview are
+\[
+\eqclassv{\smstate} = \{ \state \in \states \mid \gfctparamvaleq(\state) = \gfctparamvaleq(\smstate) =: \paramval\}.
+\]
+According to definition \ref{def:view} the set $\states' := \bigcup_{\states \in \state} \eqclassv{\state}$ is the set of states of \viewparamvaleq.
+
 
 \subsection{Markov Chain}
 \subsection{Markov Decision Process}
