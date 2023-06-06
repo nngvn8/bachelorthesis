@@ -14,13 +14,13 @@ Views are the central objective of this thesis. The purpose of a \viewN is to ob
 The conceptional idea of a \viewN is to group states by some criteria and structure the rest of the system accordingly. To formalize the grouping we define a dedicated function.
 
 \begin{definition}
-	Let TS = \transitionsystem be a transition system an \arbset be an arbitrary set. We call any function $F : \states \to \imggrp$ a \emph{\grpfctN}. \redcomment{switched to \arbset instead of \natnums}
+	Let TS = \transitionsystem be a transition system an \arbset be and arbitrary set. We call any function $F : \states \to \imggrp$ a \emph{\grpfctN}.
 	
 	\label{def:grpfct}
 \end{definition}
 
 
-Two states are \redcomment{grouped (should be Definition?)} to a new state if and only if the grouping function maps them to the same value. The definition offers an easy way of defining groups of states and labels them with a natural number. It is also very close to the actual implementation later on. The exact mapping depends on the desired grouping. In order to define a new set of states for the \viewN, we define an equivalence relation \eqrelview based on a given grouping function \grpfct.
+Two states are \redcomment{grouped (should be Definition?)} to a new state if and only if the grouping function maps them to the same value. The definition offers an easy way of defining groups of states. It is also very close to the actual implementation later on. The exact mapping depends on the desired grouping. In order to define a new set of states for the \viewN, we define an equivalence relation \eqrelview based on a given grouping function \grpfct.
 
 \begin{definition}
 	Let \grpfct be a grouping function. We define the equivalence relation $\eqrelview :=\{ (\state_1, \state_2) \in \states \times \states \mid \grpfct(\state_1) = \grpfct(\state_2)\}$
@@ -37,7 +37,7 @@ The definition of a \viewN is dependent on a given transition system and a group
 
 \begin{definition}
 	
-	Let TS = \transitionsystem be a transition system and \grpfct a grouping function. A \emph{\viewN} \view{TS}{\viewppty} is a transition system $(\states', \actions',\transitionrel', \initstates', \labelingfct')$ \redcomment{that is derived from TS with the \grpfctN \grpfct} where
+	Let TS = \transitionsystem be a transition system and \grpfct a grouping function. A \emph{\viewN} \view{\viewppty} is a transition system $(\states', \actions',\transitionrel', \initstates', \labelingfct')$ \redcomment{that is derived from TS with the \grpfctN \grpfct} where
 	
 	\begin{itemize}
 		\item $\states' = \{ \eqclass{\state}{\eqrelview} \mid \state \in \states \}$
@@ -59,7 +59,7 @@ The definition of a \viewN is dependent on a given transition system and a group
 	\label{def:view}	
 \end{definition}
 
-Note that the definition is in a most general form in the sense that if in a \viewN a property accounts to one part of some entity the whole entity receives the property i.e. 
+Note that the definition is in a most general form in the sense that if in a \viewN a property accounts to one piece of some entity the whole entity receives the property i.e. 
 \begin{itemize}	
 	\item $(\state_1, \action, \state_2) \in \transitionrel \impr (\eqclassv{\state_1}, \action, \eqclassv{\state_2}) \in \transitionrel'$
 	\item $\state \in \initstates \impr \eqclassv{\state} \in \initstates'$
