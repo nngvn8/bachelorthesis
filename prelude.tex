@@ -41,6 +41,8 @@
 %formatting
 \newcommand{\comment}[2]{{\color{#1}#2}}
 \newcommand{\redcomment}[1]{{\color{red}#1}}
+\newcommand{\purpcomment}[1]{{\color{pink}#1}}
+\newcommand{\bluecomment}[1]{{\color{blue}#1}}
 \newcommand{\mt}[1]{\ensuremath{{#1}}\xspace}
 \newcommand{\mynewcommand}[2]{\newcommand{#1}{\mt{#2}}} %% currently not used becaue of ide highlighting
 
@@ -83,17 +85,28 @@
 \newcommand{\viewppty}{\mt{\grpfct}}
 \newcommand{\viewid}{\mt{\ts}}
 \newcommand{\pll}{\mt{||}}
+\newcommand{\remstates}{\mt{\bigcup_{\state \in \states \setminus \states_1}\{\state\}}}
 
 
 %example views
+\newcommand{\outact}{\mt{\overrightarrow{\action}}}
+\newcommand{\outacts}{\mt{\overrightarrow{\actions}}}
+\newcommand{\inact}{\mt{\overleftarrow{\action}}}
+\newcommand{\inacts}{\mt{\overleftarrow{\actions(\state)}}}
 \newcommand{\gfctatomicprops}{\mt{{\viewppty_\atomicprops}}}
 \newcommand{\gfctinitstates}{\mt{{\viewppty_\initstates}}}
-\newcommand{\gfcthasoutaction}{\mt{{\viewppty_{\exists\action}}}}
-\newcommand{\gfctminoutaction}{\mt{{\viewppty_{\numoutact\leq\action}}}}
-\newcommand{\gfctmaxoutaction}{\mt{{\viewppty_{\action\leq\numoutact}}}}
-\newcommand{\gfctspanoutaction}{\mt{{\viewppty_{\numoutactb\leq\action\leq\numoutact}}}}
-\newcommand{\gfctstrongoutactident}{\mt{{\viewppty_{\actions(\state)_=}}}}
-\newcommand{\gfctweakoutactident}{\mt{{\viewppty_{\actions(\state)_\approx}}}}
+\newcommand{\gfcthasoutaction}{\mt{{\viewppty_{\exists\outact}}}}
+\newcommand{\gfctminoutaction}{\mt{{\viewppty_{\numoutact\leq\outact}}}}
+\newcommand{\gfctmaxoutaction}{\mt{{\viewppty_{\outact\leq\numoutact}}}}
+\newcommand{\gfctspanoutaction}{\mt{{\viewppty_{\numoutactb\leq\outact\leq\numoutact}}}}
+\newcommand{\gfctstrongoutactident}{\mt{{\viewppty_{\outacts(\state)_=}}}}
+\newcommand{\gfctweakoutactident}{\mt{{\viewppty_{\outacts(\state)_\approx}}}}
+\newcommand{\gfcthasinaction}{\mt{{\viewppty_{\exists\inact}}}}
+\newcommand{\gfctmininaction}{\mt{{\viewppty_{\numinact\leq\inact}}}}
+\newcommand{\gfctmaxinaction}{\mt{{\viewppty_{\inact\leq\numinact}}}}
+\newcommand{\gfctspaninaction}{\mt{{\viewppty_{\numinactb\leq\inact\leq\numinact}}}}
+\newcommand{\gfctstronginactident}{\mt{{\viewppty_{\inacts(\state)_=}}}}
+\newcommand{\gfctweakinactident}{\mt{{\viewppty_{\intacts(\state)_\approx}}}}
 \newcommand{\gfctparamvalues}{\mt{\viewppty_{\param = \paramval}}}
 \newcommand{\gfctparamvaluesopt}[1][\paramval]{\mt{\viewppty_{\param = #1}}}
 \newcommand{\gfctparamvaleq}{\mt{\viewppty_{\parameval(\state,\param)}}}
@@ -107,17 +120,27 @@
 \newcommand{\viewspanoutaction}{\mt{\view{\gfctspanoutaction}}}
 \newcommand{\viewstrongoutactident}{\mt{\view{\gfctstrongoutactident}}}
 \newcommand{\viewweakoutactident}{\mt{\view{\gfctweakoutactident}}}
+\newcommand{\viewhasinaction}{\mt{\view{\gfcthasinaction}}}
+\newcommand{\viewmininaction}{\mt{\view{\gfctmininaction}}}
+\newcommand{\viewmaxinaction}{\mt{\view{\gfctmaxinaction}}}
+\newcommand{\viewspaninaction}{\mt{\view{\gfctspaninaction}}}
+\newcommand{\viewstronginactident}{\mt{\view{\gfctstronginactident}}}
+\newcommand{\viewweakinactident}{\mt{\view{\gfctweakinactident}}}
 \newcommand{\viewparamvalues}{\mt{\view{\gfctparamvalues}}}
 \newcommand{\viewparamvaleq}{\mt{\view{\gfctparamvaleq}}}
 
 %%OutAct
 \newcommand{\numoutact}{\mt{n}}
 \newcommand{\numoutactb}{\mt{m}}
+\newcommand{\numinact}{\mt{n}}
+\newcommand{\numinactb}{\mt{m}}
 \newcommand{\setoutact}{\mt{\actions \cup \states}}
 
-\newcommand{\predmaxoutact}[1][\numoutact]{\mt{Q_{\action\leq#1}(\state,\state_1, \dots, \state_{#1+1})}}
-\newcommand{\predminoutact}[1][\numoutact]{\mt{Q_{#1\leq\action}(\state,\state_1, \dots, \state_{#1})}}
-\newcommand{\formoutact}[1][\state]{\mt{C_{#1,\action}}}
+\newcommand{\predmaxoutact}[1][\numoutact]{\mt{Q_{\outact\leq#1}(\state,\state_1, \dots, \state_{#1+1})}}
+\newcommand{\predminoutact}[1][\numoutact]{\mt{Q_{#1\leq\outact}(\state,\state_1, \dots, \state_{#1})}}
+\newcommand{\formoutact}[1][\state]{\mt{C_{#1,\outact}}}
+\newcommand{\predmaxinact}[1][\numinact]{\mt{Q_{\inact\leq#1}(\state,\state_1, \dots, \state_{#1+1})}}
+\newcommand{\predmininact}[1][\numinact]{\mt{Q_{#1\leq\inact}(\state,\state_1, \dots, \state_{#1})}}
 
 %%Parameters
 \newcommand{\params}{\mt{Par}}
