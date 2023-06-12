@@ -350,7 +350,7 @@ The most apparent idea for a \viewN utilizing parameters is to group states that
 		\item $\param \in \params \subseteq \atomicprops$ and 
 		\item $\parameval(\state, \param) = \paramval$ where $\state \in \states$.		
 	\end{itemize} 
-	The view \viewparamvalues is defined by its \grpfctN $\gfctparamvalues : \states \to \imggrp$ with
+	The view \viewparamvalueseq is defined by its \grpfctN $\gfctparamvalueseq : \states \to \imggrp$ with
 	\[
 	\state \mapsto
 	\begin{cases}
@@ -361,36 +361,58 @@ The most apparent idea for a \viewN utilizing parameters is to group states that
 	where $\imggrp := \states \cup \{a\}$.
 \end{definition}
 
-The view \viewparamvalues groups states that share the same value for a given parameter. For $\state_1, \state_2$ it is $\gfctparamvalues(\state_1) = \gfctparamvalues(\state_2)$ \iffN $\parameval(\state_1, \param) = \parameval(\state_2, \param)$ or $\state_1 = \state_2$. The obtained equivalence classes are
+The view \viewparamvalueseq groups states that share the same value for a given parameter. For $\state_1, \state_2$ it is $\gfctparamvalueseq(\state_1) = \gfctparamvalueseq(\state_2)$ \iffN $\parameval(\state_1, \param) = \parameval(\state_2, \param)$ or $\state_1 = \state_2$. The obtained equivalence classes are
 \begin{align*}
 	\eqclassv{\state} &= \{\state \in \states \mid \parameval(\state, \param) = \paramval\} \\
-	\eqclassv{\state} &= \{\state \in \states \mid \gfctparamvalues(\state) = \state\} = \{\state\}
+	\eqclassv{\state} &= \{\state \in \states \mid \gfctparamvalueseq(\state) = \state\} = \{\state\}
 \end{align*}
 
-The set of states $\states'$ of \viewparamvalues is the union of the equivalence classes of \eqrelview. It is $\states' = \bigcup_{\state \in \states} \eqclassv{\state} =: \states_1 \cup \states_2$ where
+The set of states $\states'$ of \viewparamvalueseq is the union of the equivalence classes of \eqrelview. It is $\states' = \bigcup_{\state \in \states} \eqclassv{\state} =: \states_1 \cup \states_2$ where
 
 \begin{align*}
-	\states_1 &:= \{\state \in \states \mid \gfctparamvalues(\state) = \paramval\} \\
+	\states_1 &:= \{\state \in \states \mid \gfctparamvalueseq(\state) = \paramval\} \\
 	&\hspace{1.15mm}= \{\state \in \states  \mid \parameval(\state, \param) = \paramval\} \text{ and} \\
 	\states_2 &:= \remstates.
 \end{align*}
-If states are to be grouped with the requirement of several parameters equaling specified values this can be achieved by using \parllcompN. \redcomment{disjunctive??}
 
-The view above reduces the \chosengraphtypeN in a very precise but also manual manner, because it not only dictates the parameter but also its value. A more general approach is to stipulate only the parameter but not its value. This way states will be grouped that have the same value for that parameter with no regard to the actual value of that parameter. This idea could be achieved with a view based on the \grpfctN $\grpfct_{\gfctparamvaluesopt[\paramval_1] \pll \dots \pll \gfctparamvaluesopt[\paramval_n]}$ with $\redcomment{\parameval(\states, \param)} = \{\paramval_1, \dots, \paramval_n\}$ and $|\parameval(\states,\param)| = n$. This grouping function just groups on every possible value for the parameter \param. Since this is \redcomment{not very practical} we define a view that achieves this result in a more direct and more efficient way.
+Analogously a view that requires inequality instead of equality is feasible.
 
 \begin{definition}
-	Let $\ts = \transitionsystem$ be a \chosengraphtypeN. The view \viewparamvaleq is defined by its \grpfctN $\gfctparamvaleq : \states \to \imggrp$ with
+	Let
+	\begin{itemize}
+		\item $\ts = \transitionsystem$ be a \chosengraphtypeN,
+		\item $\param \in \params \subseteq \atomicprops$ and 
+		\item $\parameval(\state, \param) \neq \paramval$ where $\state \in \states$.		
+	\end{itemize} 
+	The view \viewparamvaluesneq is defined by its \grpfctN $\gfctparamvaluesneq : \states \to \imggrp$ with
+	\[
+	\state \mapsto
+	\begin{cases}
+		\paramval, &\text{if } \parameval(\state, \param) \neq \paramval\\
+		\state, 	&\text{otherwise}
+	\end{cases}
+	\]
+	where $\imggrp := \states \cup \{a\}$.
+\end{definition}
+
+If states are to be grouped with the requirement of several parameters equaling or not equaling specified values this can be achieved by using \parllcompN. 
+\redcomment{Insert disjunctive normal form with text, cnf without}
+
+The view above reduces the \chosengraphtypeN in a very precise but also manual manner, because it not only dictates the parameter but also its value. A more general approach is to stipulate only the parameter but not its value. This way states will be grouped that have the same value for that parameter with no regard to the actual value of that parameter. This idea could be achieved with a view based on the \grpfctN $\grpfct_{\gfctparamvalueseqopt[\paramval_1] \pll \dots \pll \gfctparamvalueseqopt[\paramval_n]}$ with $\redcomment{\parameval(\states, \param)} = \{\paramval_1, \dots, \paramval_n\}$ and $|\parameval(\states,\param)| = n$. This grouping function just groups on every possible value for the parameter \param. Since this is \redcomment{not very practical} we define a view that achieves this result in a more direct and more efficient way.
+
+\begin{definition}
+	Let $\ts = \transitionsystem$ be a \chosengraphtypeN. The view \viewparamvalident is defined by its \grpfctN $\gfctparamvalident : \states \to \imggrp$ with
 	\[
 	\state \mapsto \parameval(\state,\param)
 	\]
 	and $\imggrp := \parameval(\states, \param)$.
 \end{definition}
 
-With this grouping function we directly map to the value of the parameter. Hence for $\state_1, \state_2 \in \states$ it is $\gfctparamvaleq(\state_1) = \gfctparamvaleq(\state_2)$ \iffN they are mapped to the value $\paramval \in \imggrp$. Hence the equivalence classes of \eqrelview are
+With this grouping function we directly map to the value of the parameter. Hence for $\state_1, \state_2 \in \states$ it is $\gfctparamvalident(\state_1) = \gfctparamvalident(\state_2)$ \iffN they are mapped to the value $\paramval \in \imggrp$. Hence the equivalence classes of \eqrelview are
 \[
 \eqclassv{\smstate} = \{ \state \in \states \mid \parameval(\state) = \parameval(\smstate)\}.
 \]
-According to definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv{\state}$ is the set of states of \viewparamvaleq.
+According to definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv{\state}$ is the set of states of \viewparamvalident.
 
 \subsubsection{Distance}
 \subsection{Computation on MDP-Graph}
