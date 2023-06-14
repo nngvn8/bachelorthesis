@@ -12,13 +12,13 @@ When considering \viewsN we only want into account those that utilize properties
 The \emph{Atomic Propositions \viewNC} groups all states to a new state that have the same set of atomic propositions.
 
 \begin{definition}	
-	Let $\ts = \transitionsystem$ be a \chosengraphtypeN. The view \viewatomicprops is defined by its grouping function \gfctatomicprops \grpfctN with $\gfctatomicprops : \states \to \imggrp, {\state}\mapsto{\labelingfct(\state)}$.
+	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN. The view \viewatomicprops is defined by its grouping function \gfctatomicprops \grpfctN with $\gfctatomicprops : \states \to \imggrp, {\state}\mapsto{\labelingfct(\state)}$.
 \end{definition}
 
 The grouping function is exactly the labeling function i.e. for all $\state \in \states$ it is $\gfctatomicprops(\state) = \labelingfct(\state)$. So it is $\gfctatomicprops(\state_1) = \gfctatomicprops(\state_2) \iff \labelingfct(\state_1) = \labelingfct(\state_2)$. According to definition \ref{def:eqrelview} for $\smstate \in \states$ it is $\eqclassv{\smstate} = \{\state \in \states \mid \labelingfct(\state) = \labelingfct(\smstate)\}$.
 %$\forall \state_1, \state_2 \in \states :
 
-By this we obtain the \viewN $\viewatomicprops$ for a given transition system \ts where: $\states' = \bigcup_{\state \in \states} \{\eqclassv{\state}\} =  \bigcup_{a \in \atomicprops} \{\{\state \in \states \mid \labelingfct(\state) = a\}\}$. All other components are constructed as in definition \ref{def:view}.
+By this we obtain the \viewN $\viewatomicprops$ for a given \chosengraphtypeN \chgph where: $\states' = \bigcup_{\state \in \states} \{\eqclassv{\state}\} =  \bigcup_{a \in \atomicprops} \{\{\state \in \states \mid \labelingfct(\state) = a\}\}$. All other components are constructed as in definition \ref{def:view}.
 
 \redcomment{tikz example}
 
@@ -28,7 +28,7 @@ By this we obtain the \viewN $\viewatomicprops$ for a given transition system \t
 The \emph{Initial State \viewNC}  groups all initial states into one single state. All other states are left untouched.
 
 \begin{definition}
-	Let $\ts = \transitionsystem$ be a \chosengraphtypeN. The view \viewinitstates is defined by its grouping function \gfctinitstates \grpfctN with $\gfctinitstates : \states \to \imggrp$ with 
+	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN. The view \viewinitstates is defined by its grouping function \gfctinitstates \grpfctN with $\gfctinitstates : \states \to \imggrp$ with 
 	
 	\[
 	\state \mapsto
@@ -48,7 +48,7 @@ For $\state_1,\state_2 \in \states$ it is $\gfctinitstates(\state_1) = \gfctinit
 \end{align*}
 
 
-By this we obtain the \viewN $\viewinitstates$ for a given \chosengraphtypeN \ts where: $\states' = \bigcup_{\state \in \states} \{\eqclassv{\state}\} = \{\state \in \states \mid \state \in \initstates\}\cup \bigcup_{\state \in \states \setminus \initstates}\{\{\state\}\}$.
+By this we obtain the \viewN $\viewinitstates$ for a given \chosengraphtypeN \chgph where: $\states' = \bigcup_{\state \in \states} \{\eqclassv{\state}\} = \{\state \in \states \mid \state \in \initstates\}\cup \bigcup_{\state \in \states \setminus \initstates}\{\{\state\}\}$.
 
 All other components are constructed as in definition \ref{def:view}.
 
@@ -59,12 +59,12 @@ The \emph{OutAction View} groups states that share some property regarding their
 The most obvious variant to group states is to group states that \emph{have} a given outgoing action. 
 
 \begin{definition}
-	Let $\ts = \transitionsystem$ be a \chosengraphtypeN and $\action \in \actions$. The view \viewhasoutaction is defined by its \grpfctN $\gfcthasoutaction : \states \to \imggrp$ with 
+	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN and $\action \in \actions$. The view \viewhasoutaction is defined by its \grpfctN $\gfcthasoutaction : \states \to \imggrp$ with 
 	
 	\[
 	\state \mapsto
 	\begin{cases}
-		\action,				& \text{if } \exists \state' \in \states: (\state, \action, \state') \in \redcomment{\transitionrel} \\
+		\action,				& \text{if } \exists \state' \in \states: (\state, \action, \state') \in \trans \\
 		\state,          	& \text{otherwise}
 	\end{cases}
 	\]
@@ -75,27 +75,27 @@ The most obvious variant to group states is to group states that \emph{have} a g
 
 For $\state_1,\state_2 \in \states$ it is $\gfcthasoutaction(\state_1) = \gfcthasoutaction(\state_2)$ \iffN 
 there exist $\state_{a},\state_{b} \in \states$ with 
-$(\state_1, \action, \state_{a}), (\state_2, \action, \state_{b}) \in \transitionrel$ (i.e. they have the same outgoing action \action) or $\state_1 = \state_2$. 
+$(\state_1, \action, \state_{a}), (\state_2, \action, \state_{b}) \in \trans$ (i.e. they have the same outgoing action \action) or $\state_1 = \state_2$. 
 In accordance with definition \ref{def:eqrelview} it is
 \begin{align*}
-	\eqclassv{\state} &= \{\state \in \states \mid \gfcthasoutaction(\state) = \action\} &\exists\state' \in \states : (\state, \action, \state') \in \transitionrel \\
+	\eqclassv{\state} &= \{\state \in \states \mid \gfcthasoutaction(\state) = \action\} &\exists\state' \in \states : (\state, \action, \state') \in \trans \\
 	\eqclassv{\state} &= \{\state \in \states \mid \gfcthasoutaction(\state) = \state\} = \{s\} &\text{ otherwise}
 \end{align*}
- %if for all $\state' \in \states : (\state,\action,\state') \notin \transitionrel$.
+ %if for all $\state' \in \states : (\state,\action,\state') \notin \trans$.
 
-Thereby we obtain the \viewN \viewhasoutaction for a given transition system \ts where $\states' = \bigcup_{\state \in \states} \{\eqclassv{\state}\} =: \states_1 \cup \states_2$ where
+Thereby we obtain the \viewN \viewhasoutaction for a given \chosengraphtypeN \chgph where $\states' = \bigcup_{\state \in \states} \{\eqclassv{\state}\} =: \states_1 \cup \states_2$ where
 \begin{align*}
-	 \states_1 &:= \{\state \in \states \mid \exists \state' \in \states: (\state, \action, \state') \in \transitionrel\} = \{\state \in \states \mid \state \text{ has outgoing action \action }\} \\
+	 \states_1 &:= \{\state \in \states \mid \exists \state' \in \states: (\state, \action, \state') \in \trans\} = \{\state \in \states \mid \state \text{ has outgoing action \action }\} \\
 	\states_2 &:= \remstates.
 \end{align*}
 
 
-Since actions are a very important part of transition systems as well as of its more powerful siblings MDPs and MCs it seems useful to further enhance this view and look at variants of it. Instead of only grouping states that only \emph{have} outgoing actions we could also quantify the amount of times that action should be outgoing.
+Since actions are a very important part of \chosengraphtypesN as well as of its more powerful siblings MDPs and MCs it seems useful to further enhance this view and look at variants of it. Instead of only grouping states that only \emph{have} outgoing actions we could also quantify the amount of times that action should be outgoing.
 
 For example we could require that a given action has to be outgoing a minimum amount of times. 
 
 \begin{definition}
-	Let $\ts = \transitionsystem$ be a \chosengraphtypeN and $\action \in \actions$. The view \viewminoutaction is defined by its \grpfctN $\gfctminoutaction : \states \to \arbset$ with
+	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN and $\action \in \actions$. The view \viewminoutaction is defined by its \grpfctN $\gfctminoutaction : \states \to \arbset$ with
 	
 	\[
 	\state \mapsto
@@ -107,7 +107,7 @@ For example we could require that a given action has to be outgoing a minimum am
 	
 	where $\imggrp := \setoutact$, $\numoutact \in \natnums$ is the minimum amount of times a transition with action \action has to be outgoing in order to be grouped with the other states and
 	\[
-	\predminoutact := ((\state, \action, \state_1), \dots, (\state, \action, \state_\numoutact) \in \redcomment{\transitionrel}) \land |\{\state_1, \dots, \state_\numoutact\}| = \numoutact
+	\predminoutact := ((\state, \action, \state_1), \dots, (\state, \action, \state_\numoutact) \in \trans) \land |\{\state_1, \dots, \state_\numoutact\}| = \numoutact
 	\]
 	
 	is a first order logic predicate.
@@ -117,16 +117,16 @@ For example we could require that a given action has to be outgoing a minimum am
 The number  and  
 The predicate \predminoutact requires that there are transitions with action \action to \numoutact distinct states.
 
-For $\state_1,\state_2 \in \states$ it is $\gfctminoutaction(\state_1) = \gfctminoutaction(\state_2)$ \iffN there exist distinct $\state_{a_1}, \dots, \state_{a_\numoutact} \in \states$ and distinct $\state_{b_1}, \dots, \state_{b_\numoutact} \in \states$ so that $(\state_1, \action, \state_{a_1}), \dots, (\state_1, \action, \state_{a_\numoutact}) \in \redcomment{\transitionrel}$ and $(\state_2, \action, \state_{b_1}), \dots, (\state_2, \action, \state_{b_\numoutact}) \in \redcomment{\transitionrel}$ or $\state_1 = \state_2$. According to definition \ref{def:eqrelview} it is 
+For $\state_1,\state_2 \in \states$ it is $\gfctminoutaction(\state_1) = \gfctminoutaction(\state_2)$ \iffN there exist distinct $\state_{a_1}, \dots, \state_{a_\numoutact} \in \states$ and distinct $\state_{b_1}, \dots, \state_{b_\numoutact} \in \states$ so that $(\state_1, \action, \state_{a_1}), \dots, (\state_1, \action, \state_{a_\numoutact}) \in \trans$ and $(\state_2, \action, \state_{b_1}), \dots, (\state_2, \action, \state_{b_\numoutact}) \in \trans$ or $\state_1 = \state_2$. According to definition \ref{def:eqrelview} it is 
 \begin{align*}
 	\eqclassv{\state} &= \{\state \in \states \mid \gfctminoutaction(\state) = \action\} &\text{if } \predminoutact \\ 
 	\eqclassv{\state} &= \{\state \in \states \mid \gfctminoutaction(\state) = \state\} = \{\state\} &\text{ otherwise}
 \end{align*}
 
-By this we obtain the \viewN $\viewminoutaction$ for a given transition system \ts where $\states' = \bigcup_{\state \in \states} \{\eqclassv{\state}\} =: \states_1 \cup \states_2$ where 
+By this we obtain the \viewN $\viewminoutaction$ for a given \chosengraphtypeN \chgph where $\states' = \bigcup_{\state \in \states} \{\eqclassv{\state}\} =: \states_1 \cup \states_2$ where 
 
 \begin{align*}
-	\states_1 &:= \{\state \in \states \mid \exists \state_1, \dots, \state_\numoutact \in \states: \predminoutact\} \\ %(\state, \action, \state_1), \dots, (\state, \action, \state_\numoutact) \in \redcomment{\transitionrel}, |\{\state_1, \dots, \state_\numoutact\}| = \numoutact\} \\ 
+	\states_1 &:= \{\state \in \states \mid \exists \state_1, \dots, \state_\numoutact \in \states: \predminoutact\} \\ %(\state, \action, \state_1), \dots, (\state, \action, \state_\numoutact) \in \trans, |\{\state_1, \dots, \state_\numoutact\}| = \numoutact\} \\ 
 	&\hspace{1.15mm}= \{\state \in \states \mid \text{the action } \action \text{ is outgoing at least } \numoutact \text{ times} \} \text{ and} \\
 	\states_2 &:= \remstates.	
 \end{align*}
@@ -134,7 +134,7 @@ By this we obtain the \viewN $\viewminoutaction$ for a given transition system \
 In a similar fashion we define view that groups states where at most a certain number of times a given action is outgoing. 
 
 \begin{definition}
-	Let $\ts = \transitionsystem$ be a \chosengraphtypeN and $\action \in \actions$. The view \viewmaxoutaction is defined by its \grpfctN $\gfctmaxoutaction : \states \to \arbset$ with
+	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN and $\action \in \actions$. The view \viewmaxoutaction is defined by its \grpfctN $\gfctmaxoutaction : \states \to \arbset$ with
 	
 	\[
 	\state \mapsto
@@ -146,7 +146,7 @@ In a similar fashion we define view that groups states where at most a certain n
 	
 	where $\imggrp := \actions \cup \states$, $\numoutact \in \natnums$ is the maximal number of times a transition with action \action may be outgoing and 
 	\[
-	\predmaxoutact := ((\state, \action, \state_1), \dots, (\state, \action, \state_{\numoutact+1}) \in \redcomment{\transitionrel}) \implies \bigvee_{\mathclap{\substack{i,j \in \{1,\dots, \numoutact+1\} \\ i < j}}} \state_i = \state_j
+	\predmaxoutact := ((\state, \action, \state_1), \dots, (\state, \action, \state_{\numoutact+1}) \in \trans) \implies \bigvee_{\mathclap{\substack{i,j \in \{1,\dots, \numoutact+1\} \\ i < j}}} \state_i = \state_j
 	\]
 	is a first order logic predicate.
 	\label{def:viewmaxoutaction}
@@ -157,7 +157,7 @@ In a similar fashion we define view that groups states where at most a certain n
 Since we already defined \grpfctsN and hence views for a required minimal and maximal amount of times an action has to be outgoing it is now easily possible to define a view that groups states where the amount of outgoing actions is at least \numoutact and at most \numoutactb. 
 
 \begin{definition}
-	Let $\ts = \transitionsystem$ be a \chosengraphtypeN and $\action \in \actions$. The view 
+	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN and $\action \in \actions$. The view 
 	\viewspanoutaction is defined by its \grpfctN $\gfctspanoutaction : \states \to \arbset$ with
 	
 	\[
@@ -182,11 +182,11 @@ For a given state \state and action \action we set
 for convenience. \formoutact is true  \iffN the number of outgoing actions is in the span. For $\state_1, \state_2 \in \states$ it is $\gfctspanoutaction(\state_1) = \gfctspanoutaction(\state_2)$ \iffN $\formoutact[\state_1] \land \formoutact[\state_2]$ or $\state_1 = \state_2$. Then its equivalence classes are
 
 \begin{align*}
-	\eqclassv{\state} &= \{\state \in \states \mid \gfctspanoutaction(\state) = \action\} &\redcomment{\text{ for } \state \in \states} \text{ and } \formoutact \text{ true} \\
+	\eqclassv{\state} &= \{\state \in \states \mid \gfctspanoutaction(\state) = \action\} &\formoutact \text{ true} \\
 	\eqclassv{\state} &= \{\state \in \states \mid \gfctspanoutaction(\state) = \state\} = \{\state\} &\text{ otherwise}	
 \end{align*}
 
-The new set of states $\states'$ of the view \viewspanoutaction is the union of the equivalence classes of equivalence relation \eqrelview on the set of states \states of the original transition system. Hence it is $\states' = \bigcup_{\state \in \states} \eqclassv{\state} =: \states_1 \cup \states_2$ where
+The new set of states $\states'$ of the view \viewspanoutaction is the union of the equivalence classes of equivalence relation \eqrelview on the set of states \states of the original \chosengraphtypeN. Hence it is $\states' = \bigcup_{\state \in \states} \eqclassv{\state} =: \states_1 \cup \states_2$ where
 
 \begin{align*}
 	\states_1 &:= \{\state \in \states \mid \gfctspanoutaction(\state) = \action\} \\
@@ -200,7 +200,7 @@ The new set of states $\states'$ of the view \viewspanoutaction is the union of 
 Instead of making requirements about states and group them based on whether they meet these requirements it also possible to group states that are very similar or even identical in regard to their outaction. We consider this idea with the \emph{\outactident \viewNC} in two variants: \outactidentstrong and \outactidentweak (idententiy). Firstly we will consider the variant of strong identity.
 
 \begin{definition}
-	Let $\ts = \transitionsystem$ be a \chosengraphtypeN and $\action \in \actions$. The \viewN \viewstrongoutactident is defined by its \grpfctN $\gfctstrongoutactident : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN and $\action \in \actions$. The \viewN \viewstrongoutactident is defined by its \grpfctN $\gfctstrongoutactident : \states \to \imggrp$ with
 	\[
 	\state \mapsto	
 	\{(\action, \numoutact) \mid \action \in \actions, \numoutact \text{ is the number of times that \action is outgoing from } \state\}
@@ -216,9 +216,9 @@ According to definition \ref{def:view} the set $\states' := \bigcup_{\state \in 
 As mentioned earlier a \outactidentweak variant of the \outactident \viewN is also conceivable.
 
 \begin{definition}
-	Let $\ts = \transitionsystem$ be a \chosengraphtypeN and $\action \in \actions$. The \viewN \viewweakoutactident is defined by its \grpfctN $\gfctweakoutactident : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN and $\action \in \actions$. The \viewN \viewweakoutactident is defined by its \grpfctN $\gfctweakoutactident : \states \to \imggrp$ with
 	\[
-	\state \mapsto \{\action \in \actions \mid \exists \state' \in \states : (\state, \action, \state') \in \transitionrel\} 	
+	\state \mapsto \{\action \in \actions \mid \exists \state' \in \states : (\state, \action, \state') \in \trans\} 	
 	\]
 	and $\imggrp := \actions$.
 \end{definition}
@@ -236,12 +236,12 @@ According to definition \ref{def:view} the set $\states' := \bigcup_{\state \in 
 Analogously to Outgoing Actions views of utilizing ingoing actions are feasable. Since there is no difference apart from the definitions itself, we only provide the definitions.
 
 \begin{definition}
-	Let $\ts = \transitionsystem$ be a \chosengraphtypeN and $\action \in \actions$. The view \viewhasinaction is defined by its \grpfctN $\gfcthasinaction : \states \to \imggrp$ with 
+	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN and $\action \in \actions$. The view \viewhasinaction is defined by its \grpfctN $\gfcthasinaction : \states \to \imggrp$ with 
 	
 	\[
 	\state \mapsto
 	\begin{cases}
-		\action,				& \text{if } \exists \state' \in \states: (\state', \action, \state) \in \redcomment{\transitionrel} \\
+		\action,				& \text{if } \exists \state' \in \states: (\state', \action, \state) \in \trans \\
 		\state,          	& \text{otherwise}
 	\end{cases}
 	\]
@@ -252,7 +252,7 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 
 
 \begin{definition}
-	Let $\ts = \transitionsystem$ be a \chosengraphtypeN and $\action \in \actions$. The view \viewmininaction is defined by its \grpfctN $\gfctmininaction : \states \to \arbset$ with
+	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN and $\action \in \actions$. The view \viewmininaction is defined by its \grpfctN $\gfctmininaction : \states \to \arbset$ with
 	
 	\[
 	\state \mapsto
@@ -264,14 +264,14 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 	
 	where $\imggrp := \actions \cup \states$, $\numinact \in \natnums$ is the minimum amount of times a transition with action \action has to be ingoing in order to be grouped with the other states and
 	\[
-	\predmininact := ((\state_1, \action, \state), \dots, (\state_\numinact, \action, \state) \in \redcomment{\transitionrel}) \land |\{\state_1, \dots, \state_\numinact\}| = \numinact
+	\predmininact := ((\state_1, \action, \state), \dots, (\state_\numinact, \action, \state) \in \trans) \land |\{\state_1, \dots, \state_\numinact\}| = \numinact
 	\]
 	is a first order logic predicate.
 	\label{def:viewmaxinaction}
 \end{definition}
 
 \begin{definition}
-	Let $\ts = \transitionsystem$ be a \chosengraphtypeN and $\action \in \actions$. The view \viewmaxinaction is defined by its \grpfctN $\gfctmaxinaction : \states \to \arbset$ with
+	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN and $\action \in \actions$. The view \viewmaxinaction is defined by its \grpfctN $\gfctmaxinaction : \states \to \arbset$ with
 	
 	\[
 	\state \mapsto
@@ -283,13 +283,13 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 	
 	where $\imggrp := \actions \cup \states$, $\numinact \in \natnums$ is the maximal number of times a transition with action \action may be ingoing and 
 	\[
-	\predmaxinact := ((\state_1, \action, \state), \dots, (\state_{\numinact+1}, \action, \state) \in \redcomment{\transitionrel}) \implies \bigvee_{\mathclap{\substack{i,j \in \{1,\dots, \numinact+1\} \\ i < j}}} \state_i = \state_j
+	\predmaxinact := ((\state_1, \action, \state), \dots, (\state_{\numinact+1}, \action, \state) \in \trans) \implies \bigvee_{\mathclap{\substack{i,j \in \{1,\dots, \numinact+1\} \\ i < j}}} \state_i = \state_j
 	\]
 	is a first order logic predicate.
 \end{definition}
 
 \begin{definition}
-	Let $\ts = \transitionsystem$ be a \chosengraphtypeN and $\action \in \actions$. The view 
+	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN and $\action \in \actions$. The view 
 	\viewspaninaction is defined by its \grpfctN $\gfctspaninaction : \states \to \arbset$ with
 	
 	\[
@@ -304,7 +304,7 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 \end{definition}
 
 \begin{definition}
-	Let $\ts = \transitionsystem$ be a \chosengraphtypeN and $\action \in \actions$. The \viewN \viewstronginactident is defined by its \grpfctN $\gfctstronginactident : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN and $\action \in \actions$. The \viewN \viewstronginactident is defined by its \grpfctN $\gfctstronginactident : \states \to \imggrp$ with
 	\[
 	\state \mapsto	
 	\{(\action, \numinact) \mid \action \in \actions, \numinact \text{ is the number of times that \action is ingoing from } \state\}
@@ -313,15 +313,15 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 \end{definition}
 
 \begin{definition}
-	Let $\ts = \transitionsystem$ be a \chosengraphtypeN and $\action \in \actions$. The \viewN \viewweakoutactident is defined by its \grpfctN $\gfctweakoutactident : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN and $\action \in \actions$. The \viewN \viewweakoutactident is defined by its \grpfctN $\gfctweakoutactident : \states \to \imggrp$ with
 	\[
-	\state \mapsto \{\action \in \actions \mid \exists \state' \in \states : (\state, \action, \state') \in \transitionrel\} 	
+	\state \mapsto \{\action \in \actions \mid \exists \state' \in \states : (\state, \action, \state') \in \trans\} 	
 	\]
 	and $\imggrp := \actions$.
 \end{definition}
 
 \subsubsection{Parameters}
-The concept of parameters is not part of the definitions of neither transition systems, MCs or MDPs. Even though, it is of great importance in practical applications. Parameters are used to represent states (in more detail). 
+The concept of parameters is not part of the definitions of neither \chosengraphtypesN, MCs or MDPs. Even though, it is of great importance in practical applications. Parameters are used to represent states (in more detail). 
 
 For example a MDP could be used to model a computer program with human interaction. Every state of the MDP refers an overall state of the program during execution time. In this state of the program, its variables will have specific values. Instead of only assigning a state $\state \in \states$ that refers to the state of the program, we want to retain the information about the values of the variables of the program. There is no component in MDPs that fullfills this purpose. Variables and its current values are not only relevant to computer programs but also other systems. Many of those other systems rely on some kind of global state during execution, which can be expressed with variables and values assigned to them. Parameters are used to store this information.
 
@@ -341,12 +341,13 @@ Most of the time we will use \parameval to refer to the parameter evaluation fun
 
 The most apparent idea for a \viewN utilizing parameters is to group states that meet some requirement regarding the values of the parameters.
 
+
 \redcomment{state has parameter not here uptil now because probably not used}
 
 \begin{definition}
 	Let
 	\begin{itemize}
-		\item $\ts = \transitionsystem$ be a \chosengraphtypeN,
+		\item $\chgph = \chgphtuple$ be a \chosengraphtypeN,
 		\item $\param \in \params \subseteq \atomicprops$ and 
 		\item $\parameval(\state, \param) = \paramval$ where $\state \in \states$.		
 	\end{itemize} 
@@ -380,7 +381,7 @@ Analogously a view that requires inequality instead of equality is feasible.
 \begin{definition}
 	Let
 	\begin{itemize}
-		\item $\ts = \transitionsystem$ be a \chosengraphtypeN,
+		\item $\chgph = \chgphtuple$ be a \chosengraphtypeN,
 		\item $\param \in \params \subseteq \atomicprops$ and 
 		\item $\parameval(\state, \param) \neq \paramval$ where $\state \in \states$.		
 	\end{itemize} 
@@ -401,7 +402,7 @@ If states are to be grouped with the requirement of several parameters equaling 
 The view above reduces the \chosengraphtypeN in a very precise but also manual manner, because it not only dictates the parameter but also its value. A more general approach is to stipulate only the parameter but not its value. This way states will be grouped that have the same value for that parameter with no regard to the actual value of that parameter. This idea could be achieved with a view based on the \grpfctN $\grpfct_{\gfctparamvalueseqopt[\paramval_1] \pll \dots \pll \gfctparamvalueseqopt[\paramval_n]}$ with $\redcomment{\parameval(\states, \param)} = \{\paramval_1, \dots, \paramval_n\}$ and $|\parameval(\states,\param)| = n$. This grouping function just groups on every possible value for the parameter \param. Since this is \redcomment{not very practical} we define a view that achieves this result in a more direct and more efficient way.
 
 \begin{definition}
-	Let $\ts = \transitionsystem$ be a \chosengraphtypeN. The view \viewparamvalident is defined by its \grpfctN $\gfctparamvalident : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN. The view \viewparamvalident is defined by its \grpfctN $\gfctparamvalident : \states \to \imggrp$ with
 	\[
 	\state \mapsto \parameval(\state,\param)
 	\]

@@ -4,4 +4,22 @@
 
 \begin{document}
 \section{Introduction}
+PMC is short for Probabilistic Model Checking.
+
+Model Checking is...
+Probabilistic means...
+
+When analyzing PMCs a result table is generated which consists of result vectors. These result vectors for example contain probability values for temporal events, expected values of random variables and other qualitative and quantitative results. For central measure so called schedulers can be used to resolve non-determinism in the MDPs which in addition to the result provide one ore more optimal actions per state.
+
+Already simple system models can lead to complex system behavior and an immense amount of states. An interactive visualization of an MDP can be used in support of understanding, analyzing and reviewing these complex systems. It can even be made use of to achieve further goals such as debugging or model repair. However, the pure data volume remains unaffected. The complexity is shifted to the visualization which has some general techniques to represent large amounts of data in a suitable way.
+
+\redcomment{WHAT EXACTLY CAN BE DONE/HAS BEEN DONE ---> INSERT HERE}
+
+In alternative to these general approaches domain specific preprocessing can be used to gain certain views on a given MDP that display areas or sets of states in summarized more compact form. For this purpose structural properties as well as criteria obtained from the result vectors and their containing optimal actions can be utilized.
+
+
+This thesis is about the development, formalization and implementation of a collection of different \emph{\viewsN}.
+\redcomment{Views are supposed to be applicable to only a subset of a given MDP and be composable with other views}
+The input for a view is the result table of the MDP, whereas the output is a new collumn in the MDP result table that determines which states are to be grouped to a new one.
+The evaluation is performed within the existing web-based prototype of a PMC visualization platform (PMC-Viz) and on the basis of different MDP models. They are to be analyzed regarding the suitability to facilitate the understanding of complex operational models incl. analysis results and to support processes of debugging, model repair or strategy synthesis.
 \end{document}

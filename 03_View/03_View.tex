@@ -5,16 +5,15 @@
 \begin{document}
 
 \section{View}
-Views are the central objective of this thesis. The purpose of a \viewN is to obtain a simplification of a given transition system (TS).  It is an independent TS derived from a given TS and represents a (simplified) \viewN on the given one - hence the name. Thereby the original TS is retained. 
+Views are the central objective of this thesis. The purpose of a \viewN is to obtain a simplification of a given \chosengraphtypeN.  It is an independent \chosengraphtypeN derived from a given \chosengraphtypeN and represents a (simplified) \viewN on the given one - hence the name. Thereby the original \chosengraphtypeN is retained.
+
+In the preliminaries transition systems and Markov Chains were listed as simpler version of \mdpsN. More specifically transition systems and \mdpsN are special \mdpsN namely that have no probability distribution in each state for each action or no actions. When defining \viewsN it seems feasible to do so for the most general system of the ones of consideration.That is why we will define views on \mdpsN. Only for specific views and their implementation it is to be kept in mind that if they regard an action or the probability distribution of action in a state it is not applicable to transitions systems or MCs respectively. \redcomment{topic init states}
 
 \subsection{Grouping Function}
-
-
-
 The conceptional idea of a \viewN is to group states by some criteria and structure the rest of the system accordingly. To formalize the grouping we define a dedicated function.
 
 \begin{definition}
-	Let TS = \transitionsystem be a transition system an \arbset be and arbitrary set. We call any function $F : \states \to \imggrp$ a \emph{\grpfctN}.
+	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN an \arbset be and arbitrary set. We call any function $F : \states \to \imggrp$ a \emph{\grpfctN}.
 	
 	\label{def:grpfct}
 \end{definition}
@@ -32,12 +31,12 @@ Two states are \redcomment{grouped (should be Definition?)} to a new state if an
 
 \subsection{Formal Definition}
 
-The definition of a \viewN is dependent on a given transition system and a grouping function \grpfct. We derive the equivalence relation \eqrelview as in Definition \ref{def:eqrelview} and use its equivalence classes \eqclassv{s} ($\state \in \states$) as states for the \viewN. The rest of the transition system is structured accordingly.
+The definition of a \viewN is dependent on a given MDP and a \grpfctN \grpfct. We derive the equivalence relation \eqrelview as in definition \ref{def:eqrelview} and use its equivalence classes \eqclassv{s} ($\state \in \states$) as states for the \viewN. The rest of the \chosengraphtypeN is structured accordingly.
 
 
 \begin{definition}
 	
-	Let TS = \transitionsystem be a transition system and \grpfct a grouping function. A \emph{\viewN} \view{\viewppty} is a transition system $(\states', \actions',\transitionrel', \initstates', \labelingfct')$ \redcomment{that is derived from TS with the \grpfctN \grpfct} where
+	Let \chgph = \chgphtuple be a \chosengraphtypeN and \grpfct a grouping function. A \emph{\viewN} \view{\viewppty} is a \chosengraphtypeN $\mdp' = \chgphtupledist$ \redcomment{that is derived from \mdp with the \grpfctN \grpfct} where
 	
 	\begin{itemize}
 		\item $\states' = \{ \eqclass{\state}{\eqrelview} \mid \state \in \states \}$
@@ -45,9 +44,9 @@ The definition of a \viewN is dependent on a given transition system and a group
 		
 		\item $\actions' = \actions$
 		
-		\item $\transitionrel' = \{ (\eqclassv{\state_1}, \action, \eqclassv{\state_2}) \mid \exists \state_1 \in \eqclassv{\state_1} \exists \state_2 \in \eqclassv{\state_2} : (\eqclassv{\state_1}, \action, \eqclassv{\state_2}) \in \transitionrel\}$%\subseteq \states' \times \actions' \times \states'$
+		\item $\trans' = \{ (\eqclassv{\state_1}, \action, \eqclassv{\state_2}) \mid \exists \state_1 \in \eqclassv{\state_1} \exists \state_2 \in \eqclassv{\state_2} : (\eqclassv{\state_1}, \action, \eqclassv{\state_2}) \in \trans\}$%\subseteq \states' \times \actions' \times \states'$
 		
-		\item $\initstates' = \{\eqclassv{\state'} \in \states' \mid \exists \state \in \eqclassv{\state'} : \state \in \initstates \}$
+		\item $\init' = \{\eqclassv{\state'} \in \states' \mid \exists \state \in \eqclassv{\state'} : \state \in \init \}$
 		
 		\item $\labelingfct': \states' \to \powerset{\atomicprops}, \eqclassv{\state}\mapsto \bigcup_{\state \in \eqclassv{\state}} \{\labelingfct(\state)\}$
 		
@@ -61,8 +60,8 @@ The definition of a \viewN is dependent on a given transition system and a group
 
 Note that the definition is in a most general form in the sense that if in a \viewN a property accounts to one piece of some entity the whole entity receives the property i.e. 
 \begin{itemize}	
-	\item $(\state_1, \action, \state_2) \in \transitionrel \impr (\eqclassv{\state_1}, \action, \eqclassv{\state_2}) \in \transitionrel'$
-	\item $\state \in \initstates \impr \eqclassv{\state} \in \initstates'$
+	\item $(\state_1, \action, \state_2) \in \trans \impr (\eqclassv{\state_1}, \action, \eqclassv{\state_2}) \in \trans'$
+	\item $\state \in \init \impr \eqclassv{\state} \in \initdistrib'$
 	\item $\forall \state \in \states : \labelingfct(\state) \in \labelingfct'(\eqclassv{\state})$
 	%	$\labelingfct(\state) =: \atomicprop \impr \atomicprop \in \labelingfct(\eqclassv{\state})$
 \end{itemize}

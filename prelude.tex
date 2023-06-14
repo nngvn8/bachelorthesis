@@ -48,6 +48,8 @@
 
 %own names
 \newcommand{\nm}[1]{#1\xspace}
+\newcommand{\mdpN}{\nm{MDP}}
+\newcommand{\mdpsN}{\nm{MDPs}}
 \newcommand{\viewN}{\nm{view}}
 \newcommand{\viewNC}{\nm{View}}
 \newcommand{\viewsN}{\nm{views}}
@@ -58,15 +60,24 @@
 \newcommand{\grpfctsN}{\nm{grouping functions}}
 \newcommand{\grpfctsNC}{\nm{Grouping functions}}
 \newcommand{\grpfctsNCC}{\nm{Grouping Functions}}
-\newcommand{\chosengraphtypeNCC}{\nm{Transition System}}
-\newcommand{\chosengraphtypeNC}{\nm{Transition system}}
-\newcommand{\chosengraphtypeN}{\nm{transition system}}
-\newcommand{\chosengraphtypesNCC}{\nm{Transition Systems}}
-\newcommand{\chosengraphtypesNC}{\nm{Transition systems}}
-\newcommand{\chosengraphtypesN}{\nm{transition systems}}
+%\newcommand{\chosengraphtypeNCC}{\nm{Transition System}}
+%\newcommand{\chosengraphtypeNC}{\nm{Transition system}}
+%\newcommand{\chosengraphtypeN}{\nm{transition system}}
+%\newcommand{\chosengraphtypesNCC}{\nm{Transition Systems}}
+%\newcommand{\chosengraphtypesNC}{\nm{Transition systems}}
+%\newcommand{\chosengraphtypesN}{\nm{transition systems}}
+\newcommand{\chosengraphtypeNCC}{\nm{MDP}}
+\newcommand{\chosengraphtypeNC}{\nm{MDP}}
+\newcommand{\chosengraphtypeN}{\nm{MDP}}
+\newcommand{\chosengraphtypesNCC}{\nm{MDPs}}
+\newcommand{\chosengraphtypesNC}{\nm{MDPs}}
+\newcommand{\chosengraphtypesN}{\nm{MDPs}}
 \newcommand{\parllcompN}{\nm{parallel composition}}
 \newcommand{\parllcompNC}{\nm{Parallel composition}}
 \newcommand{\parllcompNCC}{\nm{Parallel Composition}}
+\newcommand{\parllcompsN}{\nm{parallel compositions}}
+\newcommand{\parllcompsNC}{\nm{Parallel compositions}}
+\newcommand{\parllcompsNCC}{\nm{Parallel Compositions}}
 
 \newcommand{\outactident}{\nm{OutActionsIdent}}
 
@@ -78,17 +89,22 @@
 \newcommand{\outactidentstrong}{\nm{strong}}
 \newcommand{\outactidentweak}{\nm{weak}}
 
-%Identifiers for self created definitions
+% CORE DEFINITIONS
 \newcommand{\grpfct}{\mt{F}}
+\newcommand{\eqrelview}{\mt{R}}
+\newcommand{\eqclassv}[1]{\mt{\eqclass{#1}{\eqrelview}}}
+\newcommand{\viewid}{\mt{\mdp}}
 \newcommand{\view}[2][\viewid]{\mt{#1_#2}}
 \newcommand{\imggrp}{\mt{\arbset}}
 \newcommand{\viewppty}{\mt{\grpfct}}
-\newcommand{\viewid}{\mt{\ts}}
 \newcommand{\pll}{\mt{||}}
 \newcommand{\remstates}{\mt{\bigcup_{\state \in \states \setminus \states_1}\{\state\}}}
 
+%\newcommand{\mdp}{def}\mdp
+%\newcommand{\mdpdef}
 
-%example views
+
+% EXAMPLE VIEWS
 \newcommand{\outact}{\mt{\overrightarrow{\action}}}
 \newcommand{\outacts}{\mt{\overrightarrow{\actions}}}
 \newcommand{\inact}{\mt{\overleftarrow{\action}}}
@@ -152,33 +168,44 @@
 \newcommand{\paramevalimg}{\mt{\arbset}}
 \newcommand{\someparam}{\mt{\tilde{x}}}
 
-%Transitionsystem
-\newcommand{\ts}{\mt{TS}}
+% all Systems
+\newcommand{\chgph}{\mt{\mdp}}
+\newcommand{\chgphtuple}{\mt{\mdptuple}}
+\newcommand{\chgphtupledist}{\mt{\mdptupledist}}
+
+\newcommand{\states}{\mt{S}}
+\newcommand{\actions}{\mt{Act}}
+\newcommand{\atomicprops}{\mt{AP}}
+\newcommand{\labelingfct}{\mt{L}}
+\newcommand{\init}{\mt{\initdistrib}} % use MDP % refers to the underlying set
+\newcommand{\trans}{\mt{\probtfunc}} % use MDP % refers to the underlying set
+
+
 \newcommand{\state}{\mt{s}}
 \newcommand{\action}{\mt{\alpha}}
 \newcommand{\actionb}{\mt{\beta}}
 \newcommand{\actionc}{\mt{\alpha}}
-\newcommand{\atomicprop}{\mt{ap}}
-
 \newcommand{\smstate}{\mt{\tilde{\state}}}
 
-\newcommand{\states}{\mt{S}}
-\newcommand{\actions}{\mt{Act}}
+
+
+% transition sysstems
+\newcommand{\ts}{\mt{TS}}
 \newcommand{\transitionrel}{\mt{\longrightarrow}}
 \newcommand{\initstates}{\mt{I}}
-\newcommand{\atomicprops}{\mt{AP}}
-\newcommand{\labelingfct}{\mt{L}}
 \newcommand{\transitionsystem}{\mt
 	{(\states, \actions, \transitionrel, \initstates, \atomicprops, \labelingfct)}
 }
-\newcommand{\eqrelview}{\mt{R}}
-\newcommand{\eqclassv}[1]{\mt{\eqclass{#1}{\eqrelview}}}
+\newcommand{\tstupledist}{\mt{(\states', \actions',\transitionrel', \initstates', \labelingfct')}}
+
 
 %Markov chains and MDP
+\newcommand{\mdp}{\mt{\autm}}
+\newcommand{\mdptuple}{\mt{(\states, \actions, \probtfunc, \initdistrib, \atomicprops, \labelingfct)}}
+\newcommand{\mdptupledist}{\mt{(\states', \actions', \probtfunc', \initdistrib', \atomicprops', \labelingfct')}}
 \newcommand{\autm}{\mt{\mathcal{M}}}
 \newcommand{\probtfunc}{\mt{\textbf{P}}}
-\newcommand{\initdist}{\redcomment{\mt{l_{init}}}}
-
+\newcommand{\initdistrib}{\mt{\iota_{init}}}
 
 
 %maths

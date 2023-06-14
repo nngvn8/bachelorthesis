@@ -5,13 +5,6 @@
 	
 \section{Preliminaries}
 
-\subsection{\redcomment{Mathematical Fundamentals}}
-\redcomment{e.g.strongly connected components, equivalence relation, more?}
-
-\redcomment{we denote \eqclass{a}{R} for the equivalence class with the representative a under the equivalence relation R}
-
-\redcomment{how much should be included? ...probably no set theory}
-
 \subsection{Transition Systems}
 \redcomment{Motivation of transition systems} 
 
@@ -40,21 +33,21 @@
 	\item Markov Chain (MC)
 	\item transition systems to markov chains: nondeterministic choices replaced by probablistic
 	\item successor chosen according to probability distribution
-	\item distribution only dependent on current state s (not path)
+	\item distribution only dependent on current state \state (not path)
 	\item system evolution not dependent on history but only current state $\to$ \emph{memoryless property}
 \end{itemize}
 
 \redcomment{NOTES END}
 
 \begin{definition}
-	A \emph{(discrete-time) Markov chain} is a tuple $\autm = (\states, \probtfunc, \initdist, \atomicprops, \labelingfct)$ where 
+	A \emph{(discrete-time) Markov chain} is a tuple $\autm = (\states, \probtfunc, \initdistrib, \atomicprops, \labelingfct)$ where 
 	\begin{itemize}
 		\item \states is a countable, nonempty set of states,
 		\item $\probtfunc : \states \times \states \to [0,1]$ is the \emph{transition probability function}, such that for all states \state:
 		\begin{center}
 			$\bbigsum{\state' \in \states}\probtfunc(\state,\states') = 1$.	
 		\end{center}
-		\item $\initdist : \states \to [0,1]$ is the \emph{initial distribution}, such that $\mathlarger{\sum_{\state \in \states}} \initdist(\state) = 1$, and
+		\item $\initdistrib : \states \to [0,1]$ is the \emph{initial distribution}, such that $\mathlarger{\sum_{\state \in \states}} \initdistrib(\state) = 1$, and
 		\item \atomicprops is a set of atomic propositions and,
 		\item $\labelingfct : \states \to \powerset{\atomicprops}$ a labeling function.		
 	\end{itemize}
@@ -66,8 +59,8 @@
 \begin{itemize}
 	\item Probability Function \probtfunc specifies for each state \state the probability \probtfunc(\state,\state') of moving from \state to \state' in one step.
 	\item constraint on \probtfunc ensures that \probtfunc is distribution
-	\item \initdist(\state) specifies system evolution starts in \state
-	\item states \state with $\initdist(\state) > 0$ are  considered \emph{initial states}
+	\item \initdistrib(\state) specifies system evolution starts in \state
+	\item states \state with $\initdistrib(\state) > 0$ are  considered \emph{initial states}
 	\item states \state' with $\probtfunc(\state, \state') > 0$ are view as possible successors of \state
 	\item has no actions \\ "As compositional approaches for Markov models are outside the scope of this monograph,
 	actions are irrelevant in this chapter and are therefore omitted."
@@ -92,7 +85,7 @@
 \redcomment{NOTES END}
 
 \begin{definition}
-	A \emph{Markov decision process} is a tuple $\autm = (\states, \actions, \probtfunc, \initdist, \atomicprops, \labelingfct)$ where
+	A \emph{Markov decision process} is a tuple $\mdp = \mdptuple$ where
 	\begin{itemize}
 		\item \states is a countable set of states,
 		\item \actions is a set of actions,
@@ -100,7 +93,7 @@
 		\begin{center}
 			$\bbigsum{\state' \in \states}\probtfunc(\state,\action,\state') \in \{0,1\}$,
 		\end{center}
-	\item $\initdist : \states \to [0,1]$ is the initial distribution such that $\sum_{\state \in \states} \initdist(\state) = 1$,
+	\item $\initdistrib : \states \to [0,1]$ is the initial distribution such that $\sum_{\state \in \states} \initdistrib(\state) = 1$,
 	\item \atomicprops is  a set of atomic propositions and
 	\item $\labelingfct : \states \to \powerset{\atomicprops}$ a labeling function.
 	\end{itemize}
@@ -114,10 +107,10 @@ An MDP is called \emph{finite} if \states, \actions and \atomicprops are finite.
 
 \begin{itemize}
 	\item $\probtfunc(\state, \action, t)$ can be arbitrary real numbers in $[0,1]$ (sum up to 1 or 0 for fixed \state and \action), for algorithmic purposes rational
-	\item unique initial distribution \initdist. Could be generalized to set of \initdist with nondeterministic choice at the beginning. For sake of simplicity: one single distribution
+	\item unique initial distribution \initdistrib. Could be generalized to set of \initdistrib with nondeterministic choice at the beginning. For sake of simplicity: one single distribution
 	\item operational behavior:
 	\begin{itemize}
-		\item starting state $\state_0$ yielded by \initdist with $\initdist(\state_0) > 0$
+		\item starting state $\state_0$ yielded by \initdistrib with $\initdistrib(\state_0) > 0$
 		\item nondeterministic choice of enabled action (i.e. Probability sums up to one)
 		\item probabilistic choice of state (action fixed by nondeterministic selection)
 	\end{itemize}
@@ -129,6 +122,14 @@ An MDP is called \emph{finite} if \states, \actions and \atomicprops are finite.
 \end{itemize}
 
 \redcomment{NOTES END}
+
+\redcomment{CONVENTION BEGIN}
+
+For $\state_1, \state_2 \in \states$ and $\action \in \actions$ we will write $(\state_1, \action, \state_2) \in \probtfunc$ \iffN $\probtfunc(\state_1, \action, \state_2) > 0$, that is to say if there is a non-zero probability of moving from state $\state_1$ to state $\state_2$ with action \action. Analogously we will write $\state \in \initdistrib$ \iffN $\initdistrib(\state) > 0$ which means that there is chance of starting in that state.
+
+\redcomment{not sure if I should: $I := \initdistrib$ thereby meaning the underlying set}
+
+\redcomment{CONVENTION END}
 	
 \end{document}
 
