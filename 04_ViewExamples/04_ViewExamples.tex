@@ -27,7 +27,7 @@ By this we obtain the \viewN $\viewatomicprops$ for a given \chosengraphtypeN \c
 An a little more involved idea than directly using a given function is to utilize the set of initial states. We can group states that have a probability greater zero, that they are started from. In practice this might be useful to quickly find all initial states.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \chosengraphtypeN. The view \viewinitstates is defined by its grouping function \gfctinitstates \grpfctN with $\gfctinitstates : \states \to \imggrp$ with 
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $\initstates := \{\state \in \states \mid \state \in \init\}$. The view \viewinitstates is defined by its grouping function \gfctinitstates \grpfctN with $\gfctinitstates : \states \to \imggrp$ with 
 	
 	\[
 	\state \mapsto
@@ -42,8 +42,8 @@ An a little more involved idea than directly using a given function is to utiliz
 
 For $\state_1,\state_2 \in \states$ it is $\gfctinitstates(\state_1) = \gfctinitstates(\state_2)$ \iffN $\state_1, \state_2 \in \initstates$ or $\state_1 = \state_2$. According to Definition \ref{def:eqrelview} it is 
 \begin{align*}
-	\eqclassv{\state} &= \{\state \in \states \mid \grpfct(\state) = \emptyset\} &\text{for } \state \in \initstates \text{ and} \\
-	\eqclassv{\state} &= \{\state \in \states \mid \grpfct(\state) = \{\state\} \} = \{\state\} &\text{for } \state \notin \initstates.
+	\eqclassv{\state} &= \{\state \in \states \mid \gfctinitstates(\state) = \emptyset\} &\text{for } \state \in \initstates \text{ and} \\
+	\eqclassv{\state} &= \{\state \in \states \mid \gfctinitstates(\state) = \{\state\} \} = \{\state\} &\text{for } \state \notin \initstates.
 \end{align*}
 
 

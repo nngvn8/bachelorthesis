@@ -13,13 +13,12 @@ In the preliminaries transition systems and Markov Chains were listed as simpler
 The conceptional idea of a \viewN is to group states by some criteria and structure the rest of the system accordingly. To formalize the grouping we define a dedicated function.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \chosengraphtypeN an \arbset be and arbitrary set. We call any function $\grpfct_\theta : \states \to \imggrp$ a \emph{\grpfctN}. \
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN an \arbset be and arbitrary set. We call any function $\grpfct : \states \to \imggrp$ a \emph{\grpfctN}. The symbol \viewppty is a unique identifier.
 	
 	\label{def:grpfct}
 \end{definition}
 
-
-Two states are \redcomment{grouped (should be Definition?)} to a new state if and only if the grouping function maps them to the same value. The definition offers an easy way of defining groups of states. It is also very close to the actual implementation later on. The exact mapping depends on the desired grouping. In order to define a new set of states for the \viewN, we define an equivalence relation \eqrelview based on a given grouping function \grpfct.
+The identifier \viewppty normally hints the objective of the grouping function. Two states are \redcomment{grouped (should be Definition?)} to a new state if and only if the grouping function maps them to the same value. The definition offers an easy way of defining groups of states. It is also very close to the actual implementation later on. The exact mapping depends on the desired grouping. In order to define a new set of states for the \viewN, we define an equivalence relation \eqrelview based on a given grouping function \grpfct.
 
 \begin{definition}
 	Let \grpfct be a grouping function. We define the equivalence relation $\eqrelview :=\{ (\state_1, \state_2) \in \states \times \states \mid \grpfct(\state_1) = \grpfct(\state_2)\}$
@@ -31,12 +30,12 @@ Two states are \redcomment{grouped (should be Definition?)} to a new state if an
 
 \subsection{Formal Definition}
 
-The definition of a \viewN is dependent on a given MDP and a \grpfctN \grpfct. We derive the equivalence relation \eqrelview as in Definition \ref{def:eqrelview} and use its equivalence classes \eqclassv{s} ($\state \in \states$) as states for the \viewN. The rest of the \chosengraphtypeN is structured accordingly.
+The definition of a \viewN is dependent on a given MDP and a \grpfctN $\grpfct$. We derive the equivalence relation \eqrelview as in Definition \ref{def:eqrelview} and use its equivalence classes \eqclassv{s} ($\state \in \states$) as states for the \viewN. The rest of the \chosengraphtypeN is structured accordingly.
 
 
 \begin{definition}
 	
-	Let \chgph = \chgphtuple be \chosengraphtypeN and \grpfct a grouping function. A \emph{\viewN} \view{\viewppty} is \chosengraphtypeN $\mdp' = \chgphtupledist$ \redcomment{that is derived from \mdp with the \grpfctN \grpfct} where
+	Let \chgph = \chgphtuple be \chosengraphtypeN and $\grpfct$ a \grpfctN. A \emph{\viewN} is \chosengraphtypeN $\view{\viewppty} = \chgphtupledist$ that is derived from \mdp with the \grpfctN $\grpfct$ where
 	
 	\begin{itemize}
 		\item $\states' = \{ \eqclass{\state}{\eqrelview} \mid \state \in \states \}$
@@ -58,6 +57,8 @@ The definition of a \viewN is dependent on a given MDP and a \grpfctN \grpfct. W
 	\label{def:view}	
 \end{definition}
 
+The identifier \viewppty is inherited from $\grpfct$ to \view{\viewppty}. It thereby uniquely determines \view{\viewppty} and declares that \view{\viewppty} is based on $\grpfct$. Based on denotes that $\grpfct$ is the \grpfctN of \view{\viewppty} referred to in Definition \ref{def:view}.
+
 Note that the definition is in a most general form in the sense that if in a \viewN a property accounts to one piece of some entity the whole entity receives the property i.e. 
 \begin{itemize}	
 	\item $(\state_1, \action, \state_2) \in \trans \impr (\eqclassv{\state_1}, \action, \eqclassv{\state_2}) \in \trans'$
@@ -72,7 +73,7 @@ In essence views are simplification generated from \chosengraphtypeN. It seems r
 \subsubsection{\parllcompNCC}
 One of the most uncomplicated ideas is to group states that match in the function value of all given \grpfctN s. This idea is parallel in the sense that a set of \grpfctN is combined to a new \grpfctN in one single step.
 \begin{definition}
-	Let $\grpfct_1, \grpfct_2, \dots, \grpfct_n$ be \grpfctN s. A \emph{parallel composed \grpfctN} is a \grpfctN $\grpfct_{\grpfct_1 \pll \grpfct_2 \pll \dots \pll \grpfct_n}: \states \to \arbset$, $\state \mapsto (\grpfct_1(\state), \grpfct_2(\state), \dots, \grpfct_n(\state))$.
+	Let $\grpfct[1], \grpfct[2], \dots, \grpfct[n]$ be \grpfctN s. A \emph{parallel composed \grpfctN} is a \grpfctN $\grpfct_{\grpfct[1] \pll \grpfct[2] \pll \dots \pll \grpfct[n]}: \states \to \arbset$, $\state \mapsto (\grpfct[1](\state), \grpfct[2](\state), \dots, \grpfct[n](\state))$.
 		
 \end{definition}
 

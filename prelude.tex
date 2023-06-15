@@ -99,13 +99,13 @@
 \newcommand{\outactidentweak}{\nm{weak}}
 
 % CORE DEFINITIONS
-\newcommand{\grpfct}{\mt{F}}
+\newcommand{\grpfct}[1][\viewppty]{\mt{F_{#1}}}
 \newcommand{\eqrelview}{\mt{R}}
 \newcommand{\eqclassv}[1]{\mt{\eqclass{#1}{\eqrelview}}}
 \newcommand{\viewid}{\mt{\mdp}}
-\newcommand{\view}[2][\viewid]{\mt{#1_#2}}
+\newcommand{\view}[1][\viewppty]{\mt{\viewid_{#1}}}
 \newcommand{\imggrp}{\mt{\arbset}}
-\newcommand{\viewppty}{\mt{\grpfct}}
+\newcommand{\viewppty}{\mt{\theta}}
 \newcommand{\pll}{\mt{||}}
 \newcommand{\remstates}{\mt{\bigcup_{\state \in \states \setminus \states_1}\{\state\}}}
 
@@ -114,48 +114,68 @@
 
 
 % EXAMPLE VIEWS
-\newcommand{\gfctatomicprops}{\mt{{\viewppty_\atomicprops}}}
-\newcommand{\gfctinitstates}{\mt{{\viewppty_\initstates}}}
-\newcommand{\gfcthasoutaction}{\mt{{\viewppty_{\exists\outact}}}}
-\newcommand{\gfctminoutaction}{\mt{{\viewppty_{\numoutact\leq\outact}}}}
-\newcommand{\gfctmaxoutaction}{\mt{{\viewppty_{\outact\leq\numoutact}}}}
-\newcommand{\gfctspanoutaction}{\mt{{\viewppty_{\numoutactb\leq\outact\leq\numoutact}}}}
-\newcommand{\gfctstrongoutactident}{\mt{{\viewppty_{\outacts(\state)_=}}}}
-\newcommand{\gfctweakoutactident}{\mt{{\viewppty_{\outacts(\state)_\approx}}}}
-\newcommand{\gfcthasinaction}{\mt{{\viewppty_{\exists\inact}}}}
-\newcommand{\gfctmininaction}{\mt{{\viewppty_{\numinact\leq\inact}}}}
-\newcommand{\gfctmaxinaction}{\mt{{\viewppty_{\inact\leq\numinact}}}}
-\newcommand{\gfctspaninaction}{\mt{{\viewppty_{\numinactb\leq\inact\leq\numinact}}}}
-\newcommand{\gfctstronginactident}{\mt{{\viewppty_{\inacts(\state)_=}}}}
-\newcommand{\gfctweakinactident}{\mt{{\viewppty_{\inacts(\state)_\approx}}}}
-\newcommand{\gfctparamvalueseq}{\mt{\viewppty_{\param = \paramval}}}
-\newcommand{\gfctparamvaluesneq}{\mt{\viewppty_{\param \neq \paramval}}}
-\newcommand{\gfctparamdnf}{\mt{\viewppty_{ParDNF}}}
-\newcommand{\gfctparamcnf}{\mt{\viewppty_{ParCNF}}}
-\newcommand{\gfctparamvalueseqopt}[1][\paramval]{\mt{\viewppty_{\param = #1}}}
-\newcommand{\gfctparamvalident}{\mt{\viewppty_{\parameval(\state,\param)}}}
+\newcommand{\gfctatomicprops}{\mt{\grpfct[\atomicprops]}}
+\newcommand{\gfctinitstates}{\mt{\grpfct[\initstates]}}
+\newcommand{\gfcthasoutaction}{\mt{\grpfct[\exists\outact]}}
+\newcommand{\gfctminoutaction}{\mt{\grpfct[\numoutact\leq\outact]}}
+\newcommand{\gfctmaxoutaction}{\mt{\grpfct[\outact\leq\numoutact]}}
+\newcommand{\gfctspanoutaction}{\mt{\grpfct[\numoutactb\leq\outact\leq\numoutact]}}
+\newcommand{\gfctstrongoutactident}{\mt{\grpfct[\outacts(\state)_=]}}
+\newcommand{\gfctweakoutactident}{\mt{\grpfct[\outacts(\state)_\approx]}}
+\newcommand{\gfcthasinaction}{\mt{\grpfct[\exists\inact]}}
+\newcommand{\gfctmininaction}{\mt{\grpfct[\numinact\leq\inact]}}
+\newcommand{\gfctmaxinaction}{\mt{\grpfct[\inact\leq\numinact]}}
+\newcommand{\gfctspaninaction}{\mt{\grpfct[\numinactb\leq\inact\leq\numinact]}}
+\newcommand{\gfctstronginactident}{\mt{\grpfct[\inacts(\state)_=]}}
+\newcommand{\gfctweakinactident}{\mt{\grpfct[\inacts(\state)_\approx]}}
+\newcommand{\gfctparamvalueseq}{\mt{\grpfct[\param = \paramval]}}
+\newcommand{\gfctparamvaluesneq}{\mt{\grpfct[\param \neq \paramval]}}
+\newcommand{\gfctparamdnf}{\mt{\grpfct[ParDNF]}}
+\newcommand{\gfctparamcnf}{\mt{\grpfct[ParCNF]}}
+\newcommand{\gfctparamvalueseqopt}[1][\paramval]{\mt{\grpfct[\param = #1]}}
+\newcommand{\gfctparamvalident}{\mt{\grpfct[\parameval(\state,\param)]}}
 
 
+\newcommand{\viewatomicprops}{\mt{\view[\atomicprops]}}
+\newcommand{\viewinitstates}{\mt{\view[\initstates]}}
+\newcommand{\viewhasoutaction}{\mt{\view[\exists\outact]}}
+\newcommand{\viewminoutaction}{\mt{\view[\numoutact\leq\outact]}}
+\newcommand{\viewmaxoutaction}{\mt{\view[\outact\leq\numoutact]}}
+\newcommand{\viewspanoutaction}{\mt{\view[\numoutactb\leq\outact\leq\numoutact]}}
+\newcommand{\viewstrongoutactident}{\mt{\view[\outacts(\state)_=]}}
+\newcommand{\viewweakoutactident}{\mt{\view[\outacts(\state)_\approx]}}
+\newcommand{\viewhasinaction}{\mt{\view[\exists\inact]}}
+\newcommand{\viewmininaction}{\mt{\view[\numinact\leq\inact]}}
+\newcommand{\viewmaxinaction}{\mt{\view[\inact\leq\numinact]}}
+\newcommand{\viewspaninaction}{\mt{\view[\numinactb\leq\inact\leq\numinact]}}
+\newcommand{\viewstronginactident}{\mt{\view[\inacts(\state)_=]}}
+\newcommand{\viewweakinactident}{\mt{\view[\inacts(\state)_\approx]}}
+\newcommand{\viewparamvalueseq}{\mt{\view[\param = \paramval]}}
+\newcommand{\viewparamvaluesneq}{\mt{\view[\param \neq \paramval]}}
+\newcommand{\viewparamdnf}{\mt{\view[ParDNF]}}
+\newcommand{\viewparamcnf}{\mt{\view[ParCNF]}}
+\newcommand{\viewparamvalident}{\mt{\view[\parameval(\state,\param)]}}
 
-\newcommand{\viewatomicprops}{\mt{\view{\gfctatomicprops}}}
-\newcommand{\viewinitstates}{\mt{\view{\gfctinitstates}}}
-\newcommand{\viewhasoutaction}{\mt{\view{\gfcthasoutaction}}}
-\newcommand{\viewminoutaction}{\mt{\view{\gfctminoutaction}}}
-\newcommand{\viewmaxoutaction}{\mt{\view{\gfctmaxoutaction}}}
-\newcommand{\viewspanoutaction}{\mt{\view{\gfctspanoutaction}}}
-\newcommand{\viewstrongoutactident}{\mt{\view{\gfctstrongoutactident}}}
-\newcommand{\viewweakoutactident}{\mt{\view{\gfctweakoutactident}}}
-\newcommand{\viewhasinaction}{\mt{\view{\gfcthasinaction}}}
-\newcommand{\viewmininaction}{\mt{\view{\gfctmininaction}}}
-\newcommand{\viewmaxinaction}{\mt{\view{\gfctmaxinaction}}}
-\newcommand{\viewspaninaction}{\mt{\view{\gfctspaninaction}}}
-\newcommand{\viewstronginactident}{\mt{\view{\gfctstronginactident}}}
-\newcommand{\viewweakinactident}{\mt{\view{\gfctweakinactident}}}
-\newcommand{\viewparamvalueseq}{\mt{\view{\gfctparamvalueseq}}}
-\newcommand{\viewparamvaluesneq}{\mt{\view{\gfctparamvaluesneq}}}
-\newcommand{\viewparamdnf}{\mt{\view{\gfctparamdnf}}}
-\newcommand{\viewparamcnf}{\mt{\view{\gfctparamcnf}}}
-\newcommand{\viewparamvalident}{\mt{\view{\gfctparamvalident}}}
+
+%\newcommand{\viewatomicprops}{\mt{\view{\gfctatomicprops}}}
+%\newcommand{\viewinitstates}{\mt{\view{\gfctinitstates}}}
+%\newcommand{\viewhasoutaction}{\mt{\view{\gfcthasoutaction}}}
+%\newcommand{\viewminoutaction}{\mt{\view{\gfctminoutaction}}}
+%\newcommand{\viewmaxoutaction}{\mt{\view{\gfctmaxoutaction}}}
+%\newcommand{\viewspanoutaction}{\mt{\view{\gfctspanoutaction}}}
+%\newcommand{\viewstrongoutactident}{\mt{\view{\gfctstrongoutactident}}}
+%\newcommand{\viewweakoutactident}{\mt{\view{\gfctweakoutactident}}}
+%\newcommand{\viewhasinaction}{\mt{\view{\gfcthasinaction}}}
+%\newcommand{\viewmininaction}{\mt{\view{\gfctmininaction}}}
+%\newcommand{\viewmaxinaction}{\mt{\view{\gfctmaxinaction}}}
+%\newcommand{\viewspaninaction}{\mt{\view{\gfctspaninaction}}}
+%\newcommand{\viewstronginactident}{\mt{\view{\gfctstronginactident}}}
+%\newcommand{\viewweakinactident}{\mt{\view{\gfctweakinactident}}}
+%\newcommand{\viewparamvalueseq}{\mt{\view{\gfctparamvalueseq}}}
+%\newcommand{\viewparamvaluesneq}{\mt{\view{\gfctparamvaluesneq}}}
+%\newcommand{\viewparamdnf}{\mt{\view{\gfctparamdnf}}}
+%\newcommand{\viewparamcnf}{\mt{\view{\gfctparamcnf}}}
+%\newcommand{\viewparamvalident}{\mt{\view{\gfctparamvalident}}}
 
 %actions
 \newcommand{\numoutact}{\mt{n}}
