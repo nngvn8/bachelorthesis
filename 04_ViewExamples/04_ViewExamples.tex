@@ -12,7 +12,7 @@ When considering \viewsN we only want into account those that utilize properties
 The \emph{Atomic Propositions \viewNC} groups all states to a new state that have the same set of atomic propositions.
 
 \begin{definition}	
-	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN. The view \viewatomicprops is defined by its grouping function \gfctatomicprops \grpfctN with $\gfctatomicprops : \states \to \imggrp, {\state}\mapsto{\labelingfct(\state)}$.
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN. The view \viewatomicprops is defined by its grouping function \gfctatomicprops \grpfctN with $\gfctatomicprops : \states \to \imggrp, {\state}\mapsto{\labelingfct(\state)}$.
 \end{definition}
 
 The grouping function is exactly the labeling function i.e. for all $\state \in \states$ it is $\gfctatomicprops(\state) = \labelingfct(\state)$. So it is $\gfctatomicprops(\state_1) = \gfctatomicprops(\state_2) \iff \labelingfct(\state_1) = \labelingfct(\state_2)$. According to Definition \ref{def:eqrelview} for $\smstate \in \states$ it is $\eqclassv{\smstate} = \{\state \in \states \mid \labelingfct(\state) = \labelingfct(\smstate)\}$.
@@ -28,7 +28,7 @@ By this we obtain the \viewN $\viewatomicprops$ for a given \chosengraphtypeN \c
 The \emph{Initial State \viewNC}  groups all initial states into one single state. All other states are left untouched.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN. The view \viewinitstates is defined by its grouping function \gfctinitstates \grpfctN with $\gfctinitstates : \states \to \imggrp$ with 
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN. The view \viewinitstates is defined by its grouping function \gfctinitstates \grpfctN with $\gfctinitstates : \states \to \imggrp$ with 
 	
 	\[
 	\state \mapsto
@@ -59,7 +59,7 @@ The \emph{OutAction View} groups states that share some property regarding their
 The most obvious variant to group states is to group states that \emph{have} a given outgoing action. 
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN and $\action \in \actions$. The view \viewhasoutaction is defined by its \grpfctN $\gfcthasoutaction : \states \to \imggrp$ with 
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $\action \in \actions$. The view \viewhasoutaction is defined by its \grpfctN $\gfcthasoutaction : \states \to \imggrp$ with 
 	
 	\[
 	\state \mapsto
@@ -95,7 +95,7 @@ Since actions are a very important part of \chosengraphtypesN as well as of its 
 For example we could require that a given action has to be outgoing a minimum amount of times. 
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN and $\action \in \actions$. The view \viewminoutaction is defined by its \grpfctN $\gfctminoutaction : \states \to \arbset$ with
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $\action \in \actions$. The view \viewminoutaction is defined by its \grpfctN $\gfctminoutaction : \states \to \arbset$ with
 	
 	\[
 	\state \mapsto
@@ -134,7 +134,7 @@ By this we obtain the \viewN $\viewminoutaction$ for a given \chosengraphtypeN \
 In a similar fashion we define view that groups states where at most a certain number of times a given action is outgoing. 
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN and $\action \in \actions$. The view \viewmaxoutaction is defined by its \grpfctN $\gfctmaxoutaction : \states \to \arbset$ with
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $\action \in \actions$. The view \viewmaxoutaction is defined by its \grpfctN $\gfctmaxoutaction : \states \to \arbset$ with
 	
 	\[
 	\state \mapsto
@@ -157,7 +157,7 @@ In a similar fashion we define view that groups states where at most a certain n
 Since we already defined \grpfctsN and hence views for a required minimal and maximal amount of times an action has to be outgoing it is now easily possible to define a view that groups states where the amount of outgoing actions is at least \numoutact and at most \numoutactb. 
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN and $\action \in \actions$. The view 
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $\action \in \actions$. The view 
 	\viewspanoutaction is defined by its \grpfctN $\gfctspanoutaction : \states \to \arbset$ with
 	
 	\[
@@ -200,7 +200,7 @@ The \viewsN above can be combined with \parllcompN. The thereby obtained \viewN 
 Instead of making requirements about states and group them based on whether they meet these requirements it also possible to group states that are very similar or even identical in regard to their outaction. We consider this idea with the \emph{\outactident \viewNC} in two variants: \outactidentstrong and \outactidentweak (idententiy). Firstly we will consider the variant of strong identity.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN and $\action \in \actions$. The \viewN \viewstrongoutactident is defined by its \grpfctN $\gfctstrongoutactident : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $\action \in \actions$. The \viewN \viewstrongoutactident is defined by its \grpfctN $\gfctstrongoutactident : \states \to \imggrp$ with
 	\[
 	\state \mapsto	
 	\{(\action, \numoutact) \mid \action \in \actions, \numoutact \text{ is the number of times that \action is outgoing from } \state\}
@@ -216,7 +216,7 @@ According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in 
 As mentioned earlier a \outactidentweak variant of the \outactident \viewN is also conceivable.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN and $\action \in \actions$. The \viewN \viewweakoutactident is defined by its \grpfctN $\gfctweakoutactident : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $\action \in \actions$. The \viewN \viewweakoutactident is defined by its \grpfctN $\gfctweakoutactident : \states \to \imggrp$ with
 	\[
 	\state \mapsto \{\action \in \actions \mid \exists \state' \in \states : (\state, \action, \state') \in \trans\} 	
 	\]
@@ -236,7 +236,7 @@ According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in 
 Analogously to Outgoing Actions views of utilizing ingoing actions are feasable. Since there is no difference apart from the definitions itself, we only provide the definitions.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN and $\action \in \actions$. The view \viewhasinaction is defined by its \grpfctN $\gfcthasinaction : \states \to \imggrp$ with 
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $\action \in \actions$. The view \viewhasinaction is defined by its \grpfctN $\gfcthasinaction : \states \to \imggrp$ with 
 	
 	\[
 	\state \mapsto
@@ -252,7 +252,7 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN and $\action \in \actions$. The view \viewmininaction is defined by its \grpfctN $\gfctmininaction : \states \to \arbset$ with
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $\action \in \actions$. The view \viewmininaction is defined by its \grpfctN $\gfctmininaction : \states \to \arbset$ with
 	
 	\[
 	\state \mapsto
@@ -271,7 +271,7 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 \end{definition}
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN and $\action \in \actions$. The view \viewmaxinaction is defined by its \grpfctN $\gfctmaxinaction : \states \to \arbset$ with
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $\action \in \actions$. The view \viewmaxinaction is defined by its \grpfctN $\gfctmaxinaction : \states \to \arbset$ with
 	
 	\[
 	\state \mapsto
@@ -289,7 +289,7 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 \end{definition}
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN and $\action \in \actions$. The view 
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $\action \in \actions$. The view 
 	\viewspaninaction is defined by its \grpfctN $\gfctspaninaction : \states \to \arbset$ with
 	
 	\[
@@ -304,7 +304,7 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 \end{definition}
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN and $\action \in \actions$. The \viewN \viewstronginactident is defined by its \grpfctN $\gfctstronginactident : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $\action \in \actions$. The \viewN \viewstronginactident is defined by its \grpfctN $\gfctstronginactident : \states \to \imggrp$ with
 	\[
 	\state \mapsto	
 	\{(\action, \numinact) \mid \action \in \actions, \numinact \text{ is the number of times that \action is ingoing from } \state\}
@@ -313,7 +313,7 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 \end{definition}
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN and $\action \in \actions$. The \viewN \viewweakoutactident is defined by its \grpfctN $\gfctweakoutactident : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $\action \in \actions$. The \viewN \viewweakoutactident is defined by its \grpfctN $\gfctweakoutactident : \states \to \imggrp$ with
 	\[
 	\state \mapsto \{\action \in \actions \mid \exists \state' \in \states : (\state, \action, \state') \in \trans\} 	
 	\]
@@ -323,9 +323,9 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 \subsubsection{Parameters}
 The concept of parameters is not part of the definitions of neither \chosengraphtypesN, MCs or MDPs. Even though, it is of great importance in practical applications. Parameters are used to represent states (in more detail). 
 
-For example a MDP could be used to model a computer program with human interaction. Every state of the MDP refers an overall state of the program during execution time. In this state of the program, its variables will have specific values. We may want to retain the information about the variable's values of the program instead of only assigning a state $\state \in \states$ that refers to the state of the program. Variables and its current values are not only relevant to computer programs but also other systems. Many of those other systems rely on some kind of global state during execution, which can be expressed with variables and values assigned to them. Since there exists no explicit component to retain this information the notion of parameters is used to store it.
+For example an \mdpN could be used to model a computer program with human interaction. Every state of the MDP refers an overall state of the program during execution time. In this state of the program, its variables will have specific values. We may want to retain the information about the variable's values of the program instead of only assigning a state $\state \in \states$ that refers to the state of the program. Variables and its current values are not only relevant to computer programs but also other systems. Many of those other systems rely on some kind of global state during execution, which can be expressed with variables and values assigned to them. Since there exists no explicit component to retain this information the notion of parameters is used to store it.
 
-\redcomment{OLD: Since transitions systems MCs and MDPs in practice are used to model, analyze and check real world systems it is very practical to not only name states but also describe the properties of the state in more detail. For a basic notion parameters are to be imagined as a set of variables that may have different values in different states thereby describing the characteristics of the state more thoroughly. \purpcomment{ADDED TO OLD: In practice most often they arise naturally for example as variables of a computer program that is to be modeled with a MDP.}} 
+\redcomment{OLD: Since transitions systems MCs and MDPs in practice are used to model, analyze and check real world systems it is very practical to not only name states but also describe the properties of the state in more detail. For a basic notion parameters are to be imagined as a set of variables that may have different values in different states thereby describing the characteristics of the state more thoroughly. \purpcomment{ADDED TO OLD: In practice most often they arise naturally for example as variables of a computer program that is to be modeled with an \mdpN.}} 
 
 Because of the vast importance in practical applications we will consider some \viewsN that utilize them. To do so and being able to describe them formally we define and formalize the notion of parameters by considering them as a subset of the atomic propositions \atomicprops that is assigned a value by a function.
 
@@ -347,7 +347,7 @@ The most apparent idea for a \viewN utilizing parameters is to group states that
 \begin{definition}
 	Let
 	\begin{itemize}
-		\item $\chgph = \chgphtuple$ be a \chosengraphtypeN,
+		\item $\chgph = \chgphtuple$ be \chosengraphtypeN,
 		\item $\param \in \params \subseteq \atomicprops$ and 
 		\item $\parameval(\state, \param) = \paramval$ where $\state \in \states$.		
 	\end{itemize} 
@@ -381,7 +381,7 @@ Analogously a view that requires inequality instead of equality is feasible.
 \begin{definition}
 	Let
 	\begin{itemize}
-		\item $\chgph = \chgphtuple$ be a \chosengraphtypeN,
+		\item $\chgph = \chgphtuple$ be \chosengraphtypeN,
 		\item $\param \in \params \subseteq \atomicprops$ and 
 		\item $\parameval(\state, \param) \neq \paramval$ where $\state \in \states$.		
 	\end{itemize} 
@@ -397,12 +397,66 @@ Analogously a view that requires inequality instead of equality is feasible.
 \end{definition}
 
 If states are to be grouped with the requirement of several parameters equaling or not equaling specified values this can be achieved by using \parllcompN. 
-\redcomment{Insert disjunctive normal form with text, cnf without}
 
-The view above reduces the \chosengraphtypeN in a very precise but also manual manner, because it not only dictates the parameter but also its value. A more general approach is to stipulate only the parameter but not its value. This way states will be grouped that have the same value for that parameter with no regard to the actual value of that parameter. This idea could be achieved with a view based on the \grpfctN $\grpfct_{\gfctparamvalueseqopt[\paramval_1] \pll \dots \pll \gfctparamvalueseqopt[\paramval_n]}$ with $\redcomment{\parameval(\states, \param)} = \{\paramval_1, \dots, \paramval_n\}$ and $|\parameval(\states,\param)| = n$. This grouping function just groups on every possible value for the parameter \param. Since this is \redcomment{not very practical} we define a view that achieves this result in a more direct and more efficient way.
+To allow even more flexibility a view can be used that also allows a combination of requirements on parameters in a disjunctive manner. To extend this idea to its full potential we will define a \viewN that allows requirements using a disjunctive normal formal (DNF). To formalize this view more efficiently we will write $\paramstate[,kl] = \paramval$ short for $\parameval(\state, \param_{kl}) = \paramval$ where $k,l \in \natnums$ and $x_{kl} \in \params$. In the same sense we write $\paramstate[,kl] \neq \paramval$. \redcomment{It may be that $x_{ab} = x_{mn}$ for $a,b,m,n \in \natnums$ NOT HAPPY WITH THIS}. We define the symbol \eqorneq to be an element of the set $\{=,\neq\}$. That is to say, whenever it is used each time written it is a representative for either the symbol $=$ or $\neq$. It allows to write one symbol whenever $=$ and $\neq$ could or should be possible. Moreover for this context we consider $(\paramstate[,kl] = \paramval)$ as a literal and $(\paramstate[,kl] \neq \paramval)$ as its negation. We write $(\paramstate[,kl] \eqorneq \paramval)$ for a literal that could be negated or not negated.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN. The view \viewparamvalident is defined by its \grpfctN $\gfctparamvalident : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and 
+	\[
+	d(s) = ((\paramstate[,11] \eqorneq \paramval_{11}) \land \dots \land (\paramstate[,1l_1] \eqorneq \paramval_{1l_1})) \lor \dots \lor ((\paramstate[,k1] \eqorneq \paramval_{k1}) \land \dots \land (\paramstate[,kl_k]  \eqorneq \paramval_{kl_k}))
+	\]
+	proposition logical formulae in disjunctive normal form where
+	\begin{itemize}
+		\item $\{\param_{kl_i} \mid k \in \natnums, l_i \in \{l_1, \dots l_k\} \subseteq \natnums\} \subseteq \params$ and $\paramstate[,kl_i] = \parameval(\state, \param_{kl_i})$
+		\item $\{\paramval_{kl_i} \mid k \in \natnums, l_i \in \{l_1, \dots l_k\} \subseteq \natnums\} \subseteq \redcomment{\parameval(\states,\params)}$
+	\end{itemize}
+	The \viewN \viewparamdnf is defined by its \grpfctN $\gfctparamdnf : \states \to \imggrp$ where
+	\[
+	\state \mapsto
+	\begin{cases}
+		true, &\text{if } d(s) \text{ is true}\\
+		\state, 	&\text{otherwise}
+	\end{cases}
+	\]
+	
+	where $\imggrp := \{true, false\}$.
+\end{definition}
+
+
+The DNF allows us to specify a requirement in disjunctive normal form about parameters. States are mapped to the same value depending on whether or not they meet this requirement.
+
+\redcomment{DISCUSSION OF EQUALITY, EQ CLASSES AND RESULTING STATES MISSING}
+
+Analogously a view based on a conjunctive normal formal can be defined that may be more convenient, depending on the query.
+
+\begin{definition}
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and 
+	\[
+	c(s) = ((\paramstate[,11] \eqorneq \paramval_{11}) \lor \dots \lor (\paramstate[,1l_1] \eqorneq \paramval_{1l_1})) \land \dots \land ((\paramstate[,k1] \eqorneq \paramval_{k1}) \lor \dots \lor (\paramstate[,kl_k]  \eqorneq \paramval_{kl_k}))
+	\]
+	proposition logical formulae in disjunctive normal form where
+	\begin{itemize}
+		\item $\{\param_{kl_i} \mid k \in \natnums, l_i \in \{l_1, \dots l_k\} \subseteq \natnums\} \subseteq \params$ and $\paramstate[,kl_i] = \parameval(\state, \param_{kl_i})$
+		\item $\{\paramval_{kl_i} \mid k \in \natnums, l_i \in \{l_1, \dots l_k\} \subseteq \natnums\} \subseteq \redcomment{\parameval(\states,\params)}$
+	\end{itemize}
+	The \viewN \viewparamcnf is defined by its \grpfctN $\gfctparamcnf : \states \to \imggrp$ where
+	\[
+	\state \mapsto
+	\begin{cases}
+		true, &\text{if } c(s) \text{ is true}\\
+		\state, 	&\text{otherwise}
+	\end{cases}
+	\]
+	
+	where $\imggrp := \{true, false\}$.
+\end{definition}
+
+The only difference from the \viewN \viewparamcnf to the \viewN \viewparamdnf is whether the respective formulae is in conjunctive or disjunctive normal form. Since each formulae in conjunctive normal form can tan be transformed to a formulae in disjunctive normal form and vice verse neither on of the \viewsN can perform an action the other can not. Hence there is no difference in expressivity, but there may be one in size. Therefore both views have been implemented and formalized.
+
+The views discussed before reduce the \chosengraphtypeN in a very precise but also manual manner, because it not only dictates the parameter but also its value. A more general approach is to stipulate only the parameter but not its value. This way states will be grouped that have the same value for that parameter with no regard to the actual value of that parameter. This idea could be achieved with a view based on the \grpfctN $\grpfct_{\gfctparamvalueseqopt[\paramval_1] \pll \dots \pll \gfctparamvalueseqopt[\paramval_n]}$ with $\redcomment{\parameval(\states, \param)} = \{\paramval_1, \dots, \paramval_n\}$ and $|\parameval(\states,\param)| = n$. This grouping function just groups on every possible value for the parameter \param. Since this is \redcomment{not very practical} we define a view that achieves this result in a more direct and more efficient way.
+
+\begin{definition}
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN. The view \viewparamvalident is defined by its \grpfctN $\gfctparamvalident : \states \to \imggrp$ with
 	\[
 	\state \mapsto \parameval(\state,\param)
 	\]
@@ -421,5 +475,5 @@ According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in 
 
 
 
-\subsection{Comparison of the Examples}
+\section{Comparison of the Examples}
 \end{document} 

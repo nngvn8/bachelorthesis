@@ -13,7 +13,7 @@ In the preliminaries transition systems and Markov Chains were listed as simpler
 The conceptional idea of a \viewN is to group states by some criteria and structure the rest of the system accordingly. To formalize the grouping we define a dedicated function.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN an \arbset be and arbitrary set. We call any function $F : \states \to \imggrp$ a \emph{\grpfctN}.
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN an \arbset be and arbitrary set. We call any function $F : \states \to \imggrp$ a \emph{\grpfctN}.
 	
 	\label{def:grpfct}
 \end{definition}
@@ -36,7 +36,7 @@ The definition of a \viewN is dependent on a given MDP and a \grpfctN \grpfct. W
 
 \begin{definition}
 	
-	Let \chgph = \chgphtuple be a \chosengraphtypeN and \grpfct a grouping function. A \emph{\viewN} \view{\viewppty} is a \chosengraphtypeN $\mdp' = \chgphtupledist$ \redcomment{that is derived from \mdp with the \grpfctN \grpfct} where
+	Let \chgph = \chgphtuple be \chosengraphtypeN and \grpfct a grouping function. A \emph{\viewN} \view{\viewppty} is \chosengraphtypeN $\mdp' = \chgphtupledist$ \redcomment{that is derived from \mdp with the \grpfctN \grpfct} where
 	
 	\begin{itemize}
 		\item $\states' = \{ \eqclass{\state}{\eqrelview} \mid \state \in \states \}$
@@ -44,7 +44,7 @@ The definition of a \viewN is dependent on a given MDP and a \grpfctN \grpfct. W
 		
 		\item $\actions' = \actions$
 		
-		\item $\trans' = \{ (\eqclassv{\state_1}, \action, \eqclassv{\state_2}) \mid \exists \state_1 \in \eqclassv{\state_1} \exists \state_2 \in \eqclassv{\state_2} : (\eqclassv{\state_1}, \action, \eqclassv{\state_2}) \in \trans\}$%\subseteq \states' \times \actions' \times \states'$
+		\redcomment{\item $\trans' = \{ (\eqclassv{\state_1}, \action, \eqclassv{\state_2}) \mid \exists \state_1 \in \eqclassv{\state_1} \exists \state_2 \in \eqclassv{\state_2} : (\eqclassv{\state_1}, \action, \eqclassv{\state_2}) \in \trans\}$}%\subseteq \states' \times \actions' \times \states'$
 		
 		\item $\init' = \{\eqclassv{\state'} \in \states' \mid \exists \state \in \eqclassv{\state'} : \state \in \init \}$
 		
@@ -67,7 +67,7 @@ Note that the definition is in a most general form in the sense that if in a \vi
 \end{itemize}
 
 \subsection{Composition of Views}
-In essence views are simplification generated from a \chosengraphtypeN. It seems rather obvious that the composition of views is a very practical feature. Therefore in this chapter we will introduce, formalize and discuss different notions of compositions. All variants will ensure that the effect caused by each partaking views also takes effect in the composed view. Moreover it is to be generated in a way that the effect of each individual view can be reverted from the composed one. There may be restrictions in the order of removal.
+In essence views are simplification generated from \chosengraphtypeN. It seems rather obvious that the composition of views is a very practical feature. Therefore in this chapter we will introduce, formalize and discuss different notions of compositions. All variants will ensure that the effect caused by each partaking views also takes effect in the composed view. Moreover it is to be generated in a way that the effect of each individual view can be reverted from the composed one. There may be restrictions in the order of removal.
 
 \subsubsection{\parllcompNCC}
 One of the most uncomplicated ideas is to group states that match in the function value of all given \grpfctN s. This idea is parallel in the sense that a set of \grpfctN is combined to a new \grpfctN in one single step.
@@ -80,6 +80,9 @@ A view of such a grouping function is as usual created in in accordance with Def
 Since we define a new grouping function, the given ones and its views are retained. \\
 The operator \pll used in the definition is derived from the operator used in electric circuits, when the respective elements are connected in parallel. \\
 If we want to speak about this grouping function in a general way, where it is only of importance that we refer to this type of composition and the given \grpfctN s are of no importance, we will denote a \emph{\parllcompN \grpfctN} with $\grpfct_{\pll}$. \\
+
+\redcomment{Other variants missing if existent}
+\redcomment{Subsetapplication missing}
 
 
 \end{document}

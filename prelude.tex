@@ -11,6 +11,7 @@
 \usepackage{bbold}
 \usepackage{amsthm}
 \usepackage{amsmath}
+\usepackage{amssymb} % triangleq
 \usepackage[dvipsnames]{xcolor}
 \usepackage{standalone}
 \usepackage{tikz}
@@ -68,7 +69,7 @@
 %\newcommand{\chosengraphtypesN}{\nm{transition systems}}
 \newcommand{\chosengraphtypeNCC}{\nm{MDP}}
 \newcommand{\chosengraphtypeNC}{\nm{MDP}}
-\newcommand{\chosengraphtypeN}{\nm{MDP}}
+\newcommand{\chosengraphtypeN}{\nm{an MDP}}
 \newcommand{\chosengraphtypesNCC}{\nm{MDPs}}
 \newcommand{\chosengraphtypesNC}{\nm{MDPs}}
 \newcommand{\chosengraphtypesN}{\nm{MDPs}}
@@ -109,6 +110,7 @@
 \newcommand{\outacts}{\mt{\overrightarrow{\actions}}}
 \newcommand{\inact}{\mt{\overleftarrow{\action}}}
 \newcommand{\inacts}{\mt{\overleftarrow{\actions(\state)}}}
+
 \newcommand{\gfctatomicprops}{\mt{{\viewppty_\atomicprops}}}
 \newcommand{\gfctinitstates}{\mt{{\viewppty_\initstates}}}
 \newcommand{\gfcthasoutaction}{\mt{{\viewppty_{\exists\outact}}}}
@@ -125,6 +127,8 @@
 \newcommand{\gfctweakinactident}{\mt{{\viewppty_{\intacts(\state)_\approx}}}}
 \newcommand{\gfctparamvalueseq}{\mt{\viewppty_{\param = \paramval}}}
 \newcommand{\gfctparamvaluesneq}{\mt{\viewppty_{\param \neq \paramval}}}
+\newcommand{\gfctparamdnf}{\mt{\viewppty_{ParDNF}}}
+\newcommand{\gfctparamcnf}{\mt{\viewppty_{ParCNF}}}
 \newcommand{\gfctparamvalueseqopt}[1][\paramval]{\mt{\viewppty_{\param = #1}}}
 \newcommand{\gfctparamvalident}{\mt{\viewppty_{\parameval(\state,\param)}}}
 
@@ -145,6 +149,8 @@
 \newcommand{\viewweakinactident}{\mt{\view{\gfctweakinactident}}}
 \newcommand{\viewparamvalueseq}{\mt{\view{\gfctparamvalueseq}}}
 \newcommand{\viewparamvaluesneq}{\mt{\view{\gfctparamvaluesneq}}}
+\newcommand{\viewparamdnf}{\mt{\view{\gfctparamdnf}}}
+\newcommand{\viewparamcnf}{\mt{\view{\gfctparamcnf}}}
 \newcommand{\viewparamvalident}{\mt{\view{\gfctparamvalident}}}
 
 %%OutAct
@@ -163,10 +169,12 @@
 %%Parameters
 \newcommand{\params}{\mt{Par}}
 \newcommand{\param}{\mt{x}}
+\newcommand{\paramstate}[1][]{\mt{\param_{\state#1}}}
 \newcommand{\paramval}{\mt{a}}
 \newcommand{\parameval}{\mt{ParEval}}
 \newcommand{\paramevalimg}{\mt{\arbset}}
 \newcommand{\someparam}{\mt{\tilde{x}}}
+\newcommand{\eqorneq}{\mt{\;\doteqdot\;}}
 
 % all Systems
 \newcommand{\chgph}{\mt{\mdp}}
