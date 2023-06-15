@@ -64,7 +64,7 @@ The most obvious variant to group states is to group states that \emph{have} a g
 	\state \mapsto
 	\begin{cases}
 		\action,				& \text{if } \exists \state' \in \states: (\state, \action, \state') \in \trans \\
-		\state,          	& \text{otherwise}
+		\remelem,          	& \text{otherwise}
 	\end{cases}
 	\]
 	
@@ -100,7 +100,7 @@ For example we could require that a given action has to be outgoing a minimum am
 	\state \mapsto
 	\begin{cases}
 		\action,				& \text{if } \exists \state_1, \dots, \state_\numoutact \in \states:  \predminoutact\\
-		\state,          	& \text{otherwise}
+		\remelem,          	& \text{otherwise}
 	\end{cases}
 	\]
 	
@@ -139,11 +139,11 @@ In a similar fashion we define view that groups states where at most a certain n
 	\state \mapsto
 	\begin{cases}
 		\action,				& \text{if } \forall \state_1, \dots, \state_{\numoutact+1} \in \states: \predmaxoutact \\
-		\state,          	& \text{otherwise}
+		\remelem,          	& \text{otherwise}
 	\end{cases}
 	\]
 	
-	where $\imggrp := \actions \cup \states$, $\numoutact \in \natnums$ is the maximal number of times a transition with action \action may be outgoing and 
+	where $\imggrp := \actions \cup \remset$, $\numoutact \in \natnums$ is the maximal number of times a transition with action \action may be outgoing and 
 	\[
 	\predmaxoutact := ((\state, \action, \state_1), \dots, (\state, \action, \state_{\numoutact+1}) \in \trans) \implies \bigvee_{\mathclap{\substack{i,j \in \{1,\dots, \numoutact+1\} \\ i < j}}} \state_i = \state_j
 	\]
@@ -163,11 +163,11 @@ Since we already defined \grpfctsN and hence views for a required minimal and ma
 	\state \mapsto
 	\begin{cases}
 		\action,				& \text{if } \exists \state_1, \dots, \state_\numoutactb \in \states: \predminoutact[\numoutactb] \\ &\text{and } \forall \state_1, \dots, \state_{\numoutact+1} \in \states: \predmaxoutact \\
-		\state,          	& \text{otherwise}
+		\remelem,          	& \text{otherwise}
 	\end{cases}
 	\]
 	
-	where $\imggrp := \actions \cup \states$ and $\numoutactb, \numoutact \in \natnums$ are the minimal and maximal number of transitions with action \action in order for state to be grouped. The predicates \predminoutact and \predmaxoutact are the predicates from Definition \ref{def:minoutaction} and Definition \ref{def:viewmaxoutaction} respectively.
+	where $\imggrp := \actions \cup \remset$ and $\numoutactb, \numoutact \in \natnums$ are the minimal and maximal number of transitions with action \action in order for state to be grouped. The predicates \predminoutact and \predmaxoutact are the predicates from Definition \ref{def:minoutaction} and Definition \ref{def:viewmaxoutaction} respectively.
 \end{definition}
 
 We already know that for a given $\state \in \states$ the expressions $\exists \state_1, \dots, \state_\numoutact \in \states: \predminoutact$ and $\forall \state_1, \dots, \state_{\numoutactb+1} \in \states: \predmaxoutact[\numoutactb]$ from Definition \ref{def:minoutaction} and Definition \ref{def:viewmaxoutaction} require that \state has minimal and maximal amount of outgoing transitions with an action \action respectively. Hence the conjunction will be true for states where the amount of outgoing transitions with action \action is element of the set $\{\numoutactb, \numoutact+1, \dots, \numoutact-1, \numoutact\}$. We will write for this that the number of outgoing actions is \emph{in the span}.
@@ -241,11 +241,11 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 	\state \mapsto
 	\begin{cases}
 		\action,				& \text{if } \exists \state' \in \states: (\state', \action, \state) \in \trans \\
-		\state,          	& \text{otherwise}
+		\remelem,          	& \text{otherwise}
 	\end{cases}
 	\]
 	
-	and $\imggrp := \actions \cup \states$.	
+	and $\imggrp := \actions \cup \remset$.	
 	\label{def:mininaction}
 \end{definition}	
 
@@ -257,11 +257,11 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 	\state \mapsto
 	\begin{cases}
 		\action,				& \text{if } \exists \state_1, \dots, \state_\numinact \in \states:  \predmininact\\
-		\state,          	& \text{otherwise}
+		\remelem,          	& \text{otherwise}
 	\end{cases}
 	\]
 	
-	where $\imggrp := \actions \cup \states$, $\numinact \in \natnums$ is the minimum amount of times a transition with action \action has to be ingoing in order to be grouped with the other states and
+	where $\imggrp := \actions \cup \remset$, $\numinact \in \natnums$ is the minimum amount of times a transition with action \action has to be ingoing in order to be grouped with the other states and
 	\[
 	\predmininact := ((\state_1, \action, \state), \dots, (\state_\numinact, \action, \state) \in \trans) \land |\{\state_1, \dots, \state_\numinact\}| = \numinact
 	\]
@@ -276,11 +276,11 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 	\state \mapsto
 	\begin{cases}
 		\action,				& \text{if } \forall \state_1, \dots, \state_{\numinact+1} \in \states: \predmaxinact \\
-		\state,          	& \text{otherwise}
+		\remelem,          	& \text{otherwise}
 	\end{cases}
 	\]
 	
-	where $\imggrp := \actions \cup \states$, $\numinact \in \natnums$ is the maximal number of times a transition with action \action may be ingoing and 
+	where $\imggrp := \actions \cup \remset$, $\numinact \in \natnums$ is the maximal number of times a transition with action \action may be ingoing and 
 	\[
 	\predmaxinact := ((\state_1, \action, \state), \dots, (\state_{\numinact+1}, \action, \state) \in \trans) \implies \bigvee_{\mathclap{\substack{i,j \in \{1,\dots, \numinact+1\} \\ i < j}}} \state_i = \state_j
 	\]
@@ -295,11 +295,11 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 	\state \mapsto
 	\begin{cases}
 		\action,				& \text{if } \exists \state_1, \dots, \state_\numinactb \in \states: \predmininact[\numinactb] \\ &\text{and } \forall \state_1, \dots, \state_{\numinact+1} \in \states: \predmaxinact \\
-		\state,          	& \text{otherwise}
+		\remelem,          	& \text{otherwise}
 	\end{cases}
 	\]
 	
-	where $\imggrp := \actions \cup \states$ and $\numinactb, \numinact \in \natnums$ are the minimal and maximal number of transitions with action \action in order for state to be grouped. The predicates \predmininact and \predmaxinact are the predicates from Definition \ref{def:mininaction} and Definition \ref{def:viewmaxinaction} respectively.
+	where $\imggrp := \actions \cup \remset$ and $\numinactb, \numinact \in \natnums$ are the minimal and maximal number of transitions with action \action in order for state to be grouped. The predicates \predmininact and \predmaxinact are the predicates from Definition \ref{def:mininaction} and Definition \ref{def:viewmaxinaction} respectively.
 \end{definition}
 
 \begin{definition}
@@ -355,10 +355,10 @@ The most apparent idea for a \viewN utilizing parameters is to group states that
 	\state \mapsto
 	\begin{cases}
 		\paramval, &\text{if } \parameval(\state, \param) = \paramval\\
-		\state, 	&\text{otherwise}
+		\remelem, &\text{otherwise}
 	\end{cases}
 	\]
-	where $\imggrp := \states \cup \{a\}$.
+	where $\imggrp := \remset \cup \{a\}$.
 \end{definition}
 
 The view \viewparamvalueseq groups states that share the same value for a given parameter. For $\state_1, \state_2$ it is $\gfctparamvalueseq(\state_1) = \gfctparamvalueseq(\state_2)$ \iffN $\parameval(\state_1, \param) = \parameval(\state_2, \param)$ or $\state_1 = \state_2$. The obtained equivalence classes are
@@ -389,10 +389,10 @@ Analogously a view that requires inequality instead of equality is feasible.
 	\state \mapsto
 	\begin{cases}
 		\paramval, &\text{if } \parameval(\state, \param) \neq \paramval\\
-		\state, 	&\text{otherwise}
+		\remelem, 	&\text{otherwise}
 	\end{cases}
 	\]
-	where $\imggrp := \states \cup \{a\}$.
+	where $\imggrp := \remset \cup \{a\}$.
 \end{definition}
 
 If states are to be grouped with the requirement of several parameters equaling or not equaling specified values this can be achieved by using \parllcompN. 
@@ -414,7 +414,7 @@ To allow even more flexibility a view can be used that also allows a combination
 	\state \mapsto
 	\begin{cases}
 		true, &\text{if } d(s) \text{ is true}\\
-		\state, 	&\text{otherwise}
+		\remelem, 	&\text{otherwise}
 	\end{cases}
 	\]
 	
@@ -443,14 +443,14 @@ Analogously a view based on a conjunctive normal formal can be defined that may 
 	\state \mapsto
 	\begin{cases}
 		true, &\text{if } c(s) \text{ is true}\\
-		\state, 	&\text{otherwise}
+		\remelem, 	&\text{otherwise}
 	\end{cases}
 	\]
 	
 	where $\imggrp := \{true, false\}$.
 \end{definition}
 
-The only difference from the \viewN \viewparamcnf to the \viewN \viewparamdnf is whether the respective formulae is in conjunctive or disjunctive normal form. Since each formulae in conjunctive normal form can tan be transformed to a formulae in disjunctive normal form and vice verse neither on of the \viewsN can perform an action the other can not. Hence there is no difference in expressivity, but there may be one in size. Therefore both views have been implemented and formalized.
+The only difference from the \viewN \viewparamcnf to the \viewN \viewparamdnf is whether the respective formulae is in conjunctive or disjunctive normal form.\redcomment{CITATION} Since each formulae in conjunctive normal form can tan be transformed to a formulae in disjunctive normal form and vice verse neither on of the \viewsN can perform an action the other can not. Hence there is no difference in expressivity, but there may be one in size. Therefore both views have been implemented and formalized. 
 
 The views discussed before reduce the \chosengraphtypeN in a very precise but also manual manner, because it not only dictates the parameter but also its value. A more general approach is to stipulate only the parameter but not its value. This way states will be grouped that have the same value for that parameter with no regard to the actual value of that parameter. This idea could be achieved with a view based on the \grpfctN $\grpfct_{\gfctparamvalueseqopt[\paramval_1] \pll \dots \pll \gfctparamvalueseqopt[\paramval_n]}$ with $\redcomment{\parameval(\states, \param)} = \{\paramval_1, \dots, \paramval_n\}$ and $|\parameval(\states,\param)| = n$. This grouping function just groups on every possible value for the parameter \param. Since this is \redcomment{not very practical} we define a view that achieves this result in a more direct and more efficient way.
 
@@ -491,14 +491,54 @@ Formalizing \viewsN based on cycles requires some formalization of the concept c
 	Let $\chgph = \chgphtuple$ be \chosengraphtypeN. A (simple) \emph{cycle} in \chgph is any sequence \cyclesecfull alternating between states and actions where $n \in \natnums, \{\state_0, \dots, \state_{n-1}\} \subseteq \states$ is a set of distinct states,  $\{\action_0, \dots, \action_{n-1}\} \subseteq \actions$ and for all $i \in \{0, \dots, n-1\}$ it is $(\state_i,\action_i, \state_{i+1 \text{ mod }n}) \in \trans$.
 \end{definition}
 
-When the actions in the cycle are of no further importance, we will omit them only writing a sequence of states. In the following let $\cycle = \cyclesecfull$ be a cycle. For conveniences we will write $\state \in \cycle$ if the state is contained in the cycle and $\action \in \cycle$ if the action is contained in in the cycle. \redcomment{only if??} Let $\cycle_1$ and $\cycle_2$ be cycles. $\cycle_1 \cup \cycle_2 := \{\state \in \states \mid \state \in \cycle_1 \text{ or } \state \in \cycle_2\}$.
+When the actions in the cycle are of no further importance, we will omit them only writing a sequence of states. In the following let $\cycle = \cyclesecfull$ be a cycle. For conveniences we will write $\state \in \cycle$ if the state is contained in the cycle \cycle and $\action \in \cycle$ if the action is contained in in the cycle \cycle. \redcomment{only if??} In words we will write a state or action is \emph{on} or \emph{in} the cycle.Let $\cycle_1$ and $\cycle_2$ be cycles. $\cycle_1 \cup \cycle_2 := \{\state \in \states \mid \state \in \cycle_1 \text{ or } \state \in \cycle_2\}$.
+
+\begin{definition}
+	Let \cycle be an cycle in \chgph and \states be the states set of \chgph. The number $n = |\{\state \in \states \mid \state \in \cycle\}|$ is called the \emph{length} of a cycle. 
+\end{definition}
+
+Apart from the formalization of the term cycle and the length of a cycle we will also have to formalize a way to find cycles.
+
+\begin{definition}
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $n \in \natnums$. The function  $\fctfindcycles(\chgph, n)$ is called \emph{cycle finder function} (CFF) It returns a set $\cycleset$ of all cycles in \chgph where for all $\cycle \in \cycleset$ it is $|\{\state \in \states \mid \state \in \cycle\}| \geq n$. That is there are at least $n$ states contained in each cycle. 
+\end{definition}
+
+There exist several cycle finding algorithms in practice. The function $\fctfindcycles(\chgph, n)$ is an abstraction for one of these algorithms being used. The actual implementation relys on the libraries \redcomment{Szwarcfiter and Lauer - $O(V+EC)$ Tiernan - $O(V.constV)$ CITATION!!}
 
 With the formalization done we will introduce some views utilizing the concept cycles. For one we will combine the notion cycle with domain specific knowledge for the other we will consider how and why cycles in MDPs are in general of relevance. We will begin with the latter.  Cycles in general are of interest because they pose the risk of getting stuck in endless loops, when performing actions on the \mdpN. \redcomment{Model checking is one of the most relevant actions on \chosengraphtypesN that are vulnerable to loops. They are performed commonly on them.} Therefore a \viewN that simply finds existing cycles is feasible.
 
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \chosengraphtypeN. Let $\fctfindcycle(\chgph, n)$ be a function that returns a set $\cycleset$ of all cycles in \chgph where for all $\cycle \in \cycleset$ it is $|\{\state \in \states \mid \state \in \cycle\}| \geq n \in \natnums$. That is there are at least $n$ states contained in each cycle.
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $n \in \natnums$. The \viewN \viewhascycle is defined by its \grpfctN $\gfcthascycle : \states \to \imggrp$ where
+	\[
+	\state \mapsto
+	\begin{cases}
+		inCycle, &\text{if } \fctfindcycles(\chgph, n) \neq \emptyset \\
+		\remelem, &\text{otherwise}
+	\end{cases}
+	\]
+	
+	and $\imggrp = \remset \cup \{inCycle\}.$
 \end{definition}
+
+This \viewN groups all states that are contained in cycle with a length of at least $n$. It is to note that the affinity of a state to one or several respective cycles is lost.
+
+\redcomment{DISCUSSION OF EQUALITY, EQ CLASSES AND RESULTING STATES MISSING}
+
+\begin{definition}
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $n \in \natnums$. The \viewN \viewexactcycle is defined by its \grpfctN $\gfctexactcycle : \states \to \imggrp$ where
+	\[
+	\state \mapsto \{\cycle \in \fctfindcycles(\chgph, n) \mid \state \in \cycle\}
+	\]
+	
+	and $\imggrp = \remset \cup \{inCycle\}.$
+\end{definition}
+
+This \viewN groups states that are on the same set of cycles. Thus if $C_1$ and $C_2$ are distinct cycles and $\state_1, \state_2 \in \cycle_1$ and $\state_1 \in \cycle_2$ but $\state_2 \notin \cycle_2$ they are not grouped. It suffices that a state is on one cycle that the other one is not, in order for the states not being grouped. In graphs with many cycles this can lead to little grouping.
+
+\redcomment{DISCUSSION OF EQUALITY, EQ CLASSES AND RESULTING STATES MISSING}
+
+\redcomment{GREEDY APPROACHES (STATE ON SINGLE CYCLE), AND SET APPROACH s -> $C_1 \cup C_2$ ommited because not sure if reasonable}
 
 \subsubsection{Strongly Connected Components}
 \subsection{Utilizing the MDP Resulttable}
@@ -506,5 +546,5 @@ With the formalization done we will introduce some views utilizing the concept c
 
 
 
-\section{Comparison of the Examples}
+
 \end{document} 
