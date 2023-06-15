@@ -15,10 +15,10 @@ The \emph{Atomic Propositions \viewNC} groups all states to a new state that hav
 	Let $\chgph = \chgphtuple$ be a \chosengraphtypeN. The view \viewatomicprops is defined by its grouping function \gfctatomicprops \grpfctN with $\gfctatomicprops : \states \to \imggrp, {\state}\mapsto{\labelingfct(\state)}$.
 \end{definition}
 
-The grouping function is exactly the labeling function i.e. for all $\state \in \states$ it is $\gfctatomicprops(\state) = \labelingfct(\state)$. So it is $\gfctatomicprops(\state_1) = \gfctatomicprops(\state_2) \iff \labelingfct(\state_1) = \labelingfct(\state_2)$. According to definition \ref{def:eqrelview} for $\smstate \in \states$ it is $\eqclassv{\smstate} = \{\state \in \states \mid \labelingfct(\state) = \labelingfct(\smstate)\}$.
+The grouping function is exactly the labeling function i.e. for all $\state \in \states$ it is $\gfctatomicprops(\state) = \labelingfct(\state)$. So it is $\gfctatomicprops(\state_1) = \gfctatomicprops(\state_2) \iff \labelingfct(\state_1) = \labelingfct(\state_2)$. According to Definition \ref{def:eqrelview} for $\smstate \in \states$ it is $\eqclassv{\smstate} = \{\state \in \states \mid \labelingfct(\state) = \labelingfct(\smstate)\}$.
 %$\forall \state_1, \state_2 \in \states :
 
-By this we obtain the \viewN $\viewatomicprops$ for a given \chosengraphtypeN \chgph where: $\states' = \bigcup_{\state \in \states} \{\eqclassv{\state}\} =  \bigcup_{a \in \atomicprops} \{\{\state \in \states \mid \labelingfct(\state) = a\}\}$. All other components are constructed as in definition \ref{def:view}.
+By this we obtain the \viewN $\viewatomicprops$ for a given \chosengraphtypeN \chgph where: $\states' = \bigcup_{\state \in \states} \{\eqclassv{\state}\} =  \bigcup_{a \in \atomicprops} \{\{\state \in \states \mid \labelingfct(\state) = a\}\}$. All other components are constructed as in Definition \ref{def:view}.
 
 \redcomment{tikz example}
 
@@ -41,7 +41,7 @@ The \emph{Initial State \viewNC}  groups all initial states into one single stat
 	and $\imggrp := \{\emptyset\} \cup \{\{\state\} \mid \state \in \states\}$.
 \end{definition}
 
-For $\state_1,\state_2 \in \states$ it is $\gfctinitstates(\state_1) = \gfctinitstates(\state_2)$ \iffN $\state_1, \state_2 \in \initstates$ or $\state_1 = \state_2$. According to definition \ref{def:eqrelview} it is 
+For $\state_1,\state_2 \in \states$ it is $\gfctinitstates(\state_1) = \gfctinitstates(\state_2)$ \iffN $\state_1, \state_2 \in \initstates$ or $\state_1 = \state_2$. According to Definition \ref{def:eqrelview} it is 
 \begin{align*}
 	\eqclassv{\state} &= \{\state \in \states \mid \grpfct(\state) = \emptyset\} &\text{for } \state \in \initstates \text{ and} \\
 	\eqclassv{\state} &= \{\state \in \states \mid \grpfct(\state) = \{\state\} \} = \{\state\} &\text{for } \state \notin \initstates.
@@ -50,7 +50,7 @@ For $\state_1,\state_2 \in \states$ it is $\gfctinitstates(\state_1) = \gfctinit
 
 By this we obtain the \viewN $\viewinitstates$ for a given \chosengraphtypeN \chgph where: $\states' = \bigcup_{\state \in \states} \{\eqclassv{\state}\} = \{\state \in \states \mid \state \in \initstates\}\cup \bigcup_{\state \in \states \setminus \initstates}\{\{\state\}\}$.
 
-All other components are constructed as in definition \ref{def:view}.
+All other components are constructed as in Definition \ref{def:view}.
 
 \subsubsection{Outgoing Actions}
 \redcomment{define outgoing transition and outgoing action}
@@ -76,7 +76,7 @@ The most obvious variant to group states is to group states that \emph{have} a g
 For $\state_1,\state_2 \in \states$ it is $\gfcthasoutaction(\state_1) = \gfcthasoutaction(\state_2)$ \iffN 
 there exist $\state_{a},\state_{b} \in \states$ with 
 $(\state_1, \action, \state_{a}), (\state_2, \action, \state_{b}) \in \trans$ (i.e. they have the same outgoing action \action) or $\state_1 = \state_2$. 
-In accordance with definition \ref{def:eqrelview} it is
+In accordance with Definition \ref{def:eqrelview} it is
 \begin{align*}
 	\eqclassv{\state} &= \{\state \in \states \mid \gfcthasoutaction(\state) = \action\} &\exists\state' \in \states : (\state, \action, \state') \in \trans \\
 	\eqclassv{\state} &= \{\state \in \states \mid \gfcthasoutaction(\state) = \state\} = \{s\} &\text{ otherwise}
@@ -117,7 +117,7 @@ For example we could require that a given action has to be outgoing a minimum am
 The number  and  
 The predicate \predminoutact requires that there are transitions with action \action to \numoutact distinct states.
 
-For $\state_1,\state_2 \in \states$ it is $\gfctminoutaction(\state_1) = \gfctminoutaction(\state_2)$ \iffN there exist distinct $\state_{a_1}, \dots, \state_{a_\numoutact} \in \states$ and distinct $\state_{b_1}, \dots, \state_{b_\numoutact} \in \states$ so that $(\state_1, \action, \state_{a_1}), \dots, (\state_1, \action, \state_{a_\numoutact}) \in \trans$ and $(\state_2, \action, \state_{b_1}), \dots, (\state_2, \action, \state_{b_\numoutact}) \in \trans$ or $\state_1 = \state_2$. According to definition \ref{def:eqrelview} it is 
+For $\state_1,\state_2 \in \states$ it is $\gfctminoutaction(\state_1) = \gfctminoutaction(\state_2)$ \iffN there exist distinct $\state_{a_1}, \dots, \state_{a_\numoutact} \in \states$ and distinct $\state_{b_1}, \dots, \state_{b_\numoutact} \in \states$ so that $(\state_1, \action, \state_{a_1}), \dots, (\state_1, \action, \state_{a_\numoutact}) \in \trans$ and $(\state_2, \action, \state_{b_1}), \dots, (\state_2, \action, \state_{b_\numoutact}) \in \trans$ or $\state_1 = \state_2$. According to Definition \ref{def:eqrelview} it is 
 \begin{align*}
 	\eqclassv{\state} &= \{\state \in \states \mid \gfctminoutaction(\state) = \action\} &\text{if } \predminoutact \\ 
 	\eqclassv{\state} &= \{\state \in \states \mid \gfctminoutaction(\state) = \state\} = \{\state\} &\text{ otherwise}
@@ -168,10 +168,10 @@ Since we already defined \grpfctsN and hence views for a required minimal and ma
 	\end{cases}
 	\]
 	
-	where $\imggrp := \actions \cup \states$ and $\numoutactb, \numoutact \in \natnums$ are the minimal and maximal number of transitions with action \action in order for state to be grouped. The predicates \predminoutact and \predmaxoutact are the predicates from the definitions \ref{def:minoutaction} and \ref{def:viewmaxoutaction} respectively.
+	where $\imggrp := \actions \cup \states$ and $\numoutactb, \numoutact \in \natnums$ are the minimal and maximal number of transitions with action \action in order for state to be grouped. The predicates \predminoutact and \predmaxoutact are the predicates from Definition \ref{def:minoutaction} and Definition \ref{def:viewmaxoutaction} respectively.
 \end{definition}
 
-We already know that for a given $\state \in \states$ the expressions $\exists \state_1, \dots, \state_\numoutact \in \states: \predminoutact$ and $\forall \state_1, \dots, \state_{\numoutactb+1} \in \states: \predmaxoutact[\numoutactb]$ from the definitions \ref{def:minoutaction} and \ref{def:viewmaxoutaction} require that \state has minimal and maximal amount of outgoing transitions with an action \action respectively. Hence the conjunction will be true for states where the amount of outgoing transitions with action \action is element of the set $\{\numoutactb, \numoutact+1, \dots, \numoutact-1, \numoutact\}$. We will write for this that the number of outgoing actions is \emph{in the span}.
+We already know that for a given $\state \in \states$ the expressions $\exists \state_1, \dots, \state_\numoutact \in \states: \predminoutact$ and $\forall \state_1, \dots, \state_{\numoutactb+1} \in \states: \predmaxoutact[\numoutactb]$ from Definition \ref{def:minoutaction} and Definition \ref{def:viewmaxoutaction} require that \state has minimal and maximal amount of outgoing transitions with an action \action respectively. Hence the conjunction will be true for states where the amount of outgoing transitions with action \action is element of the set $\{\numoutactb, \numoutact+1, \dots, \numoutact-1, \numoutact\}$. We will write for this that the number of outgoing actions is \emph{in the span}.
 
 For a given state \state and action \action we set
 \[
@@ -195,7 +195,7 @@ The new set of states $\states'$ of the view \viewspanoutaction is the union of 
 	\states_2 &:= \remstates.
 \end{align*}
 
-\redcomment{The views above could be expanded to several actions with requirements}
+The \viewsN above can be combined with \parllcompN. The thereby obtained \viewN requires that the respective conditions of all the combined \viewsN are met. In this sense it is a conjunctive combination.
 
 Instead of making requirements about states and group them based on whether they meet these requirements it also possible to group states that are very similar or even identical in regard to their outaction. We consider this idea with the \emph{\outactident \viewNC} in two variants: \outactidentstrong and \outactidentweak (idententiy). Firstly we will consider the variant of strong identity.
 
@@ -208,11 +208,11 @@ Instead of making requirements about states and group them based on whether they
 	and $\imggrp := \actions \times \natnums_0$.
 \end{definition}
 
-The \grpfctN asserts to each state a set of pairs. Note that a pair is contained int the set for each action $\action \in \actions$. In case there is no outgoing transition from state \state with an action \action it is $(\action, 0) \in \gfctstrongoutactident$. For $\state_1, \state_2 \in \states$ it is $\gfctstrongoutactident(\state_1) = \gfctstrongoutactident(\state_2)$ \iffN $\state_1$ and $\state_2$ are mapped to the same set of pairs. By definition \ref{def:eqrelview} the obtained equivalence classes of \eqrelview are
+The \grpfctN asserts to each state a set of pairs. Note that a pair is contained int the set for each action $\action \in \actions$. In case there is no outgoing transition from state \state with an action \action it is $(\action, 0) \in \gfctstrongoutactident$. For $\state_1, \state_2 \in \states$ it is $\gfctstrongoutactident(\state_1) = \gfctstrongoutactident(\state_2)$ \iffN $\state_1$ and $\state_2$ are mapped to the same set of pairs. By Definition \ref{def:eqrelview} the obtained equivalence classes of \eqrelview are
 \[
 	\eqclassv{\state} := \{\state \in \states \mid \gfctstrongoutactident(\state) = \{(\action_1, \numoutact_1), \dots, (\action_l, \numoutact_l)\}, l = |\actions|\}
 \]
-According to definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv{\state}$ is the set of states of \viewstrongoutactident. All other components of \viewstrongoutactident are as usual structured in accordance with the definition \ref{def:view}.
+According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv{\state}$ is the set of states of \viewstrongoutactident. All other components of \viewstrongoutactident are as usual structured in accordance with the Definition \ref{def:view}.
 As mentioned earlier a \outactidentweak variant of the \outactident \viewN is also conceivable.
 
 \begin{definition}
@@ -230,7 +230,7 @@ For $\state_1, \state_2 \in \states$ it is $\gfctweakoutactident(\state_1) = \gf
 \[
 	\eqclassv{\smstate} = \{ \state \in \states \mid \gfctweakoutactident(\state) = \gfctweakoutactident(\smstate) =: \{\action_1, \dots, \action_l\}, l \in \natnums\}.
 \]
-According to definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv{\state}$ is the set of states of \viewweakoutactident.
+According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv{\state}$ is the set of states of \viewweakoutactident.
 
 \subsubsection{Ingoing Actions}
 Analogously to Outgoing Actions views of utilizing ingoing actions are feasable. Since there is no difference apart from the definitions itself, we only provide the definitions.
@@ -300,7 +300,7 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 	\end{cases}
 	\]
 	
-	where $\imggrp := \actions \cup \states$ and $\numinactb, \numinact \in \natnums$ are the minimal and maximal number of transitions with action \action in order for state to be grouped. The predicates \predmininact and \predmaxinact are the predicates from the definitions \ref{def:mininaction} and \ref{def:viewmaxinaction} respectively.
+	where $\imggrp := \actions \cup \states$ and $\numinactb, \numinact \in \natnums$ are the minimal and maximal number of transitions with action \action in order for state to be grouped. The predicates \predmininact and \predmaxinact are the predicates from Definition \ref{def:mininaction} and Definition \ref{def:viewmaxinaction} respectively.
 \end{definition}
 
 \begin{definition}
@@ -323,11 +323,11 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 \subsubsection{Parameters}
 The concept of parameters is not part of the definitions of neither \chosengraphtypesN, MCs or MDPs. Even though, it is of great importance in practical applications. Parameters are used to represent states (in more detail). 
 
-For example a MDP could be used to model a computer program with human interaction. Every state of the MDP refers an overall state of the program during execution time. In this state of the program, its variables will have specific values. Instead of only assigning a state $\state \in \states$ that refers to the state of the program, we want to retain the information about the values of the variables of the program. There is no component in MDPs that fullfills this purpose. Variables and its current values are not only relevant to computer programs but also other systems. Many of those other systems rely on some kind of global state during execution, which can be expressed with variables and values assigned to them. Parameters are used to store this information.
+For example a MDP could be used to model a computer program with human interaction. Every state of the MDP refers an overall state of the program during execution time. In this state of the program, its variables will have specific values. We may want to retain the information about the variable's values of the program instead of only assigning a state $\state \in \states$ that refers to the state of the program. Variables and its current values are not only relevant to computer programs but also other systems. Many of those other systems rely on some kind of global state during execution, which can be expressed with variables and values assigned to them. Since there exists no explicit component to retain this information the notion of parameters is used to store it.
 
-\redcomment{OLD: Since transitions systems MCs and MDPs in practice are used to model, analyze and check real world systems it is very practical to not only name states but also describe the properties of the state in more detail. For a basic notion parameters are to be imagined as a set of variables that may have different values in different states thereby describing the characteristics of the state more thoroughly. \purpcomment{ADDED: In practice most often they arise very naturally for example as variables of a computer program that is to be modeled with a MDP.}} 
+\redcomment{OLD: Since transitions systems MCs and MDPs in practice are used to model, analyze and check real world systems it is very practical to not only name states but also describe the properties of the state in more detail. For a basic notion parameters are to be imagined as a set of variables that may have different values in different states thereby describing the characteristics of the state more thoroughly. \purpcomment{ADDED TO OLD: In practice most often they arise naturally for example as variables of a computer program that is to be modeled with a MDP.}} 
 
-Because of the vast importance in practical applications we will consider some \viewsN that utilize them. To do so and being able to describe them formally we define we will formalize the notion of parameters by considering them as a subset of the atomic propositions \atomicprops that is assigned a value by a function.
+Because of the vast importance in practical applications we will consider some \viewsN that utilize them. To do so and being able to describe them formally we define and formalize the notion of parameters by considering them as a subset of the atomic propositions \atomicprops that is assigned a value by a function.
 
 \begin{definition}
 	The set $\params \subseteq \atomicprops$ is called \emph{parameters}.
@@ -413,7 +413,7 @@ With this grouping function we directly map to the value of the parameter. Hence
 \[
 \eqclassv{\smstate} = \{ \state \in \states \mid \parameval(\state) = \parameval(\smstate)\}.
 \]
-According to definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv{\state}$ is the set of states of \viewparamvalident.
+According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv{\state}$ is the set of states of \viewparamvalident.
 
 \subsubsection{Distance}
 \subsection{Computation on MDP-Graph}
