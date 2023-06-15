@@ -11,7 +11,7 @@
 \usepackage{bbold}
 \usepackage{amsthm}
 \usepackage{amsmath}
-\usepackage{amssymb} % triangleq
+\usepackage{amssymb} % doteqdot
 \usepackage[dvipsnames]{xcolor}
 \usepackage{standalone}
 \usepackage{tikz}
@@ -19,6 +19,14 @@
 \usepackage{xspace}
 \usepackage{relsize}
 \usepackage{mathtools} %mathclap
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks,
+	citecolor=black,
+	filecolor=black,
+	linkcolor=black,
+	urlcolor=black
+}
 %\usepackage{xparse} % \newDocumentCommand for multiple optional arguments
 %\usepackage{titlecaps}
 
@@ -106,11 +114,6 @@
 
 
 % EXAMPLE VIEWS
-\newcommand{\outact}{\mt{\overrightarrow{\action}}}
-\newcommand{\outacts}{\mt{\overrightarrow{\actions}}}
-\newcommand{\inact}{\mt{\overleftarrow{\action}}}
-\newcommand{\inacts}{\mt{\overleftarrow{\actions(\state)}}}
-
 \newcommand{\gfctatomicprops}{\mt{{\viewppty_\atomicprops}}}
 \newcommand{\gfctinitstates}{\mt{{\viewppty_\initstates}}}
 \newcommand{\gfcthasoutaction}{\mt{{\viewppty_{\exists\outact}}}}
@@ -124,13 +127,14 @@
 \newcommand{\gfctmaxinaction}{\mt{{\viewppty_{\inact\leq\numinact}}}}
 \newcommand{\gfctspaninaction}{\mt{{\viewppty_{\numinactb\leq\inact\leq\numinact}}}}
 \newcommand{\gfctstronginactident}{\mt{{\viewppty_{\inacts(\state)_=}}}}
-\newcommand{\gfctweakinactident}{\mt{{\viewppty_{\intacts(\state)_\approx}}}}
+\newcommand{\gfctweakinactident}{\mt{{\viewppty_{\inacts(\state)_\approx}}}}
 \newcommand{\gfctparamvalueseq}{\mt{\viewppty_{\param = \paramval}}}
 \newcommand{\gfctparamvaluesneq}{\mt{\viewppty_{\param \neq \paramval}}}
 \newcommand{\gfctparamdnf}{\mt{\viewppty_{ParDNF}}}
 \newcommand{\gfctparamcnf}{\mt{\viewppty_{ParCNF}}}
 \newcommand{\gfctparamvalueseqopt}[1][\paramval]{\mt{\viewppty_{\param = #1}}}
 \newcommand{\gfctparamvalident}{\mt{\viewppty_{\parameval(\state,\param)}}}
+
 
 
 \newcommand{\viewatomicprops}{\mt{\view{\gfctatomicprops}}}
@@ -153,7 +157,7 @@
 \newcommand{\viewparamcnf}{\mt{\view{\gfctparamcnf}}}
 \newcommand{\viewparamvalident}{\mt{\view{\gfctparamvalident}}}
 
-%%OutAct
+%actions
 \newcommand{\numoutact}{\mt{n}}
 \newcommand{\numoutactb}{\mt{m}}
 \newcommand{\numinact}{\mt{n}}
@@ -166,6 +170,11 @@
 \newcommand{\predmaxinact}[1][\numinact]{\mt{Q_{\inact\leq#1}(\state,\state_1, \dots, \state_{#1+1})}}
 \newcommand{\predmininact}[1][\numinact]{\mt{Q_{#1\leq\inact}(\state,\state_1, \dots, \state_{#1})}}
 
+\newcommand{\outact}{\mt{\overrightarrow{\action}}}
+\newcommand{\outacts}{\mt{\overrightarrow{\actions}}}
+\newcommand{\inact}{\mt{\overleftarrow{\action}}}
+\newcommand{\inacts}{\mt{\overleftarrow{\actions}}}
+
 %%Parameters
 \newcommand{\params}{\mt{Par}}
 \newcommand{\param}{\mt{x}}
@@ -175,6 +184,13 @@
 \newcommand{\paramevalimg}{\mt{\arbset}}
 \newcommand{\someparam}{\mt{\tilde{x}}}
 \newcommand{\eqorneq}{\mt{\;\doteqdot\;}}
+
+%Cycles
+\newcommand{\cyclesecfull}{\mt{(\state_0, \action_0, \state_1, \action_1, \dots, \action_{n-1}, \state_0)}}
+\newcommand{\fctfindcycle}{\mt{findCycle}}
+\newcommand{\cycle}{\mt{C}}
+\newcommand{\cycleset}{\mt{\cycle_{\{\}}}}
+
 
 % all Systems
 \newcommand{\chgph}{\mt{\mdp}}

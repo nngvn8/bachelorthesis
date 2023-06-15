@@ -6,10 +6,11 @@
 \section{View Examples}
 In this chapter we will introduce and discuss some \viewN examples created by the author. Their purpose is to understand the idea and concept of a \viewN and get to know some views that might be useful in real world applications. \\
 When considering \viewsN we only want into account those that utilize properties of MDPs or that do computations that are also feasible on normal graphs but are of explicit relevance MDPs.
-\subsection{Utilizing MDP components}
-\redcomment{\viewsNC based on MDP components}
+\subsection{Views Utilizing MDP Components}
+In this subsection we will introduce some views the are purely based on the components of an \mdpN. Their will neither be computations on the graph-structure of an MDP nor computations using the result vector.
 \subsubsection{Atomic Propositions}
-The \emph{Atomic Propositions \viewNC} groups all states to a new state that have the same set of atomic propositions.
+One of the least involved approaches to create a view is to base it on the atomic propositions that can be assigned to each state by the labeling function. The notion is to group states that were assigned the same set of atomic propositions. \redcomment{Why useful?, currently no "has AP" -> maybe should be added}
+
 
 \begin{definition}	
 	Let $\chgph = \chgphtuple$ be \chosengraphtypeN. The view \viewatomicprops is defined by its grouping function \gfctatomicprops \grpfctN with $\gfctatomicprops : \states \to \imggrp, {\state}\mapsto{\labelingfct(\state)}$.
@@ -22,10 +23,8 @@ By this we obtain the \viewN $\viewatomicprops$ for a given \chosengraphtypeN \c
 
 \redcomment{tikz example}
 
-\redcomment{example from the database of max}
-
 \subsubsection{Initial States}
-The \emph{Initial State \viewNC}  groups all initial states into one single state. All other states are left untouched.
+An a little more involved idea than directly using a given function is to utilize the set of initial states. We can group states that have a probability greater zero, that they are started from. In practice this might be useful to quickly find all initial states.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \chosengraphtypeN. The view \viewinitstates is defined by its grouping function \gfctinitstates \grpfctN with $\gfctinitstates : \states \to \imggrp$ with 
@@ -313,9 +312,9 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 \end{definition}
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $\action \in \actions$. The \viewN \viewweakoutactident is defined by its \grpfctN $\gfctweakoutactident : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $\action \in \actions$. The \viewN \viewweakinactident is defined by its \grpfctN $\gfctweakinactident : \states \to \imggrp$ with
 	\[
-	\state \mapsto \{\action \in \actions \mid \exists \state' \in \states : (\state, \action, \state') \in \trans\} 	
+	\state \mapsto \{\action \in \actions \mid \exists \state' \in \states : (\state', \action, \state) \in \trans\} 	
 	\]
 	and $\imggrp := \actions$.
 \end{definition}
@@ -337,7 +336,7 @@ Because of the vast importance in practical applications we will consider some \
 	Let \paramevalimg be an arbitrary set. The function $\parameval : \states \times \params \to \paramevalimg$ is called parameter evaluation function.
 \end{definition} 
 
-Most of the time we will use \parameval to refer to the parameter evaluation function. When we speak about the value of a parameter in a state we refer to the image of $\parameval$ for that state and value. The set \paramevalimg is arbitrary so that arbitrary values can be assigned to a parameter. Speaking in terms of computer science and programming this loosens as an example the restriction of only being able to assign numbers and no booleans.
+Most of the time we will use \parameval to refer to the parameter evaluation function. When we speak about the value of a parameter in a state we refer to the image of $\parameval$ for that state and parameter. The set \paramevalimg is arbitrary so that arbitrary values can be assigned to a parameter. Speaking in terms of computer science and programming this loosens as an example the restriction of only being able to assign numbers and no booleans.
 
 The most apparent idea for a \viewN utilizing parameters is to group states that meet some requirement regarding the values of the parameters.
 
@@ -469,8 +468,40 @@ With this grouping function we directly map to the value of the parameter. Hence
 \]
 According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv{\state}$ is the set of states of \viewparamvalident.
 
+
+\subsection{Utilizing the MDP Graphstructure}
 \subsubsection{Distance}
-\subsection{Computation on MDP-Graph}
+\redcomment{TODO}
+\begin{definition}
+		Let $\chgph = \chgphtuple$ be \chosengraphtypeN.
+\end{definition}
+
+\subsubsection{Double Directed Edges with same Action}
+\redcomment{NOT SURE IF SHOULD BE INCLUDED}
+\begin{definition}
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN.
+\end{definition}
+
+\subsubsection{Cycles}
+A cycle is a structure that can exist in every graph. The concept of cycles is not specific to \chosengraphtypesN or any of its more specialized variants. The purpose of this thesis is to discuss views that utilize domain specific knowledge or if a general concept is of special relevance when exploring \chosengraphtypeN. The former and the latter apply on cycles.
+
+Formalizing \viewsN based on cycles requires some formalization of the concept cycle. We will use a domain specific definition that will serve us the most.
+
+\begin{definition}
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN. A (simple) \emph{cycle} in \chgph is any sequence \cyclesecfull alternating between states and actions where $n \in \natnums, \{\state_0, \dots, \state_{n-1}\} \subseteq \states$ is a set of distinct states,  $\{\action_0, \dots, \action_{n-1}\} \subseteq \actions$ and for all $i \in \{0, \dots, n-1\}$ it is $(\state_i,\action_i, \state_{i+1 \text{ mod }n}) \in \trans$.
+\end{definition}
+
+When the actions in the cycle are of no further importance, we will omit them only writing a sequence of states. In the following let $\cycle = \cyclesecfull$ be a cycle. For conveniences we will write $\state \in \cycle$ if the state is contained in the cycle and $\action \in \cycle$ if the action is contained in in the cycle. \redcomment{only if??} Let $\cycle_1$ and $\cycle_2$ be cycles. $\cycle_1 \cup \cycle_2 := \{\state \in \states \mid \state \in \cycle_1 \text{ or } \state \in \cycle_2\}$.
+
+With the formalization done we will introduce some views utilizing the concept cycles. For one we will combine the notion cycle with domain specific knowledge for the other we will consider how and why cycles in MDPs are in general of relevance. We will begin with the latter.  Cycles in general are of interest because they pose the risk of getting stuck in endless loops, when performing actions on the \mdpN. \redcomment{Model checking is one of the most relevant actions on \chosengraphtypesN that are vulnerable to loops. They are performed commonly on them.} Therefore a \viewN that simply finds existing cycles is feasible.
+
+
+\begin{definition}
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN. Let $\fctfindcycle(\chgph, n)$ be a function that returns a set $\cycleset$ of all cycles in \chgph where for all $\cycle \in \cycleset$ it is $|\{\state \in \states \mid \state \in \cycle\}| \geq n \in \natnums$. That is there are at least $n$ states contained in each cycle.
+\end{definition}
+
+\subsubsection{Strongly Connected Components}
+\subsection{Utilizing the MDP Resulttable}
 
 
 
