@@ -511,7 +511,7 @@ With the formalization done we will introduce some views utilizing the concept c
 
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $n \in \natnums$. The \viewN \viewhascycle is defined by its \grpfctN $\gfcthascycle : \states \to \imggrp$ where
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $n \in \natnums$. The \viewN \viewhascycle is defined by its \grpfctN $\gfcthascycle : \states \to \imggrp$ with
 	\[
 	\state \mapsto
 	\begin{cases}
@@ -528,7 +528,7 @@ This \viewN groups all states that are contained in cycle with a length of at le
 \redcomment{DISCUSSION OF EQUALITY, EQ CLASSES AND RESULTING STATES MISSING}
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $n \in \natnums$. The \viewN \viewexactcycle is defined by its \grpfctN $\gfctexactcycle : \states \to \imggrp$ where
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $n \in \natnums$. The \viewN \viewexactcycle is defined by its \grpfctN $\gfctexactcycle : \states \to \imggrp$ with
 	\[
 	\state \mapsto \{\cycle \in \fctfindcycles(\chgph, n) \mid \state \in \cycle\}
 	\]
@@ -546,7 +546,7 @@ This \viewN groups states that have the same set of cycles they are contained in
 The view above might be useful when having found cycles to see what cycles specifically exist. Often it is interesting to find cycles that consist only of transitions of the same action. The following view accomplishes that.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $n \in \natnums$. The \viewN \viewexactcycle is defined by its \grpfctN $\gfctexactcycle : \states \to \imggrp$ where
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $n \in \natnums$. The \viewN \viewexactcycle is defined by its \grpfctN $\gfctexactcycle : \states \to \imggrp$ with
 	\[
 	\state \mapsto \{\cycle \in \fctfindcycles(\chgph, n) \mid \state \in \cycle, \tilde{\action} \in \cycle, \forall \action \in \cycle : \action = \tilde{\action} \}
 	\]
@@ -566,25 +566,51 @@ Therefore it is feasible to consider a view utilizing strongly connected compone
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \chosengraphtypeN. A set of the from
 	\begin{align*}
-		\scc = \{\state \in \states \mid & \; \forall \state' \in \scc : \exists \; \! (\state_1, \action_1, \dots, \action_n, \state') \\
+		\scc = \{\state_1 \in \states \mid & \; \forall \state' \in \scc : \exists n \in \natnums, \exists \; \! (\state_1, \action_1, \state_2, \action_2 \dots, \state_n, \action_n, \state') \\
 		&\text{ where } (\state_n, \action_n, \state') \in \trans \land \forall i \in \{1, \dots, n-1\} : (\state_i, \action_i, \state_{i+1}) \in \trans \}
 	\end{align*}
-	is called \emph{strongly connected component} of \chgph. That is for every state in the set there has to exist a sequence of transitions to every other state of the set.
+	is called \emph{strongly connected component} of \chgph. That is for every state in the set there has to exist a sequence of transitions to every other state of the set. The set of strongly connected components of \chgph is denoted with \setscc.
 \end{definition}
 
-Since the strong connection is an equivalence relation the \sccsN are equivalence classes and hence disjoint. \redcomment{CITATION}
+Since the strong connection is an equivalence relation the \sccsN are equivalence classes and hence disjoint. To find \sccsN Tarjans algorithm is the classic. In the implementation an improved variant from Gabow is used supplied by the \jgrapht library. \redcomment{CITATION}
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and \setscc be the set of all \sccsN of \chgph. The \viewN \viewscc is defined by its \grpfctN $\gfctscc : \states \to \imggrp$ where
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN. The \viewN \viewscc is defined by its \grpfctN $\gfctscc : \states \to \imggrp$ with
 	\[
-	\state \mapsto \scc \text{ where } \redcomment{\state \in \scc \in \setscc}
+	\state \mapsto \scc \quad \quad \text{ where } \redcomment{\state \in \scc \in \setscc}
 	\]
 	and $\imggrp = \setscc$.
 \end{definition}
 
-This view groups all states together that are in the same \sccN. Since \sccsN are equivalence classes and they are disjoint. So each \state will be mapped to its one and only \sccN. This is because... \redcomment{DISCUSSION OF EQUALITY, EQ CLASSES AND RESULTING STATES MISSING}
+This view groups all states together that are in the same \sccN. Because \sccsN are disjoint each \state will be mapped to its one and only \sccN. This is because... \redcomment{DISCUSSION OF EQUALITY, EQ CLASSES AND RESULTING STATES MISSING}
 
-\subsection{Utilizing the MDP Resulttable}
+A special kind of strongly connected components is the the bottom strongly connected component.
+
+\begin{definition}
+	Let \scc be a \sccN. A \emph{bottom strongly connected component} (\bsccN) is a \sccN where it holds that: \redcomment{concurrent versions}
+	\[
+	\forall \state \in \scc : \forall (\state, \action, \state') \in \trans : \state' \in \scc
+	\]
+	\[
+	\forall \state \in \scc : \bigsum{t \in \scc} \trans(\state, t) = 1
+	\]
+	That is from \scc there is no state reachable outside of \scc. The set of bottom strongly connected components of \chgph is denoted with \setbscc.
+\end{definition}
+
+\redcomment{These are of special relevance because..}
+
+\begin{definition}
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN. The \viewN \viewbscc is defined by its \grpfctN $\gfctbscc : \states \to \imggrp$ with
+	\[
+	\state \mapsto \scc \quad \quad \text{ where } \redcomment{\state \in \scc \in \setbscc}
+	\]
+	and $\imggrp = \setbscc$.
+\end{definition}
+
+In the implementation strongly connected components are determined using the algorithm of Gabow, afterwards filtering those \sccsN that have only transitions to states within the \sccN. Equality, equivalence classes and the new state set are constructed analogously to the view \viewscc.
+
+\subsection{Utilizing the MDP Result Table}
+In this section we will discuss \viewsN utilizing the result table. The actual implementation is relies on one powerful \viewN that can set to perform arbitrary actions using model checking results.
 
 
 

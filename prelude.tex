@@ -90,6 +90,9 @@
 \newcommand{\parllcompsNCC}{\nm{Parallel Compositions}}
 \newcommand{\sccN}{\nm{SCC}}
 \newcommand{\sccsN}{\nm{SCCs}}
+\newcommand{\bsccN}{\nm{BSCC}}
+\newcommand{\bsccsN}{\nm{BSCCs}}
+\newcommand{\jgrapht}{jGraphtT}
 
 \newcommand{\outactident}{\nm{OutActionsIdent}}
 
@@ -142,7 +145,8 @@
 \newcommand{\gfcthascycle}{\mt{\grpfct[\exists\cycle]}}
 \newcommand{\gfctexactcycle}{\mt{\grpfct[\{\cycle\}]}}
 \newcommand{\gfctexactactcycle}{\mt{\grpfct[\{\cycle_\action\}]}}
-\newcommand{\gfctscc}{\mt{\grpfct[\scc]}}
+\newcommand{\gfctscc}{\mt{\grpfct[scc]}}
+\newcommand{\gfctbscc}{\mt{\grpfct[bscc]}}
 
 
 \newcommand{\viewatomicprops}{\mt{\view[\atomicprops]}}
@@ -167,7 +171,8 @@
 \newcommand{\viewhascycle}{\mt{\view[\exists\cycle]}}
 \newcommand{\viewexactcycle}{\mt{\view[\{\cycle\}]}}
 \newcommand{\viewexactactcycle}{\mt{\view[\{\cycle_\action\}]}}
-\newcommand{\viewscc}{\mt{\view[\scc]}}
+\newcommand{\viewscc}{\mt{\view[scc]}}
+\newcommand{\viewbscc}{\mt{\view[bscc]}}
 
 
 %\newcommand{\viewatomicprops}{\mt{\view{\gfctatomicprops}}}
@@ -225,8 +230,9 @@
 \newcommand{\cycleset}{\mt{\cycle_{\{\}}}}
 
 % strongly connected components
-\newcommand{\scc}{\mt{scc}}
-\newcommand{\setscc}{\mt{K}}
+\newcommand{\scc}{\mt{T}}
+\newcommand{\setscc}{\mt{SCC(\chgph)}}
+\newcommand{\setbscc}{\mt{BSCC(\chgph)}}
 
 
 % all Systems
