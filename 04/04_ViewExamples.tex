@@ -33,11 +33,11 @@ An a little more involved idea than directly using a given function is to utiliz
 	\state \mapsto
 	\begin{cases}
 		\emptyset,				& \text{if } \state \in \initstates \\
-		\{\state\},          	& \text{otherwise}
+		\remelem,          	& \text{otherwise}
 	\end{cases}
 	\]
 	
-	and $\imggrp := \{\emptyset\} \cup \{\{\state\} \mid \state \in \states\}$.
+	and $\imggrp := \{\emptyset\} \cup \remset$.
 \end{definition}
 
 For $\state_1,\state_2 \in \states$ it is $\gfctinitstates(\state_1) = \gfctinitstates(\state_2)$ \iffN $\state_1, \state_2 \in \initstates$ or $\state_1 = \state_2$. According to Definition \ref{def:eqrelview} it is 
@@ -500,10 +500,12 @@ When the actions in the cycle are of no further importance, we will omit them on
 Apart from the formalization of the term cycle and the length of a cycle we will also have to formalize a way to find cycles.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $n \in \natnums$. The function  $\fctfindcycles(\chgph, n)$ is called \emph{cycle finder function} (CFF) It returns a set $\cycleset$ of all cycles in \chgph where for all $\cycle \in \cycleset$ it is $|\{\state \in \states \mid \state \in \cycle\}| \geq n$. That is there are at least $n$ states contained in each cycle. 
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $n \in \natnums$. The function  $\fctfindcycles(\chgph, n)$ is called \emph{cycle finder function} (CFF). It returns a set $\cycleset$ of all cycles in \chgph where for all $\cycle \in \cycleset$ it is $|\{\state \in \states \mid \state \in \cycle\}| \geq n$. That is there are at least $n$ states contained in each cycle. 
 \end{definition}
 
-There exist several cycle finding algorithms in practice. The function $\fctfindcycles(\chgph, n)$ is an abstraction for one of these algorithms being used. The actual implementation relys on the libraries \redcomment{Szwarcfiter and Lauer - $O(V+EC)$ Tiernan - $O(V.constV)$ CITATION!!}
+In a programming like manner we will write $\fctfindcycles(\chgph,n)$ and thereby referring to its returned set. This will be clear from the context.
+
+In practice there exist several cycle finding algorithms. The function $\fctfindcycles(\chgph, n)$ is an abstraction for one of these algorithms being used. The actual implementation relys on algorithms of the jave library jgrapht namely the \redcomment{Algorithm Szwarcfiter and Lauer - $O(V+EC)$ and Tiernan - $O(V.constV)$ CITATION!!}
 
 With the formalization done we will introduce some views utilizing the concept cycles. For one we will combine the notion cycle with domain specific knowledge for the other we will consider how and why cycles in MDPs are in general of relevance. We will begin with the latter.  Cycles in general are of interest because they pose the risk of getting stuck in endless loops, when performing actions on the \mdpN. \redcomment{Model checking is one of the most relevant actions on \chosengraphtypesN that are vulnerable to loops. They are performed commonly on them.} Therefore a \viewN that simply finds existing cycles is feasible.
 
@@ -531,16 +533,57 @@ This \viewN groups all states that are contained in cycle with a length of at le
 	\state \mapsto \{\cycle \in \fctfindcycles(\chgph, n) \mid \state \in \cycle\}
 	\]
 	
-	and $\imggrp = \remset \cup \{inCycle\}.$
+	and $\imggrp = \powerset{\fctfindcycles(\chgph, n)}$
+	\label{def:exactcycleview}
 \end{definition}
 
-This \viewN groups states that are on the same set of cycles. Thus if $C_1$ and $C_2$ are distinct cycles and $\state_1, \state_2 \in \cycle_1$ and $\state_1 \in \cycle_2$ but $\state_2 \notin \cycle_2$ they are not grouped. It suffices that a state is on one cycle that the other one is not, in order for the states not being grouped. In graphs with many cycles this can lead to little grouping.
+This \viewN groups states that have the same set of cycles they are contained in. Thus if $C_1$ and $C_2$ are distinct cycles and $\state_1, \state_2 \in \cycle_1$ and $\state_1 \in \cycle_2$ but $\state_2 \notin \cycle_2$ they are not grouped. It suffices that a state is on one cycle that the other one is not, in order for the states not being grouped. In graphs with many cycles this can lead to little grouping.
 
 \redcomment{DISCUSSION OF EQUALITY, EQ CLASSES AND RESULTING STATES MISSING}
 
-\redcomment{GREEDY APPROACHES (STATE ON SINGLE CYCLE), AND SET APPROACH s -> $C_1 \cup C_2$ ommited because not sure if reasonable}
+\redcomment{GREEDY APPROACHES (STATE ON SINGLE CYCLE), AND SET APPROACH s -> $C_1 \cup C_2$ omitted because not sure if needed}
+
+The view above might be useful when having found cycles to see what cycles specifically exist. Often it is interesting to find cycles that consist only of transitions of the same action. The following view accomplishes that.
+
+\begin{definition}
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $n \in \natnums$. The \viewN \viewexactcycle is defined by its \grpfctN $\gfctexactcycle : \states \to \imggrp$ where
+	\[
+	\state \mapsto \{\cycle \in \fctfindcycles(\chgph, n) \mid \state \in \cycle, \tilde{\action} \in \cycle, \forall \action \in \cycle : \action = \tilde{\action} \}
+	\]
+	
+	and $\imggrp = \powerset{\fctfindcycles(\chgph, n)}$
+\end{definition}
+
+The view specializes the view from Definition \ref{def:exactcycleview} in the sense that it additionally requires for all $\cycle \in \gfctexactcycle$ that all actions occurring in the cycle are the same. \redcomment{doubling to above definition?}
+
+\redcomment{NO DISCUSSION IF PREVIOUSLY}
+
 
 \subsubsection{Strongly Connected Components}
+Strongly connect components (\sccN) are of major importance in model checking \redcomment{I think so because I found the terms many times in the book. Remaining question: really? why?}
+Therefore it is feasible to consider a view utilizing strongly connected components. Deviating from most definitions we will define \sccN not as a subgraph but only as the set of its nodes. Moreover the definition written in the terms of \chosengraphtypeN.
+
+\begin{definition}
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN. A set of the from
+	\begin{align*}
+		\scc = \{\state \in \states \mid & \; \forall \state' \in \scc : \exists \; \! (\state_1, \action_1, \dots, \action_n, \state') \\
+		&\text{ where } (\state_n, \action_n, \state') \in \trans \land \forall i \in \{1, \dots, n-1\} : (\state_i, \action_i, \state_{i+1}) \in \trans \}
+	\end{align*}
+	is called \emph{strongly connected component} of \chgph. That is for every state in the set there has to exist a sequence of transitions to every other state of the set.
+\end{definition}
+
+Since the strong connection is an equivalence relation the \sccsN are equivalence classes and hence disjoint. \redcomment{CITATION}
+
+\begin{definition}
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and \setscc be the set of all \sccsN of \chgph. The \viewN \viewscc is defined by its \grpfctN $\gfctscc : \states \to \imggrp$ where
+	\[
+	\state \mapsto \scc \text{ where } \redcomment{\state \in \scc \in \setscc}
+	\]
+	and $\imggrp = \setscc$.
+\end{definition}
+
+This view groups all states together that are in the same \sccN. Since \sccsN are equivalence classes and they are disjoint. So each \state will be mapped to its one and only \sccN. This is because... \redcomment{DISCUSSION OF EQUALITY, EQ CLASSES AND RESULTING STATES MISSING}
+
 \subsection{Utilizing the MDP Resulttable}
 
 

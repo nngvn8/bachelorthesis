@@ -19,6 +19,7 @@
 \usepackage{xspace}
 \usepackage{relsize}
 \usepackage{mathtools} %mathclap
+%\usepackage{MnSymbol}
 \usepackage{hyperref}
 \hypersetup{
 	colorlinks,
@@ -87,6 +88,8 @@
 \newcommand{\parllcompsN}{\nm{parallel compositions}}
 \newcommand{\parllcompsNC}{\nm{Parallel compositions}}
 \newcommand{\parllcompsNCC}{\nm{Parallel Compositions}}
+\newcommand{\sccN}{\nm{SCC}}
+\newcommand{\sccsN}{\nm{SCCs}}
 
 \newcommand{\outactident}{\nm{OutActionsIdent}}
 
@@ -138,6 +141,8 @@
 \newcommand{\gfctparamvalident}{\mt{\grpfct[\parameval(\state,\param)]}}
 \newcommand{\gfcthascycle}{\mt{\grpfct[\exists\cycle]}}
 \newcommand{\gfctexactcycle}{\mt{\grpfct[\{\cycle\}]}}
+\newcommand{\gfctexactactcycle}{\mt{\grpfct[\{\cycle_\action\}]}}
+\newcommand{\gfctscc}{\mt{\grpfct[\scc]}}
 
 
 \newcommand{\viewatomicprops}{\mt{\view[\atomicprops]}}
@@ -161,6 +166,8 @@
 \newcommand{\viewparamvalident}{\mt{\view[\parameval(\state,\param)]}}
 \newcommand{\viewhascycle}{\mt{\view[\exists\cycle]}}
 \newcommand{\viewexactcycle}{\mt{\view[\{\cycle\}]}}
+\newcommand{\viewexactactcycle}{\mt{\view[\{\cycle_\action\}]}}
+\newcommand{\viewscc}{\mt{\view[\scc]}}
 
 
 %\newcommand{\viewatomicprops}{\mt{\view{\gfctatomicprops}}}
@@ -217,6 +224,10 @@
 \newcommand{\cycle}{\mt{C}}
 \newcommand{\cycleset}{\mt{\cycle_{\{\}}}}
 
+% strongly connected components
+\newcommand{\scc}{\mt{scc}}
+\newcommand{\setscc}{\mt{K}}
+
 
 % all Systems
 \newcommand{\chgph}{\mt{\mdp}}
@@ -264,6 +275,7 @@
 \newcommand{\impr}{\mt{\hspace{3mm}\Rightarrow\hspace{2mm}}}
 \newcommand{\impl}{\mt{\hspace{3mm}\Leftarrow\hspace{2mm}}}
 \newcommand{\natnums}{\mt{\mathbb{N}}} 
+\newcommand{\intmodn}[1][n]{\mt{\mathbb{Z}_{#1}}}
 \newcommand{\arbset}{\mt{M}}
 \newcommand{\bigsum}[2][]{\mt{\mathlarger{\sum}_{#2}^{#1}}}
 \newcommand{\bbigsum}[2][]{\mt{\mathlarger{\mathlarger{\sum}}_{#2}^{#1}}}
