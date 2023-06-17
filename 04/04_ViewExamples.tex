@@ -473,8 +473,14 @@ According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in 
 \subsubsection{Distance}
 \redcomment{TODO}
 \begin{definition}
-		Let $\chgph = \chgphtuple$ be \chosengraphtypeN.
+		Let $\chgph = \chgphtuple$ be \chosengraphtypeN and $\smstates \subseteq \states$ arbitrary. \redcomment{$\fctdistdefault$ IMPLEMENTATION IN PSEUDOCODE? DEFINITION BEFORE?} The \viewN \viewdistance is defined by its \grpfctN $\gfctdistance : \states \to \imggrp$ with 
+		\[
+		\state \mapsto \distval \quad \quad \text{where } (\state, \distval) \in \fctdistdefault
+		\]
+		and $M = \states \times (\natnums \cup \{\inf\})$.
 \end{definition}
+
+Due to the implementation of \fctdistdefault for every state $\state \in \states$ exists a pair $(\state, \distval)$ in the returned set of \fctdistdefault. That is it is there for every state $\state \in \states$ there exists  $(\state, \distval)$ with $ (\state, \distval)\in \fctdistdefault$. The view groups states that have the same distance to the set measured with the amounts of transitions necessary reach the the closest \smstates considering the granularity \granularity.
 
 \subsubsection{Double Directed Edges with same Action}
 \redcomment{NOT SURE IF SHOULD BE INCLUDED}

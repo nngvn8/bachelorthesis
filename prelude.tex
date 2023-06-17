@@ -70,7 +70,7 @@
 \newcommand{\grpfctsN}{\nm{grouping functions}}
 \newcommand{\grpfctsNC}{\nm{Grouping functions}}
 \newcommand{\grpfctsNCC}{\nm{Grouping Functions}}
-%\newcommand{\chosengraphtypeNCC}{\nm{Transition System}}
+%\newcommand{\chosenphtypeNCC}{\nm{Transition System}}
 %\newcommand{\chosengraphtypeNC}{\nm{Transition system}}
 %\newcommand{\chosengraphtypeN}{\nm{transition system}}
 %\newcommand{\chosengraphtypesNCC}{\nm{Transition Systems}}
@@ -122,6 +122,8 @@
 
 
 % EXAMPLE VIEWS
+\newcommand{\distance}{\mt{\longleftrightarrow}}
+
 \newcommand{\gfctatomicprops}{\mt{\grpfct[\atomicprops]}}
 \newcommand{\gfctinitstates}{\mt{\grpfct[\initstates]}}
 \newcommand{\gfcthasoutaction}{\mt{\grpfct[\exists\outact]}}
@@ -142,6 +144,7 @@
 \newcommand{\gfctparamcnf}{\mt{\grpfct[ParCNF]}}
 \newcommand{\gfctparamvalueseqopt}[1][\paramval]{\mt{\grpfct[\param = #1]}}
 \newcommand{\gfctparamvalident}{\mt{\grpfct[\parameval(\state,\param)]}}
+\newcommand{\gfctdistance}{\mt{\grpfct[\distance]}}
 \newcommand{\gfcthascycle}{\mt{\grpfct[\exists\cycle]}}
 \newcommand{\gfctexactcycle}{\mt{\grpfct[\{\cycle\}]}}
 \newcommand{\gfctexactactcycle}{\mt{\grpfct[\{\cycle_\action\}]}}
@@ -168,6 +171,7 @@
 \newcommand{\viewparamdnf}{\mt{\view[ParDNF]}}
 \newcommand{\viewparamcnf}{\mt{\view[ParCNF]}}
 \newcommand{\viewparamvalident}{\mt{\view[\parameval(\state,\param)]}}
+\newcommand{\viewdistance}{\mt{\view[\distance]}}
 \newcommand{\viewhascycle}{\mt{\view[\exists\cycle]}}
 \newcommand{\viewexactcycle}{\mt{\view[\{\cycle\}]}}
 \newcommand{\viewexactactcycle}{\mt{\view[\{\cycle_\action\}]}}
@@ -223,6 +227,12 @@
 \newcommand{\someparam}{\mt{\tilde{x}}}
 \newcommand{\eqorneq}{\mt{\;\doteqdot\;}}
 
+% Distance
+\newcommand{\fctdist}{\mt{distance}}
+\newcommand{\fctdistdefault}{\mt{\fctdist(\chgph, \smstates, \granularity)}}
+\newcommand{\distval}{\mt{dist}}
+\newcommand{\granularity}{\mt{n}}
+
 %Cycles
 \newcommand{\cyclesecfull}{\mt{(\state_0, \action_0, \state_1, \action_1, \dots, \action_{n-1}, \state_0)}}
 \newcommand{\fctfindcycles}{\mt{findCycles}}
@@ -246,6 +256,7 @@
 \newcommand{\labelingfct}{\mt{L}}
 \newcommand{\init}{\mt{\initdistrib}} % use MDP % refers to the underlying set
 \newcommand{\trans}{\mt{\probtfunc}} % use MDP % refers to the underlying set
+\newcommand{\smstates}{\mt{\tilde{\states}}}
 
 
 \newcommand{\state}{\mt{s}}
