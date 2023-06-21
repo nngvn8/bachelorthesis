@@ -21,16 +21,16 @@ The conceptional idea of a \viewN is to group states by some criteria and struct
 The identifier \viewppty normally hints the objective of the grouping function. Two states are \redcomment{grouped (should be Definition?)} to a new state if and only if the grouping function maps them to the same value. The definition offers an easy way of defining groups of states. It is also very close to the actual implementation later on. The exact mapping depends on the desired grouping. In order to define a new set of states for the \viewN, we define an equivalence relation \eqrelview based on a given grouping function \grpfct.
 
 \begin{definition}
-	Let \grpfct be a grouping function. We define the equivalence relation $\eqrelview :=\{ (\state_1, \state_2) \in \states \times \states \mid \grpfct(\state_1) = \grpfct(\state_2)\}$
+	Let \grpfct be a grouping function. We define the equivalence relation $\eqrelview :=\{ (\state_1, \state_2) \in \states \times \states \mid \grpfct(\state_1) = \grpfct(\state_2) \neq \bot\} \cup \{(\state, \state)  \mid \state \in \states\}$
 	
 	\label{def:eqrelview}
 \end{definition}
 
-\eqrelview is an equivalence relation because the equality relation is one. The property directly conveys to \eqrelview. We observe that two states $\state_1, \state_2$ are grouped to a new state if and only if $(\state_1, \state_2) \in \eqrelview$. This is the case if and only if $\state_1, \state_2 \in \eqclassv{\state_1} = \eqclassv{\state_2}$ where $\eqclassv{\state_i}$ for $i \in \{1,2\}$ denotes the equivalence class of \eqrelview.
+\eqrelview is an equivalence relation because it is reflexive, transitive and symmetric. \eqrelview is reflexive because $\{(\state, \state)  \mid \state \in \states\} \subseteq \eqrelview$. Transitivity and symmetry directly convey from the equality relation which is an equivalence relation. We observe that two states $\state_1, \state_2$ are grouped to a new state if and only if $(\state_1, \state_2) \in \eqrelview$ and none of them is mapped to $\bot$. This is the case if and only if $\state_1, \state_2 \in \eqclassv[\state_1] = \eqclassv[\state_2]$ where $\eqclassv[\state_i]$ for $i \in \{1,2\}$ denotes the equivalence class of \eqrelview. \eqclasssetv denotes the set of equivalence classes of \eqrelview, i.e. $\eqclasssetv := \bigcup_{\state \in \states}\{\eqclassv\}$.
 
 \subsection{Formal Definition}
 
-The definition of a \viewN is dependent on a given MDP and a \grpfctN $\grpfct$. We derive the equivalence relation \eqrelview as in Definition \ref{def:eqrelview} and use its equivalence classes \eqclassv{s} ($\state \in \states$) as states for the \viewN. The rest of the \chosengraphtypeN is structured accordingly.
+The definition of a \viewN is dependent on a given MDP and a \grpfctN $\grpfct$. We derive the equivalence relation \eqrelview as in Definition \ref{def:eqrelview} and use its equivalence classes \eqclassv ($\state \in \states$) as states for the \viewN. The rest of the \chosengraphtypeN is structured accordingly.
 
 
 \begin{definition}
@@ -38,16 +38,26 @@ The definition of a \viewN is dependent on a given MDP and a \grpfctN $\grpfct$.
 	Let \chgph = \chgphtuple be \chosengraphtypeN and $\grpfct$ a \grpfctN. A \emph{\viewN} is \chosengraphtypeN $\view = \chgphtupledist$ that is derived from \mdp with the \grpfctN $\grpfct$ where
 	
 	\begin{itemize}
-			\item $\states' = \{ \eqclass{\state}{\eqrelview} \mid \state \in \states \}$
+			\item $\states' = \{ \eqclass{\state}{\eqrelview} \mid \state \in \states \} = \eqclasssetv$
 			%\eqclass{s}
 			
 			\item $\actions' = \actions$
 			
-			\redcomment{\item $\trans' = \{ (\eqclassv{\state_1}, \action, \eqclassv{\state_2}) \mid \exists \state_1 \in \eqclassv{\state_1} \exists \state_2 \in \eqclassv{\state_2} : (\eqclassv{\state_1}, \action, \eqclassv{\state_2}) \in \trans\}$}%\subseteq \states' \times \actions' \times \states'$
+			%\redcomment{\item $\trans' = \{ (\eqclassv[\state_1], \action, \eqclassv[\state_2]) \mid \exists \state_1 \in \eqclassv[\state_1] \exists \state_2 \in \eqclassv[\state_2] : (\eqclassv[\state_1], \action, \eqclassv[\state_2]) \in \trans\}$}%\subseteq \states' \times \actions' \times \states'$
 			
-			\item $\init' = \{\eqclassv{\state'} \in \states' \mid \exists \state \in \eqclassv{\state'} : \state \in \init \}$
+			\item $\probtfunc : \eqclasssetv \times \actions \times \eqclasssetv \to [0,1]$ with 
+			\[ 
+			\probtfunc'(\eqclassv[\state_1], \action, \eqclassv[\state_2]) = \frac{1}{|\eqclassv[\state_1]|}\bbigsum{\substack{\state_a \in \eqclassv[\state_1], \\ \state_b \in \eqclassv[\state_2]}}\probtfunc(\state_a, \action, \state_b) 
+			\]
 			
-			\item $\labelingfct': \states' \to \powerset{\atomicprops}, \eqclassv{\state}\mapsto \bigcup_{\state \in \eqclassv{\state}} \{\labelingfct(\state)\}$
+			%\{\eqclassv[\state'] \in \states' \mid \exists \state \in \eqclassv[\state'] : \state \in \init \}$
+			
+			\item $\initdistrib' : \eqclasssetv \to [0,1]$ with 
+			\[
+			\initdistrib'(\eqclassv) = \bbigsum{\state \in \eqrelview} \initdistrib(\state)
+			\]
+						
+			\item $\labelingfct': \states' \to \powerset{\atomicprops}, \eqclassv\mapsto \bigcup_{\state \in \eqclassv} \{\labelingfct(\state)\}$
 			
 		\end{itemize}
 	
@@ -57,30 +67,57 @@ The definition of a \viewN is dependent on a given MDP and a \grpfctN $\grpfct$.
 	\label{def:view}	
 \end{definition}
 
-The identifier \viewppty is inherited from $\grpfct$ to \view. It thereby uniquely determines \view and declares that \view is based on $\grpfct$. Based on denotes that $\grpfct$ is the \grpfctN of \view referred to in Definition \ref{def:view}.
-
-Note that the definition is in a most general form in the sense that if in a \viewN a property accounts to one piece of some entity the whole entity receives the property i.e. 
+The identifier \viewppty is inherited from $\grpfct$ to \view. The identifier declares that $\grpfct$ is the \grpfctN of \view and thereby also uniquely determines \view. Note that the definition is in a most general form in the sense that if in a \viewN a property accounts to one piece of some entity the whole entity receives the property i.e. 
 \begin{itemize}	
-	\item $(\state_1, \action, \state_2) \in \trans \impr (\eqclassv{\state_1}, \action, \eqclassv{\state_2}) \in \trans'$
-	\item $\state \in \init \impr \eqclassv{\state} \in \initdistrib'$
-	\item $\forall \state \in \states : \labelingfct(\state) \in \labelingfct'(\eqclassv{\state})$
-	%	$\labelingfct(\state) =: \atomicprop \impr \atomicprop \in \labelingfct(\eqclassv{\state})$
+	\item $(\state_1, \action, \state_2) \in \trans \impr (\eqclassv[\state_1], \action, \eqclassv[\state_2]) \in \trans'$
+	\item $\state \in \init \impr \eqclassv \in \initdistrib'$
+	\item $\forall \state \in \states : \labelingfct(\state) \in \labelingfct'(\eqclassv)$
+	%	$\labelingfct(\state) =: \atomicprop \impr \atomicprop \in \labelingfct(\eqclassv)$
 \end{itemize}
+
+\redcomment{other versions feasible??}
+
 
 \subsection{Composition of Views}
 In essence views are simplification generated from \chosengraphtypeN. It seems rather obvious that the composition of views is a very practical feature. Therefore in this chapter we will introduce, formalize and discuss different notions of compositions. All variants will ensure that the effect caused by each partaking views also takes effect in the composed view. Moreover it is to be generated in a way that the effect of each individual view can be reverted from the composed one. There may be restrictions in the order of removal.
 
 \subsubsection{\parllcompNCC}
-One of the most uncomplicated ideas is to group states that match in the function value of all given \grpfctN s. This idea is parallel in the sense that a set of \grpfctN is combined to a new \grpfctN in one single step.
+One of the most uncomplicated ideas is to group states that match in the function value of all given \grpfctsN. This idea is parallel in the sense that a set of \grpfctN is combined to a new \grpfctN in one single step.
 \begin{definition}
-	Let $\grpfct[1], \grpfct[2], \dots, \grpfct[n]$ be \grpfctN s. A \emph{parallel composed \grpfctN} is a \grpfctN $\grpfct_{\grpfct[1] \pll \grpfct[2] \pll \dots \pll \grpfct[n]}: \states \to \arbset$, $\state \mapsto (\grpfct[1](\state), \grpfct[2](\state), \dots, \grpfct[n](\state))$.
+	Let $\grpfct[\viewppty_1], \grpfct[\viewppty_2], \dots, \grpfct[\viewppty_n]$ be \grpfctsN. A \emph{parallel composed \grpfctN} is a \grpfctN $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n}]: \states \to \arbset$ with
+	\[
+	\state \mapsto (\grpfct[\viewppty_1](\state), \grpfct[\viewppty_2](\state), \dots, \grpfct[\viewppty_n](\state))
+	\] 
+	The respective parallel composed view is denoted with $\view[\viewppty_1 \pll \viewppty_2 \pll \dots \pll 
+	\viewppty_n]$.
 		
 \end{definition}
 
-A view of such a grouping function is as usual created in in accordance with Definition \ref{def:view}. Furthermore it is obvious that the effect of a view is considered in the new grouping function and hence the view.
-Since we define a new grouping function, the given ones and its views are retained. \\
-The operator \pll used in the definition is derived from the operator used in electric circuits, when the respective elements are connected in parallel. \\
-If we want to speak about this grouping function in a general way, where it is only of importance that we refer to this type of composition and the given \grpfctN s are of no importance, we will denote a \emph{\parllcompN \grpfctN} with $\grpfct[\pll]$. \\
+
+The operator \pll used in the definition is inspired from the operator used in electric circuits, when the respective elements are connected in parallel.
+
+If we want to speak about this grouping function in a general way, where it is only of importance that we refer to this type of composition and the given \grpfctsN are of no importance, we will denote a \emph{\parllcompN \grpfctN} with $\grpfct[\pll]$.
+
+When talking about the function values of $\grpfct[\pll]$ which are tuples we associate the tuples $(a, (b, c))$ and $((a, b), c)$. That is we consider them equal: $(a, (b, c)) = ((a, b), c)$. This is because It is to note that the parallel composition is associative when associating pairs of the  . Let $\grpfct[a], \grpfct[b], \grpfct[c]$ be \grpfctsN. It is
+\begin{equation*}
+	\begin{aligned}[c]
+		&\grpfct[a \pll b] = (\grpfct[a], \grpfct[b]) \\
+		&\grpfct[(a \pll b) \pll c] = ((\grpfct[a], \grpfct[b]), \grpfct[c])
+	\end{aligned}
+	\quad\quad\quad\quad\quad\quad
+	\begin{aligned}[c]
+		&\grpfct[b \pll c] = (\grpfct[b], \grpfct[c]) \\
+		&\grpfct[a \pll (b \pll c)] = (\grpfct[a], (\grpfct[b], \grpfct[c]))\\
+	\end{aligned}					
+\end{equation*}
+
+\[
+\grpfct[a \pll b] = ((\grpfct[a], \grpfct[b]), \grpfct[c]) = (\grpfct[a], (\grpfct[b], \grpfct[c])) = \grpfct[a \pll (b \pll c)]
+\]
+
+The last equation follows by the definition of tuples with nested ordered pairs.
+
+
 
 \redcomment{Other variants missing if existent}
 \redcomment{Subsetapplication missing}

@@ -36,15 +36,20 @@
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
+%\AfterEndEnvironment{definition}{\noindent\ignorespaces}
 
 \theoremstyle{theorem}
 \newtheorem{theorem}{Satz}[section]
+%\AfterEndEnvironment{theorem}{\noindent\ignorespaces}
 
 \theoremstyle{korollary}
 \newtheorem{korollary}{Korollar}[section]
+%\AfterEndEnvironment{korollary}{\noindent\ignorespaces}
 
 \theoremstyle{definition}
 \newtheorem{exmp}{Beispiel}[section]
+%\AfterEndEnvironment{exmp}{\noindent\ignorespaces}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MY MACROS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -93,7 +98,7 @@
 \newcommand{\sccsN}{\nm{SCCs}}
 \newcommand{\bsccN}{\nm{BSCC}}
 \newcommand{\bsccsN}{\nm{BSCCs}}
-\newcommand{\jgrapht}{jGraphtT}
+\newcommand{\jgrapht}{\nm{jGraphtT}}
 
 \newcommand{\outactident}{\nm{OutActionsIdent}}
 
@@ -108,14 +113,15 @@
 % CORE DEFINITIONS
 \newcommand{\grpfct}[1][\viewppty]{\mt{F_{#1}}}
 \newcommand{\eqrelview}{\mt{R}}
-\newcommand{\eqclassv}[1]{\mt{\eqclass{#1}{\eqrelview}}}
+\newcommand{\eqclassv}[1][\state]{\mt{\eqclass{#1}{\eqrelview}}}
+\newcommand{\eqclasssetv}[1][\states]{\eqclassv[{#1}]} %OLD: \bigcup_{\state \in \states} \eqclassv
 \newcommand{\viewid}{\mt{\mdp}}
 \newcommand{\view}[1][\viewppty]{\mt{\viewid_{#1}}}
 \newcommand{\imggrp}{\mt{\arbset}}
 \newcommand{\viewppty}{\mt{\theta}}
 \newcommand{\pll}{\mt{||}}
 \newcommand{\remstates}{\mt{\bigcup_{\state \in \states \setminus \states_1}\{\{\state\}\}}}
-\newcommand{\remelem}{\mt{\state}}
+\newcommand{\remelem}{\mt{\bot}}
 \newcommand{\remset}{\mt{\states}}
 
 %\newcommand{\mdp}{def}\mdp
@@ -139,12 +145,12 @@
 \newcommand{\gfctspaninaction}{\mt{\grpfct[\numinactb\leq\inact\leq\numinact]}}
 \newcommand{\gfctstronginactident}{\mt{\grpfct[\inacts(\state)_=]}}
 \newcommand{\gfctweakinactident}{\mt{\grpfct[\inacts(\state)_\approx]}}
-\newcommand{\gfctparamvalueseq}{\mt{\grpfct[\param = \paramval]}}
-\newcommand{\gfctparamvaluesneq}{\mt{\grpfct[\param \neq \paramval]}}
-\newcommand{\gfctparamdnf}{\mt{\grpfct[ParDNF]}}
-\newcommand{\gfctparamcnf}{\mt{\grpfct[ParCNF]}}
-\newcommand{\gfctparamvalueseqopt}[1][\paramval]{\mt{\grpfct[\param = #1]}}
-\newcommand{\gfctparamvalident}{\mt{\grpfct[\parameval(\state,\param)]}}
+\newcommand{\gfctparamvalueseq}{\mt{\grpfct[\var = \varval]}}
+\newcommand{\gfctparamvaluesneq}{\mt{\grpfct[\var \neq \varval]}}
+\newcommand{\gfctparamdnf}{\mt{\grpfct[VarDNF]}}
+\newcommand{\gfctparamcnf}{\mt{\grpfct[VarCNF]}}
+\newcommand{\gfctparamvalueseqopt}[1][\varval]{\mt{\grpfct[\var = #1]}}
+\newcommand{\gfctparamvalident}{\mt{\grpfct[\vareval(\state,\var)]}}
 \newcommand{\gfctdistance}{\mt{\grpfct[\distance]}}
 \newcommand{\gfcthascycle}{\mt{\grpfct[\exists\cycle]}}
 \newcommand{\gfctexactcycle}{\mt{\grpfct[\{\cycle\}]}}
@@ -167,11 +173,11 @@
 \newcommand{\viewspaninaction}{\mt{\view[\numinactb\leq\inact\leq\numinact]}}
 \newcommand{\viewstronginactident}{\mt{\view[\inacts(\state)_=]}}
 \newcommand{\viewweakinactident}{\mt{\view[\inacts(\state)_\approx]}}
-\newcommand{\viewparamvalueseq}{\mt{\view[\param = \paramval]}}
-\newcommand{\viewparamvaluesneq}{\mt{\view[\param \neq \paramval]}}
-\newcommand{\viewparamdnf}{\mt{\view[ParDNF]}}
-\newcommand{\viewparamcnf}{\mt{\view[ParCNF]}}
-\newcommand{\viewparamvalident}{\mt{\view[\parameval(\state,\param)]}}
+\newcommand{\viewparamvalueseq}{\mt{\view[\var = \varval]}}
+\newcommand{\viewparamvaluesneq}{\mt{\view[\var \neq \varval]}}
+\newcommand{\viewparamdnf}{\mt{\view[VarDNF]}}
+\newcommand{\viewparamcnf}{\mt{\view[VarCNF]}}
+\newcommand{\viewparamvalident}{\mt{\view[\vareval(\state,\var)]}}
 \newcommand{\viewdistance}{\mt{\view[\distance]}}
 \newcommand{\viewhascycle}{\mt{\view[\exists\cycle]}}
 \newcommand{\viewexactcycle}{\mt{\view[\{\cycle\}]}}
@@ -219,12 +225,12 @@
 \newcommand{\inacts}{\mt{\overleftarrow{\actions}}}
 
 %%Parameters
-\newcommand{\params}{\mt{Par}}
-\newcommand{\param}{\mt{x}}
-\newcommand{\paramstate}[1][]{\mt{\param_{\state#1}}}
-\newcommand{\paramval}{\mt{a}}
-\newcommand{\parameval}{\mt{ParEval}}
-\newcommand{\paramevalimg}{\mt{\arbset}}
+\newcommand{\vars}{\mt{Var}}
+\newcommand{\var}{\mt{x}}
+\newcommand{\varstate}[1][]{\mt{\var_{\state#1}}}
+\newcommand{\varval}{\mt{a}}
+\newcommand{\vareval}{\mt{VarEval}}
+\newcommand{\varevalimg}{\mt{\arbset}}
 \newcommand{\someparam}{\mt{\tilde{x}}}
 \newcommand{\eqorneq}{\mt{\;\doteqdot\;}}
 

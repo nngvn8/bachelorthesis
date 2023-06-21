@@ -19,7 +19,7 @@ One of the least involved approaches to create a view is to base it on the atomi
 The grouping function is exactly the labeling function i.e. for all $\state \in \states$ it is $\gfctatomicprops(\state) = \labelingfct(\state)$. So it is $\gfctatomicprops(\state_1) = \gfctatomicprops(\state_2) \iff \labelingfct(\state_1) = \labelingfct(\state_2)$. According to Definition \ref{def:eqrelview} for $\smstate \in \states$ it is $\eqclassv{\smstate} = \{\state \in \states \mid \labelingfct(\state) = \labelingfct(\smstate)\}$.
 %$\forall \state_1, \state_2 \in \states :
 
-By this we obtain the \viewN $\viewatomicprops$ for a given \chosengraphtypeN \chgph where: $\states' = \bigcup_{\state \in \states} \{\eqclassv{\state}\} =  \bigcup_{a \in \atomicprops} \{\{\state \in \states \mid \labelingfct(\state) = a\}\}$. All other components are constructed as in Definition \ref{def:view}.
+By this we obtain the \viewN $\viewatomicprops$ for a given \chosengraphtypeN \chgph where: $\states' = \bigcup_{\state \in \states} \{\eqclassv\} =  \bigcup_{a \in \atomicprops} \{\{\state \in \states \mid \labelingfct(\state) = a\}\}$. All other components are constructed as in Definition \ref{def:view}.
 
 \redcomment{tikz example}
 
@@ -42,12 +42,12 @@ An a little more involved idea than directly using a given function is to utiliz
 
 For $\state_1,\state_2 \in \states$ it is $\gfctinitstates(\state_1) = \gfctinitstates(\state_2)$ \iffN $\state_1, \state_2 \in \initstates$ or $\state_1 = \state_2$. According to Definition \ref{def:eqrelview} it is 
 \begin{align*}
-	\eqclassv{\state} &= \{\state \in \states \mid \gfctinitstates(\state) = \emptyset\} &\text{for } \state \in \initstates \text{ and} \\
-	\eqclassv{\state} &= \{\state \in \states \mid \gfctinitstates(\state) = \{\state\} \} = \{\state\} &\text{for } \state \notin \initstates.
+	\eqclassv &= \{\state \in \states \mid \gfctinitstates(\state) = \emptyset\} &\text{for } \state \in \initstates \text{ and} \\
+	\eqclassv &= \{\state \in \states \mid \gfctinitstates(\state) = \{\state\} \} = \{\state\} &\text{for } \state \notin \initstates.
 \end{align*}
 
 
-By this we obtain the \viewN $\viewinitstates$ for a given \chosengraphtypeN \chgph where: $\states' = \bigcup_{\state \in \states} \{\eqclassv{\state}\} = \{\state \in \states \mid \state \in \initstates\}\cup \bigcup_{\state \in \states \setminus \initstates}\{\{\state\}\}$.
+By this we obtain the \viewN $\viewinitstates$ for a given \chosengraphtypeN \chgph where: $\states' = \bigcup_{\state \in \states} \{\eqclassv\} = \{\state \in \states \mid \state \in \initstates\}\cup \bigcup_{\state \in \states \setminus \initstates}\{\{\state\}\}$.
 
 All other components are constructed as in Definition \ref{def:view}.
 
@@ -77,12 +77,12 @@ there exist $\state_{a},\state_{b} \in \states$ with
 $(\state_1, \action, \state_{a}), (\state_2, \action, \state_{b}) \in \trans$ (i.e. they have the same outgoing action \action) or $\state_1 = \state_2$. 
 In accordance with Definition \ref{def:eqrelview} it is
 \begin{align*}
-	\eqclassv{\state} &= \{\state \in \states \mid \gfcthasoutaction(\state) = \action\} &\exists\state' \in \states : (\state, \action, \state') \in \trans \\
-	\eqclassv{\state} &= \{\state \in \states \mid \gfcthasoutaction(\state) = \state\} = \{s\} &\text{ otherwise}
+	\eqclassv &= \{\state \in \states \mid \gfcthasoutaction(\state) = \action\} &\exists\state' \in \states : (\state, \action, \state') \in \trans \\
+	\eqclassv &= \{\state \in \states \mid \gfcthasoutaction(\state) = \state\} = \{s\} &\text{ otherwise}
 \end{align*}
  %if for all $\state' \in \states : (\state,\action,\state') \notin \trans$.
 
-Thereby we obtain the \viewN \viewhasoutaction for a given \chosengraphtypeN \chgph where $\states' = \bigcup_{\state \in \states} \{\eqclassv{\state}\} =: \states_1 \cup \states_2$ where
+Thereby we obtain the \viewN \viewhasoutaction for a given \chosengraphtypeN \chgph where $\states' = \bigcup_{\state \in \states} \{\eqclassv\} =: \states_1 \cup \states_2$ where
 \begin{align*}
 	 \states_1 &:= \{\state \in \states \mid \exists \state' \in \states: (\state, \action, \state') \in \trans\} = \{\state \in \states \mid \state \text{ has outgoing action \action }\} \\
 	\states_2 &:= \remstates.
@@ -118,11 +118,11 @@ The predicate \predminoutact requires that there are transitions with action \ac
 
 For $\state_1,\state_2 \in \states$ it is $\gfctminoutaction(\state_1) = \gfctminoutaction(\state_2)$ \iffN there exist distinct $\state_{a_1}, \dots, \state_{a_\numoutact} \in \states$ and distinct $\state_{b_1}, \dots, \state_{b_\numoutact} \in \states$ so that $(\state_1, \action, \state_{a_1}), \dots, (\state_1, \action, \state_{a_\numoutact}) \in \trans$ and $(\state_2, \action, \state_{b_1}), \dots, (\state_2, \action, \state_{b_\numoutact}) \in \trans$ or $\state_1 = \state_2$. According to Definition \ref{def:eqrelview} it is 
 \begin{align*}
-	\eqclassv{\state} &= \{\state \in \states \mid \gfctminoutaction(\state) = \action\} &\text{if } \predminoutact \\ 
-	\eqclassv{\state} &= \{\state \in \states \mid \gfctminoutaction(\state) = \state\} = \{\state\} &\text{ otherwise}
+	\eqclassv &= \{\state \in \states \mid \gfctminoutaction(\state) = \action\} &\text{if } \predminoutact \\ 
+	\eqclassv &= \{\state \in \states \mid \gfctminoutaction(\state) = \state\} = \{\state\} &\text{ otherwise}
 \end{align*}
 
-By this we obtain the \viewN $\viewminoutaction$ for a given \chosengraphtypeN \chgph where $\states' = \bigcup_{\state \in \states} \{\eqclassv{\state}\} =: \states_1 \cup \states_2$ where 
+By this we obtain the \viewN $\viewminoutaction$ for a given \chosengraphtypeN \chgph where $\states' = \bigcup_{\state \in \states} \{\eqclassv\} =: \states_1 \cup \states_2$ where 
 
 \begin{align*}
 	\states_1 &:= \{\state \in \states \mid \exists \state_1, \dots, \state_\numoutact \in \states: \predminoutact\} \\ %(\state, \action, \state_1), \dots, (\state, \action, \state_\numoutact) \in \trans, |\{\state_1, \dots, \state_\numoutact\}| = \numoutact\} \\ 
@@ -181,11 +181,11 @@ For a given state \state and action \action we set
 for convenience. \formoutact is true  \iffN the number of outgoing actions is in the span. For $\state_1, \state_2 \in \states$ it is $\gfctspanoutaction(\state_1) = \gfctspanoutaction(\state_2)$ \iffN $\formoutact[\state_1] \land \formoutact[\state_2]$ or $\state_1 = \state_2$. Then its equivalence classes are
 
 \begin{align*}
-	\eqclassv{\state} &= \{\state \in \states \mid \gfctspanoutaction(\state) = \action\} &\formoutact \text{ true} \\
-	\eqclassv{\state} &= \{\state \in \states \mid \gfctspanoutaction(\state) = \state\} = \{\state\} &\text{ otherwise}	
+	\eqclassv &= \{\state \in \states \mid \gfctspanoutaction(\state) = \action\} &\formoutact \text{ true} \\
+	\eqclassv &= \{\state \in \states \mid \gfctspanoutaction(\state) = \state\} = \{\state\} &\text{ otherwise}	
 \end{align*}
 
-The new set of states $\states'$ of the view \viewspanoutaction is the union of the equivalence classes of equivalence relation \eqrelview on the set of states \states of the original \chosengraphtypeN. Hence it is $\states' = \bigcup_{\state \in \states} \eqclassv{\state} =: \states_1 \cup \states_2$ where
+The new set of states $\states'$ of the view \viewspanoutaction is the union of the equivalence classes of equivalence relation \eqrelview on the set of states \states of the original \chosengraphtypeN. Hence it is $\states' = \bigcup_{\state \in \states} \eqclassv =: \states_1 \cup \states_2$ where
 
 \begin{align*}
 	\states_1 &:= \{\state \in \states \mid \gfctspanoutaction(\state) = \action\} \\
@@ -209,9 +209,9 @@ Instead of making requirements about states and group them based on whether they
 
 The \grpfctN asserts to each state a set of pairs. Note that a pair is contained int the set for each action $\action \in \actions$. In case there is no outgoing transition from state \state with an action \action it is $(\action, 0) \in \gfctstrongoutactident$. For $\state_1, \state_2 \in \states$ it is $\gfctstrongoutactident(\state_1) = \gfctstrongoutactident(\state_2)$ \iffN $\state_1$ and $\state_2$ are mapped to the same set of pairs. By Definition \ref{def:eqrelview} the obtained equivalence classes of \eqrelview are
 \[
-	\eqclassv{\state} := \{\state \in \states \mid \gfctstrongoutactident(\state) = \{(\action_1, \numoutact_1), \dots, (\action_l, \numoutact_l)\}, l = |\actions|\}
+	\eqclassv := \{\state \in \states \mid \gfctstrongoutactident(\state) = \{(\action_1, \numoutact_1), \dots, (\action_l, \numoutact_l)\}, l = |\actions|\}
 \]
-According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv{\state}$ is the set of states of \viewstrongoutactident. All other components of \viewstrongoutactident are as usual structured in accordance with the Definition \ref{def:view}.
+According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewstrongoutactident. All other components of \viewstrongoutactident are as usual structured in accordance with the Definition \ref{def:view}.
 As mentioned earlier a \outactidentweak variant of the \outactident \viewN is also conceivable.
 
 \begin{definition}
@@ -229,7 +229,7 @@ For $\state_1, \state_2 \in \states$ it is $\gfctweakoutactident(\state_1) = \gf
 \[
 	\eqclassv{\smstate} = \{ \state \in \states \mid \gfctweakoutactident(\state) = \gfctweakoutactident(\smstate) =: \{\action_1, \dots, \action_l\}, l \in \natnums\}.
 \]
-According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv{\state}$ is the set of states of \viewweakoutactident.
+According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewweakoutactident.
 
 \subsubsection{Ingoing Actions}
 Analogously to Outgoing Actions views of utilizing ingoing actions are feasable. Since there is no difference apart from the definitions itself, we only provide the definitions.
@@ -319,59 +319,59 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 	and $\imggrp := \actions$.
 \end{definition}
 
-\subsubsection{Parameters}
-The concept of parameters is not part of the definitions of neither \chosengraphtypesN, MCs or MDPs. Even though, it is of great importance in practical applications. Parameters are used to represent states (in more detail). 
+\subsubsection{Variables}
+The concept of variables is not part of the definitions of neither \chosengraphtypesN, MCs or MDPs. Even though, it is of great importance in practical applications. Variables are used to represent states (in more detail). 
 
-For example an \mdpN could be used to model a computer program with human interaction. Every state of the MDP refers an overall state of the program during execution time. In this state of the program, its variables will have specific values. We may want to retain the information about the variable's values of the program instead of only assigning a state $\state \in \states$ that refers to the state of the program. Variables and its current values are not only relevant to computer programs but also other systems. Many of those other systems rely on some kind of global state during execution, which can be expressed with variables and values assigned to them. Since there exists no explicit component to retain this information the notion of parameters is used to store it.
+For example an \mdpN could be used to model a computer program with human interaction. Every state of the MDP refers an overall state of the program during execution time. In this state of the program, its variables will have specific values. We may want to retain the information about the variable's values of the program instead of only assigning a state $\state \in \states$ that refers to the state of the program. Variables and its current values are not only relevant to computer programs but also other systems. Many of those other systems rely on some kind of global state during execution, which can be expressed with variables and values assigned to them. Since there exists no explicit component to retain this information the notion of variables is used to store it.
 
-\redcomment{OLD: Since transitions systems MCs and MDPs in practice are used to model, analyze and check real world systems it is very practical to not only name states but also describe the properties of the state in more detail. For a basic notion parameters are to be imagined as a set of variables that may have different values in different states thereby describing the characteristics of the state more thoroughly. \purpcomment{ADDED TO OLD: In practice most often they arise naturally for example as variables of a computer program that is to be modeled with an \mdpN.}} 
+\redcomment{OLD: Since transitions systems MCs and MDPs in practice are used to model, analyze and check real world systems it is very practical to not only name states but also describe the properties of the state in more detail. For a basic notion variables are to be imagined as a set of variables that may have different values in different states thereby describing the characteristics of the state more thoroughly. \purpcomment{ADDED TO OLD: In practice most often they arise naturally for example as variables of a computer program that is to be modeled with an \mdpN.}} 
 
-Because of the vast importance in practical applications we will consider some \viewsN that utilize them. To do so and being able to describe them formally we define and formalize the notion of parameters by considering them as a subset of the atomic propositions \atomicprops that is assigned a value by a function.
+Because of the vast importance in practical applications we will consider some \viewsN that utilize them. To do so and being able to describe them formally we define and formalize the notion of variables by considering them as a subset of the atomic propositions \atomicprops that is assigned a value by a function.
 
 \begin{definition}
-	The set $\params \subseteq \atomicprops$ is called \emph{parameters}.
+	The set $\vars$ is called \emph{variables}.
 \end{definition}
 
 \begin{definition}
-	Let \paramevalimg be an arbitrary set. The function $\parameval : \states \times \params \to \paramevalimg$ is called parameter evaluation function.
+	Let \varevalimg be an arbitrary set. The function $\vareval : \states \times \vars \to \varevalimg$ is called variable evaluation function.
 \end{definition} 
 
-Most of the time we will use \parameval to refer to the parameter evaluation function. When we speak about the value of a parameter in a state we refer to the image of $\parameval$ for that state and parameter. The set \paramevalimg is arbitrary so that arbitrary values can be assigned to a parameter. Speaking in terms of computer science and programming this loosens as an example the restriction of only being able to assign numbers and no booleans.
+Most of the time we will use \vareval to refer to the variable evaluation function. When we speak about the value of a variable in a state we refer to the image of $\vareval$ for that state and variable. The set \varevalimg is arbitrary so that arbitrary values can be assigned to a variable. Speaking in terms of computer science and programming this loosens as an example the restriction of only being able to assign numbers and no booleans.
 
-The most apparent idea for a \viewN utilizing parameters is to group states that meet some requirement regarding the values of the parameters.
+The most apparent idea for a \viewN utilizing variables is to group states that meet some requirement regarding the values of the variables.
 
 
-\redcomment{state has parameter not here uptil now because probably not used}
+\redcomment{state has variable not here uptil now because probably not used}
 
 \begin{definition}
 	Let
 	\begin{itemize}
 		\item $\chgph = \chgphtuple$ be \chosengraphtypeN,
-		\item $\param \in \params \subseteq \atomicprops$ and 
-		\item $\parameval(\state, \param) = \paramval$ where $\state \in \states$.		
+		\item $\var \in \vars \subseteq \atomicprops$ and 
+		\item $\vareval(\state, \var) = \varval$ where $\state \in \states$.		
 	\end{itemize} 
 	The view \viewparamvalueseq is defined by its \grpfctN $\gfctparamvalueseq : \states \to \imggrp$ with
 	\[
 	\state \mapsto
 	\begin{cases}
-		\paramval, &\text{if } \parameval(\state, \param) = \paramval\\
+		\varval, &\text{if } \vareval(\state, \var) = \varval\\
 		\remelem, &\text{otherwise}
 	\end{cases}
 	\]
 	where $\imggrp := \remset \cup \{a\}$.
 \end{definition}
 
-The view \viewparamvalueseq groups states that share the same value for a given parameter. For $\state_1, \state_2$ it is $\gfctparamvalueseq(\state_1) = \gfctparamvalueseq(\state_2)$ \iffN $\parameval(\state_1, \param) = \parameval(\state_2, \param)$ or $\state_1 = \state_2$. The obtained equivalence classes are
+The view \viewparamvalueseq groups states that share the same value for a given variable. For $\state_1, \state_2$ it is $\gfctparamvalueseq(\state_1) = \gfctparamvalueseq(\state_2)$ \iffN $\vareval(\state_1, \var) = \vareval(\state_2, \var)$ or $\state_1 = \state_2$. The obtained equivalence classes are
 \begin{align*}
-	\eqclassv{\state} &= \{\state \in \states \mid \parameval(\state, \param) = \paramval\} \\
-	\eqclassv{\state} &= \{\state \in \states \mid \gfctparamvalueseq(\state) = \state\} = \{\state\}
+	\eqclassv &= \{\state \in \states \mid \vareval(\state, \var) = \varval\} \\
+	\eqclassv &= \{\state \in \states \mid \gfctparamvalueseq(\state) = \state\} = \{\state\}
 \end{align*}
 
-The set of states $\states'$ of \viewparamvalueseq is the union of the equivalence classes of \eqrelview. It is $\states' = \bigcup_{\state \in \states} \eqclassv{\state} =: \states_1 \cup \states_2$ where
+The set of states $\states'$ of \viewparamvalueseq is the union of the equivalence classes of \eqrelview. It is $\states' = \bigcup_{\state \in \states} \eqclassv =: \states_1 \cup \states_2$ where
 
 \begin{align*}
-	\states_1 &:= \{\state \in \states \mid \gfctparamvalueseq(\state) = \paramval\} \\
-	&\hspace{1.15mm}= \{\state \in \states  \mid \parameval(\state, \param) = \paramval\} \text{ and} \\
+	\states_1 &:= \{\state \in \states \mid \gfctparamvalueseq(\state) = \varval\} \\
+	&\hspace{1.15mm}= \{\state \in \states  \mid \vareval(\state, \var) = \varval\} \text{ and} \\
 	\states_2 &:= \remstates.
 \end{align*}
 
@@ -381,35 +381,35 @@ Analogously a view that requires inequality instead of equality is feasible.
 	Let
 	\begin{itemize}
 		\item $\chgph = \chgphtuple$ be \chosengraphtypeN,
-		\item $\param \in \params \subseteq \atomicprops$ and 
-		\item $\parameval(\state, \param) \neq \paramval$ where $\state \in \states$.		
+		\item $\var \in \vars \subseteq \atomicprops$ and 
+		\item $\vareval(\state, \var) \neq \varval$ where $\state \in \states$.		
 	\end{itemize} 
 	The view \viewparamvaluesneq is defined by its \grpfctN $\gfctparamvaluesneq : \states \to \imggrp$ with
 	\[
 	\state \mapsto
 	\begin{cases}
-		\paramval, &\text{if } \parameval(\state, \param) \neq \paramval\\
+		\varval, &\text{if } \vareval(\state, \var) \neq \varval\\
 		\remelem, 	&\text{otherwise}
 	\end{cases}
 	\]
 	where $\imggrp := \remset \cup \{a\}$.
 \end{definition}
 
-If states are to be grouped with the requirement of several parameters equaling or not equaling specified values this can be achieved by using \parllcompN. 
+If states are to be grouped with the requirement of several variables equaling or not equaling specified values this can be achieved by using \parllcompN. 
 
-To allow even more flexibility a view can be used that also allows a combination of requirements on parameters in a disjunctive manner. To extend this idea to its full potential we will define a \viewN that allows requirements using a disjunctive normal formal (DNF). To formalize this view more efficiently we will write $\paramstate[,kl] = \paramval$ short for $\parameval(\state, \param_{kl}) = \paramval$ where $k,l \in \natnums$ and $x_{kl} \in \params$. In the same sense we write $\paramstate[,kl] \neq \paramval$. \redcomment{It may be that $x_{ab} = x_{mn}$ for $a,b,m,n \in \natnums$ NOT HAPPY WITH THIS}. We define the symbol \eqorneq to be an element of the set $\{=,\neq\}$. That is to say, whenever it is used each time written it is a representative for either the symbol $=$ or $\neq$. It allows to write one symbol whenever $=$ and $\neq$ could or should be possible. Moreover for this context we consider $(\paramstate[,kl] = \paramval)$ as a literal and $(\paramstate[,kl] \neq \paramval)$ as its negation. We write $(\paramstate[,kl] \eqorneq \paramval)$ for a literal that could be negated or not negated.
+To allow even more flexibility a view can be used that also allows a combination of requirements on variables in a disjunctive manner. To extend this idea to its full potential we will define a \viewN that allows requirements using a disjunctive normal formal (DNF). To formalize this view more efficiently we will write $\varstate[,kl] = \varval$ short for $\vareval(\state, \var_{kl}) = \varval$ where $k,l \in \natnums$ and $x_{kl} \in \vars$. In the same sense we write $\varstate[,kl] \neq \varval$. \redcomment{It may be that $x_{ab} = x_{mn}$ for $a,b,m,n \in \natnums$ NOT HAPPY WITH THIS}. We define the symbol \eqorneq to be an element of the set $\{=,\neq\}$. That is to say, whenever it is used each time written it is a representative for either the symbol $=$ or $\neq$. It allows to write one symbol whenever $=$ and $\neq$ could or should be possible. Moreover for this context we consider $(\varstate[,kl] = \varval)$ as a literal and $(\varstate[,kl] \neq \varval)$ as its negation. We write $(\varstate[,kl] \eqorneq \varval)$ for a literal that could be negated or not negated.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and 
 	\[
-	d(s) = ((\paramstate[,11] \eqorneq \paramval_{11}) \land \dots \land (\paramstate[,1l_1] \eqorneq \paramval_{1l_1})) \lor \dots \lor ((\paramstate[,k1] \eqorneq \paramval_{k1}) \land \dots \land (\paramstate[,kl_k]  \eqorneq \paramval_{kl_k}))
+	d(s) = ((\varstate[,11] \eqorneq \varval_{11}) \land \dots \land (\varstate[,1l_1] \eqorneq \varval_{1l_1})) \lor \dots \lor ((\varstate[,k1] \eqorneq \varval_{k1}) \land \dots \land (\varstate[,kl_k]  \eqorneq \varval_{kl_k}))
 	\]
 	proposition logical formulae in disjunctive normal form where
 	\begin{itemize}
-		\item $\{\param_{kl_i} \mid k \in \natnums, l_i \in \{l_1, \dots l_k\} \subseteq \natnums\} \subseteq \params$ and $\paramstate[,kl_i] = \parameval(\state, \param_{kl_i})$
-		\item $\{\paramval_{kl_i} \mid k \in \natnums, l_i \in \{l_1, \dots l_k\} \subseteq \natnums\} \subseteq \redcomment{\parameval(\states,\params)}$
+		\item $\{\var_{kl_i} \mid k \in \natnums, l_i \in \{l_1, \dots l_k\} \subseteq \natnums\} \subseteq \vars$ and $\varstate[,kl_i] = \vareval(\state, \var_{kl_i})$
+		\item $\{\varval_{kl_i} \mid k \in \natnums, l_i \in \{l_1, \dots l_k\} \subseteq \natnums\} \subseteq \redcomment{\vareval(\states,\vars)}$
 	\end{itemize}
-	The \viewN \viewparamdnf is defined by its \grpfctN $\gfctparamdnf : \states \to \imggrp$ where
+	The \viewN \viewparamdnf is defined by its \grpfctN $\gfctparamdnf : \states \to \imggrp$ with
 	\[
 	\state \mapsto
 	\begin{cases}
@@ -422,7 +422,7 @@ To allow even more flexibility a view can be used that also allows a combination
 \end{definition}
 
 
-The DNF allows us to specify a requirement in disjunctive normal form about parameters. States are mapped to the same value depending on whether or not they meet this requirement.
+The DNF allows us to specify a requirement in disjunctive normal form about variables. States are mapped to the same value depending on whether or not they meet this requirement.
 
 \redcomment{DISCUSSION OF EQUALITY, EQ CLASSES AND RESULTING STATES MISSING}
 
@@ -431,14 +431,14 @@ Analogously a view based on a conjunctive normal formal can be defined that may 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \chosengraphtypeN and 
 	\[
-	c(s) = ((\paramstate[,11] \eqorneq \paramval_{11}) \lor \dots \lor (\paramstate[,1l_1] \eqorneq \paramval_{1l_1})) \land \dots \land ((\paramstate[,k1] \eqorneq \paramval_{k1}) \lor \dots \lor (\paramstate[,kl_k]  \eqorneq \paramval_{kl_k}))
+	c(s) = ((\varstate[,11] \eqorneq \varval_{11}) \lor \dots \lor (\varstate[,1l_1] \eqorneq \varval_{1l_1})) \land \dots \land ((\varstate[,k1] \eqorneq \varval_{k1}) \lor \dots \lor (\varstate[,kl_k]  \eqorneq \varval_{kl_k}))
 	\]
 	proposition logical formulae in disjunctive normal form where
 	\begin{itemize}
-		\item $\{\param_{kl_i} \mid k \in \natnums, l_i \in \{l_1, \dots l_k\} \subseteq \natnums\} \subseteq \params$ and $\paramstate[,kl_i] = \parameval(\state, \param_{kl_i})$
-		\item $\{\paramval_{kl_i} \mid k \in \natnums, l_i \in \{l_1, \dots l_k\} \subseteq \natnums\} \subseteq \redcomment{\parameval(\states,\params)}$
+		\item $\{\var_{kl_i} \mid k \in \natnums, l_i \in \{l_1, \dots l_k\} \subseteq \natnums\} \subseteq \vars$ and $\varstate[,kl_i] = \vareval(\state, \var_{kl_i})$
+		\item $\{\varval_{kl_i} \mid k \in \natnums, l_i \in \{l_1, \dots l_k\} \subseteq \natnums\} \subseteq \redcomment{\vareval(\states,\vars)}$
 	\end{itemize}
-	The \viewN \viewparamcnf is defined by its \grpfctN $\gfctparamcnf : \states \to \imggrp$ where
+	The \viewN \viewparamcnf is defined by its \grpfctN $\gfctparamcnf : \states \to \imggrp$ with
 	\[
 	\state \mapsto
 	\begin{cases}
@@ -452,21 +452,21 @@ Analogously a view based on a conjunctive normal formal can be defined that may 
 
 The only difference from the \viewN \viewparamcnf to the \viewN \viewparamdnf is whether the respective formulae is in conjunctive or disjunctive normal form.\redcomment{CITATION} Since each formulae in conjunctive normal form can tan be transformed to a formulae in disjunctive normal form and vice verse neither on of the \viewsN can perform an action the other can not. Hence there is no difference in expressivity, but there may be one in size. Therefore both views have been implemented and formalized. 
 
-The views discussed before reduce the \chosengraphtypeN in a very precise but also manual manner, because it not only dictates the parameter but also its value. A more general approach is to stipulate only the parameter but not its value. This way states will be grouped that have the same value for that parameter with no regard to the actual value of that parameter. This idea could be achieved with a view based on the \grpfctN $\grpfct_{\gfctparamvalueseqopt[\paramval_1] \pll \dots \pll \gfctparamvalueseqopt[\paramval_n]}$ with $\redcomment{\parameval(\states, \param)} = \{\paramval_1, \dots, \paramval_n\}$ and $|\parameval(\states,\param)| = n$. This grouping function just groups on every possible value for the parameter \param. Since this is \redcomment{not very practical} we define a view that achieves this result in a more direct and more efficient way.
+The views discussed before reduce the \chosengraphtypeN in a very precise but also manual manner, because it not only dictates the variable but also its value. A more general approach is to stipulate only the variable but not its value. This way states will be grouped that have the same value for that variable with no regard to the actual value of that variable. This idea could be achieved with a view based on the \grpfctN $\grpfct[\varval_1 ]$%\pll \dots \pll \gfctparamvalueseqopt[\varval_n]]$ with $\redcomment{\vareval(\states, \var)} = \{\varval_1, \dots, \varval_n\}$ and $|\vareval(\states,\var)| = n$. This grouping function just groups on every possible value for the variable \var. Since this is \redcomment{not very practical} we define a view that achieves this result in a more direct and more efficient way.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \chosengraphtypeN. The view \viewparamvalident is defined by its \grpfctN $\gfctparamvalident : \states \to \imggrp$ with
 	\[
-	\state \mapsto \parameval(\state,\param)
+	\state \mapsto \vareval(\state,\var)
 	\]
-	and $\imggrp := \parameval(\states, \param)$.
+	and $\imggrp := \vareval(\states, \var)$.
 \end{definition}
 
-With this grouping function we directly map to the value of the parameter. Hence for $\state_1, \state_2 \in \states$ it is $\gfctparamvalident(\state_1) = \gfctparamvalident(\state_2)$ \iffN they are mapped to the value $\paramval \in \imggrp$. Hence the equivalence classes of \eqrelview are
+With this grouping function we directly map to the value of the variable. Hence for $\state_1, \state_2 \in \states$ it is $\gfctparamvalident(\state_1) = \gfctparamvalident(\state_2)$ \iffN they are mapped to the value $\varval \in \imggrp$. Hence the equivalence classes of \eqrelview are
 \[
-\eqclassv{\smstate} = \{ \state \in \states \mid \parameval(\state) = \parameval(\smstate)\}.
+\eqclassv{\smstate} = \{ \state \in \states \mid \vareval(\state) = \vareval(\smstate)\}.
 \]
-According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv{\state}$ is the set of states of \viewparamvalident.
+According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewparamvalident.
 
 
 \subsection{Utilizing the MDP Graphstructure}
@@ -497,7 +497,7 @@ Formalizing \viewsN based on cycles requires some formalization of the concept c
 	Let $\chgph = \chgphtuple$ be \chosengraphtypeN. A (simple) \emph{cycle} in \chgph is any sequence \cyclesecfull alternating between states and actions where $n \in \natnums, \{\state_0, \dots, \state_{n-1}\} \subseteq \states$ is a set of distinct states,  $\{\action_0, \dots, \action_{n-1}\} \subseteq \actions$ and for all $i \in \{0, \dots, n-1\}$ it is $(\state_i,\action_i, \state_{i+1 \text{ mod }n}) \in \trans$.
 \end{definition}
 
-When the actions in the cycle are of no further importance, we will omit them only writing a sequence of states. In the following let $\cycle = \cyclesecfull$ be a cycle. For conveniences we will write $\state \in \cycle$ if the state is contained in the cycle \cycle and $\action \in \cycle$ if the action is contained in in the cycle \cycle. \redcomment{only if??} In words we will write a state or action is \emph{on} or \emph{in} the cycle.Let $\cycle_1$ and $\cycle_2$ be cycles. $\cycle_1 \cup \cycle_2 := \{\state \in \states \mid \state \in \cycle_1 \text{ or } \state \in \cycle_2\}$.
+When the actions in the cycle are of no further importance, we will omit them only writing a sequence of states. In the following let $\cycle = \cyclesecfull$ be a cycle. For conveniences we will write $\state \in \cycle$ if the state is contained in the cycle \cycle and $\action \in \cycle$ if the action is contained in in the cycle \cycle. \redcomment{only if??} In words we will write a state or action is \emph{on} or \emph{in} the cycle. Let $\cycle_1$ and $\cycle_2$ be cycles. $\cycle_1 \cup \cycle_2 := \{\state \in \states \mid \state \in \cycle_1 \text{ or } \state \in \cycle_2\}$.
 
 \begin{definition}
 	Let \cycle be an cycle in \chgph and \states be the states set of \chgph. The number $n = |\{\state \in \states \mid \state \in \cycle\}|$ is called the \emph{length} of a cycle. 
@@ -511,7 +511,7 @@ Apart from the formalization of the term cycle and the length of a cycle we will
 
 In a programming like manner we will write $\fctfindcycles(\chgph,n)$ and thereby referring to its returned set. This will be clear from the context.
 
-In practice there exist several cycle finding algorithms. The function $\fctfindcycles(\chgph, n)$ is an abstraction for one of these algorithms being used. The actual implementation relys on algorithms of the jave library jgrapht namely the \redcomment{Algorithm Szwarcfiter and Lauer - $O(V+EC)$ and Tiernan - $O(V.constV)$ CITATION!!}
+In practice there exist several cycle finding algorithms. The function $\fctfindcycles(\chgph, n)$ is an abstraction for one of these algorithms being used. The actual implementation relys on algorithms of the jave library \jgrapht namely the \redcomment{Algorithm Szwarcfiter and Lauer - $O(V+EC)$ and Tiernan - $O(V.constV)$ CITATION!!}
 
 With the formalization done we will introduce some views utilizing the concept cycles. For one we will combine the notion cycle with domain specific knowledge for the other we will consider how and why cycles in MDPs are in general of relevance. We will begin with the latter.  Cycles in general are of interest because they pose the risk of getting stuck in endless loops, when performing actions on the \mdpN. \redcomment{Model checking is one of the most relevant actions on \chosengraphtypesN that are vulnerable to loops. They are performed commonly on them.} Therefore a \viewN that simply finds existing cycles is feasible.
 
