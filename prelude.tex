@@ -119,9 +119,11 @@
 \newcommand{\remstates}{\mt{\bigcup_{\state \in \states \setminus \states_1}\{\{\state\}\}}}
 \newcommand{\remelem}{\mt{\bot}}
 \newcommand{\remset}{\mt{\{\bot\}}}
+\newcommand{\gfctpll}{\mt{\grpfct[\pll]}}
 
 %\newcommand{\mdp}{def}\mdp
 %\newcommand{\mdpdef}
+
 
 
 % EXAMPLE VIEWS
@@ -181,27 +183,6 @@
 \newcommand{\viewscc}{\mt{\view[scc]}}
 \newcommand{\viewbscc}{\mt{\view[bscc]}}
 
-
-%\newcommand{\viewatomicprops}{\mt{\view{\gfctatomicprops}}}
-%\newcommand{\viewinitstates}{\mt{\view{\gfctinitstates}}}
-%\newcommand{\viewhasoutaction}{\mt{\view{\gfcthasoutaction}}}
-%\newcommand{\viewminoutaction}{\mt{\view{\gfctminoutaction}}}
-%\newcommand{\viewmaxoutaction}{\mt{\view{\gfctmaxoutaction}}}
-%\newcommand{\viewspanoutaction}{\mt{\view{\gfctspanoutaction}}}
-%\newcommand{\viewstrongoutactident}{\mt{\view{\gfctstrongoutactident}}}
-%\newcommand{\viewweakoutactident}{\mt{\view{\gfctweakoutactident}}}
-%\newcommand{\viewhasinaction}{\mt{\view{\gfcthasinaction}}}
-%\newcommand{\viewmininaction}{\mt{\view{\gfctmininaction}}}
-%\newcommand{\viewmaxinaction}{\mt{\view{\gfctmaxinaction}}}
-%\newcommand{\viewspaninaction}{\mt{\view{\gfctspaninaction}}}
-%\newcommand{\viewstronginactident}{\mt{\view{\gfctstronginactident}}}
-%\newcommand{\viewweakinactident}{\mt{\view{\gfctweakinactident}}}
-%\newcommand{\viewparamvalueseq}{\mt{\view{\gfctparamvalueseq}}}
-%\newcommand{\viewparamvaluesneq}{\mt{\view{\gfctparamvaluesneq}}}
-%\newcommand{\viewparamdnf}{\mt{\view{\gfctparamdnf}}}
-%\newcommand{\viewparamcnf}{\mt{\view{\gfctparamcnf}}}
-%\newcommand{\viewparamvalident}{\mt{\view{\gfctparamvalident}}}
-
 %actions
 \newcommand{\numoutact}{\mt{n}}
 \newcommand{\numoutactb}{\mt{m}}
@@ -221,11 +202,11 @@
 \newcommand{\inacts}{\mt{\overleftarrow{\actions}}}
 
 %%Parameters
-\newcommand{\vars}{\mt{Var}}
+\newcommand{\vars}{\mt{V\!ar}}
 \newcommand{\var}{\mt{x}}
 \newcommand{\varstate}[1][]{\mt{\var_{\state#1}}}
 \newcommand{\varval}{\mt{a}}
-\newcommand{\vareval}{\mt{VarEval}}
+\newcommand{\vareval}{\mt{V\!arEval}}
 \newcommand{\varevalimg}{\mt{\arbset}}
 \newcommand{\someparam}{\mt{\tilde{x}}}
 \newcommand{\eqorneq}{\mt{\;\doteqdot\;}}

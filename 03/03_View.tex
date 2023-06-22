@@ -98,18 +98,18 @@ One of the most uncomplicated ideas is to group states that match in the functio
 
 The operator \pll used in the definition is inspired from the operator used in electric circuits, when the respective elements are connected in parallel.
 
-If we want to speak about this grouping function in a general way, where it is only of importance that we refer to this type of composition and the given \grpfctsN are of no importance, we will denote a \emph{\parllcompN \grpfctN} with $\grpfct[\pll]$.
+If we want to speak about this grouping function in a general way, where it is only of importance that we refer to this type of composition and the given \grpfctsN are of no importance, we will denote a \emph{\parllcompN \grpfctN} with \gfctpll.
 
-The operator \pll in $\grpfct[\pll]$ is associative with respect to the grouped states. That is exactly the same states are grouped no matter where parenthesis are put.
+The operator \pll in \gfctpll is associative with respect to the grouped states. That is exactly the same states are grouped no matter where parenthesis are put.
 \begin{proposition}
-	Let $\grpfct[u], \grpfct[v], \grpfct[w]$ be \grpfctsN. For all $\state_1, \state_2 \in \states$ it holds that
+	Let $\grpfct[u], \grpfct[v], \grpfct[w]$ be \grpfctsN and \states a set of states. For all $\state_1, \state_2 \in \states$ it holds that
 	\[
 	\grpfct[(u \pll v) \pll w](\state_1) = \grpfct[(u \pll v) \pll w](\state_2) \iff \grpfct[u \pll (v \pll w)](\state_1) = \grpfct[u \pll (v \pll w)](\state_2)
 	\]
 \end{proposition}
 
 \begin{proof}
-Let $\grpfct[u], \grpfct[v], \grpfct[w]$ be \grpfctsN and a \states a set of states with $\state \in \states$. It is
+Let $\grpfct[u], \grpfct[v], \grpfct[w]$ be \grpfctsN and \states a set of states with $\state \in \states$. It is
 \begin{equation*}
 	\begin{aligned}[c]
 		&\grpfct[u \pll v](\state) = (\grpfct[u](\state), \grpfct[v](\state)) \\
@@ -127,13 +127,14 @@ Let $\state_1, \state_2 \in \states$ be arbitrary. Moreover let %$\grpfct[((u \p
 \begin{equation*}
 	\begin{aligned}[c]
 		&\grpfct[(u \pll v) \pll w](\state_1) =: ((a,b),c) \text{ and} \\
-		&\grpfct[(u \pll v) \pll w](\state_2) =: ((x, y), z) \text{,}
+		&\grpfct[(u \pll v) \pll w](\state_2) =: ((x, y), z) \text{.}
 	\end{aligned}
-	\quad\quad\quad\text{then it is}\quad\quad\quad
+	\quad\quad\text{Then it is}\quad\quad
 	\begin{aligned}[c]
 		&\grpfct[u \pll (v \pll w)](\state_1) = (a, (b, c)) \text{ and} \\
 		&\grpfct[u \pll (v \pll w)](\state_2) = (x, (y, z)).
-	\end{aligned}					
+	\end{aligned}
+	\quad\quad\quad				
 \end{equation*}
 
 \noindent
@@ -153,6 +154,34 @@ This is because
 \end{align*}
 \end{proof}
 
+The operator \pll in \gfctpll is also commutative with respect of the states being grouped.
+
+\begin{proposition}
+	Let $\grpfct[u]$ and $\grpfct[v]$ be \grpfctsN and \states a set of states. For all $\state_1, \state_2 \in \states$ it holds that
+	\[
+	\grpfct[u \pll v](\state_1) = \grpfct[u \pll v](\state_2) \iff \grpfct[v \pll u](\state_1) = \grpfct[v \pll u](\state_2)
+	\]
+\end{proposition}
+
+\begin{proof}
+Let $\grpfct[u]$ and $\grpfct[v]$ be \grpfctsN, $\state_1, \state_2 \in \states$ and
+\begin{align*}
+	\grpfct[u \pll v](\state_1) &= (\grpfct[u](\state_1), \grpfct[v](\state_1)) =: (a, b) \\
+	\grpfct[u \pll v](\state_2) &= (\grpfct[u](\state_2), \grpfct[v](\state_2)) =: (x, y)			
+\end{align*}
+Then it is
+\begin{align*}
+	\grpfct[v \pll u](\state_1) &= (\grpfct[v](\state_1), \grpfct[u](\state_1)) = (b, a) \\
+	\grpfct[v \pll u](\state_2) &= (\grpfct[v](\state_2), \grpfct[u](\state_2)) = (y, x)
+\end{align*}
+It follows that
+\[
+	\grpfct[u \pll v](\state_1) = \grpfct[u \pll v](\state_2) \iff \grpfct[v \pll u](\state_1) = \grpfct[v \pll u](\state_2)
+\]
+because $(a, b) = (x, y) \iff a = x \,\, \land \,\, b = y \iff (b, a) = (y, x)$.
+
+	
+\end{proof}
 
 
 \redcomment{Other variants missing if existent}
