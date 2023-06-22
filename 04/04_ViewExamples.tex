@@ -9,19 +9,19 @@ When considering \viewsN we only want into account those that utilize properties
 \subsection{Views Utilizing MDP Components}
 In this subsection we will introduce some views the are purely based on the components of an \mdpN. Their will neither be computations on the graph-structure of an MDP nor computations using the result vector.
 \subsubsection{Atomic Propositions}
-One of the least involved approaches to create a view is to base it on the atomic propositions that can be assigned to each state by the labeling function. The notion is to group states that were assigned the same set of atomic propositions. \redcomment{Why useful?, currently no "has AP" -> maybe should be added}
+One of the least involved approaches to create a view is to base it on the atomic propositions that are assigned to each state by the labeling function. The notion is to group states that were assigned the same set of atomic propositions. \redcomment{Why useful?, currently no "has AP" -> maybe should be added}
 
 
 \begin{definition}	
 	Let $\chgph = \chgphtuple$ be \chosengraphtypeN. The view \viewatomicprops is defined by its grouping function \gfctatomicprops \grpfctN with $\gfctatomicprops : \states \to \imggrp, {\state}\mapsto{\labelingfct(\state)}$.
 \end{definition}
 
-The grouping function is exactly the labeling function i.e. for all $\state \in \states$ it is $\gfctatomicprops(\state) = \labelingfct(\state)$. So it is $\gfctatomicprops(\state_1) = \gfctatomicprops(\state_2) \iff \labelingfct(\state_1) = \labelingfct(\state_2)$. According to Definition \ref{def:eqrelview} for $\smstate \in \states$ it is $\eqclassv{\smstate} = \{\state \in \states \mid \labelingfct(\state) = \labelingfct(\smstate)\}$.
+The grouping function is exactly the labeling function i.e. for all $\state \in \states$ it is $\gfctatomicprops(\state) := \labelingfct(\state)$. So it is $\gfctatomicprops(\state_1) = \gfctatomicprops(\state_2) \iff \labelingfct(\state_1) = \labelingfct(\state_2)$. According to Definition \ref{def:eqrelview} for $\smstate \in \states$ it is $\eqclassv[\smstate] = \{\state \in \states \mid \labelingfct(\state) = \labelingfct(\smstate)\}$.
 %$\forall \state_1, \state_2 \in \states :
 
 By this we obtain the \viewN $\viewatomicprops$ for a given \chosengraphtypeN \chgph where: $\states' = \bigcup_{\state \in \states} \{\eqclassv\} =  \bigcup_{a \in \atomicprops} \{\{\state \in \states \mid \labelingfct(\state) = a\}\}$. All other components are constructed as in Definition \ref{def:view}.
 
-\redcomment{tikz example}
+Although this view might seem rather simple because it is only performs $\gfctatomicprops := \labelingfct$ it is the most powerful one of all the views that will be shown later on. This is because every view presented in the following is reducible to this one. That is because a \grpfctN essentially asserts an atomic proposition to every state, namely the value in respect to the considered property of a given view. The reduction can be realized by replacing the labeling function with the grouping function of the resepective view. That is $\labelingfct := \grpfct$ and $\atomicprops := \redcomment{\grpfct(\states)}$ for some \grpfctN \grpfct.
 
 \subsubsection{Initial States}
 An a little more involved idea than directly using a given function is to utilize the set of initial states. We can group states that have a probability greater zero, that they are started from. In practice this might be useful to quickly find all initial states.

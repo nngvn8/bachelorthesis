@@ -36,21 +36,17 @@
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[section]
+\newtheorem{exmp}{Beispiel}[section]
 %\AfterEndEnvironment{definition}{\noindent\ignorespaces}
 
 \theoremstyle{theorem}
 \newtheorem{theorem}{Satz}[section]
+\newtheorem{proposition}{Proposition}[section]
 %\AfterEndEnvironment{theorem}{\noindent\ignorespaces}
 
 \theoremstyle{korollary}
 \newtheorem{korollary}{Korollar}[section]
 %\AfterEndEnvironment{korollary}{\noindent\ignorespaces}
-
-\theoremstyle{definition}
-\newtheorem{exmp}{Beispiel}[section]
-%\AfterEndEnvironment{exmp}{\noindent\ignorespaces}
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MY MACROS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %formatting
@@ -119,10 +115,10 @@
 \newcommand{\view}[1][\viewppty]{\mt{\viewid_{#1}}}
 \newcommand{\imggrp}{\mt{\arbset}}
 \newcommand{\viewppty}{\mt{\theta}}
-\newcommand{\pll}{\mt{||}}
+\newcommand{\pll}{\mt{\;\!||\;\!}}
 \newcommand{\remstates}{\mt{\bigcup_{\state \in \states \setminus \states_1}\{\{\state\}\}}}
 \newcommand{\remelem}{\mt{\bot}}
-\newcommand{\remset}{\mt{\states}}
+\newcommand{\remset}{\mt{\{\bot\}}}
 
 %\newcommand{\mdp}{def}\mdp
 %\newcommand{\mdpdef}
@@ -211,7 +207,7 @@
 \newcommand{\numoutactb}{\mt{m}}
 \newcommand{\numinact}{\mt{n}}
 \newcommand{\numinactb}{\mt{m}}
-\newcommand{\setoutact}{\mt{\actions \cup \states}}
+\newcommand{\setoutact}{\mt{\actions \cup \remset}}
 
 \newcommand{\predmaxoutact}[1][\numoutact]{\mt{Q_{\outact\leq#1}(\state,\state_1, \dots, \state_{#1+1})}}
 \newcommand{\predminoutact}[1][\numoutact]{\mt{Q_{#1\leq\outact}(\state,\state_1, \dots, \state_{#1})}}

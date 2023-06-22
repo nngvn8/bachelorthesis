@@ -7,18 +7,18 @@
 \section{View}
 Views are the central objective of this thesis. The purpose of a \viewN is to obtain a simplification of a given \chosengraphtypeN.  It is an independent \chosengraphtypeN derived from a given \chosengraphtypeN and represents a (simplified) \viewN on the given one - hence the name. Thereby the original \chosengraphtypeN is retained.
 
-In the preliminaries transition systems and Markov Chains were listed as simpler version of \mdpsN. More specifically transition systems and \mdpsN are special \mdpsN namely that have no probability distribution in each state for each action or no actions. When defining \viewsN it seems feasible to do so for the most general system of the ones of consideration.That is why we will define views on \mdpsN. Only for specific views and their implementation it is to be kept in mind that if they regard an action or the probability distribution of action in a state it is not applicable to transitions systems or MCs respectively. \redcomment{topic init states}
+In the preliminaries transition systems and Markov Chains were listed as simpler version of \mdpsN. Roughly speaking transition systems and \mdpsN are special \mdpsN namely that have no probability distribution in each state for each action or no actions. When defining \viewsN it seems feasible to do so for the most general system of the ones of consideration.That is why we will define views on \mdpsN. Only for specific views and their implementation it is to be kept in mind that if they regard an action or the probability distribution of an action in a state it is not applicable to transitions systems or MCs respectively. \redcomment{topic init states}
 
 \subsection{Grouping Function}
 The conceptional idea of a \viewN is to group states by some criteria and structure the rest of the system accordingly. To formalize the grouping we define a dedicated function.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \chosengraphtypeN an \arbset be and arbitrary set. We call any function $\grpfct : \states \to \imggrp$ a \emph{\grpfctN}. The symbol \viewppty is a unique identifier.
+	Let $\chgph = \chgphtuple$ be \chosengraphtypeN an \arbset be and arbitrary set \redcomment{with $\remelem \in \arbset$}. We call any function $\grpfct : \states \to \imggrp$ a \emph{\grpfctN}. The symbol \viewppty is a unique identifier.
 	
 	\label{def:grpfct}
 \end{definition}
 
-The identifier \viewppty normally hints the objective of the grouping function. Two states are \redcomment{grouped (should be Definition?)} to a new state if and only if the grouping function maps them to the same value. The definition offers an easy way of defining groups of states. It is also very close to the actual implementation later on. The exact mapping depends on the desired grouping. In order to define a new set of states for the \viewN, we define an equivalence relation \eqrelview based on a given grouping function \grpfct.
+The identifier \viewppty normally hints the objective of the grouping function. Two states are \redcomment{grouped (should be Definition?)} to a new state if and only if the grouping function maps them to the same value \redcomment{if that value is not the unique symbol \remelem}. The mapping to the symbol \remelem will be used whenever a state is supposed to be excluded from the grouping. The definition offers an easy way of defining groups of states. It is also very close to the actual implementation later on. The exact mapping depends on the desired grouping. In order to define a new set of states for the \viewN, we define an equivalence relation \eqrelview based on a given grouping function \grpfct.
 
 \begin{definition}
 	Let \grpfct be a grouping function. We define the equivalence relation $\eqrelview :=\{ (\state_1, \state_2) \in \states \times \states \mid \grpfct(\state_1) = \grpfct(\state_2) \neq \bot\} \cup \{(\state, \state)  \mid \state \in \states\}$
@@ -26,7 +26,9 @@ The identifier \viewppty normally hints the objective of the grouping function. 
 	\label{def:eqrelview}
 \end{definition}
 
-\eqrelview is an equivalence relation because it is reflexive, transitive and symmetric. \eqrelview is reflexive because $\{(\state, \state)  \mid \state \in \states\} \subseteq \eqrelview$. Transitivity and symmetry directly convey from the equality relation which is an equivalence relation. We observe that two states $\state_1, \state_2$ are grouped to a new state if and only if $(\state_1, \state_2) \in \eqrelview$ and none of them is mapped to $\bot$. This is the case if and only if $\state_1, \state_2 \in \eqclassv[\state_1] = \eqclassv[\state_2]$ where $\eqclassv[\state_i]$ for $i \in \{1,2\}$ denotes the equivalence class of \eqrelview. \eqclasssetv denotes the set of equivalence classes of \eqrelview, i.e. $\eqclasssetv := \bigcup_{\state \in \states}\{\eqclassv\}$.
+\eqrelview is an equivalence relation because it is reflexive, transitive and symmetric. \eqrelview is reflexive because $\{(\state, \state)  \mid \state \in \states\} \subseteq \eqrelview$. Thus for all states \state it is $(\state, \state) \in \eqrelview$. Therefore for the properties transitivity and symmetry we only consider distinct $\state_1, \state_2 \in \states$. If $\grpfct(\smstate) = \remelem$ with \smstate being one of states $\state_1$ or $\state_2$ it is $(\state_1, \state_2) \notin \eqrelview$. Hence when considering transitivity and symmetry we assume $\grpfct(\state_1), \grpfct(\state_2) \neq \remelem$. If $\grpfct(\state_1) = \grpfct(\state_2)$ it is obviously also $\grpfct(\state_2) = \grpfct(\state_1)$, which means if $(\state_1, \state_2) \in \eqrelview$ it follows that $(\state_2, \state_1) \in \eqrelview$. Hence \eqrelview is symmetric. The property directly conveyed from equality. In the same way transitivity directly conveys from the equality relation to \eqrelview.
+
+We observe that two states $\state_1, \state_2$ are grouped to a new state if and only if $(\state_1, \state_2) \in \eqrelview$. This is the case if and only if $\state_1, \state_2 \in \eqclassv[\state_1] = \eqclassv[\state_2]$ where $\eqclassv[\state_i]$ for $i \in \natnums$ denotes the respective equivalence class of \eqrelview, i.e. $\eqclassv[\smstate] := \{\state \in \states \mid (\state,\smstate) \in \eqrelview\}$. \eqclasssetv denotes the set of all equivalence classes of \eqrelview, i.e. $\eqclasssetv := \bigcup_{\state \in \states}\{\eqclassv\}$.
 
 \subsection{Formal Definition}
 
@@ -84,7 +86,7 @@ In essence views are simplification generated from \chosengraphtypeN. It seems r
 \subsubsection{\parllcompNCC}
 One of the most uncomplicated ideas is to group states that match in the function value of all given \grpfctsN. This idea is parallel in the sense that a set of \grpfctN is combined to a new \grpfctN in one single step.
 \begin{definition}
-	Let $\grpfct[\viewppty_1], \grpfct[\viewppty_2], \dots, \grpfct[\viewppty_n]$ be \grpfctsN. A \emph{parallel composed \grpfctN} is a \grpfctN $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n}]: \states \to \arbset$ with
+	Let $\view[\viewppty_1], \view[\viewppty_2], \dots, \view[\viewppty_n]$ be \viewsN and  $\grpfct[\viewppty_1], \grpfct[\viewppty_2], \dots, \grpfct[\viewppty_n]$ be its \grpfctsN. A \emph{parallel composed \grpfctN} is a \grpfctN $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n}]: \states \to \arbset$ with
 	\[
 	\state \mapsto (\grpfct[\viewppty_1](\state), \grpfct[\viewppty_2](\state), \dots, \grpfct[\viewppty_n](\state))
 	\] 
@@ -98,24 +100,58 @@ The operator \pll used in the definition is inspired from the operator used in e
 
 If we want to speak about this grouping function in a general way, where it is only of importance that we refer to this type of composition and the given \grpfctsN are of no importance, we will denote a \emph{\parllcompN \grpfctN} with $\grpfct[\pll]$.
 
-When talking about the function values of $\grpfct[\pll]$ which are tuples we associate the tuples $(a, (b, c))$ and $((a, b), c)$. That is we consider them equal: $(a, (b, c)) = ((a, b), c)$. This is because It is to note that the parallel composition is associative when associating pairs of the  . Let $\grpfct[a], \grpfct[b], \grpfct[c]$ be \grpfctsN. It is
+The operator \pll in $\grpfct[\pll]$ is associative with respect to the grouped states. That is exactly the same states are grouped no matter where parenthesis are put.
+\begin{proposition}
+	Let $\grpfct[u], \grpfct[v], \grpfct[w]$ be \grpfctsN. For all $\state_1, \state_2 \in \states$ it holds that
+	\[
+	\grpfct[(u \pll v) \pll w](\state_1) = \grpfct[(u \pll v) \pll w](\state_2) \iff \grpfct[u \pll (v \pll w)](\state_1) = \grpfct[u \pll (v \pll w)](\state_2)
+	\]
+\end{proposition}
+
+\begin{proof}
+Let $\grpfct[u], \grpfct[v], \grpfct[w]$ be \grpfctsN and a \states a set of states with $\state \in \states$. It is
 \begin{equation*}
 	\begin{aligned}[c]
-		&\grpfct[a \pll b] = (\grpfct[a], \grpfct[b]) \\
-		&\grpfct[(a \pll b) \pll c] = ((\grpfct[a], \grpfct[b]), \grpfct[c])
+		&\grpfct[u \pll v](\state) = (\grpfct[u](\state), \grpfct[v](\state)) \\
+		&\grpfct[(u \pll v) \pll w](\state) = ((\grpfct[u](\state), \grpfct[v](\state)), \grpfct[w](\state))
 	\end{aligned}
-	\quad\quad\quad\quad\quad\quad
+	\quad\quad\quad\quad\quad
 	\begin{aligned}[c]
-		&\grpfct[b \pll c] = (\grpfct[b], \grpfct[c]) \\
-		&\grpfct[a \pll (b \pll c)] = (\grpfct[a], (\grpfct[b], \grpfct[c]))\\
+		&\grpfct[v \pll w](\state) = (\grpfct[v](\state), \grpfct[w](\state)) \\
+		&\grpfct[u \pll (v \pll w)](\state) = (\grpfct[u](\state), (\grpfct[v](\state), \grpfct[w](\state))\\
+	\end{aligned}					
+\end{equation*}
+\\
+\noindent
+Let $\state_1, \state_2 \in \states$ be arbitrary. Moreover let %$\grpfct[((u \pll v) \pll w)](\state_1) =: ((a,b),c)$ and $\grpfct[u \pll (v \pll w)](\state_1) =: ((x, y), z)$, then $\grpfct[u \pll (v \pll w)](\state_1) = (a, (b, c))$ and $\grpfct[u \pll (v \pll w)](\state_2) = (x, (y, z))$
+\begin{equation*}
+	\begin{aligned}[c]
+		&\grpfct[(u \pll v) \pll w](\state_1) =: ((a,b),c) \text{ and} \\
+		&\grpfct[(u \pll v) \pll w](\state_2) =: ((x, y), z) \text{,}
+	\end{aligned}
+	\quad\quad\quad\text{then it is}\quad\quad\quad
+	\begin{aligned}[c]
+		&\grpfct[u \pll (v \pll w)](\state_1) = (a, (b, c)) \text{ and} \\
+		&\grpfct[u \pll (v \pll w)](\state_2) = (x, (y, z)).
 	\end{aligned}					
 \end{equation*}
 
+\noindent
+Then it is
 \[
-\grpfct[a \pll b] = ((\grpfct[a], \grpfct[b]), \grpfct[c]) = (\grpfct[a], (\grpfct[b], \grpfct[c])) = \grpfct[a \pll (b \pll c)]
+	\grpfct[(u \pll v) \pll w](\state_1) = \grpfct[(u \pll v) \pll w](\state_2) \iff \grpfct[u \pll (v \pll w)](\state_1) = \grpfct[u \pll (v \pll w)](\state_2)
 \]
 
-The last equation follows by the definition of tuples with nested ordered pairs.
+\noindent
+This is because
+\begin{align*}
+	&((a, b), c) = ((x, y), z) \\
+	\iff \quad &(a, b) = (x, y) \land c = z \\
+	\iff \quad &a = x \land b = y \land c = z \\
+	\iff \quad &a = x \land (b, c) = (y, z) \\
+	\iff \quad &(a, (b, c)) = (x, (y, z))
+\end{align*}
+\end{proof}
 
 
 
