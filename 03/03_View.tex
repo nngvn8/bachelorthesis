@@ -5,7 +5,7 @@
 \begin{document}
 	
 \section{View}
-Views are the central objective of this thesis. The purpose of a \viewN is to obtain a simplification of a given \chosengraphtypeN.  It is an independent \chosengraphtypeN derived from a given \chosengraphtypeN and represents a (simplified) \viewN on the given one - hence the name. Thereby the original \chosengraphtypeN is retained.
+Views are the central objective of this thesis. The purpose of a \viewN is to obtain a simplification of a given \chgphN.  It is an independent \chgphN derived from a given \chgphN and represents a (simplified) \viewN on the given one - hence the name. Thereby the original \chgphN is retained.
 
 In the preliminaries transition systems and Markov Chains were listed as simpler version of \mdpsN. Roughly speaking transition systems and \mdpsN are special \mdpsN namely that have no probability distribution in each state for each action or no actions. When defining \viewsN it seems feasible to do so for the most general system of the ones of consideration.That is why we will define views on \mdpsN. Only for specific views and their implementation it is to be kept in mind that if they regard an action or the probability distribution of an action in a state it is not applicable to transitions systems or MCs respectively. \redcomment{topic init states}
 
@@ -13,7 +13,7 @@ In the preliminaries transition systems and Markov Chains were listed as simpler
 The conceptional idea of a \viewN is to group states by some criteria and structure the rest of the system accordingly. To formalize the grouping we define a dedicated function.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \chosengraphtypeN an \arbset be and arbitrary set \redcomment{with $\remelem \in \arbset$}. We call any function $\grpfct : \states \to \imggrp$ a \emph{\grpfctN}. The symbol \viewppty is a unique identifier.
+	Let $\chgph = \chgphtuple$ be \chgphN an \arbset be and arbitrary set \redcomment{with $\remelem \in \arbset$}. We call any function $\grpfct : \states \to \imggrp$ a \emph{\grpfctN}. The symbol \viewppty is a unique identifier.
 	
 	\label{def:grpfct}
 \end{definition}
@@ -32,12 +32,12 @@ We observe that two states $\state_1, \state_2$ are grouped to a new state if an
 
 \subsection{Formal Definition}
 
-The definition of a \viewN is dependent on a given MDP and a \grpfctN $\grpfct$. We derive the equivalence relation \eqrelview as in Definition \ref{def:eqrelview} and use its equivalence classes \eqclassv ($\state \in \states$) as states for the \viewN. The rest of the \chosengraphtypeN is structured accordingly.
+The definition of a \viewN is dependent on a given MDP and a \grpfctN $\grpfct$. We derive the equivalence relation \eqrelview as in Definition \ref{def:eqrelview} and use its equivalence classes \eqclassv ($\state \in \states$) as states for the \viewN. The rest of the \chgphN is structured accordingly.
 
 
 \begin{definition}
 	
-	Let \chgph = \chgphtuple be \chosengraphtypeN and $\grpfct$ a \grpfctN. A \emph{\viewN} is \chosengraphtypeN $\view = \chgphtupledist$ that is derived from \mdp with the \grpfctN $\grpfct$ where
+	Let \chgph = \chgphtuple be \chgphN and $\grpfct$ a \grpfctN. A \emph{\viewN} is \chgphN $\view = \chgphtupledist$ that is derived from \mdp with the \grpfctN $\grpfct$ where
 	
 	\begin{itemize}
 			\item $\states' = \{ \eqclass{\state}{\eqrelview} \mid \state \in \states \} = \eqclasssetv$
@@ -81,7 +81,7 @@ The identifier \viewppty is inherited from $\grpfct$ to \view. The identifier de
 
 
 \subsection{Composition of Views}
-In essence views are simplification generated from \chosengraphtypeN. It seems rather obvious that the composition of views is a very practical feature. Therefore in this chapter we will introduce, formalize and discuss different notions of compositions. All variants will ensure that the effect caused by each partaking views also takes effect in the composed view. Moreover it is to be generated in a way that the effect of each individual view can be reverted from the composed one. There may be restrictions in the order of removal.
+In essence views are simplification generated from \chgphN. It seems rather obvious that the composition of views is a very practical feature. Therefore in this chapter we will introduce, formalize and discuss different notions of compositions. All variants will ensure that the effect caused by each partaking views also takes effect in the composed view. Moreover it is to be generated in a way that the effect of each individual view can be reverted from the composed one. There may be restrictions in the order of removal.
 
 \subsubsection{\parllcompNCC}
 One of the most uncomplicated ideas is to group states that match in the function value of all given \grpfctsN. This idea is parallel in the sense that a set of \grpfctN is combined to a new \grpfctN in one single step.

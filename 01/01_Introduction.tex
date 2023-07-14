@@ -2,23 +2,99 @@
 \input{prelude}
 
 \begin{document}
-	\section{Introduction}
-	PMC is short for Probabilistic Model Checking.
+\section{Introduction}
+PMC is short for Probabilistic Model Checking.
+
+Model Checking is...
+Probabilistic means...
+
+When analyzing PMCs a result table is generated which consists of result vectors. These result vectors for example contain probability values for temporal events, expected values of random variables and other qualitative and quantitative results. For central measure so called schedulers can be used to resolve non-determinism in the MDPs which in addition to the result provide one ore more optimal actions per state.
+
+Already simple system models can lead to complex system behavior and an immense amount of states. An interactive visualization of an MDP can be used in support of understanding, analyzing and reviewing these complex systems. It can even be made use of to achieve further goals such as debugging or model repair. However, the pure data volume remains unaffected. The complexity is shifted to the visualization which has some general techniques to represent large amounts of data in a suitable way.
+
+\redcomment{WHAT EXACTLY CAN BE DONE/HAS BEEN DONE ---> INSERT HERE}
+
+Apart from the methods available in visualization there exist domain specific abstraction methods for transition systems. These are based on relations such as simulation order, simulation equivalence, bisimulation equivalence as well as trace equivalence, stutter linear time relations and stutter bisimulation equivalences. These relations can be based on the set of all possible transition systems or the set of states of one single transition system. Whereas the first declares some similarity of transition systems with regard to model check them the latter one can be used to obtain quotient systems. The set of states of such quotient system coincides with the the respective equivalence relation.
+\begin{itemize}
+	\item all relations declare that at least one of the two systems being in relation can mimic the behavior of the other one in some way. In case of equivalence the systems can mimic each other.
+	\item except for trace inclusion and trace equivalence whether such mimicking is possible depends on the existence of a specific relation $\mimicrel \subseteq \states_1 \times \states_2$ where $\states_1 \text{ and } \states_2$ are the state sets of two corresponding transition systems $\ts_1$ and $\ts_2$. The symbol \mimicrel is included in each definition of a relation on the set of all possible transition systems. In each definition it receives a different name and represents a different relation between the sets $\states_1 \text{ and } \states_2$. %Whenever $(\state_1, \state_2) \in \mimicrel$ we will also write $\state_2$ mimics $\state_1$. Sometimes it may follow that also $\state_1$ mimics $\state_2$, depending on the requirements made on \mimicrel. The term mimic is used on transition systems and \states and in both cases declares that one entity can mimic the behavior of the other one.
+	\item Depending on the type of mimicking (simulation order, bisimulation equivalence, ...) different requirements are made on \mimicrel. It is dependent on these requirements whether \mimicrel exists for a given pair of transition systems $\ts_1$ and $\ts_2$ and hence also whether or not these two transition systems are in relation.
+	\item all relations have three requirements made on \mimicrel in common.
+	\item firstly, there has to be some relationship between the initial states. That is, at least $\exists (\state_1, \state_2) \in \mimicrel \text{ with } \state_1 \in \initstates_1, \state_2 \in \initstates_2$ where $\initstates_1$ and $\initstates_2$ are the respective sets of initial states of the two transition systems $\ts_1$ and $\ts_2$ in question
+	\item Secondly for each $(\state_1, \state_2) \in \mimicrel$ the two states must have the same set of atomic propositions. That is $\labelingfct(\state_1) = \labelingfct(\state_2)$.
+	\item lastly for all $\state_1, \state_2$ with $(\state_1, \state_2) \in \mimicrel$ some requirement is made about their (not necessarily direct) successors
+	\item the mimicking types differ in the requirements they make on the relation \mimicrel with respect to initial states (1) of the two transition systems and the requirements made on the successors (2).
+	\item when one transition system can mimic another it is only required that that each initial state $\state_1 \in \initstates_1$ there is an initial state $\state_2 \in \initstates_2$ with $(\state_1,\state_2) \in \mimicrel$
+	\item when two systems mimic each other it is as well required that for each initial state $\state_1 \in \initstates_1$ it is $(\state_1, \state_2) \in \mimicrel$ with $\state_2 \in \initstates_2$ but additionally that for each $\state_2 \in \initstates_2$ it is $(\state_2, \state_1) \in \mimicrel$ with $\state_1 \in \initstates_1$.
+	\item where all of them differ is the requirements made on the successors of the states being in relation
+	\item bisimulation equivalence (\bisimeq) declares that two transition systems can mimic each other. Every two states with $(\state_1, \state_2) \in \mimicrel$ one must have an successor $\state'$ for each successor $\smstate'$of the other state so that the two successors stand in relation with respect to \mimicrel. That is the successors standing in relation again must have the same set of atomic propositions and meet the requirement regarding their successors. If a state \state is equal in its set of atomic propositions to another state \smstate and meets a respective requirement on a selection of the successors of \smstate we say it \stmimicsN it. Note that here \stmimickingN is mutual. $\state_1$ \stmimicsN $\state_2$ and vice versa. \redcomment{definition?} bisimulation equivalence is, as the name suggest, an equivalence relation on the set of all possible transition systems.
+	\item simulation order (\simorder) is weaker than bismulation. It only declares that one system can \stmimicN the other. For every two states with $(\state_1, \state_2) \in \mimicrel$ the second one must \stmimicN the first one. That is, for each successor $\state_1'$ of $\state_1$ the state $\state_2$ must have an successor $\state_2'$ so that $\state_2;$ $\stmimicsN$ $\state_1'$. In this case of the simulation order relation $\state_2'$ \stmimickingN $\state_1'$ coincides with $(\state_1', \state_2') \in \mimicrel$. For the simulation order relation it is not required that $\state_1$ can \stmimicN $\state_2$. Simulation order is a preorder on the set of all possible transition systems.
+	\item Simulation equivalence (\simequiv) declares that for two transition systems $\ts_1, \ts_2$ it holds that $\ts_1 \simorder \ts_2$ and $\ts_2 \simorder \ts_1$. It might seem like it conincides with bisimulation but it does not. For simulation order it has to hold that for a given state $\state_1$ in the mimicked system that there has to exist another state $\state_2$ in the mimicking system, that \stmimicsN $\state_1$. Although due to simulation equivalence $\state_2$ now also must have a state $\state'$ that mimics $\state_2$, it does not need to hold that $\state' = \state_1$. The state $\state_2$ could be mimicked by another state than $\state_1$. The mimicking between two states does not need to be mutual. Simulation equivalence is an equivalence relation on the set of all possible transition systems.
+	\item in general it holds that for $\ts_1, \ts_2$ being transition systems $\ts_1 \bisimeq \ts_2$ implies $\ts_1 \simequiv \ts_2$ implies $\ts_1 \simorder \ts_2$.
+	\item All of the mimicking types presented, mimicking is happening in a stepwise manner and atomic propositions are concidered as the property of concern. Choosing atomic propositions has the advantage of preserving the logical formulae used in model checking.	
+	\item bisimulation equivalence preserves CTL and CTL* formulae for finite TS without terminal states 579
+	\item simulation equivalence/order maintain LTL by trace inclusion and universally and existencially quantified fragments of CTL* \redcomment{correct?} 579
+	\item The condition of stepwise mimicking is softened with stutter simulation and bisimulation equivalence expands the concept of simulation equivalence and stutter bisimulation equivalence. Instead of requiring for each successor $\state_1'$ of a state $\state_1$ to be \stmimickedN by a direct successor of $\state_2$ it suffices if there is path to such a state $\state_2'$, that \stmimicsN $\state_1'$. All states on the path must then also \stmimicN $\state_1$. Moreover this requirement is only made for successors of $\state_1$ if the successor $\state_1'$ is not in relation to $\state_2$. 
+	\item There also is another variant of stutter bisimulation equivalence which is called stutter bisimulation divergent equivalence which we wont consider here.
+	\item So far relations on the set of all transition systems have been considered. 
+	\item All the above mentioned equivalence relations are also defined on the set of states of one single transition system. 
+	\item They are defined very similar to the relations on the set of all possible transition systems. Let $\relts \subseteq \states \times \states$ be some relation on the set of states \states of an transition system. Two states $\state_1,\state_2 \in \states$ are in relation ($(\state_1, \state_2) \in \relts$) if there exists a relation $\mimicrel \subseteq \states \times \states$ that meets some requirements. These requirements are the same as the ones used on \mimicrel for transition systems except for the condition on the initial states. That is, only the set of atomic propositions of $\state_1, \state_2$ has to be equal $(\labelingfct(\state_1) = \labelingfct(\state_2))$ and some requirement on their successors has to be met.
+	\item They are used for abstractions by defining quotient systems of a given transition system. In a quotient systems the set of states consists of the equivalence classes of the equivalence relation.
+	\begin{definition}
+		Let $\ts = \transitionsystem$ be a transition system and \relts and equivalence relation on \states. The quotient transition system is defined by $TS/\relts = (\states/\relts, \{\tau\}, \transitionrel', \initstates', \atomicprops, \labelingfct')$ where:
+		\begin{itemize}
+			\item $\initstates' := \{\eqclass{\state}{\relts} \mid \state \in \initstates\}$
+			\item $\transitionrel':= \{(\eqclass{\state}{\relts}, \tau, \eqclass{\state'}{\relts}) \mid (\state, \action, \state') \in \transitionrel\}$
+			\item $\labelingfct'(\eqclass{\state}{\relts}) := \labelingfct(\state)$
+		\end{itemize}
+	\end{definition}
 	
-	Model Checking is...
-	Probabilistic means...
-	
-	When analyzing PMCs a result table is generated which consists of result vectors. These result vectors for example contain probability values for temporal events, expected values of random variables and other qualitative and quantitative results. For central measure so called schedulers can be used to resolve non-determinism in the MDPs which in addition to the result provide one ore more optimal actions per state.
-	
-	Already simple system models can lead to complex system behavior and an immense amount of states. An interactive visualization of an MDP can be used in support of understanding, analyzing and reviewing these complex systems. It can even be made use of to achieve further goals such as debugging or model repair. However, the pure data volume remains unaffected. The complexity is shifted to the visualization which has some general techniques to represent large amounts of data in a suitable way.
-	
-	\redcomment{WHAT EXACTLY CAN BE DONE/HAS BEEN DONE ---> INSERT HERE}
-	
-	In alternative to these general approaches domain specific preprocessing can be used to gain certain views on a given MDP that display areas or sets of states in a summarized more compact form. For this purpose structural properties as well as criteria obtained from the result vectors and their containing optimal actions can be utilized.
 	
 	
-	This thesis is about the development, formalization and implementation of a collection of different \emph{\viewsN}.
-	\redcomment{Views are supposed to be applicable to only a subset of a given MDP and be composable with other views}
-	The input for a view is the result table of the MDP, whereas the output is a new collumn in the MDP result table that determines which states are to be grouped to a new one.
-	The evaluation is performed within the existing web-based prototype of a PMC visualization platform (PMC-Viz) and on the basis of different MDP models. They are to be analyzed regarding the suitability to facilitate the understanding of complex operational models incl. analysis results and to support processes of debugging, model repair or strategy synthesis.
+	
+	\item holds $\ts \; \rel \; \ts/\relts$
+	
+	\item Similarily an abstract transition system using the simulation relation can be obtained... using an abstraction function
+	
+	\item \redcomment{def abstraction function, def relation}
+	
+	\item obtain smaller system that has properties with respect to formulas \redcomment{discuss how much smaller? $\to$ would rather not}
+	
+	\item expensive: to calculate with complexities
+	\begin{itemize}
+		\item bisimulation:
+		\item simulation
+		\item stutter simulation:
+		\item stutter bisimulation:
+	\end{itemize}
+	
+	\item usecase: browsability for humans \\
+	$\to$ understand and looking at the system from a human perspective of highest importance \\
+	$\to$ less expensive calculation
+	
+	\item views of an MDP aim for high comprehensibility, low performance and will conceptually be very similar to the the notion of an abstract transition system.
+	
+	\item \redcomment{"Partial order reduction attempts to analyze only a fragment ˆTS of the full transition
+	system TS by ignoring several interleavings of independent actions."}
+	
+%	\begin{itemize}
+%		\item on TS can simulate the other one stepwisely
+%		\item Simulating one has at least one matching action for each action of the simulated one			
+%	\end{itemize}	
+%	\item bisimulation relation R between the two sets of states
+%	\item if exists R on sets of states -> TS1 and TS2 are bisimulation equivalent
+%	\item requirements on R for (s1 s2) $\in$ R
+%	\begin{itemize}
+%		\item same atomic props
+%		\item for every successor there must exist an successor in the other MDP that are in relation
+%	\end{itemize}
+\end{itemize}
+
+In alternative to these general approaches domain specific preprocessing can be used to gain certain views on a given MDP that display areas or sets of states in a summarized more compact form. For this purpose structural properties as well as criteria obtained from the result vectors and their containing optimal actions can be utilized.
+
+
+This thesis is about the development, formalization and implementation of a collection of different \emph{\viewsN}.
+\redcomment{Views are supposed to be applicable to only a subset of a given MDP and be composable with other views}
+The input for a view is the result table of the MDP, whereas the output is a new collumn in the MDP result table that determines which states are to be grouped to a new one.
+The evaluation is performed within the existing web-based prototype of a PMC visualization platform (PMC-Viz) and on the basis of different MDP models. They are to be analyzed regarding the suitability to facilitate the understanding of complex operational models incl. analysis results and to support processes of debugging, model repair or strategy synthesis.
 \end{document}

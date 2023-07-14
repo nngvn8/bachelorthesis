@@ -3,7 +3,7 @@
 
 \usepackage{inputenc,fontenc}
 \usepackage[a4paper,margin=3cm]{geometry}
-\usepackage[english,german]{babel}
+\usepackage[english]{babel}
 %\usepackage[german]{babel}
 %\usepackage[fixlanguage]{babelbib}
 
@@ -58,6 +58,14 @@
 \newcommand{\mynewcommand}[2]{\newcommand{#1}{\mt{#2}}} %% currently not used becaue of ide highlighting
 \newcommand{\arr}{\mt{\to}}
 
+%model checking terms
+\newcommand{\mimicrel}{\mt{\mathcal{R}}}
+\newcommand{\bisimeq}{\mt{\;\!\sim\;\!}}
+\newcommand{\simorder}{\mt{\;\!\preceq\;\!}}
+\newcommand{\simequiv}{\mt{\;\!\simeq\;\!}} %command already defined
+\newcommand{\relts}{\mt{\;\!\bullet_{_{\tiny{TS}}}\;\!}}
+\newcommand{\rel}{\mt{\;\!\bullet\;\!}}
+
 %own names
 \newcommand{\nm}[1]{#1\xspace}
 \newcommand{\mdpN}{\nm{MDP}}
@@ -72,18 +80,23 @@
 \newcommand{\grpfctsN}{\nm{grouping functions}}
 \newcommand{\grpfctsNC}{\nm{Grouping functions}}
 \newcommand{\grpfctsNCC}{\nm{Grouping Functions}}
+\newcommand{\stmimicN}{\nm{state-mimic}}
+\newcommand{\stmimicsN}{\nm{state-mimics}}
+\newcommand{\stmimickingN}{\nm{state-mimicking}}
+\newcommand{\stmimickedN}{\nm{state-mimicked}}
 %\newcommand{\chosenphtypeNCC}{\nm{Transition System}}
-%\newcommand{\chosengraphtypeNC}{\nm{Transition system}}
-%\newcommand{\chosengraphtypeN}{\nm{transition system}}
-%\newcommand{\chosengraphtypesNCC}{\nm{Transition Systems}}
-%\newcommand{\chosengraphtypesNC}{\nm{Transition systems}}
-%\newcommand{\chosengraphtypesN}{\nm{transition systems}}
-\newcommand{\chosengraphtypeNCC}{\nm{MDP}}
-\newcommand{\chosengraphtypeNC}{\nm{MDP}}
-\newcommand{\chosengraphtypeN}{\nm{an MDP}}
-\newcommand{\chosengraphtypesNCC}{\nm{MDPs}}
-\newcommand{\chosengraphtypesNC}{\nm{MDPs}}
-\newcommand{\chosengraphtypesN}{\nm{MDPs}}
+%\newcommand{\chgphNC}{\nm{Transition system}}
+%\newcommand{\chgphN}{\nm{transition system}}
+%\newcommand{\chgphsNCC}{\nm{Transition Systems}}
+%\newcommand{\chgphsNC}{\nm{Transition systems}}
+%\newcommand{\chgphsN}{\nm{transition systems}}
+\newcommand{\chgphNCC}{\nm{MDP}}
+\newcommand{\chgphNC}{\nm{MDP}}
+\newcommand{\chgphN}{\nm{MDP}}
+\newcommand{\achgphN}{\nm{an MDP}}
+\newcommand{\chgphsNCC}{\nm{MDPs}}
+\newcommand{\chgphsNC}{\nm{MDPs}}
+\newcommand{\chgphsN}{\nm{MDPs}}
 \newcommand{\parllcompN}{\nm{parallel composition}}
 \newcommand{\parllcompNC}{\nm{Parallel composition}}
 \newcommand{\parllcompNCC}{\nm{Parallel Composition}}
