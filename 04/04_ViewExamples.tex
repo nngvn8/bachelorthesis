@@ -1,11 +1,9 @@
 \documentclass[preview]{standalone}
 \input{prelude}
 
-
 \begin{document}
 \section{View Examples}
-\documentclass[preview]{standalone}
-\input{prelude}In this chapter we will introduce and discuss some \viewN examples created by the author. Their purpose is to understand the idea and concept of a \viewN and get to know some views that might be useful in real world applications. \\
+In this chapter we will introduce and discuss some \viewN examples created by the author. Their purpose is to understand the idea and concept of a \viewN and get to know some views that might be useful in real world applications. \\
 When considering \viewsN we only want into account those that utilize properties of MDPs or that do computations that are also feasible on normal graphs but are of explicit relevance MDPs.
 \subsection{Views Utilizing MDP Components}
 In this subsection we will introduce some views the are purely based on the components of an \mdpN. Their will neither be computations on the graph-structure of an MDP nor computations using the result vector.
@@ -33,9 +31,9 @@ An a little more involved idea than directly using a given function is to utiliz
 	\[
 	\state \mapsto
 	\begin{cases}
-		\emptyset,				& \text{if } \state \in \initstates \\
-		\remelem,          	& \text{otherwise}
-	\end{cases}
+			\emptyset,				& \text{if } \state \in \initstates \\
+			\remelem,          	& \text{otherwise}
+		\end{cases}
 	\]
 	
 	and $\imggrp := \{\emptyset\} \cup \remset$.
@@ -64,9 +62,9 @@ The most obvious variant to group states is to group states that \emph{have} a g
 	\[
 	\state \mapsto
 	\begin{cases}
-		\action,				& \text{if } \exists \state' \in \states: (\state, \action, \state') \in \trans \\
-		\remelem,          	& \text{otherwise}
-	\end{cases}
+			\action,				& \text{if } \exists \state' \in \states: (\state, \action, \state') \in \trans \\
+			\remelem,          	& \text{otherwise}
+		\end{cases}
 	\]
 	
 	and $\imggrp := \setoutact$.	
@@ -100,9 +98,9 @@ For example we could require that a given action has to be outgoing a minimum am
 	\[
 	\state \mapsto
 	\begin{cases}
-		\action,				& \text{if } \exists \state_1, \dots, \state_\numoutact \in \states:  \predminoutact\\
-		\remelem,          	& \text{otherwise}
-	\end{cases}
+			\action,				& \text{if } \exists \state_1, \dots, \state_\numoutact \in \states:  \predminoutact\\
+			\remelem,          	& \text{otherwise}
+		\end{cases}
 	\]
 	
 	where $\imggrp := \setoutact$, $\numoutact \in \natnums$ is the minimum amount of times a transition with action \action has to be outgoing in order to be grouped with the other states and
@@ -139,9 +137,9 @@ In a similar fashion we define view that groups states where at most a certain n
 	\[
 	\state \mapsto
 	\begin{cases}
-		\action,				& \text{if } \forall \state_1, \dots, \state_{\numoutact+1} \in \states: \predmaxoutact \\
-		\remelem,          	& \text{otherwise}
-	\end{cases}
+			\action,				& \text{if } \forall \state_1, \dots, \state_{\numoutact+1} \in \states: \predmaxoutact \\
+			\remelem,          	& \text{otherwise}
+		\end{cases}
 	\]
 	
 	where $\imggrp := \actions \cup \remset$, $\numoutact \in \natnums$ is the maximal number of times a transition with action \action may be outgoing and 
@@ -163,9 +161,9 @@ Since we already defined \grpfctsN and hence views for a required minimal and ma
 	\[
 	\state \mapsto
 	\begin{cases}
-		\action,				& \text{if } \exists \state_1, \dots, \state_\numoutactb \in \states: \predminoutact[\numoutactb] \\ &\text{and } \forall \state_1, \dots, \state_{\numoutact+1} \in \states: \predmaxoutact \\
-		\remelem,          	& \text{otherwise}
-	\end{cases}
+			\action,				& \text{if } \exists \state_1, \dots, \state_\numoutactb \in \states: \predminoutact[\numoutactb] \\ &\text{and } \forall \state_1, \dots, \state_{\numoutact+1} \in \states: \predmaxoutact \\
+			\remelem,          	& \text{otherwise}
+		\end{cases}
 	\]
 	
 	where $\imggrp := \actions \cup \remset$ and $\numoutactb, \numoutact \in \natnums$ are the minimal and maximal number of transitions with action \action in order for state to be grouped. The predicates \predminoutact and \predmaxoutact are the predicates from Definition \ref{def:minoutaction} and Definition \ref{def:viewmaxoutaction} respectively.
@@ -241,9 +239,9 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 	\[
 	\state \mapsto
 	\begin{cases}
-		\action,				& \text{if } \exists \state' \in \states: (\state', \action, \state) \in \trans \\
-		\remelem,          	& \text{otherwise}
-	\end{cases}
+			\action,				& \text{if } \exists \state' \in \states: (\state', \action, \state) \in \trans \\
+			\remelem,          	& \text{otherwise}
+		\end{cases}
 	\]
 	
 	and $\imggrp := \actions \cup \remset$.	
@@ -257,9 +255,9 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 	\[
 	\state \mapsto
 	\begin{cases}
-		\action,				& \text{if } \exists \state_1, \dots, \state_\numinact \in \states:  \predmininact\\
-		\remelem,          	& \text{otherwise}
-	\end{cases}
+			\action,				& \text{if } \exists \state_1, \dots, \state_\numinact \in \states:  \predmininact\\
+			\remelem,          	& \text{otherwise}
+		\end{cases}
 	\]
 	
 	where $\imggrp := \actions \cup \remset$, $\numinact \in \natnums$ is the minimum amount of times a transition with action \action has to be ingoing in order to be grouped with the other states and
@@ -276,9 +274,9 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 	\[
 	\state \mapsto
 	\begin{cases}
-		\action,				& \text{if } \forall \state_1, \dots, \state_{\numinact+1} \in \states: \predmaxinact \\
-		\remelem,          	& \text{otherwise}
-	\end{cases}
+			\action,				& \text{if } \forall \state_1, \dots, \state_{\numinact+1} \in \states: \predmaxinact \\
+			\remelem,          	& \text{otherwise}
+		\end{cases}
 	\]
 	
 	where $\imggrp := \actions \cup \remset$, $\numinact \in \natnums$ is the maximal number of times a transition with action \action may be ingoing and 
@@ -295,9 +293,9 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 	\[
 	\state \mapsto
 	\begin{cases}
-		\action,				& \text{if } \exists \state_1, \dots, \state_\numinactb \in \states: \predmininact[\numinactb] \\ &\text{and } \forall \state_1, \dots, \state_{\numinact+1} \in \states: \predmaxinact \\
-		\remelem,          	& \text{otherwise}
-	\end{cases}
+			\action,				& \text{if } \exists \state_1, \dots, \state_\numinactb \in \states: \predmininact[\numinactb] \\ &\text{and } \forall \state_1, \dots, \state_{\numinact+1} \in \states: \predmaxinact \\
+			\remelem,          	& \text{otherwise}
+		\end{cases}
 	\]
 	
 	where $\imggrp := \actions \cup \remset$ and $\numinactb, \numinact \in \natnums$ are the minimal and maximal number of transitions with action \action in order for state to be grouped. The predicates \predmininact and \predmaxinact are the predicates from Definition \ref{def:mininaction} and Definition \ref{def:viewmaxinaction} respectively.
@@ -323,7 +321,8 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 \subsubsection{Variables}
 The concept of variables is not part of the definitions of neither \tsN, MCs or \mdpsN even though, it is of great importance in practice. We will introduce and discuss this concept before utilizing it for \viewsN.
 
-Since states describe some information about a system at a certain moment of its behavior the information carried is usually not atomic but rather consists of several pieces. For instance when considering a computer program at a given moment during execution all its currently available variables will have some value, the stack will have a certain structure and the program counter points to a specific instruction. Systems in general at a certain moment of their behavior have several properties that in total pose the current state of the system. That is in practice each state is actually derived from a possible variable assertion. Choosing the respective variable assertion as state representation would result in rather complex state objects. Therefore the values of the variables are usually stored in a separate data structure and a simple identifier like an integer represents the actual state. When formalizing this in practice used approach two options using the already existing components of an \mdpN come into consideration. Firstly there is the option of declaring the states as complex objects that contain this information. This would be possible because the set of states is not further specified. Accessing this information stored within a state would be rather tedious because there is no already existing entity to properly accomplishing the access. Hence this option was not further explored. The second option is to require that all possible assertions of all variables are included in the atomic propositions. The labeling function would then assert exactly one atomic proposition for each variable for each state, that specifies what the current value of that variable is. Although this would be possible, for simplicity we chose that variables and its values are provided in addition to the \mdpN. Obviously they are to be understood as derived and therefore dependent on the  system, that the \mdpN has been derived from. By no means the set of variables and its evaluation are arbitrary.
+Since states describe some information about a system at a certain moment of its behavior the information carried is usually not atomic but rather consists of several pieces. For instance when considering a computer program at a given moment during execution all its currently available variables will have some value, the stack will have a certain structure and the program counter points to a specific instruction. Systems in general at a certain moment of their behavior have several properties that in total pose the current state of the system. That is in practice each state is actually derived from a possible variable assertion. Choosing the respective variable assertion as state representation would result in rather complex state objects. Therefore the values of the variables are usually stored in a separate data structure and a simple identifier like an integer represents the actual state. When formalizing this in practice used approach several options com into consideration. Available \mdpN components like atomic propositions or the set of states could be used to contain this information. There could be a subset of atomic propositions that declares that a certain variable has a certain value. There had to be taken care that for each variable in each state there is only one atomic proposition declaring its value. The set of states could be used in the sense that the states itself are complex objects containing the information. Both of these options are rather tedious but possible. A third option is to define a set of variables and an evaluation function that are induced by the \mdpN.
+%Firstly there is the option of declaring the states as complex objects that contain this information. This would be possible because the set of states is not further specified. Accessing this information stored within a state would be rather tedious because there is no already existing entity to properly accomplishing the access. Hence this option was not further explored. The second option is to require that all possible assertions of all variables are included in the atomic propositions. The labeling function would then assert exactly one atomic proposition for each variable for each state, that specifies what the current value of that variable is. Although this would be possible, for simplicity we chose that variables and its values are provided in addition to the \mdpN. Obviously they are to be understood as derived and therefore dependent on the  system, that the \mdpN has been derived from. By no means the set of variables and its evaluation are arbitrary.
 
 
 %Variables are used to represent states (in more detail). 
@@ -335,14 +334,14 @@ Since states describe some information about a system at a certain moment of its
 %Because of the vast importance in practical applications we will consider some \viewsN that utilize them. To do so and being able to describe them formally we define and formalize the notion of variables by considering them as a subset of the atomic propositions \atomicprops that is assigned a value by a function.
 
 \begin{definition}
-	The set $\vars$ is called \emph{variables}.
+	Let $\mdp$ be an \mdpN. The set $\vars$ is called \emph{variables} (of \mdp). It contains all variables induced by \mdp.
 \end{definition}
 
 \begin{definition}
-	Let \varevalimg be an arbitrary set. The function $\vareval : \states \times \vars \to \varevalimg$ is called \emph{variable evaluation function}.
+	Let $\mdp = \mdptuple$ be an \mdpN and \varevalimgset be an arbitrary set. The by im induced function $\vareval : \states \times \vars \to \varevalimgset$ is called \emph{variable evaluation function}.
 \end{definition} 
 
-Most of the time we will use \vareval to refer to the variable evaluation function. When we speak about the value of a variable in a state we refer to the image of $\vareval$ for that state and variable. The set \varevalimg is arbitrary so that arbitrary values can be assigned to a variable. Speaking in terms of computer science and programming this loosens as an example the restriction of only being able to assign numbers and no booleans.
+Most of the time we will use \vareval to refer to the variable evaluation function. When we speak about the value of a variable in a state we refer to the image of $\vareval$ for that state and variable. The set \varevalimgset is arbitrary so that arbitrary values can be assigned to a variable. Speaking in terms of computer science and programming this loosens as an example the restriction of only being able to assign numbers and no booleans.
 
 The most apparent idea for a \viewN utilizing variables is to group states that meet some requirement regarding the values of the variables.
 
@@ -350,19 +349,13 @@ The most apparent idea for a \viewN utilizing variables is to group states that 
 \redcomment{state has variable not here uptil now because probably not used}
 
 \begin{definition}
-	Let
-	\begin{itemize}
-		\item $\chgph = \chgphtuple$ be \achgphN,
-		\item $\vars$ be the respective set of variables with $\var \in \vars$ and
-		\item $\vareval(\state, \var) = \varval$ where $\state \in \states$.		
-	\end{itemize} 
-	The view \viewparamvalueseq is defined by its \grpfctN $\gfctparamvalueseq : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be \achgphN, $\var \in \vars$ and $\varval \in \varevalimg$. The view \viewparamvalueseq is defined by its \grpfctN $\gfctparamvalueseq : \states \to \imggrp$ with
 	\[
 	\state \mapsto
 	\begin{cases}
-		\varval, &\text{if } \vareval(\state, \var) = \varval\\
-		\remelem, &\text{otherwise}
-	\end{cases}
+			\varval, &\text{if } \vareval(\state, \var) = \varval\\
+			\remelem, &\text{otherwise}
+		\end{cases}
 	\]
 	where $\imggrp := \remset \cup \{a\}$.
 \end{definition}
@@ -384,49 +377,34 @@ The set of states $\states'$ of \viewparamvalueseq is the union of the equivalen
 Analogously a view that requires inequality instead of equality is feasible.
 
 \begin{definition}
-	Let
-	\begin{itemize}
-		\item $\chgph = \chgphtuple$ be \achgphN,
-		\item $\vars$ be the respective set of variables with $\var \in \vars$ and
-		\item $\vareval(\state, \var) \neq \varval$ where $\state \in \states$.		
-	\end{itemize} 
-	The view \viewparamvaluesneq is defined by its \grpfctN $\gfctparamvaluesneq : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be \achgphN, $\var \in \vars$ and $\varval \in \varevalimg$. The view \viewparamvaluesneq is defined by its \grpfctN $\gfctparamvaluesneq : \states \to \imggrp$ with
 	\[
 	\state \mapsto
 	\begin{cases}
-		\varval, &\text{if } \vareval(\state, \var) \neq \varval\\
-		\remelem, 	&\text{otherwise}
-	\end{cases}
+			\varval, &\text{if } \vareval(\state, \var) \neq \varval\\
+			\remelem, 	&\text{otherwise}
+		\end{cases}
 	\]
 	where $\imggrp := \remset \cup \{a\}$.
 \end{definition}
 
 If states are to be grouped with the requirement of several variables equaling or not equaling specified values this can be achieved by using \parllcompN. 
 
-To allow even more flexibility a view can be used that also allows a combination of requirements on variables in a disjunctive manner. To extend this idea to its full potential we will define a \viewN that allows requirements using a disjunctive normal formal (DNF). To formalize this view more efficiently we will write $\varstate[,kl] = \varval$ short for $\vareval(\state, \var_{kl}) = \varval$ where $k,l \in \natnums$ and $x_{kl} \in \vars$. In the same sense we write $\varstate[,kl] \neq \varval$. \redcomment{It may be that $x_{ab} = x_{mn}$ for $a,b,m,n \in \natnums$ NOT HAPPY WITH THIS}. We define the symbol \eqorneq to be an element of the set $\{=,\neq\}$. That is to say, whenever it is used each time written it is a representative for either the symbol $=$ or $\neq$. It allows to write one symbol whenever $=$ and $\neq$ could or should be possible. Moreover for this context we consider $(\varstate[,kl] = \varval)$ as a literal and $(\varstate[,kl] \neq \varval)$ as its negation. We write $(\varstate[,kl] \eqorneq \varval)$ for a literal that could be negated or not negated.
+To allow even more flexibility a view can be used that also allows a combination of requirements on variables in a disjunctive manner. To extend this idea to its full potential we will define a \viewN that allows requirements using a disjunctive normal formal (DNF). To formalize this view more efficiently we will write $\varstate[,i]$ short for $\vareval(\state, \var_i)$ where $x_i \in \vars$ and $i \in \natnums$. We define the symbol \eqorneq to be an element of the set $\{=,\neq\}$. That is to say, whenever it is used each time written it is a representative for either the symbol $=$ or $\neq$. It allows to write one symbol whenever $=$ and $\neq$ could or should be possible. Moreover for this context we consider $(\varstate[,i] = \varval)$ as a literal and $(\varstate[,i] \neq \varval)$ as its negation. We write $(\varstate[,i] \eqorneq \varval)$ for a literal that could be negated or not negated.
 
 \begin{definition}
-	Let 
-	\begin{itemize}
-		\item $\chgph = \chgphtuple$ be \achgphN,
-		\item \vars the respective set of variables 
-		\item \vareval the respective variable evaluation function and		
-	\end{itemize}
+	Let $\chgph = \chgphtuple$ be \achgphN, $\var \in \vars$, $\varval \in \varevalimg$ and
 	\[
 	d(s) = ((\varstate[,11] \eqorneq \varval_{11}) \land \dots \land (\varstate[,1l_1] \eqorneq \varval_{1l_1})) \lor \dots \lor ((\varstate[,k1] \eqorneq \varval_{k1}) \land \dots \land (\varstate[,kl_k]  \eqorneq \varval_{kl_k}))
 	\]
-	proposition logical formulae in disjunctive normal form where
-	\begin{itemize}
-		\item $\{\var_{kl_i} \mid k \in \natnums, l_i \in \{l_1, \dots l_k\} \subseteq \natnums\} \subseteq \vars$ and $\varstate[,kl_i] = \vareval(\state, \var_{kl_i})$
-		\item $\{\varval_{kl_i} \mid k \in \natnums, l_i \in \{l_1, \dots l_k\} \subseteq \natnums\} \subseteq \redcomment{\vareval(\states,\vars)}$
-	\end{itemize}
+	proposition logical formulae in disjunctive normal form where $\varstate[,{ij}], a_{ij} \in \varevalimg$ 		
 	The \viewN \viewparamdnf is defined by its \grpfctN $\gfctparamdnf : \states \to \imggrp$ with
 	\[
 	\state \mapsto
 	\begin{cases}
-		true, &\text{if } d(s) \text{ is true}\\
-		\remelem, 	&\text{otherwise}
-	\end{cases}
+			true, &\text{if } d(s) \text{ is true}\\
+			\remelem, 	&\text{otherwise}
+		\end{cases}
 	\]
 	
 	where $\imggrp := \{true, \remelem\}$.
@@ -441,21 +419,25 @@ Analogously a view based on a conjunctive normal formal can be defined that may 
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN and 
-	\[
-	c(s) = ((\varstate[,11] \eqorneq \varval_{11}) \lor \dots \lor (\varstate[,1l_1] \eqorneq \varval_{1l_1})) \land \dots \land ((\varstate[,k1] \eqorneq \varval_{k1}) \lor \dots \lor (\varstate[,kl_k]  \eqorneq \varval_{kl_k}))
-	\]
-	proposition logical formulae in disjunctive normal form where
+	\begin{align*}
+		c(s) = &((\varstate[,i_1] \eqorneq \varval_{i_1}) \lor \dots \lor (\varstate[,i_{l_1}] \eqorneq \varval_{i_{l_1}})) \; \land \\
+		&((\varstate[,i_{l_1+1}] \eqorneq \varval_{i_{l_1+1}}) \lor \dots \lor (\varstate[,i_{l_2}] \eqorneq \varval_{i_{l_2}})) \; \land  \\
+		&\dots \\ 
+		&((\varstate[,i_{(l_{m-1})+1}] \eqorneq \varval_{i_{(l_{m-1})+1}}) \lor \dots \lor (\varstate[,i_{l_m}]  \eqorneq \varval_{i_{l_m}}))
+	\end{align*}
+	
+	proposition logical formula in disjunctive normal form where
 	\begin{itemize}
-		\item $\{\var_{kl_i} \mid k \in \natnums, l_i \in \{l_1, \dots l_k\} \subseteq \natnums\} \subseteq \vars$ and $\varstate[,kl_i] = \vareval(\state, \var_{kl_i})$
-		\item $\{\varval_{kl_i} \mid k \in \natnums, l_i \in \{l_1, \dots l_k\} \subseteq \natnums\} \subseteq \redcomment{\vareval(\states,\vars)}$
-	\end{itemize}
+			\item $\varstate[,i_k], a_{i_k} \in \varevalimg$ with $i_k\in \natnums$ and $k \in \{1, \dots, l_m\}$
+			\item $l_1 < l_2 < \dots < l_m$ and $m$ is the number of clauses in $c(s)$
+		\end{itemize}
 	The \viewN \viewparamcnf is defined by its \grpfctN $\gfctparamcnf : \states \to \imggrp$ with
 	\[
 	\state \mapsto
 	\begin{cases}
-		true, &\text{if } c(s) \text{ is true}\\
-		\remelem, 	&\text{otherwise}
-	\end{cases}
+			true, &\text{if } c(s) \text{ is true}\\
+			\remelem, 	&\text{otherwise}
+		\end{cases}
 	\]
 	
 	where $\imggrp := \{true, \remelem\}$.
@@ -508,19 +490,15 @@ Formalizing \viewsN based on cycles requires some formalization of the concept c
 	Let $\chgph = \chgphtuple$ be \achgphN. A (simple) \emph{cycle} in \chgph is any sequence \cyclesecfull alternating between states and actions where $n \in \natnums, \{\state_0, \dots, \state_{n-1}\} \subseteq \states$ is a set of distinct states,  $\{\action_0, \dots, \action_{n-1}\} \subseteq \actions$ and for all $i \in \{0, \dots, n-1\}$ it is $(\state_i,\action_i, \state_{i+1 \text{ mod }n}) \in \trans$.
 \end{definition}
 
-When the actions in the cycle are of no further importance, we will omit them only writing a sequence of states. In the following let $\cycle = \cyclesecfull$ be a cycle. For conveniences we will write $\state \in \cycle$ if the state is contained in the cycle \cycle and $\action \in \cycle$ if the action is contained in in the cycle \cycle. \redcomment{only if??} In words we will write a state or action is \emph{on} or \emph{in} the cycle. Let $\cycle_1$ and $\cycle_2$ be cycles. $\cycle_1 \cup \cycle_2 := \{\state \in \states \mid \state \in \cycle_1 \text{ or } \state \in \cycle_2\}$.
+When the actions in the cycle are of no further importance, we will omit them only writing a sequence of states. In the following let $\cycle = \cyclesecfull$ be a cycle. For conveniences we will write $\state \in \cycle$ if the state is contained in the cycle \cycle and $\action \in \cycle$ if the action is contained in in the cycle \cycle. \redcomment{only if??} In words we will both write a state or action is \emph{on} or \emph{in} the cycle. Let $\cycle_1$ and $\cycle_2$ be cycles. $\cycle_1 \cup \cycle_2 := \{\state \in \states \mid \state \in \cycle_1 \text{ or } \state \in \cycle_2\}$.
 
 \begin{definition}
-	Let \cycle be an cycle in \chgph and \states be the states set of \chgph. The number $n = |\{\state \in \states \mid \state \in \cycle\}|$ is called the \emph{length} of a cycle. 
+	Let \cycle be an cycle in \chgph and \states be the states set of \chgph. The number $|\{\state \in \states \mid \state \in \cycle\}| =: \lencycle(\cycle)$ is called the \emph{length} of a cycle. 
 \end{definition}
-
-Apart from the formalization of the term cycle and the length of a cycle we will also have to formalize a way to find cycles.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN and $n \in \natnums$. The function  $\fctfindcycles(\chgph, n)$ is called \emph{cycle finder function} (CFF). It returns a set $\cycleset$ of all cycles in \chgph where for all $\cycle \in \cycleset$ it is $|\{\state \in \states \mid \state \in \cycle\}| \geq n$. That is there are at least $n$ states contained in each cycle. 
+	Let $\chgph$ be an \chgphN. The set $\cycleset := \{ \cycle \mid \lencycle(\cycle) \geq n\}$ declares the set of all cycles in \chgph with at least length $n$.
 \end{definition}
-
-In a programming like manner we will write $\fctfindcycles(\chgph,n)$ and thereby referring to its returned set. This will be clear from the context.
 
 In practice there exist several cycle finding algorithms. The function $\fctfindcycles(\chgph, n)$ is an abstraction for one of these algorithms being used. The actual implementation relys on algorithms of the jave library \jgrapht namely the \redcomment{Algorithm Szwarcfiter and Lauer - $O(V+EC)$ and Tiernan - $O(V.constV)$ CITATION!!}
 
@@ -532,9 +510,9 @@ With the formalization done we will introduce some views utilizing the concept c
 	\[
 	\state \mapsto
 	\begin{cases}
-		inCycle, &\text{if } \fctfindcycles(\chgph, n) \neq \emptyset \\
-		\remelem, &\text{otherwise}
-	\end{cases}
+			inCycle, &\text{if } \cycleset \neq \emptyset \\
+			\remelem, &\text{otherwise}
+		\end{cases}
 	\]
 	
 	and $\imggrp = \{inCycle\} \cup \remset.$
@@ -547,34 +525,45 @@ This \viewN groups all states that are contained in cycle with a length of at le
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN and $n \in \natnums$. The \viewN \viewexactcycle is defined by its \grpfctN $\gfctexactcycle : \states \to \imggrp$ with
 	\[
-	\state \mapsto \{\cycle \in \fctfindcycles(\chgph, n) \mid \state \in \cycle\}
+	\state \mapsto \{\cycle \in \cycleset \mid \state \in \cycle\}
 	\]
 	
-	and $\imggrp = \powerset{\fctfindcycles(\chgph, n)}$
+	and $\imggrp = \powerset{\cycleset}\cup \remset.$
 	\label{def:exactcycleview}
 \end{definition}
 
-This \viewN groups states that have the same set of cycles they are contained in. Thus if $C_1$ and $C_2$ are distinct cycles and $\state_1, \state_2 \in \cycle_1$ and $\state_1 \in \cycle_2$ but $\state_2 \notin \cycle_2$ they are not grouped. It suffices that a state is on one cycle that the other one is not, in order for the states not being grouped. In graphs with many cycles this can lead to little grouping.
+This \viewN groups states that have the same set of cycles they are contained in. Thus if $C_1$ and $C_2$ are distinct cycles and $\state_1, \state_2 \in \cycle_1$ and $\state_1 \in \cycle_2$ but $\state_2 \notin \cycle_2$ they are not grouped. It suffices that a state is on one cycle that the other one is not on, in order for the states not being grouped. In graphs with many cycles this can lead to little grouping. 
 
 \redcomment{DISCUSSION OF EQUALITY, EQ CLASSES AND RESULTING STATES MISSING}
 
-\redcomment{GREEDY APPROACHES (STATE ON SINGLE CYCLE), AND SET APPROACH s -> $C_1 \cup C_2$ omitted because not sure if needed}
+\redcomment{GREEDY APPROACHES (STATE ON SINGLE CYCLE), AND SET APPROACH s $\to$ $C_1 \cup C_2$ omitted because not sure if needed}
 
 The view above might be useful when having found cycles to see what cycles specifically exist. Often it is interesting to find cycles that consist only of transitions of the same action. The following view accomplishes that.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN and $n \in \natnums$. The \viewN \viewexactcycle is defined by its \grpfctN $\gfctexactcycle : \states \to \imggrp$ with
 	\[
-	\state \mapsto \{\cycle \in \fctfindcycles(\chgph, n) \mid \state \in \cycle, \tilde{\action} \in \cycle, \forall \action \in \cycle : \action = \tilde{\action} \}
+	\state \mapsto \{\cycle \in \cycleset \mid \state \in \cycle, \tilde{\action} \in \cycle, \forall \action \in \cycle : \action = \tilde{\action} \}
 	\]
 	
-	and $\imggrp = \powerset{\fctfindcycles(\chgph, n)}$
+	and $\imggrp = \powerset{\cycleset} \cup \remset.$
 \end{definition}
 
 The view specializes the view from Definition \ref{def:exactcycleview} in the sense that it additionally requires for all $\cycle \in \gfctexactcycle$ that all actions occurring in the cycle are the same. \redcomment{doubling to above definition?}
 
 \redcomment{NO DISCUSSION IF PREVIOUSLY}
 
+In definition \ref{def:exactcycleview} we stated that little grouping can occur when mapping on the set of cycles in all of which the state is contained. Hence we provide the definition and implemenation of a view that groups states even though their set of cycles is not equal, but there is sufficient similarity in the cycles they are on.
+
+\begin{definition}
+	Let $\chgph = \chgphtuple$ be \achgphN and $n \in \natnums$. The \viewN \viewcycleset is defined by its \grpfctN $\gfctcycleset : \states \to \imggrp$ with
+	\[
+	\state \mapsto \{\smstate \in \states \mid \state, \smstate \in \cycle \in \cycleset\}
+	\]
+	and $\imggrp = \powerset{\states} \cup \remset.$
+\end{definition}
+
+Each state is mapped to the set of states resulting from joing the state sets of all the cycles the state is on. 
 
 \subsubsection{Strongly Connected Components}
 Strongly connect components (\sccN) are of major importance in model checking \redcomment{I think so because I found the terms many times in the book. Remaining question: really? why?}
@@ -583,9 +572,9 @@ Therefore it is feasible to consider a view utilizing strongly connected compone
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN. A set of the from
 	\begin{align*}
-		\scc = \{\state_1 \in \states \mid & \; \forall \state' \in \scc : \exists n \in \natnums, \exists \; \! (\state_1, \action_1, \state_2, \action_2 \dots, \state_n, \action_n, \state') \\
-		&\text{ where } (\state_n, \action_n, \state') \in \trans \land \forall i \in \{1, \dots, n-1\} : (\state_i, \action_i, \state_{i+1}) \in \trans \}
-	\end{align*}
+			\scc = \{\state_1 \in \states \mid & \; \forall \state' \in \scc : \exists n \in \natnums, \exists \; \! (\state_1, \action_1, \state_2, \action_2 \dots, \state_n, \action_n, \state') \\
+			&\text{ where } (\state_n, \action_n, \state') \in \trans \land \forall i \in \{1, \dots, n-1\} : (\state_i, \action_i, \state_{i+1}) \in \trans \}
+		\end{align*}
 	is called \emph{strongly connected component} of \chgph. That is for every state in the set there has to exist a sequence of transitions to every other state of the set. The set of strongly connected components of \chgph is denoted with \setscc.
 \end{definition}
 
@@ -631,8 +620,5 @@ In this section we will discuss \viewsN utilizing the result table. The actual i
 
 \redcomment{needhelp Understanding Cluster}
 
-
-
-
-
+	
 \end{document} 

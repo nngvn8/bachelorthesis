@@ -140,7 +140,8 @@
 
 
 % EXAMPLE VIEWS
-\newcommand{\distance}{\mt{\longleftrightarrow}}
+\newcommand{\pptydistance}{\mt{\longleftrightarrow}}
+\newcommand{\pptycycleset}{\mt{\cup{\{\state\}_\cycle}}}
 
 \newcommand{\gfctatomicprops}{\mt{\grpfct[\atomicprops]}}
 \newcommand{\gfctinitstates}{\mt{\grpfct[\initstates]}}
@@ -162,9 +163,10 @@
 \newcommand{\gfctparamcnf}{\mt{\grpfct[VarCNF]}}
 \newcommand{\gfctparamvalueseqopt}[1][\varval]{\mt{\grpfct[\var = #1]}}
 \newcommand{\gfctparamvalident}{\mt{\grpfct[\vareval(\state,\var)]}}
-\newcommand{\gfctdistance}{\mt{\grpfct[\distance]}}
+\newcommand{\gfctdistance}{\mt{\grpfct[\pptydistance]}}
 \newcommand{\gfcthascycle}{\mt{\grpfct[\exists\cycle]}}
 \newcommand{\gfctexactcycle}{\mt{\grpfct[\{\cycle\}]}}
+\newcommand{\gfctcycleset}{\mt{\grpfct[\pptycycleset]}}
 \newcommand{\gfctexactactcycle}{\mt{\grpfct[\{\cycle_\action\}]}}
 \newcommand{\gfctscc}{\mt{\grpfct[scc]}}
 \newcommand{\gfctbscc}{\mt{\grpfct[bscc]}}
@@ -189,9 +191,10 @@
 \newcommand{\viewparamdnf}{\mt{\view[VarDNF]}}
 \newcommand{\viewparamcnf}{\mt{\view[VarCNF]}}
 \newcommand{\viewparamvalident}{\mt{\view[\vareval(\state,\var)]}}
-\newcommand{\viewdistance}{\mt{\view[\distance]}}
+\newcommand{\viewdistance}{\mt{\view[\pptydistance]}}
 \newcommand{\viewhascycle}{\mt{\view[\exists\cycle]}}
 \newcommand{\viewexactcycle}{\mt{\view[\{\cycle\}]}}
+\newcommand{\viewcycleset}{\mt{\view[\pptycycleset]}}
 \newcommand{\viewexactactcycle}{\mt{\view[\{\cycle_\action\}]}}
 \newcommand{\viewscc}{\mt{\view[scc]}}
 \newcommand{\viewbscc}{\mt{\view[bscc]}}
@@ -215,12 +218,13 @@
 \newcommand{\inacts}{\mt{\overleftarrow{\actions}}}
 
 %%Parameters
-\newcommand{\vars}{\mt{V\!ar}}
+\newcommand{\vars}[1][\mdp]{\mt{V\!ar_{#1}}}
 \newcommand{\var}{\mt{x}}
 \newcommand{\varstate}[1][]{\mt{\var_{\state#1}}}
 \newcommand{\varval}{\mt{a}}
-\newcommand{\vareval}{\mt{V\!arEval}}
-\newcommand{\varevalimg}{\mt{\arbset}}
+\newcommand{\vareval}[1][\mdp]{\mt{V\!arEval_{#1}}}
+\newcommand{\varevalimg}[1][\mdp]{\mt{\vareval(\states,\vars)}}
+\newcommand{\varevalimgset}{\mt{\arbset}}
 \newcommand{\someparam}{\mt{\tilde{x}}}
 \newcommand{\eqorneq}{\mt{\;\doteqdot\;}}
 
@@ -234,8 +238,8 @@
 \newcommand{\cyclesecfull}{\mt{(\state_0, \action_0, \state_1, \action_1, \dots, \action_{n-1}, \state_0)}}
 \newcommand{\fctfindcycles}{\mt{findCycles}}
 \newcommand{\cycle}{\mt{C}}
-\newcommand{\cycleset}{\mt{\cycle_{\{\}}}}
-
+\newcommand{\cycleset}{\mt{\cycle_{\mdp, n}}}
+\newcommand{\lencycle}{\mt{len}}
 % strongly connected components
 \newcommand{\scc}{\mt{T}}
 \newcommand{\setscc}{\mt{SCC(\chgph)}}
