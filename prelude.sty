@@ -1,0 +1,326 @@
+\ProvidesPackage{prelude} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PACKAGES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{inputenc,fontenc}
+\usepackage[a4paper,margin=3cm]{geometry}
+\usepackage[english]{babel}
+%\usepackage[german]{babel}
+%\usepackage[fixlanguage]{babelbib}
+
+
+\usepackage{bbold}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb} % doteqdot
+\usepackage[dvipsnames]{xcolor}
+\usepackage{standalone}
+\usepackage{tikz}
+\usepackage{cite}
+\usepackage{xspace}
+\usepackage{relsize}
+\usepackage{mathtools} %mathclap
+%\usepackage{MnSymbol}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks,
+	citecolor=black,
+	filecolor=black,
+	linkcolor=black,
+	urlcolor=black
+}
+%\usepackage{xparse} % \newDocumentCommand for multiple optional arguments
+%\usepackage{titlecaps}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% THEOREMSTYLES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{exmp}{Beispiel}[section]
+%\AfterEndEnvironment{definition}{\noindent\ignorespaces}
+
+\theoremstyle{theorem}
+\newtheorem{theorem}{Satz}[section]
+\newtheorem{proposition}{Proposition}[section]
+%\AfterEndEnvironment{theorem}{\noindent\ignorespaces}
+
+\theoremstyle{korollary}
+\newtheorem{korollary}{Korollar}[section]
+%\AfterEndEnvironment{korollary}{\noindent\ignorespaces}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MY MACROS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%formatting
+\newcommand{\comment}[2]{{\color{#1}#2}}
+\newcommand{\redcomment}[1]{{\color{red}#1}}
+\newcommand{\purpcomment}[1]{{\color{pink}#1}}
+\newcommand{\bluecomment}[1]{{\color{blue}#1}}
+\newcommand{\mt}[1]{\ensuremath{{#1}}\xspace}
+\newcommand{\mynewcommand}[2]{\newcommand{#1}{\mt{#2}}} %% currently not used becaue of ide highlighting
+\newcommand{\arr}{\mt{\to}}
+\newcommand{\test}{test}
+
+%model checking terms
+\newcommand{\mimicrel}{\mt{\mathcal{R}}}
+\newcommand{\bisimeq}{\mt{\;\!\sim\;\!}}
+\newcommand{\simorder}{\mt{\;\!\preceq\;\!}}
+\newcommand{\simequiv}{\mt{\;\!\simeq\;\!}} %command already defined
+\newcommand{\relts}{\mt{\;\!\bullet_{_{\tiny{TS}}}\;\!}}
+\newcommand{\rel}{\mt{\;\!\bullet\;\!}}
+
+%own names
+\newcommand{\nm}[1]{#1\xspace}
+\newcommand{\mdpN}{\nm{MDP}}
+\newcommand{\mdpsN}{\nm{MDPs}}
+\newcommand{\viewN}{\nm{view}}
+\newcommand{\viewNC}{\nm{View}}
+\newcommand{\viewsN}{\nm{views}}
+\newcommand{\viewsNC}{\nm{Views}}
+\newcommand{\grpfctN}{\nm{grouping function}}
+\newcommand{\grpfctNC}{\nm{Grouping function}}
+\newcommand{\grpfctNCC}{\nm{Grouping Function}}
+\newcommand{\grpfctsN}{\nm{grouping functions}}
+\newcommand{\grpfctsNC}{\nm{Grouping functions}}
+\newcommand{\grpfctsNCC}{\nm{Grouping Functions}}
+\newcommand{\stmimicN}{\nm{state-mimic}}
+\newcommand{\stmimicsN}{\nm{state-mimics}}
+\newcommand{\stmimickingN}{\nm{state-mimicking}}
+\newcommand{\stmimickedN}{\nm{state-mimicked}}
+%\newcommand{\chosenphtypeNCC}{\nm{Transition System}}
+%\newcommand{\chgphNC}{\nm{Transition system}}
+%\newcommand{\chgphN}{\nm{transition system}}
+%\newcommand{\chgphsNCC}{\nm{Transition Systems}}
+%\newcommand{\chgphsNC}{\nm{Transition systems}}
+%\newcommand{\chgphsN}{\nm{transition systems}}
+\newcommand{\chgphNCC}{\nm{MDP}}
+\newcommand{\chgphNC}{\nm{MDP}}
+\newcommand{\chgphN}{\nm{MDP}}
+\newcommand{\achgphN}{\nm{an MDP}}
+\newcommand{\chgphsNCC}{\nm{MDPs}}
+\newcommand{\chgphsNC}{\nm{MDPs}}
+\newcommand{\chgphsN}{\nm{MDPs}}
+\newcommand{\parllcompN}{\nm{parallel composition}}
+\newcommand{\parllcompNC}{\nm{Parallel composition}}
+\newcommand{\parllcompNCC}{\nm{Parallel Composition}}
+\newcommand{\parllcompsN}{\nm{parallel compositions}}
+\newcommand{\parllcompsNC}{\nm{Parallel compositions}}
+\newcommand{\parllcompsNCC}{\nm{Parallel Compositions}}
+\newcommand{\sccN}{\nm{SCC}}
+\newcommand{\sccsN}{\nm{SCCs}}
+\newcommand{\bsccN}{\nm{BSCC}}
+\newcommand{\bsccsN}{\nm{BSCCs}}
+\newcommand{\jgrapht}{\nm{jGraphtT}}
+
+\newcommand{\outactident}{\nm{OutActionsIdent}}
+
+%names
+\newcommand{\iffN}{\nm{if and only if}}
+\newcommand{\tsN}{\nm{TS}}
+
+%% outactions identical
+\newcommand{\outactidentstrong}{\nm{strong}}
+\newcommand{\outactidentweak}{\nm{weak}}
+
+% CORE DEFINITIONS
+\newcommand{\grpfct}[1][\viewppty]{\mt{F_{#1}}}
+\newcommand{\eqrelview}{\mt{R}}
+\newcommand{\eqclassv}[1][\state]{\mt{\eqclass{#1}{\eqrelview}}}
+\newcommand{\eqclasssetv}[1][\states]{\eqclassv[{#1}]} %OLD: \bigcup_{\state \in \states} \eqclassv
+\newcommand{\viewid}{\mt{\mdp}}
+\newcommand{\view}[1][\viewppty]{\mt{\viewid_{#1}}}
+\newcommand{\imggrp}{\mt{\arbset}}
+\newcommand{\viewppty}{\mt{\theta}}
+\newcommand{\pll}{\mt{\;\!||\;\!}}
+\newcommand{\remstates}{\mt{\bigcup_{\state \in \states \setminus \states_1}\{\{\state\}\}}}
+\newcommand{\remelem}{\mt{\bot}}
+\newcommand{\remset}{\mt{\{\bot\}}}
+\newcommand{\gfctpll}{\mt{\grpfct[\pll]}}
+\newcommand{\group}{\mt{\top}}
+\newcommand{\imggrpbinview}{\mt{\{\group, \remelem\}}}
+\newcommand{\viewappset}{\mt{\tilde{\states}}}
+	
+%\newcommand{\mdp}{def}\mdp
+%\newcommand{\mdpdef}
+
+
+
+% EXAMPLE VIEWS
+\newcommand{\pptydistance}{\mt{\longleftrightarrow}}
+\newcommand{\pptycycleset}{\mt{\cup{\{\state\}_\cycle}}}
+\newcommand{\pptyoutactsetsize}{\mt{|\outacts(\state)|}}
+\newcommand{\pptyoutactsingle}{\mt{|\outacts(\state)|_1}}
+\newcommand{\pptyinactsetsize}{\mt{|\inacts(\state)|}}
+\newcommand{\pptyinactsingle}{\mt{|\inacts(\state)|_1}}
+
+\newcommand{\gfctatomicprops}{\mt{\grpfct[\atomicprops]}}
+\newcommand{\gfctinitstates}{\mt{\grpfct[\initstates]}}
+\newcommand{\gfcthasoutaction}{\mt{\grpfct[\exists\outact]}}
+\newcommand{\gfctminoutaction}{\mt{\grpfct[\numoutact\leq\outact]}}
+\newcommand{\gfctmaxoutaction}{\mt{\grpfct[\outact\leq\numoutact]}}
+\newcommand{\gfctspanoutaction}{\mt{\grpfct[\numoutactb\leq\outact\leq\numoutact]}}
+\newcommand{\gfctoutactsetsize}{\mt{\grpfct[\pptyoutactsetsize]}}
+\newcommand{\gfctoutactsingle}{\mt{\grpfct[\pptyoutactsingle]}}
+\newcommand{\gfctstrongoutactident}{\mt{\grpfct[\outacts(\state)_=]}}
+\newcommand{\gfctweakoutactident}{\mt{\grpfct[\outacts(\state)_\approx]}}
+\newcommand{\gfcthasinaction}{\mt{\grpfct[\exists\inact]}}
+\newcommand{\gfctmininaction}{\mt{\grpfct[\numinact\leq\inact]}}
+\newcommand{\gfctmaxinaction}{\mt{\grpfct[\inact\leq\numinact]}}
+\newcommand{\gfctspaninaction}{\mt{\grpfct[\numinactb\leq\inact\leq\numinact]}}
+\newcommand{\gfctinactsetsize}{\mt{\grpfct[\pptyinactsetsize]}}
+\newcommand{\gfctinactsingle}{\mt{\grpfct[\pptyinactsingle]}}
+\newcommand{\gfctstronginactident}{\mt{\grpfct[\inacts(\state)_=]}}
+\newcommand{\gfctweakinactident}{\mt{\grpfct[\inacts(\state)_\approx]}}
+\newcommand{\gfctparamvalueseq}{\mt{\grpfct[\var = \varval]}}
+\newcommand{\gfctparamvaluesneq}{\mt{\grpfct[\var \neq \varval]}}
+\newcommand{\gfctparamdnf}{\mt{\grpfct[VarDNF]}}
+\newcommand{\gfctparamcnf}{\mt{\grpfct[VarCNF]}}
+\newcommand{\gfctparamvalueseqopt}[1][\varval]{\mt{\grpfct[\var = #1]}}
+\newcommand{\gfctparamvalident}{\mt{\grpfct[\vareval(\state,\var)]}}
+\newcommand{\gfctdistance}{\mt{\grpfct[\pptydistance]}}
+\newcommand{\gfcthascycle}{\mt{\grpfct[\exists\cycle]}}
+\newcommand{\gfctexactcycle}{\mt{\grpfct[\{\cycle\}]}}
+\newcommand{\gfctcycleset}{\mt{\grpfct[\pptycycleset]}}
+\newcommand{\gfctexactactcycle}{\mt{\grpfct[\{\cycle_\action\}]}}
+\newcommand{\gfctscc}{\mt{\grpfct[scc]}}
+\newcommand{\gfctbscc}{\mt{\grpfct[bscc]}}
+
+
+\newcommand{\viewatomicprops}{\mt{\view[\atomicprops]}}
+\newcommand{\viewinitstates}{\mt{\view[\initstates]}}
+\newcommand{\viewhasoutaction}{\mt{\view[\exists\outact]}}
+\newcommand{\viewminoutaction}{\mt{\view[\numoutact\leq\outact]}}
+\newcommand{\viewmaxoutaction}{\mt{\view[\outact\leq\numoutact]}}
+\newcommand{\viewspanoutaction}{\mt{\view[\numoutactb\leq\outact\leq\numoutact]}}
+\newcommand{\viewoutactsetsize}{\mt{\view[\pptyoutactsetsize]}}
+\newcommand{\viewoutactsingle}{\mt{\view[\pptyoutactsingle]}}
+\newcommand{\viewstrongoutactident}{\mt{\view[\outacts(\state)_=]}}
+\newcommand{\viewweakoutactident}{\mt{\view[\outacts(\state)_\approx]}}
+\newcommand{\viewhasinaction}{\mt{\view[\exists\inact]}}
+\newcommand{\viewmininaction}{\mt{\view[\numinact\leq\inact]}}
+\newcommand{\viewmaxinaction}{\mt{\view[\inact\leq\numinact]}}
+\newcommand{\viewspaninaction}{\mt{\view[\numinactb\leq\inact\leq\numinact]}}
+\newcommand{\viewinactsetsize}{\mt{\view[\pptyinactsetsize]}}
+\newcommand{\viewinactsingle}{\mt{\view[\pptyinactsingle]}}
+\newcommand{\viewstronginactident}{\mt{\view[\inacts(\state)_=]}}
+\newcommand{\viewweakinactident}{\mt{\view[\inacts(\state)_\approx]}}
+\newcommand{\viewparamvalueseq}{\mt{\view[\var = \varval]}}
+\newcommand{\viewparamvaluesneq}{\mt{\view[\var \neq \varval]}}
+\newcommand{\viewparamdnf}{\mt{\view[VarDNF]}}
+\newcommand{\viewparamcnf}{\mt{\view[VarCNF]}}
+\newcommand{\viewparamvalident}{\mt{\view[\vareval(\state,\var)]}}
+\newcommand{\viewdistance}{\mt{\view[\pptydistance]}}
+\newcommand{\viewhascycle}{\mt{\view[\exists\cycle]}}
+\newcommand{\viewexactcycle}{\mt{\view[\{\cycle\}]}}
+\newcommand{\viewcycleset}{\mt{\view[\pptycycleset]}}
+\newcommand{\viewexactactcycle}{\mt{\view[\{\cycle_\action\}]}}
+\newcommand{\viewscc}{\mt{\view[scc]}}
+\newcommand{\viewbscc}{\mt{\view[bscc]}}
+
+%actions
+\newcommand{\numoutact}{\mt{n}}
+\newcommand{\numoutactb}{\mt{m}}
+\newcommand{\numinact}{\mt{n}}
+\newcommand{\numinactb}{\mt{m}}
+
+\newcommand{\predmaxoutact}[1][\numoutact]{\mt{Q_{\outact\leq#1}(\state,\state_1, \dots, \state_{#1+1})}}
+\newcommand{\predminoutact}[1][\numoutact]{\mt{Q_{#1\leq\outact}(\state,\state_1, \dots, \state_{#1})}}
+\newcommand{\formoutact}[1][\state]{\mt{C_{#1,\outact}}}
+\newcommand{\predmaxinact}[1][\numinact]{\mt{Q_{\inact\leq#1}(\state,\state_1, \dots, \state_{#1+1})}}
+\newcommand{\predmininact}[1][\numinact]{\mt{Q_{#1\leq\inact}(\state,\state_1, \dots, \state_{#1})}}
+
+\newcommand{\outact}{\mt{\overrightarrow{\action}}}
+\newcommand{\outacts}{\mt{\overrightarrow{\actions}}}
+\newcommand{\inact}{\mt{\overleftarrow{\action}}}
+\newcommand{\inacts}{\mt{\overleftarrow{\actions}}}
+
+%%Parameters
+\newcommand{\vars}[1][\mdp]{\mt{V\!ar_{#1}}}
+\newcommand{\var}{\mt{x}}
+\newcommand{\varstate}[1][]{\mt{\var_{\state#1}}}
+\newcommand{\varval}{\mt{a}}
+\newcommand{\vareval}[1][\mdp]{\mt{V\!arEval_{#1}}}
+\newcommand{\varevalimg}[1][\mdp]{\mt{\vareval(\states,\vars)}}
+\newcommand{\varevalimgset}{\mt{\arbset}}
+\newcommand{\someparam}{\mt{\tilde{x}}}
+\newcommand{\eqorneq}{\mt{\;\doteqdot\;}}
+
+% Distance
+\newcommand{\fctdist}{\mt{distance}}
+\newcommand{\fctdistdefault}{\mt{\fctdist(\chgph, \smstates, \grandist)}}
+\newcommand{\distval}{\mt{d}}
+\newcommand{\grandist}{\mt{n}}
+\let\path\oldpath
+\newcommand{\path}{\mt{P}}
+\newcommand{\pathsecfull}{\mt{(\state_1, \action_1, \state_2, \action_2, \dots, \action_{n-1}, \state_n)}}
+\newcommand{\lenpath}{\mt{len}}
+\newcommand{\pfirst}{\mt{first}}
+\newcommand{\plast}{\mt{last}}
+\newcommand{\pathset}{\mt{\path_\chgph}}
+
+%Cycles
+\newcommand{\cyclesecfull}{\mt{(\state_0, \action_0, \state_1, \action_1, \dots, \action_{n-1}, \state_0)}}
+\newcommand{\fctfindcycles}{\mt{findCycles}}
+\newcommand{\cycle}{\mt{C}}
+\newcommand{\cycleset}{\mt{\cycle_{\mdp, n}}}
+\newcommand{\lencycle}{\mt{len}}
+% strongly connected components
+\newcommand{\scc}{\mt{T}}
+\newcommand{\setscc}{\mt{SCC(\chgph)}}
+\newcommand{\setbscc}{\mt{BSCC(\chgph)}}
+
+
+% all Systems
+\newcommand{\chgph}{\mt{\mdp}}
+\newcommand{\chgphtuple}{\mt{\mdptuple}}
+\newcommand{\chgphtupledist}{\mt{\mdptupledist}}
+
+\newcommand{\states}{\mt{S}}
+\newcommand{\actions}{\mt{Act}}
+\newcommand{\atomicprops}{\mt{AP}}
+\newcommand{\labelingfct}{\mt{L}}
+\newcommand{\init}{\mt{\initdistrib}} % use MDP % refers to the underlying set
+\newcommand{\trans}{\mt{\probtfunc}} % use MDP % refers to the underlying set
+\newcommand{\smstates}{\mt{\tilde{\states}}}
+
+
+\newcommand{\state}{\mt{s}}
+\newcommand{\action}{\mt{\alpha}}
+\newcommand{\actionb}{\mt{\beta}}
+\newcommand{\actionc}{\mt{\alpha}}
+\newcommand{\smstate}{\mt{\tilde{\state}}}
+
+
+
+% transition sysstems
+\newcommand{\ts}{\mt{TS}}
+\newcommand{\transitionrel}{\mt{\longrightarrow}}
+\newcommand{\initstates}{\mt{I}}
+\newcommand{\transitionsystem}{\mt
+	{(\states, \actions, \transitionrel, \initstates, \atomicprops, \labelingfct)}
+}
+\newcommand{\tstupledist}{\mt{(\states', \actions',\transitionrel', \initstates', \labelingfct')}}
+
+
+%Markov chains and MDP
+\newcommand{\mdp}{\mt{\autm}}
+\newcommand{\mdptuple}{\mt{(\states, \actions, \probtfunc, \initdistrib, \atomicprops, \labelingfct)}}
+\newcommand{\mdptupledist}{\mt{(\states', \actions', \probtfunc', \initdistrib', \atomicprops', \labelingfct')}}
+\newcommand{\autm}{\mt{\mathcal{M}}}
+\newcommand{\probtfunc}{\mt{\textbf{P}}}
+\newcommand{\initdistrib}{\mt{\iota_{init}}}
+
+
+%maths
+\newcommand{\powerset}[1]{\mt{\mathcal{P}(#1)}}
+\newcommand{\eqclass}[2]{\mt{[#1]_{#2}}}%{\mt{#1 / #2}}
+\newcommand{\impr}{\mt{\hspace{3mm}\Rightarrow\hspace{2mm}}}
+\newcommand{\impl}{\mt{\hspace{3mm}\Leftarrow\hspace{2mm}}}
+\newcommand{\natnums}{\mt{\mathbb{N}}} 
+\newcommand{\intmodn}[1][n]{\mt{\mathbb{Z}_{#1}}}
+\newcommand{\arbset}{\mt{M}}
+\newcommand{\bigsum}[2][]{\mt{\mathlarger{\sum}_{#2}^{#1}}}
+\newcommand{\bbigsum}[2][]{\mt{\mathlarger{\mathlarger{\sum}}_{#2}^{#1}}}
+\newcommand{\invimage}[2]{#1^{\mt{-1}(#2)}}
+
+%tickz
+%% \definecolor{darkred}{RGB}{196, 42, 42}

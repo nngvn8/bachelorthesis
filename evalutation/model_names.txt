@@ -1,0 +1,5 @@
+#00 two_dies    - mdp two dies
+#01 TPME        - two process mutual exclusion
+#02 RDP         - randomized dining philosophers (SCC)
+#03 RTPW        - randomized two process wait-free
+#04 DCG         - dining cryptographers (~SCC)

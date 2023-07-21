@@ -133,6 +133,9 @@
 \newcommand{\remelem}{\mt{\bot}}
 \newcommand{\remset}{\mt{\{\bot\}}}
 \newcommand{\gfctpll}{\mt{\grpfct[\pll]}}
+\newcommand{\group}{\mt{\top}}
+\newcommand{\imggrpbinview}{\mt{\{\group, \remelem\}}}
+\newcommand{\viewappset}{\mt{\tilde{\states}}}
 
 %\newcommand{\mdp}{def}\mdp
 %\newcommand{\mdpdef}
@@ -142,6 +145,10 @@
 % EXAMPLE VIEWS
 \newcommand{\pptydistance}{\mt{\longleftrightarrow}}
 \newcommand{\pptycycleset}{\mt{\cup{\{\state\}_\cycle}}}
+\newcommand{\pptyoutactsetsize}{\mt{|\outacts(\state)|}}
+\newcommand{\pptyoutactsingle}{\mt{|\outacts(\state)|_1}}
+\newcommand{\pptyinactsetsize}{\mt{|\inacts(\state)|}}
+\newcommand{\pptyinactsingle}{\mt{|\inacts(\state)|_1}}
 
 \newcommand{\gfctatomicprops}{\mt{\grpfct[\atomicprops]}}
 \newcommand{\gfctinitstates}{\mt{\grpfct[\initstates]}}
@@ -149,12 +156,16 @@
 \newcommand{\gfctminoutaction}{\mt{\grpfct[\numoutact\leq\outact]}}
 \newcommand{\gfctmaxoutaction}{\mt{\grpfct[\outact\leq\numoutact]}}
 \newcommand{\gfctspanoutaction}{\mt{\grpfct[\numoutactb\leq\outact\leq\numoutact]}}
+\newcommand{\gfctoutactsetsize}{\mt{\grpfct[\pptyoutactsetsize]}}
+\newcommand{\gfctoutactsingle}{\mt{\grpfct[\pptyoutactsingle]}}
 \newcommand{\gfctstrongoutactident}{\mt{\grpfct[\outacts(\state)_=]}}
 \newcommand{\gfctweakoutactident}{\mt{\grpfct[\outacts(\state)_\approx]}}
 \newcommand{\gfcthasinaction}{\mt{\grpfct[\exists\inact]}}
 \newcommand{\gfctmininaction}{\mt{\grpfct[\numinact\leq\inact]}}
 \newcommand{\gfctmaxinaction}{\mt{\grpfct[\inact\leq\numinact]}}
 \newcommand{\gfctspaninaction}{\mt{\grpfct[\numinactb\leq\inact\leq\numinact]}}
+\newcommand{\gfctinactsetsize}{\mt{\grpfct[\pptyinactsetsize]}}
+\newcommand{\gfctinactsingle}{\mt{\grpfct[\pptyinactsingle]}}
 \newcommand{\gfctstronginactident}{\mt{\grpfct[\inacts(\state)_=]}}
 \newcommand{\gfctweakinactident}{\mt{\grpfct[\inacts(\state)_\approx]}}
 \newcommand{\gfctparamvalueseq}{\mt{\grpfct[\var = \varval]}}
@@ -178,12 +189,16 @@
 \newcommand{\viewminoutaction}{\mt{\view[\numoutact\leq\outact]}}
 \newcommand{\viewmaxoutaction}{\mt{\view[\outact\leq\numoutact]}}
 \newcommand{\viewspanoutaction}{\mt{\view[\numoutactb\leq\outact\leq\numoutact]}}
+\newcommand{\viewoutactsetsize}{\mt{\view[\pptyoutactsetsize]}}
+\newcommand{\viewoutactsingle}{\mt{\view[\pptyoutactsingle]}}
 \newcommand{\viewstrongoutactident}{\mt{\view[\outacts(\state)_=]}}
 \newcommand{\viewweakoutactident}{\mt{\view[\outacts(\state)_\approx]}}
 \newcommand{\viewhasinaction}{\mt{\view[\exists\inact]}}
 \newcommand{\viewmininaction}{\mt{\view[\numinact\leq\inact]}}
 \newcommand{\viewmaxinaction}{\mt{\view[\inact\leq\numinact]}}
 \newcommand{\viewspaninaction}{\mt{\view[\numinactb\leq\inact\leq\numinact]}}
+\newcommand{\viewinactsetsize}{\mt{\view[\pptyinactsetsize]}}
+\newcommand{\viewinactsingle}{\mt{\view[\pptyinactsingle]}}
 \newcommand{\viewstronginactident}{\mt{\view[\inacts(\state)_=]}}
 \newcommand{\viewweakinactident}{\mt{\view[\inacts(\state)_\approx]}}
 \newcommand{\viewparamvalueseq}{\mt{\view[\var = \varval]}}
@@ -204,7 +219,6 @@
 \newcommand{\numoutactb}{\mt{m}}
 \newcommand{\numinact}{\mt{n}}
 \newcommand{\numinactb}{\mt{m}}
-\newcommand{\setoutact}{\mt{\actions \cup \remset}}
 
 \newcommand{\predmaxoutact}[1][\numoutact]{\mt{Q_{\outact\leq#1}(\state,\state_1, \dots, \state_{#1+1})}}
 \newcommand{\predminoutact}[1][\numoutact]{\mt{Q_{#1\leq\outact}(\state,\state_1, \dots, \state_{#1})}}
@@ -230,9 +244,16 @@
 
 % Distance
 \newcommand{\fctdist}{\mt{distance}}
-\newcommand{\fctdistdefault}{\mt{\fctdist(\chgph, \smstates, \granularity)}}
-\newcommand{\distval}{\mt{dist}}
-\newcommand{\granularity}{\mt{n}}
+\newcommand{\fctdistdefault}{\mt{\fctdist(\chgph, \smstates, \grandist)}}
+\newcommand{\distval}{\mt{d}}
+\newcommand{\grandist}{\mt{n}}
+\let\path\oldpath
+\newcommand{\path}{\mt{P}}
+\newcommand{\pathsecfull}{\mt{(\state_1, \action_1, \state_2, \action_2, \dots, \action_{n-1}, \state_n)}}
+\newcommand{\lenpath}{\mt{len}}
+\newcommand{\pfirst}{\mt{first}}
+\newcommand{\plast}{\mt{last}}
+\newcommand{\pathset}{\mt{\path_\chgph}}
 
 %Cycles
 \newcommand{\cyclesecfull}{\mt{(\state_0, \action_0, \state_1, \action_1, \dots, \action_{n-1}, \state_0)}}

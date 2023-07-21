@@ -1,5 +1,7 @@
 \documentclass[preview]{standalone}
+%\usepackage{prelude}
 \input{prelude}
+
 
 \begin{document}
 \section{View Examples}
@@ -8,7 +10,7 @@ When considering \viewsN we only want into account those that utilize properties
 \subsection{Views Utilizing MDP Components}
 In this subsection we will introduce some views the are purely based on the components of an \mdpN. Their will neither be computations on the graph-structure of an MDP nor computations using the result vector.
 \subsubsection{Atomic Propositions}
-One of the least involved approaches to create a view is to base it on the atomic propositions that are assigned to each state by the labeling function. The notion is to group states that were assigned the same set of atomic propositions. \redcomment{Why useful?, currently no "has AP" -> maybe should be added}
+One of the least involved approaches to create a view is to base it on the atomic propositions that are assigned to each state by the labeling function. The notion is to group states that were assigned the same set of atomic propositions. \redcomment{Why useful?, currently no "has AP" $\to$ maybe should be added}
 
 
 \begin{definition}	
@@ -26,22 +28,22 @@ Although this view might seem rather simple because essentially it only performs
 An a little more involved idea than directly using a given function is to utilize the set of initial states. We can group states that have a probability greater zero, that they are started from. In practice this might be useful to quickly find all initial states.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN and $\initstates := \{\state \in \states \mid \state \in \init\}$. The view \viewinitstates is defined by its grouping function \gfctinitstates \grpfctN with $\gfctinitstates : \states \to \imggrp$ with 
+	Let $\chgph = \chgphtuple$ be \achgphN and $\initstates := \{\state \in \states \mid \state \in \init\}$. The view \viewinitstates is defined by its \grpfctN with $\gfctinitstates : \states \to \imggrp$ with 
 	
 	\[
 	\state \mapsto
 	\begin{cases}
-			\emptyset,				& \text{if } \state \in \initstates \\
+			\group,				& \text{if } \state \in \initstates \\
 			\remelem,          	& \text{otherwise}
 		\end{cases}
 	\]
 	
-	and $\imggrp := \{\emptyset\} \cup \remset$.
+	and $\imggrp := \imggrpbinview$.
 \end{definition}
 
 For $\state_1,\state_2 \in \states$ it is $\gfctinitstates(\state_1) = \gfctinitstates(\state_2)$ \iffN $\state_1, \state_2 \in \initstates$ or $\state_1 = \state_2$. According to Definition \ref{def:eqrelview} it is 
 \begin{align*}
-	\eqclassv &= \{\state \in \states \mid \gfctinitstates(\state) = \emptyset\} &\text{for } \state \in \initstates \text{ and} \\
+	\eqclassv &= \{\state \in \states \mid \gfctinitstates(\state) = \group\} &\text{for } \state \in \initstates \text{ and} \\
 	\eqclassv &= \{\state \in \states \mid \gfctinitstates(\state) = \{\state\} \} = \{\state\} &\text{for } \state \notin \initstates.
 \end{align*}
 
@@ -51,8 +53,9 @@ By this we obtain the \viewN $\viewinitstates$ for a given \achgphN \chgph where
 All other components are constructed as in Definition \ref{def:view}.
 
 \subsubsection{Outgoing Actions}
-\redcomment{define outgoing transition and outgoing action}
-The \emph{OutAction View} groups states that share some property regarding their actions  of the outgoing transitions. Several variants are feasible. In the following we will use the expression "outgoing action \action" equivalent with "transition with outgoing action \action".
+Another crucial component of \achgphN is its set of actions \actions. Actions are used for interprocesscommunication und synchronization. In this subsection we will provide and dicuss some views utilizing actions on transitions that are outgonig from a state. 
+%For simplicity we will write "outgoing action \action" short for "transition with outgoing action \action" analogously we will write "ingoing action \action" short for "transition with ingoing action \action". We
+We will write a state \state has an outgoing action \action if there exists a state $\state'$ with $(\state, \action, \state') \in \trans$. For a state \state, ingoing action \action we say it has an ingoing action \action if there exist a state $\state'$ with $(\state', \action, \state) \in \trans$.
 
 The most obvious variant to group states is to group states that \emph{have} a given outgoing action. 
 
@@ -62,12 +65,12 @@ The most obvious variant to group states is to group states that \emph{have} a g
 	\[
 	\state \mapsto
 	\begin{cases}
-			\action,				& \text{if } \exists \state' \in \states: (\state, \action, \state') \in \trans \\
+			\group,				& \text{if } \exists \state' \in \states: (\state, \action, \state') \in \trans \\
 			\remelem,          	& \text{otherwise}
 		\end{cases}
 	\]
 	
-	and $\imggrp := \setoutact$.	
+	and $\imggrp := \imggrpbinview$. %\actions \cup \remset$.	
 \end{definition}
 
 
@@ -98,12 +101,14 @@ For example we could require that a given action has to be outgoing a minimum am
 	\[
 	\state \mapsto
 	\begin{cases}
-			\action,				& \text{if } \exists \state_1, \dots, \state_\numoutact \in \states:  \predminoutact\\
+			\group,				& \text{if } \exists \state_1, \dots, \state_\numoutact \in \states:  \predminoutact\\
 			\remelem,          	& \text{otherwise}
 		\end{cases}
 	\]
 	
-	where $\imggrp := \setoutact$, $\numoutact \in \natnums$ is the minimum amount of times a transition with action \action has to be outgoing in order to be grouped with the other states and
+	where $\imggrp := \imggrpbinview$,
+	%	\actions \cup \remset$
+	 $\numoutact \in \natnums$ is the minimum amount of times a transition with action \action has to be outgoing in order to be grouped with the other states and
 	\[
 	\predminoutact := ((\state, \action, \state_1), \dots, (\state, \action, \state_\numoutact) \in \trans) \land |\{\state_1, \dots, \state_\numoutact\}| = \numoutact
 	\]
@@ -137,12 +142,14 @@ In a similar fashion we define view that groups states where at most a certain n
 	\[
 	\state \mapsto
 	\begin{cases}
-			\action,				& \text{if } \forall \state_1, \dots, \state_{\numoutact+1} \in \states: \predmaxoutact \\
+			\group,				& \text{if } \forall \state_1, \dots, \state_{\numoutact+1} \in \states: \predmaxoutact \\
 			\remelem,          	& \text{otherwise}
 		\end{cases}
 	\]
 	
-	where $\imggrp := \actions \cup \remset$, $\numoutact \in \natnums$ is the maximal number of times a transition with action \action may be outgoing and 
+	where $\imggrp := \imggrpbinview$,
+%	$\numoutact \in \natnums$ 
+	is the maximal number of times a transition with action \action may be outgoing and 
 	\[
 	\predmaxoutact := ((\state, \action, \state_1), \dots, (\state, \action, \state_{\numoutact+1}) \in \trans) \implies \bigvee_{\mathclap{\substack{i,j \in \{1,\dots, \numoutact+1\} \\ i < j}}} \state_i = \state_j
 	\]
@@ -161,12 +168,14 @@ Since we already defined \grpfctsN and hence views for a required minimal and ma
 	\[
 	\state \mapsto
 	\begin{cases}
-			\action,				& \text{if } \exists \state_1, \dots, \state_\numoutactb \in \states: \predminoutact[\numoutactb] \\ &\text{and } \forall \state_1, \dots, \state_{\numoutact+1} \in \states: \predmaxoutact \\
+			\group,				& \text{if } \exists \state_1, \dots, \state_\numoutactb \in \states: \predminoutact[\numoutactb] \\ &\text{and } \forall \state_1, \dots, \state_{\numoutact+1} \in \states: \predmaxoutact \\
 			\remelem,          	& \text{otherwise}
 		\end{cases}
 	\]
 	
-	where $\imggrp := \actions \cup \remset$ and $\numoutactb, \numoutact \in \natnums$ are the minimal and maximal number of transitions with action \action in order for state to be grouped. The predicates \predminoutact and \predmaxoutact are the predicates from Definition \ref{def:minoutaction} and Definition \ref{def:viewmaxoutaction} respectively.
+	where $\imggrp := \imggrpbinview$
+%	\actions \cup \remset$ 
+	and $\numoutactb, \numoutact \in \natnums$ are the minimal and maximal number of transitions with action \action in order for state to be grouped. The predicates \predminoutact and \predmaxoutact are the predicates from Definition \ref{def:minoutaction} and Definition \ref{def:viewmaxoutaction} respectively.
 \end{definition}
 
 We already know that for a given $\state \in \states$ the expressions $\exists \state_1, \dots, \state_\numoutact \in \states: \predminoutact$ and $\forall \state_1, \dots, \state_{\numoutactb+1} \in \states: \predmaxoutact[\numoutactb]$ from Definition \ref{def:minoutaction} and Definition \ref{def:viewmaxoutaction} require that \state has minimal and maximal amount of outgoing transitions with an action \action respectively. Hence the conjunction will be true for states where the amount of outgoing transitions with action \action is element of the set $\{\numoutactb, \numoutact+1, \dots, \numoutact-1, \numoutact\}$. We will write for this that the number of outgoing actions is \emph{in the span}.
@@ -203,7 +212,7 @@ Instead of making requirements about states and group them based on whether they
 	\state \mapsto	
 	\{(\action, \numoutact) \mid \action \in \actions, \numoutact \text{ is the number of times that \action is outgoing from } \state\}
 	\]
-	and $\imggrp := \actions \times \natnums_0$.
+	and $\imggrp := \actions \times \natnums_0 \cup \remset$.
 \end{definition}
 
 The \grpfctN asserts to each state a set of pairs. Note that a pair is contained int the set for each action $\action \in \actions$. In case there is no outgoing transition from state \state with an action \action it is $(\action, 0) \in \gfctstrongoutactident$. For $\state_1, \state_2 \in \states$ it is $\gfctstrongoutactident(\state_1) = \gfctstrongoutactident(\state_2)$ \iffN $\state_1$ and $\state_2$ are mapped to the same set of pairs. By Definition \ref{def:eqrelview} the obtained equivalence classes of \eqrelview are
@@ -218,7 +227,7 @@ As mentioned earlier a \outactidentweak variant of the \outactident \viewN is al
 	\[
 	\state \mapsto \{\action \in \actions \mid \exists \state' \in \states : (\state, \action, \state') \in \trans\} 	
 	\]
-	and $\imggrp := \actions$.
+	and $\imggrp := \actions \cup \remset$.
 \end{definition}
 \redcomment{condition of image-set written in inconsistent style to strong identity. Swap strong and weak (order)?}
 
@@ -230,6 +239,31 @@ For $\state_1, \state_2 \in \states$ it is $\gfctweakoutactident(\state_1) = \gf
 \]
 According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewweakoutactident.
 
+Apart from the option of directly considering one or a set of outgoing actions with possible quantities it is also possible to only consider the quantity of outgoing actions without regarding the any specific action.
+
+\begin{definition}
+	Let $\chgph = \chgphtuple$ be \achgphN and $\action \in \actions$. The \viewN \viewoutactsetsize is defined by its \grpfctN $\gfctoutactsetsize : \states \to \imggrp$ with
+	\[
+	\state \mapsto |\{\action \in \actions \mid \exists \state' \in \states : (\state, \action, \state') \in \trans\}|
+	\]
+	and $\imggrp := \natnums \cup \remset$.
+\end{definition}
+
+The notion of the view is similar to utilize the outdegree, with the difference being here that ougoing transitions with the same action are considered as one single edge. This reflects on the options available for nondeterminism in this state.
+
+The sepcialcase of there only being one single ougoing action is worth a distinct view, since it hides all nondeterministic choices, but nothing more.
+
+\begin{definition}
+	Let $\chgph = \chgphtuple$ be \achgphN and $\action \in \actions$. The \viewN \viewoutactsingle is defined by its \grpfctN $\gfctoutactsingle : \states \to \imggrp$ with
+	\[\state \mapsto 
+	\begin{cases}
+		\group, &\text{if } |\{\action \in \actions \mid \exists \state' \in \states : (\state, \action, \state') \in \trans\}| = 1 \\ 
+		\remelem, &\text{otherwise}
+	\end{cases}
+	\]
+	and $\imggrp := \natnums \cup \remset$.
+\end{definition}
+
 \subsubsection{Ingoing Actions}
 Analogously to Outgoing Actions views of utilizing ingoing actions are feasable. Since there is no difference apart from the definitions itself, we only provide the definitions.
 
@@ -239,12 +273,12 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 	\[
 	\state \mapsto
 	\begin{cases}
-			\action,				& \text{if } \exists \state' \in \states: (\state', \action, \state) \in \trans \\
+			\group,				& \text{if } \exists \state' \in \states: (\state', \action, \state) \in \trans \\
 			\remelem,          	& \text{otherwise}
 		\end{cases}
 	\]
 	
-	and $\imggrp := \actions \cup \remset$.	
+	and $\imggrp := \imggrpbinview$.	
 	\label{def:mininaction}
 \end{definition}	
 
@@ -255,12 +289,14 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 	\[
 	\state \mapsto
 	\begin{cases}
-			\action,				& \text{if } \exists \state_1, \dots, \state_\numinact \in \states:  \predmininact\\
+			\group,				& \text{if } \exists \state_1, \dots, \state_\numinact \in \states:  \predmininact\\
 			\remelem,          	& \text{otherwise}
 		\end{cases}
 	\]
 	
-	where $\imggrp := \actions \cup \remset$, $\numinact \in \natnums$ is the minimum amount of times a transition with action \action has to be ingoing in order to be grouped with the other states and
+	where $\imggrp := \imggrpbinview$,
+%	 $\numinact \in \natnums$ 
+	 is the minimum amount of times a transition with action \action has to be ingoing in order to be grouped with the other states and
 	\[
 	\predmininact := ((\state_1, \action, \state), \dots, (\state_\numinact, \action, \state) \in \trans) \land |\{\state_1, \dots, \state_\numinact\}| = \numinact
 	\]
@@ -274,12 +310,14 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 	\[
 	\state \mapsto
 	\begin{cases}
-			\action,				& \text{if } \forall \state_1, \dots, \state_{\numinact+1} \in \states: \predmaxinact \\
+			\group,				& \text{if } \forall \state_1, \dots, \state_{\numinact+1} \in \states: \predmaxinact \\
 			\remelem,          	& \text{otherwise}
 		\end{cases}
 	\]
 	
-	where $\imggrp := \actions \cup \remset$, $\numinact \in \natnums$ is the maximal number of times a transition with action \action may be ingoing and 
+	where $\imggrp := \imggrpbinview$
+%	$\numinact \in \natnums$ 
+	 is the maximal number of times a transition with action \action may be ingoing and 
 	\[
 	\predmaxinact := ((\state_1, \action, \state), \dots, (\state_{\numinact+1}, \action, \state) \in \trans) \implies \bigvee_{\mathclap{\substack{i,j \in \{1,\dots, \numinact+1\} \\ i < j}}} \state_i = \state_j
 	\]
@@ -293,12 +331,14 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 	\[
 	\state \mapsto
 	\begin{cases}
-			\action,				& \text{if } \exists \state_1, \dots, \state_\numinactb \in \states: \predmininact[\numinactb] \\ &\text{and } \forall \state_1, \dots, \state_{\numinact+1} \in \states: \predmaxinact \\
+			\group,				& \text{if } \exists \state_1, \dots, \state_\numinactb \in \states: \predmininact[\numinactb] \\ &\text{and } \forall \state_1, \dots, \state_{\numinact+1} \in \states: \predmaxinact \\
 			\remelem,          	& \text{otherwise}
 		\end{cases}
 	\]
 	
-	where $\imggrp := \actions \cup \remset$ and $\numinactb, \numinact \in \natnums$ are the minimal and maximal number of transitions with action \action in order for state to be grouped. The predicates \predmininact and \predmaxinact are the predicates from Definition \ref{def:mininaction} and Definition \ref{def:viewmaxinaction} respectively.
+	where $\imggrp := \imggrpbinview$
+%	\actions \cup \remset$ 
+	and $\numinactb, \numinact \in \natnums$ are the minimal and maximal number of transitions with action \action in order for state to be grouped. The predicates \predmininact and \predmaxinact are the predicates from Definition \ref{def:mininaction} and Definition \ref{def:viewmaxinaction} respectively.
 \end{definition}
 
 \begin{definition}
@@ -307,7 +347,7 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 	\state \mapsto	
 	\{(\action, \numinact) \mid \action \in \actions, \numinact \text{ is the number of times that \action is ingoing from } \state\}
 	\]
-	and $\imggrp := \actions \times \natnums_0$.
+	and $\imggrp := (\actions \times \natnums_0) \cup \remset$.
 \end{definition}
 
 \begin{definition}
@@ -315,7 +355,15 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 	\[
 	\state \mapsto \{\action \in \actions \mid \exists \state' \in \states : (\state', \action, \state) \in \trans\} 	
 	\]
-	and $\imggrp := \actions$.
+	and $\imggrp := \actions\cup \remset$.
+\end{definition}
+
+\begin{definition}
+	Let $\chgph = \chgphtuple$ be \achgphN and $\action \in \actions$. The \viewN \viewinactsetsize is defined by its \grpfctN $\gfctinactsetsize : \states \to \imggrp$ with
+	\[
+	\state \mapsto |\{\action \in \actions \mid \exists \state' \in \states : (\state', \action, \state) \in \trans\}|
+	\]
+	and $\imggrp := \natnums \cup \remset$.
 \end{definition}
 
 \subsubsection{Variables}
@@ -353,11 +401,11 @@ The most apparent idea for a \viewN utilizing variables is to group states that 
 	\[
 	\state \mapsto
 	\begin{cases}
-			\varval, &\text{if } \vareval(\state, \var) = \varval\\
+			\group, &\text{if } \vareval(\state, \var) = \varval\\
 			\remelem, &\text{otherwise}
 		\end{cases}
 	\]
-	where $\imggrp := \remset \cup \{a\}$.
+	where $\imggrp := \imggrpbinview$.
 \end{definition}
 
 The view \viewparamvalueseq groups states that share the same value for a given variable. For $\state_1, \state_2$ it is $\gfctparamvalueseq(\state_1) = \gfctparamvalueseq(\state_2)$ \iffN $\vareval(\state_1, \var) = \vareval(\state_2, \var)$ or $\state_1 = \state_2$. The obtained equivalence classes are
@@ -381,11 +429,11 @@ Analogously a view that requires inequality instead of equality is feasible.
 	\[
 	\state \mapsto
 	\begin{cases}
-			\varval, &\text{if } \vareval(\state, \var) \neq \varval\\
+			\group, &\text{if } \vareval(\state, \var) \neq \varval\\
 			\remelem, 	&\text{otherwise}
 		\end{cases}
 	\]
-	where $\imggrp := \remset \cup \{a\}$.
+	where $\imggrp := \imggrpbinview$.
 \end{definition}
 
 If states are to be grouped with the requirement of several variables equaling or not equaling specified values this can be achieved by using \parllcompN. 
@@ -402,12 +450,12 @@ To allow even more flexibility a view can be used that also allows a combination
 	\[
 	\state \mapsto
 	\begin{cases}
-			true, &\text{if } d(s) \text{ is true}\\
+			\group, &\text{if } d(s) \text{ is true}\\
 			\remelem, 	&\text{otherwise}
 		\end{cases}
 	\]
 	
-	where $\imggrp := \{true, \remelem\}$.
+	where $\imggrp := \{\group, \remelem\}$.
 \end{definition}
 
 
@@ -435,12 +483,12 @@ Analogously a view based on a conjunctive normal formal can be defined that may 
 	\[
 	\state \mapsto
 	\begin{cases}
-			true, &\text{if } c(s) \text{ is true}\\
+			\group, &\text{if } c(s) \text{ is true}\\
 			\remelem, 	&\text{otherwise}
 		\end{cases}
 	\]
 	
-	where $\imggrp := \{true, \remelem\}$.
+	where $\imggrp := \{\group, \remelem\}$.
 \end{definition}
 
 The only difference from the \viewN \viewparamcnf to the \viewN \viewparamdnf is whether the respective formulae is in conjunctive or disjunctive normal form.\redcomment{CITATION} Since each formulae in conjunctive normal form can tan be transformed to a formulae in disjunctive normal form and vice verse neither on of the \viewsN can perform an action the other can not. Hence there is no difference in expressivity, but there may be one in size. Therefore both views have been implemented and formalized. 
@@ -464,16 +512,43 @@ According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in 
 
 \subsection{Utilizing the MDP Graphstructure}
 \subsubsection{Distance}
-\redcomment{Implementation Algorithm	}
+Considering distances in a graph can be very helpful to get an overview of a graph. Likewise it helps a lot with understanding the structure of \achgphN. In order to consider the distance between nodes we will need to formalize it.
+
+\redcomment{definition is very simlar to execution fragments! Citation?}
+
+\begin{definition}
+	Let $\chgph = \chgphtuple$ be \achgphN. A (simple and finite) \emph{path} \path is a sequence \pathsecfull alternating between states and actions where $n \in \natnums, \{\state_1, \dots, \state_{n}\} \subseteq \states$ is a set of distinct states,  $\{\action_1, \dots, \action_{n}\} \subseteq \actions$ and for all $i \in \{1, \dots, n\}$ it is $(\state_i,\action_i, \state_{i+1}) \in \trans$. 
+	
+	\noindent
+	It is $\pfirst(\path) := \state_0$ and $\plast(\path) := \state_n$ and \pathset the set of all paths in \chgph.
+\end{definition}
+
+\begin{definition}
+	\sloppy
+	Let $\chgph = \chgphtuple$ be \achgphN and \path = \pathsecfull be a path in \chgph. The number $n =: \lenpath(\path)$ is called \emph{length} of the path \path.
+\end{definition}
+
+\begin{definition}
+	Let $\chgph = \chgphtuple$ be \achgphN. The \emph{distance} from $\smstates \subseteq \states$ to $\state \in \states$ is the length of the shortest path from a state $\smstate \in \smstates$ to \state. That is $dist(\chgph, \smstates, \state) := \text{min}\{\lenpath(\path) \mid \path \in \pathset, \; \pfirst(\path) \in \smstates, \; \plast(\path) \in \state\}$.
+\end{definition}
+
+For a \viewN that applies to the whole and utilizes distance it only makes sense to consider a given set of states from which one the distance is measured. An intuitive choice for such set is the set of initial states. The following algorithm calculates the distance of each node from a given set $\smstates \subseteq \states$ considering granularity \grandist:
+
+\redcomment{Implementation Algorithm}
+
+The set \fctdistdefault declares the returned set of \redcomment{ALGORITHM}. The implementation ensures that for every state $\state$ there exists a pair $(\state, \distval)$ in \fctdistdefault. The following view groups states that have the same distance to the set measured with the amounts of transitions necessary to reach the the closest \smstates considering the granularity \grandist.
+
 \begin{definition}
 		Let $\chgph = \chgphtuple$ be \achgphN and $\smstates \subseteq \states$ arbitrary. \redcomment{$\fctdistdefault$ IMPLEMENTATION IN PSEUDOCODE? DEFINITION BEFORE?} The \viewN \viewdistance is defined by its \grpfctN $\gfctdistance : \states \to \imggrp$ with 
 		\[
 		\state \mapsto \distval \quad \quad \text{where } (\state, \distval) \in \fctdistdefault
 		\]
-		and $M = \states \times (\natnums \cup \{\inf\})$.
+		and $M = \natnums \cup \{\inf\} \cup \remset$.
 \end{definition}
 
-Due to the implementation of \fctdistdefault for every state $\state \in \states$ exists a pair $(\state, \distval)$ in the returned set of \fctdistdefault. That is it is there for every state $\state \in \states$ there exists  $(\state, \distval)$ with $ (\state, \distval)\in \fctdistdefault$. The view groups states that have the same distance to the set measured with the amounts of transitions necessary reach the the closest \smstates considering the granularity \granularity.
+\redcomment{Variants of ALGORITHM which allow directinoless or only reverse traversal of the \mdpN are provided in the appendix. The respective views would utilize their returned set in the exact same way. That is, \fctdistdefault is replaced with the set of the respective algorithm and nothing else changes.}
+
+
 
 \subsubsection{Double Directed Edges with same Action}
 \redcomment{NOT SURE IF SHOULD BE INCLUDED}
@@ -487,7 +562,7 @@ A cycle is a structure that can exist in every graph. The concept of cycles is n
 Formalizing \viewsN based on cycles requires some formalization of the concept cycle. We will use a domain specific definition that will serve us the most.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN. A (simple) \emph{cycle} in \chgph is any sequence \cyclesecfull alternating between states and actions where $n \in \natnums, \{\state_0, \dots, \state_{n-1}\} \subseteq \states$ is a set of distinct states,  $\{\action_0, \dots, \action_{n-1}\} \subseteq \actions$ and for all $i \in \{0, \dots, n-1\}$ it is $(\state_i,\action_i, \state_{i+1 \text{ mod }n}) \in \trans$.
+	Let $\chgph = \chgphtuple$ be \achgphN. A (simple) \emph{cycle} \cycle in \chgph is a sequence \cyclesecfull alternating between states and actions where $n \in \natnums, \{\state_0, \dots, \state_{n-1}\} \subseteq \states$ is a set of distinct states,  $\{\action_0, \dots, \action_{n-1}\} \subseteq \actions$ and for all $i \in \{0, \dots, n-1\}$ it is $(\state_i,\action_i, \state_{i+1 \text{ mod }n}) \in \trans$.
 \end{definition}
 
 When the actions in the cycle are of no further importance, we will omit them only writing a sequence of states. In the following let $\cycle = \cyclesecfull$ be a cycle. For conveniences we will write $\state \in \cycle$ if the state is contained in the cycle \cycle and $\action \in \cycle$ if the action is contained in in the cycle \cycle. \redcomment{only if??} In words we will both write a state or action is \emph{on} or \emph{in} the cycle. Let $\cycle_1$ and $\cycle_2$ be cycles. $\cycle_1 \cup \cycle_2 := \{\state \in \states \mid \state \in \cycle_1 \text{ or } \state \in \cycle_2\}$.
@@ -497,7 +572,7 @@ When the actions in the cycle are of no further importance, we will omit them on
 \end{definition}
 
 \begin{definition}
-	Let $\chgph$ be an \chgphN. The set $\cycleset := \{ \cycle \mid \lencycle(\cycle) \geq n\}$ declares the set of all cycles in \chgph with at least length $n$.
+	Let $\chgph$ be an \chgphN. The set $\cycleset := \{ \cycle \mid \lencycle(\cycle) \geq n\}$ declares the set of all cycles in \chgph with a length of at least $n$.
 \end{definition}
 
 In practice there exist several cycle finding algorithms. The function $\fctfindcycles(\chgph, n)$ is an abstraction for one of these algorithms being used. The actual implementation relys on algorithms of the jave library \jgrapht namely the \redcomment{Algorithm Szwarcfiter and Lauer - $O(V+EC)$ and Tiernan - $O(V.constV)$ CITATION!!}
@@ -510,12 +585,12 @@ With the formalization done we will introduce some views utilizing the concept c
 	\[
 	\state \mapsto
 	\begin{cases}
-			inCycle, &\text{if } \cycleset \neq \emptyset \\
+			\group, &\text{if } \cycleset \neq \emptyset \\
 			\remelem, &\text{otherwise}
 		\end{cases}
 	\]
 	
-	and $\imggrp = \{inCycle\} \cup \remset.$
+	and $\imggrp = \{\group, \remelem\}$.
 \end{definition}
 
 This \viewN groups all states that are contained in cycle with a length of at least $n$. It is to note that the affinity of a state to one or several respective cycles is lost.
@@ -560,7 +635,7 @@ In definition \ref{def:exactcycleview} we stated that little grouping can occur 
 	\[
 	\state \mapsto \{\smstate \in \states \mid \state, \smstate \in \cycle \in \cycleset\}
 	\]
-	and $\imggrp = \powerset{\states} \cup \remset.$
+	and $\imggrp = \states \cup \remset.$
 \end{definition}
 
 Each state is mapped to the set of states resulting from joing the state sets of all the cycles the state is on. 
@@ -571,11 +646,15 @@ Therefore it is feasible to consider a view utilizing strongly connected compone
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN. A set of the from
-	\begin{align*}
-			\scc = \{\state_1 \in \states \mid & \; \forall \state' \in \scc : \exists n \in \natnums, \exists \; \! (\state_1, \action_1, \state_2, \action_2 \dots, \state_n, \action_n, \state') \\
-			&\text{ where } (\state_n, \action_n, \state') \in \trans \land \forall i \in \{1, \dots, n-1\} : (\state_i, \action_i, \state_{i+1}) \in \trans \}
-		\end{align*}
-	is called \emph{strongly connected component} of \chgph. That is for every state in the set there has to exist a sequence of transitions to every other state of the set. The set of strongly connected components of \chgph is denoted with \setscc.
+	\[
+		\scc = \{\state \in \states \mid  \forall \state' \in \scc : (\exists \path \in \pathset \text{ with } \pfirst(\path) = \state, \; \plast(\path) = \state') \text{ or } \state = \state'\}
+	\]
+	
+%	\begin{align*}
+%			\scc = \{\state_1 \in \states \mid & \; \forall \state' \in \scc : \exists n \in \natnums, \exists \; \! (\state_1, \action_1, \state_2, \action_2 \dots, \state_n, \action_n, \state') \\
+%			&\text{ where } (\state_n, \action_n, \state') \in \trans \land \forall i \in \{1, \dots, n-1\} : (\state_i, \action_i, \state_{i+1}) \in \trans \}
+%	\end{align*}
+	is called \emph{strongly connected component} of \chgph. That is for every state in the set there has to exist a sequence of transitions to every other state of the set. The state itself is always considered a reachable by itself, i.e. there does not need to exist a self loop. In consequence, each state is contained in stronlgy connected component namely at least in the one that only contains itself. The set of strongly connected components of \chgph is denoted with \setscc.
 \end{definition}
 
 Since the strong connection is an equivalence relation the \sccsN are equivalence classes and hence disjoint. To find \sccsN Tarjans algorithm is the classic. In the implementation an improved variant from Gabow is used supplied by the \jgrapht library. \redcomment{CITATION}
@@ -583,9 +662,9 @@ Since the strong connection is an equivalence relation the \sccsN are equivalenc
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN. The \viewN \viewscc is defined by its \grpfctN $\gfctscc : \states \to \imggrp$ with
 	\[
-	\state \mapsto \scc \quad \quad \text{ where } \redcomment{\state \in \scc \in \setscc}
+	\state \mapsto \scc \quad \quad \text{ where } \state \in \scc \in \setscc
 	\]
-	and $\imggrp = \setscc$.
+	and $\imggrp = \setscc \cup \remset$.
 \end{definition}
 
 This view groups all states together that are in the same \sccN. Because \sccsN are disjoint each \state will be mapped to its one and only \sccN. This is because... \redcomment{DISCUSSION OF EQUALITY, EQ CLASSES AND RESULTING STATES MISSING}
@@ -608,9 +687,9 @@ A special kind of strongly connected components is the the bottom strongly conne
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN. The \viewN \viewbscc is defined by its \grpfctN $\gfctbscc : \states \to \imggrp$ with
 	\[
-	\state \mapsto \scc \quad \quad \text{ where } \redcomment{\state \in \scc \in \setbscc}
+	\state \mapsto \scc \quad \quad \text{ where } \state \in \scc \in \setbscc
 	\]
-	and $\imggrp = \setbscc$.
+	and $\imggrp = \setbscc \cup \remset$.
 \end{definition}
 
 In the implementation strongly connected components are determined using the algorithm of Gabow, afterwards filtering those \sccsN that have only transitions to states within the \sccN. Equality, equivalence classes and the new state set are constructed analogously to the view \viewscc.

@@ -1,4 +1,6 @@
+ 
 \documentclass[preview]{standalone}
+%\usepackage{prelude}
 \input{prelude}
 
 
@@ -13,7 +15,19 @@ In the preliminaries transition systems and Markov Chains were listed as simpler
 The conceptional idea of a \viewN is to group states by some criteria and structure the rest of the system accordingly. To formalize the grouping we define a dedicated function.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \chgphN an \arbset be and arbitrary set \redcomment{with $\remelem \in \arbset$}. We call any function $\grpfct : \states \to \imggrp$ a \emph{\grpfctN}. The symbol \viewppty is a unique identifier.
+	Let $\chgph = \chgphtuple$ be \chgphN, \smstates a subset of \states and \arbset be an arbitrary set \redcomment{with $\remelem \in \arbset$}. We call any function $\grpfct : \states \to \imggrp$ with
+	$\tilde\grpfct(s) = \remelem \text{ if } \state \notin \smstates$.
+	
+	
+	\[
+	\state \mapsto
+	\begin{cases}
+		\tilde\grpfct(s),				& \text{if } \state \in \smstates \\ 		\remelem,          	& \text{otherwise}
+	\end{cases}
+	\]
+	where $\tilde\grpfct : \states \to \imggrp$.
+	
+	a \emph{\grpfctN}. The symbol \viewppty is a unique identifier.
 	
 	\label{def:grpfct}
 \end{definition}
@@ -40,28 +54,28 @@ The definition of a \viewN is dependent on a given MDP and a \grpfctN $\grpfct$.
 	Let \chgph = \chgphtuple be \chgphN and $\grpfct$ a \grpfctN. A \emph{\viewN} is \chgphN $\view = \chgphtupledist$ that is derived from \mdp with the \grpfctN $\grpfct$ where
 	
 	\begin{itemize}
-			\item $\states' = \{ \eqclass{\state}{\eqrelview} \mid \state \in \states \} = \eqclasssetv$
-			%\eqclass{s}
-			
-			\item $\actions' = \actions$
-			
-			%\redcomment{\item $\trans' = \{ (\eqclassv[\state_1], \action, \eqclassv[\state_2]) \mid \exists \state_1 \in \eqclassv[\state_1] \exists \state_2 \in \eqclassv[\state_2] : (\eqclassv[\state_1], \action, \eqclassv[\state_2]) \in \trans\}$}%\subseteq \states' \times \actions' \times \states'$
-			
-			\item $\probtfunc : \eqclasssetv \times \actions \times \eqclasssetv \to [0,1]$ with 
-			\[ 
-			\probtfunc'(\eqclassv[\state_1], \action, \eqclassv[\state_2]) = \frac{1}{|\eqclassv[\state_1]|}\bbigsum{\substack{\state_a \in \eqclassv[\state_1], \\ \state_b \in \eqclassv[\state_2]}}\probtfunc(\state_a, \action, \state_b) 
-			\]
-			
-			%\{\eqclassv[\state'] \in \states' \mid \exists \state \in \eqclassv[\state'] : \state \in \init \}$
-			
-			\item $\initdistrib' : \eqclasssetv \to [0,1]$ with 
-			\[
-			\initdistrib'(\eqclassv) = \bbigsum{\state \in \eqrelview} \initdistrib(\state)
-			\]
-						
-			\item $\labelingfct': \states' \to \powerset{\atomicprops}, \eqclassv\mapsto \bigcup_{\state \in \eqclassv} \{\labelingfct(\state)\}$
-			
-		\end{itemize}
+				\item $\states' = \{ \eqclass{\state}{\eqrelview} \mid \state \in \states \} = \eqclasssetv$
+				%\eqclass{s}
+				
+				\item $\actions' = \actions$
+				
+				%\redcomment{\item $\trans' = \{ (\eqclassv[\state_1], \action, \eqclassv[\state_2]) \mid \exists \state_1 \in \eqclassv[\state_1] \exists \state_2 \in \eqclassv[\state_2] : (\eqclassv[\state_1], \action, \eqclassv[\state_2]) \in \trans\}$}%\subseteq \states' \times \actions' \times \states'$
+				
+				\item $\probtfunc : \eqclasssetv \times \actions \times \eqclasssetv \to [0,1]$ with 
+				\[ 
+				\probtfunc'(\eqclassv[\state_1], \action, \eqclassv[\state_2]) = \frac{1}{|\eqclassv[\state_1]|}\bbigsum{\substack{\state_a \in \eqclassv[\state_1], \\ \state_b \in \eqclassv[\state_2]}}\probtfunc(\state_a, \action, \state_b) 
+				\]
+				
+				%\{\eqclassv[\state'] \in \states' \mid \exists \state \in \eqclassv[\state'] : \state \in \init \}$
+				
+				\item $\initdistrib' : \eqclasssetv \to [0,1]$ with 
+				\[
+				\initdistrib'(\eqclassv) = \bbigsum{\state \in \eqrelview} \initdistrib(\state)
+				\]
+							
+				\item $\labelingfct': \states' \to \powerset{\atomicprops}, \eqclassv\mapsto \bigcup_{\state \in \eqclassv} \{\labelingfct(\state)\}$
+				
+			\end{itemize}
 	
 	and \eqrelview is the equivalence relation according to Definition \ref{def:eqrelview}.
 	
@@ -112,28 +126,28 @@ The operator \pll in \gfctpll is associative with respect to the grouped states.
 Let $\grpfct[u], \grpfct[v], \grpfct[w]$ be \grpfctsN and \states a set of states with $\state \in \states$. It is
 \begin{equation*}
 	\begin{aligned}[c]
-		&\grpfct[u \pll v](\state) = (\grpfct[u](\state), \grpfct[v](\state)) \\
-		&\grpfct[(u \pll v) \pll w](\state) = ((\grpfct[u](\state), \grpfct[v](\state)), \grpfct[w](\state))
-	\end{aligned}
+			&\grpfct[u \pll v](\state) = (\grpfct[u](\state), \grpfct[v](\state)) \\
+			&\grpfct[(u \pll v) \pll w](\state) = ((\grpfct[u](\state), \grpfct[v](\state)), \grpfct[w](\state))
+		\end{aligned}
 	\quad\quad\quad\quad\quad
 	\begin{aligned}[c]
-		&\grpfct[v \pll w](\state) = (\grpfct[v](\state), \grpfct[w](\state)) \\
-		&\grpfct[u \pll (v \pll w)](\state) = (\grpfct[u](\state), (\grpfct[v](\state), \grpfct[w](\state))\\
-	\end{aligned}					
+			&\grpfct[v \pll w](\state) = (\grpfct[v](\state), \grpfct[w](\state)) \\
+			&\grpfct[u \pll (v \pll w)](\state) = (\grpfct[u](\state), (\grpfct[v](\state), \grpfct[w](\state))\\
+		\end{aligned}					
 \end{equation*}
 \\
 \noindent
 Let $\state_1, \state_2 \in \states$ be arbitrary. Moreover let %$\grpfct[((u \pll v) \pll w)](\state_1) =: ((a,b),c)$ and $\grpfct[u \pll (v \pll w)](\state_1) =: ((x, y), z)$, then $\grpfct[u \pll (v \pll w)](\state_1) = (a, (b, c))$ and $\grpfct[u \pll (v \pll w)](\state_2) = (x, (y, z))$
 \begin{equation*}
 	\begin{aligned}[c]
-		&\grpfct[(u \pll v) \pll w](\state_1) =: ((a,b),c) \text{ and} \\
-		&\grpfct[(u \pll v) \pll w](\state_2) =: ((x, y), z) \text{.}
-	\end{aligned}
+			&\grpfct[(u \pll v) \pll w](\state_1) =: ((a,b),c) \text{ and} \\
+			&\grpfct[(u \pll v) \pll w](\state_2) =: ((x, y), z) \text{.}
+		\end{aligned}
 	\quad\quad\text{Then it is}\quad\quad
 	\begin{aligned}[c]
-		&\grpfct[u \pll (v \pll w)](\state_1) = (a, (b, c)) \text{ and} \\
-		&\grpfct[u \pll (v \pll w)](\state_2) = (x, (y, z)).
-	\end{aligned}
+			&\grpfct[u \pll (v \pll w)](\state_1) = (a, (b, c)) \text{ and} \\
+			&\grpfct[u \pll (v \pll w)](\state_2) = (x, (y, z)).
+		\end{aligned}
 	\quad\quad\quad				
 \end{equation*}
 
