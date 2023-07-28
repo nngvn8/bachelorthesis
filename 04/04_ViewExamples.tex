@@ -52,12 +52,25 @@ By this we obtain the \viewN $\viewinitstates$ for a given \achgphN \chgph where
 
 All other components are constructed as in Definition \ref{def:view}.
 
+\begin{figure}[h]
+	\begin{minipage}{.5\textwidth}
+		\hspace{5mm}
+		\input{./04/images/initStates/initStatesBefore}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		\input{./04/images/initStates/initStatesAfter}
+	\end{minipage}
+	\caption{Simplified representation of \mdp (left) and the \viewN \viewinitstates on it(left)}
+	\label{fig:initStatesExmp}  
+\end{figure}
+
+
 \subsubsection{Outgoing Actions}
 Another crucial component of \achgphN is its set of actions \actions. Actions are used for interprocesscommunication und synchronization. In this subsection we will provide and dicuss some views utilizing actions on transitions that are outgonig from a state. 
 %For simplicity we will write "outgoing action \action" short for "transition with outgoing action \action" analogously we will write "ingoing action \action" short for "transition with ingoing action \action". We
 We will write a state \state has an outgoing action \action if there exists a state $\state'$ with $(\state, \action, \state') \in \trans$. For a state \state, ingoing action \action we say it has an ingoing action \action if there exist a state $\state'$ with $(\state', \action, \state) \in \trans$.
 
-The most obvious variant to group states is to group states that \emph{have} a given outgoing action. 
+The most obvious variant to group states is to group states that \emph{have} a given outgoing action.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN and $\action \in \actions$. The view \viewhasoutaction is defined by its \grpfctN $\gfcthasoutaction : \states \to \imggrp$ with 
@@ -221,6 +234,14 @@ The \grpfctN asserts to each state a set of pairs. Note that a pair is contained
 \]
 According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewstrongoutactident. All other components of \viewstrongoutactident are as usual structured in accordance with the Definition \ref{def:view}.
 As mentioned earlier a \outactidentweak variant of the \outactident \viewN is also conceivable.
+
+\begin{figure}[h]
+
+	\input{./04/images/actions/outActIdentStrongBefore}
+
+	\caption{Simplified representation of \mdp (left) and the \viewN \viewinitstates on it(left)}
+	\label{fig:outActIdentStrongBefore}  
+\end{figure}
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN and $\action \in \actions$. The \viewN \viewweakoutactident is defined by its \grpfctN $\gfctweakoutactident : \states \to \imggrp$ with
@@ -607,7 +628,22 @@ This \viewN groups all states that are contained in cycle with a length of at le
 	\label{def:exactcycleview}
 \end{definition}
 
-This \viewN groups states that have the same set of cycles they are contained in. Thus if $C_1$ and $C_2$ are distinct cycles and $\state_1, \state_2 \in \cycle_1$ and $\state_1 \in \cycle_2$ but $\state_2 \notin \cycle_2$ they are not grouped. It suffices that a state is on one cycle that the other one is not on, in order for the states not being grouped. In graphs with many cycles this can lead to little grouping. 
+This \viewN groups states that have the same set of cycles they are contained in. Thus if $C_1$ and $C_2$ are distinct cycles and $\state_1, \state_2 \in \cycle_1$ and $\state_1 \in \cycle_2$ but $\state_2 \notin \cycle_2$ they are not grouped. It suffices that a state is on one cycle that the other one is not on, in order for the states not being grouped. In graphs with many cycles this can lead to little grouping.
+
+
+\begin{figure}[h]
+	\begin{minipage}{.5\textwidth}
+		\hspace{5mm}
+		\input{./04/images/cycles/cyclesBefore}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+%		\input{./04/images/cycles/initStatesAfter}
+	\end{minipage}
+	\caption{Simplified representation of \mdp (left) and the \viewN \viewinitstates on it(left)}
+	\label{fig:cyclesBefore}  
+\end{figure}
+
+
 
 \redcomment{DISCUSSION OF EQUALITY, EQ CLASSES AND RESULTING STATES MISSING}
 
@@ -615,8 +651,34 @@ This \viewN groups states that have the same set of cycles they are contained in
 
 The view above might be useful when having found cycles to see what cycles specifically exist. Often it is interesting to find cycles that consist only of transitions of the same action. The following view accomplishes that.
 
+\begin{figure}[h]
+	\begin{minipage}{.5\textwidth}
+		\hspace{5mm}
+		\input{./04/images/cycles/cyclesAfterHas}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		%		\input{./04/images/cycles/initStatesAfter}
+	\end{minipage}
+	\caption{Simplified representation of \mdp (left) and the \viewN \viewinitstates on it(left)}
+	\label{fig:cycleAfterHas}  
+\end{figure}
+
+\begin{figure}[h]
+	\begin{minipage}{.5\textwidth}
+%		\hspace{5mm}
+		\input{./04/images/cycles/cyclesAfterExact0}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		\input{./04/images/cycles/cyclesAfterExact5}
+	\end{minipage}
+	\caption{\viewNC \viewexactactcycle[0] (left) and \viewN \viewexactactcycle[5] the right}
+	\label{fig:cycleAfterExtact0}  
+\end{figure}
+
+
+
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN and $n \in \natnums$. The \viewN \viewexactcycle is defined by its \grpfctN $\gfctexactcycle : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be \achgphN and $n \in \natnums$. The \viewN \viewexactactcycle is defined by its \grpfctN $\gfctexactactcycle : \states \to \imggrp$ with
 	\[
 	\state \mapsto \{\cycle \in \cycleset \mid \state \in \cycle, \tilde{\action} \in \cycle, \forall \action \in \cycle : \action = \tilde{\action} \}
 	\]
