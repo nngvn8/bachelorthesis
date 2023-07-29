@@ -9,22 +9,22 @@
 	\newcommand{\createstate}[3]{\node[draw, circle, minimum size=1cm] (#1) at (#2) {#3}}
 	\newcommand{\basex}{0}
 	\newcommand{\basey}{0}
-	\begin{tikzpicture} [ >=latex]
+	\begin{tikzpicture} [every initial by arrow/.style={thick}]
 		%		\createstate{s1}{3,2+4}{$\state_1$};
 		\path
-		(\basex,		\basey+2) 		node[state] (s1) 	{$\state_1$} 
-		(\basex+2,		\basey+4) 		node[state] (s2) 	{$\state_2$} 
-		(\basex+5,		\basey+3.5) 	node[state] (s3) 	{$\state_3$} 
-		(\basex+8,		\basey+4) 		node[state] (s4) 	{$\state_4$}
-		(\basex+10,		\basey+2) 		node[state] (s5) 	{$\state_5$}
-		(\basex+8,		\basey+0) 		node[state] (s6) 	{$\state_6$}
-		(\basex+5,		\basey+1) 		node[state] (s7) 	{$\state_7$}
-		(\basex+2,		\basey+0) 		node[state] (s8) 	{$\state_8$}
-		(\basex+6.5,	\basey-.75)		node[state] (s9) 	{$\state_9$}
-		(\basex+5,		\basey-2) 		node[state] (s10) 	{$\state_{10}$}
-		(\basex+3.5,	\basey-.75)		node[state] (s11) 	{$\state_{11}$}
-		(\basex+.75,	\basey-1.25)	node[state] (s12) 	{$\state_{12}$}
-		(\basex+9.5,	\basey-1.75)	node[state] (s13) 	{$\state_{13}$}
+		(\basex,		\basey+2) 		node[mstate] (s1) 	{$\state_1$} 
+		(\basex+2,		\basey+4) 		node[mstate,initial,initial text=,initial distance=18pt] (s2) 	{$\state_2$} 
+		(\basex+5,		\basey+3.5) 	node[mstate] (s3) 	{$\state_3$} 
+		(\basex+8,		\basey+4) 		node[mstate] (s4) 	{$\state_4$}
+		(\basex+10,		\basey+2) 		node[mstate] (s5) 	{$\state_5$}
+		(\basex+8,		\basey+0) 		node[mstate] (s6) 	{$\state_6$}
+		(\basex+5,		\basey+1) 		node[mstate] (s7) 	{$\state_7$}
+		(\basex+2,		\basey+0) 		node[mstate] (s8) 	{$\state_8$}
+		(\basex+6.5,	\basey-.75)		node[mstate] (s9) 	{$\state_9$}
+		(\basex+5,		\basey-2) 		node[mstate] (s10) 	{$\state_{10}$}
+		(\basex+3.5,	\basey-.75)		node[mstate] (s11) 	{$\state_{11}$}
+		(\basex+.75,	\basey-1.25)	node[mstate] (s12) 	{$\state_{12}$}
+		(\basex+9.5,	\basey-1.75)	node[mstate] (s13) 	{$\state_{13}$}
 		;
 		
 		\path [trans] (s1) 	edge node [midway,above left]{\action} 		(s2);
@@ -47,7 +47,7 @@
 		
 %		\path [trans] (s-1) -- (s-2) node [midway, above] () {\action}
 		
-%		(\basex+3,	\basey+1) node[state] (s-bot) {$\bot$}
+%		(\basex+3,	\basey+1) node[mstate] (s-bot) {$\bot$}
 %		(s-1)++(-1.2,0) node (s-1-in) {}
 %		(s-3)++(-1.2,0) node (s-3-in) {};
 		

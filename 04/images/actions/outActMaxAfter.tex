@@ -1,0 +1,46 @@
+\documentclass[tikz,preview]{standalone}
+%\usepackage{prelude}
+\input{prelude}
+
+
+
+
+\begin{document}
+	\newcommand{\basex}{0}
+	\newcommand{\basey}{0}
+	\newcommand{\createstate}[3]{\node[draw, circle, minimum size=1cm] (#1) at (#2) {#3}}
+	
+	
+	\begin{tikzpicture} [scale=2, every initial by arrow/.style={thick}]
+		
+
+	\path
+	(\basex+1,		\basey) 		node[gstate,init, initial left] (sbot) 	{$\notppty$} 
+	(\basex+1,		\basey-1.3) 	node[gstate] (s3) 	{$\state_3$} 
+	(\basex,		\basey-2) 		node[gstate] (s4) 	{$\state_4$} 
+	(\basex+2,		\basey-2)		node[gstate] (s5) 	{$\state_5$} 
+	(\basex+2.7,	\basey-.5) 		node[gstate] (s6) 	{$\state_6$}
+
+	;
+
+	\path [trans, bend right=25] 		(sbot) 	edge node [midway,above left]		{\actionc} 		(s4);
+	\path [trans] 		(sbot) 	edge node [midway,right]			{\actionb} 		(s3);
+	\path [trans, bend right=25] 		(sbot) 	edge node [midway,left]				{\action} 		(s3);
+	\path [trans, bend left=25](sbot) 	edge node [midway,left]			{\actionb} 		(s5);
+	\path [trans, bend left=45] (sbot) 	edge node [midway,right]		{\actionc} 		(s5);
+	\path [trans,bend right=35] 	(s3) 	edge node [midway,right]	{\actionc} 		(sbot);
+	\path [trans] 	(s3) 	edge node [midway,above left]	{\action} 		(s4);
+	\path [trans] 	(s5) 	edge node [midway,above]	{\actionc} 		(s4);
+	
+%	\path [trans] 		(sbot) 	edge [loop, in=15, out=50, looseness=6] node [midway,right] {\action,\actionb} 	(sbot);
+	\path [trans] 		(sbot) 	edge [loop above] node [midway,right=4pt] {\action,\actionb} 	(sot);
+	\path [trans] 		(s3) 	edge [loop right] node [midway,below=4pt] {\actionb} 	(s3);
+	\path [trans] 		(s4) 	edge [loop below] node [midway,right=4pt] {\action} 	(s4);
+	\path [trans] 		(s6) 	edge [loop above] node [midway,right=4pt] {\actionc} 	(s6);
+	
+	
+	%		midway, at start, near start, very near start, at end, near end, very near end
+		
+		
+	\end{tikzpicture}
+\end{document}

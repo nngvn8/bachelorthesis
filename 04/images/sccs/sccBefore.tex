@@ -1,0 +1,81 @@
+\documentclass[tikz,preview]{standalone}
+%\usepackage{prelude}
+\input{prelude}
+
+
+
+
+\begin{document}
+	\newcommand{\basex}{0}
+	\newcommand{\basey}{0}
+	\newcommand{\createstate}[3]{\node[draw, circle, minimum size=1cm] (#1) at (#2) {#3}}
+	
+	
+	\begin{tikzpicture} [scale=1.2, every initial by arrow/.style={thick}]
+		
+		style/.mstate={minimum size=2}
+			
+		\path
+		(\basex+.3,		\basey) 		node[mstate,initial,initial text=,initial distance=15pt] (s1) 	{$\state_1$} 
+		(\basex+2,		\basey+1.6) 		node[mstate] (s2) 	{$\state_2$} 
+		(\basex+3.6,	\basey+1.4) 	node[mstate] (s3) 	{$\state_3$} 
+		(\basex+1.9,		\basey+0) 		node[mstate] (s4) {$\state_4$} 
+		(\basex+3.5,		\basey+0.5)		node[mstate] (s5) 	{$\state_5$} 
+		(\basex+3.7,		\basey-.4) 		node[mstate] (s6) 	{$\state_6$} 
+		(\basex+5,	\basey) 		node[mstate] (s7) 	{$\state_7$} 
+		(\basex+2.4,	\basey-1.2) 	node[mstate] (s8) 	{$\state_8$} 
+		(\basex+3.3,		\basey-1.5) 	node[mstate] (s9) 	{$\state_9$} 
+		(\basex+.9,		\basey-1.6) 	node[mstate] (s10) 	{$\state_{10}$} 
+		(\basex+4.7,		\basey-1.8) 		node[mstate] (s11) 	{$\state_{11}$} 
+		(\basex+2.4,	\basey-2.2)		node[mstate] (s12) 	{$\state_{12}$} 
+		(\basex+4,		\basey-2.5) 		node[mstate] (s13) 	{$\state_{13}$} 
+		
+		;
+		
+		\path [trans] (s1) edge (s2);
+		\path [trans] (s1) edge (s4);
+		\path [trans] (s1) edge (s10);
+		\path [trans] (s2) edge (s3);
+		\path [trans] (s3) edge (s4);
+		\path [trans] (s3) edge (s7);
+		\path [bendtrans] (s4) edge (s2);
+		\path [bendtrans] (s4) edge (s5);
+		\path [bendtrans] (s5) edge (s4);
+		\path [trans] (s5) edge (s7);
+		\path [trans] (s6) edge (s9);
+		\path [trans] (s6) edge (s11);
+		\path [trans] (s7) edge (s6);
+		\path [trans] (s8) edge (s5);
+		\path [trans] (s8) edge (s12);
+		\path [trans] (s8) edge (s5);
+		\path [trans] (s9) edge (s7);
+		\path [trans] (s10) edge (s4);
+		\path [trans] (s10) edge (s8);
+		\path [trans] (s11) edge (s7);
+		\path [trans] (s11) edge (s9);
+		\path [trans] (s12) edge (s10);
+		\path [trans] (s12) edge (s11);
+		\path [trans] (s12) edge (s13);
+
+		\path [trans] (s13) edge [loop right] (s13);
+ 		
+%		\path [trans, bend right=25] 		(sbot) 	edge node [midway,above left]		{\actionc} 		(s4);
+%		\path [trans] 		(sbot) 	edge node [midway,right]			{\actionb} 		(s3);
+%		\path [trans, bend right=25] 		(sbot) 	edge node [midway,left]				{\action} 		(s3);
+%		\path [trans, bend left=25](sbot) 	edge node [midway,left]			{\actionb} 		(s5);
+%		\path [trans, bend left=45] (sbot) 	edge node [midway,right]		{\actionc} 		(s5);
+%		\path [trans,bend right=35] 	(s3) 	edge node [midway,right]	{\actionc} 		(sbot);
+%		\path [trans] 	(s3) 	edge node [midway,above left]	{\action} 		(s4);
+%		\path [trans] 	(s5) 	edge node [midway,above]	{\actionc} 		(s4);
+%		
+%		\path [trans] 		(sbot) 	edge [loop, in=15, out=50, looseness=6] node [midway,right] {\action,\actionb} 	(sbot);
+%		\path [trans] 		(s3) 	edge [loop right] node [midway,below=4pt] {\actionb} 	(s3);
+%		\path [trans] 		(s4) 	edge [loop below] node [midway,below] {\action} 	(s4);
+%		\path [trans] 		(s6) 	edge [loop above] node [midway,above] {\actionc} 	(s6);
+		
+		
+		%		midway, at start, near start, very near start, at end, near end, very near end
+		
+		
+	\end{tikzpicture}
+\end{document}

@@ -1,0 +1,40 @@
+\documentclass[tikz,preview]{standalone}
+%\usepackage{prelude}
+\input{prelude}
+
+
+
+
+\begin{document}
+	\newcommand{\basex}{0}
+	\newcommand{\basey}{0}
+	\newcommand{\createstate}[3]{\node[draw, circle, minimum size=1cm] (#1) at (#2) {#3}}
+	
+	
+	\begin{tikzpicture} [scale=2, every initial by arrow/.style={thick}]
+		
+		
+		\path
+		(\basex+1,		\basey) 		node[gstate,init, initial left] (s123) 	{$\state_1, \state_2,\state_3$} 
+		(\basex,		\basey-1.5) 	node[gstate] (s4) 	{$\state_4$} 
+		(\basex+2,		\basey-1.5)		node[gstate] (s56) 	{$\state_5,\state_6$} 
+		
+		(s123)++(0.25,0)		node[minimum size=0.8cm] (s123loop) 	{} 
+		(s56)++(0.1,0)		node[minimum size=0.8cm] (s56loop) 	{} 
+		
+		;
+		
+		\path [bendtransr] 		(s123) 	edge node [midway,above left]		{\actionc} 		(s4);
+		\path [bendtrans] 		(s123) 	edge node [midway,below right]		{\action} 		(s4);		
+		\path [bendtransr](s123) 	edge node [midway,below left]			{\actionb} 		(s56);
+		\path [bendtrans] (s123) 	edge node [midway,right]		{\actionc} 		(s56);
+		
+		
+		\path [trans] 	(s56) 	edge node [midway,above]	{\actionc} 		(s4);		
+		\path [trans] 		(s123loop) 	edge [loop, in=10, out=60,looseness=6, shorten >= -1pt] node [midway,right] {\actionb} 	(s123loop);
+		\path [trans] 		(s4) 	edge [loop below] node [midway,right] {\action} 	(s4);
+		\path [trans] 		(s56loop) 	edge [loop right] node [midway,above] {\actionc} 	(s56loop);
+		
+		
+	\end{tikzpicture}
+\end{document}

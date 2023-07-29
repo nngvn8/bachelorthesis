@@ -1,0 +1,37 @@
+\documentclass[tikz,preview]{standalone}
+%\usepackage{prelude}
+\input{prelude}
+
+
+\begin{document}
+	\newcommand{\basex}{0}
+	\newcommand{\basey}{0}
+	\newcommand{\createstate}[3]{\node[draw, circle, minimum size=1cm] (#1) at (#2) {#3}}
+	
+	
+	\begin{tikzpicture} [scale=3, every initial by arrow/.style={thick}]
+		
+		
+		\path
+		(\basex,		\basey) 		node[gstate,init, initial left] (sbot) 	{$\notppty$} 
+		
+		;
+		
+		\node[gstate, above right = of sbot] (t1) 	{$\scc_1$};
+		\node[gstate, below right = of sbot] (t2) 	{$\scc_2$};
+		\node[gstate, above right = of t2] 	 (t3) 	{$\scc_3$};
+		
+	
+		\path [trans] 		(sbot) 	edge node [midway,above]	{} 		(t1);		
+		\path [bendtrans] 	(sbot) 	edge node [midway,above]	{} 		(t2);		
+		\path [trans] 		(t1) 	edge node [midway,above]	{} 		(t3);		
+		\path [bendtrans] 	(t2) 	edge node [midway,above]	{} 		(sbot);		
+		\path [trans] 		(t2) 	edge node [midway,above]	{} 		(t3);	
+		
+		\path [trans] (t1)	edge [loop above] (t1);
+		\path [trans] (t2)	edge [loop below] (t1);
+		\path [trans] (t3)	edge [loop above] (t3);
+			
+		
+	\end{tikzpicture}
+\end{document}

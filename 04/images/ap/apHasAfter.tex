@@ -1,0 +1,43 @@
+\documentclass[tikz,preview]{standalone}
+%\usepackage{prelude}
+\input{prelude}
+
+
+
+
+\begin{document}
+	\newcommand{\basex}{0}
+	\newcommand{\basey}{-.4}
+	\newcommand{\createstate}[3]{\node[draw, circle, minimum size=1cm] (#1) at (#2) {#3}}
+	
+	
+	\begin{tikzpicture} [scale=2.4, every initial by arrow/.style={thick}]
+		
+		\newcommand{\disth}{40pt}
+		\newcommand{\distv}{50pt}
+		
+		\node at (0,0) {};
+		
+		\node [gstate] (s3) at (\basex,\basey) {$\state_3$};
+		\node [gstate,right=\disth of s3] (s2) {$\state_2$};
+		\node [gstate,below=\distv of s3] (s6) {$\state_6$};
+		\node [gstate,init,initial right,below=\distv of s2] (sbot) {$\notppty$};
+		
+		\path [trans] (s3) edge (s6);
+
+		\path [bendtrans] (s2) edge (sbot);
+		\path [bendtrans] (s3) edge (sbot);
+		\path [bendtrans] (s6) edge (sbot);
+		\path [bendtrans] (sbot) edge (s2);
+		\path [bendtrans] (sbot) edge (s3);
+		\path [bendtrans] (sbot) edge (s6);
+		
+		\path [trans] (sbot) edge [loop below] (sbot);
+	
+		
+		
+		%		midway, at start, near start, very near start, at end, near end, very near end
+		
+		
+	\end{tikzpicture}
+\end{document}

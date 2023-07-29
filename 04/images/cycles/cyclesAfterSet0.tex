@@ -1,0 +1,35 @@
+\documentclass[tikz,preview]{standalone}
+%\usepackage{prelude}
+\input{prelude}
+
+
+\begin{document}
+	\newcommand{\basex}{0}
+	\newcommand{\basey}{0}
+	\newcommand{\createstate}[3]{\node[draw, circle, minimum size=1cm] (#1) at (#2) {#3}}
+	
+	
+	\begin{tikzpicture} [scale=2.5, every initial by arrow/.style={thick}]
+		
+		
+		\path
+		(\basex,		\basey) 		node[gstate,init, initial left] (c1) 	{$\{\state_1, \dots, \state_8\}$} 
+		
+		;
+		
+		
+		\node[gstate,below=40pt of c1] 			(c2) 	{$\{\state_9, \state_{10}, \state_{11}\}$};
+		\node[gstate,left=35pt of c2] 	 	(cbot) {$\notppty$};
+		\node[right=35pt of c2] {};
+		
+		
+		\path [bendtrans] 	(c1) 	edge node [midway,right]	{$\actionc$} 		(c2);		
+		\path [bendtrans] 	(c1) 	edge node [midway,above left]	{$\action$} 		(cbot);				
+		\path [bendtrans] 	(c2) 	edge node [midway,left]	{$\actionc$} 		(c1);		
+		
+		\path [trans] (c1)	edge [loop above] node [midway, right=4pt] {$\action, \actionb, \actionc$}(c1);
+		\path [trans] (c2)	edge [loop below] node [midway, right=4pt] {$\action$} (c2);
+		
+		
+	\end{tikzpicture}
+\end{document}

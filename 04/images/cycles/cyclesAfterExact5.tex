@@ -9,26 +9,32 @@
 	\newcommand{\createstate}[3]{\node[draw, circle, minimum size=1cm] (#1) at (#2) {#3}}
 	\newcommand{\basex}{0}
 	\newcommand{\basey}{0}
-	\begin{tikzpicture} [scale=0.8]
+	\begin{tikzpicture} [scale=0.8, every initial by arrow/.style={thick}]
 		%		\createstate{s1}{3,2+4}{$\state_1$};
 		\path
-		(\basex+1.75,	\basey+4.5) 	node[gstate] (c12) 		{$\{\cycle_1, \cycle_2\}$} 		
-		(\basex+8.25,	\basey+4.5) 	node[gstate] (c13) 		{$\{\cycle_1, \cycle_3\}$}
+		(\basex+1.75,	\basey+4.5) 	node[gstate] (c12) 		{$\{\cycle_1\}$} 		
+		(\basex+8.25,	\basey+4.5) 	node[gstate] (c13) 		{$\{\cycle_2\}$}
 		(\basex+5,		\basey+1) 	node[gstate] (cbot) 		{$\notppty$}
-		(\basex+5,		\basey+6) 	node[gstate] (c123) 		{$\{\cycle_1, \cycle_2, \cycle_3\}$} 
-		(\basex+5,		\basey+3) 	node[gstate] (c1234) 	{$\{\cycle_1, \cycle_2, \cycle_3, \cycle_4\}$} 
+		(\basex+5,		\basey+6) 	node[gstate, initial, initial text=, initial distance=20pt] (c123) 		{$\{\cycle_1, \cycle_2\}$} 
+		(\basex+5,		\basey+3) 	node[gstate] (c1234) 	{$\{\cycle_1, \cycle_2, \cycle_3\}$} 
 		
 		;
 		
-		\path [trans] (c12) edge node [midway, above left] {\action} (c123);
+		\path [trans] (c12) edge node [midway, above left=-3pt] {\action} (c123);
+		\path [bendtrans] (c12) edge node [midway, above] {\actionc} (c1234);
 		\path [trans] (c123) edge node [midway, above right] {\actionb} (c13);
 		\path [trans] (c13) edge node [midway, above] {\actionb} (c1234);
 		\path [bendtrans] (cbot) edge node [midway, left] {\actionc} (c1234);
 		\path [bendtrans] (c1234) edge node [midway, right] {\actionc} (cbot);
 		\path [bendtrans] (c1234) edge node [midway, left] {\actionb} (c123);
 		\path [bendtrans] (c123) edge node [midway, right] {\action} (c1234);
-		\path [trans] (c1234) edge node [midway, above] {\action} (c12);
-		\path [trans, bend right=30] (c12) edge node [midway,below left] {\actionc} (cbot);		
+		\path [bendtrans] (c1234) edge node [midway, below] {\action} (c12);
+		\path [trans, bend right=30] (c12) edge node [midway,below left] {\action} (cbot);
+		
+		\path [trans] (c12) edge [loop above] node [midway, above] {\action} (c12);
+		\path [trans] (c13) edge [loop above] node [midway, above] {\actionb} (c13);
+		\path [trans] (cbot) edge [loop right] node [midway, right] {\actionc} (cbot);
+	
 		
 	\end{tikzpicture}
 \end{document}

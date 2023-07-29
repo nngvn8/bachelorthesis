@@ -13,6 +13,19 @@ In this subsection we will introduce some views the are purely based on the comp
 One of the least involved approaches to create a view is to base it on the atomic propositions that are assigned to each state by the labeling function. The notion is to group states that were assigned the same set of atomic propositions. \redcomment{Why useful?, currently no "has AP" $\to$ maybe should be added}
 
 
+\begin{figure}[h]
+	\begin{minipage}{.6\textwidth}
+		%		\hspace{5mm}
+		\input{./04/images/ap/apBefore}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		\input{./04/images/ap/apHasAfter}
+	\end{minipage}
+	\caption{Simplified representations of \mdp (left) and the \viewN \viewatomicprops on it (right)}
+	\label{fig:apHasBeforeAfter}  
+\end{figure}
+
+
 \begin{definition}	
 	Let $\chgph = \chgphtuple$ be \achgphN. The view \viewatomicprops is defined by its grouping function \gfctatomicprops \grpfctN with $\gfctatomicprops : \states \to \imggrp, {\state}\mapsto{\labelingfct(\state)}$.
 \end{definition}
@@ -23,6 +36,19 @@ The grouping function is exactly the labeling function i.e. for all $\state \in 
 By this we obtain the \viewN $\viewatomicprops$ for a given \chgphN \chgph where: $\states' = \bigcup_{\state \in \states} \{\eqclassv\} =  \bigcup_{a \in \atomicprops} \{\{\state \in \states \mid \labelingfct(\state) = a\}\}$. All other components are constructed as in Definition \ref{def:view}.
 
 Although this view might seem rather simple because essentially it only performs $\gfctatomicprops := \labelingfct$ it is the most powerful one. This is because every view presented in the following is reducible to this one. That is because a \grpfctN essentially asserts an atomic proposition to every state, namely the value in respect to the considered property of a given view. The reduction can be realized by replacing the labeling function with the grouping function of the resepective view. That is $\labelingfct := \grpfct$ and $\atomicprops := \redcomment{\grpfct(\states)}$ for some \grpfctN \grpfct. While this works it alters the underlying \chgphN.
+
+\begin{figure}[h]
+	\begin{minipage}{.6\textwidth}
+%		\hspace{5mm}
+		\input{./04/images/ap/apBefore}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+	\input{./04/images/ap/apIdentAfter}
+	\end{minipage}
+	\caption{Simplified representations of \mdp (left) and the \viewN \viewatomicprops on it (right)}
+	\label{fig:apIdentBeforeAfter}  
+\end{figure}
+
 
 \subsubsection{Initial States}
 An a little more involved idea than directly using a given function is to utilize the set of initial states. We can group states that have a probability greater zero, that they are started from. In practice this might be useful to quickly find all initial states.
@@ -60,7 +86,7 @@ All other components are constructed as in Definition \ref{def:view}.
 	\begin{minipage}{.5\textwidth}
 		\input{./04/images/initStates/initStatesAfter}
 	\end{minipage}
-	\caption{Simplified representation of \mdp (left) and the \viewN \viewinitstates on it(left)}
+	\caption{Simplified representations of \mdp (left) and the \viewN \viewinitstates on it (right)}
 	\label{fig:initStatesExmp}  
 \end{figure}
 
@@ -103,8 +129,26 @@ Thereby we obtain the \viewN \viewhasoutaction for a given \chgphN \chgph where 
 	\states_2 &:= \remstates.
 \end{align*}
 
+\begin{figure}[h]
+	\begin{minipage}{.5\textwidth}
+		\hspace{5mm}
+		\input{./04/images/actions/outActIdentStrongBefore}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		\hspace{5mm}
+		\input{./04/images/actions/outActHasAfter}
+	\end{minipage}
+	\caption{Simplified representations of \mdp (left) and the \viewN \viewhasoutaction on it (right)}
+	\label{fig:outActHasAfter}  
+\end{figure}
+
+
+
+
 
 Since actions are a very important part of \chgphsN as well as of its more powerful siblings MDPs and MCs it seems useful to further enhance this view and look at variants of it. Instead of only grouping states that only \emph{have} outgoing actions we could also quantify the amount of times that action should be outgoing.
+
+
 
 For example we could require that a given action has to be outgoing a minimum amount of times. 
 
@@ -170,7 +214,21 @@ In a similar fashion we define view that groups states where at most a certain n
 	\label{def:viewmaxoutaction}
 \end{definition}
 
- It ensures that if there are one more than \numoutact outgoing transitions with an action \action at least two of the states where the transitions \redcomment{end} are in fact the same. Since this is required for all possible combinations of $\numoutact + 1$ states by the grouping function, only states that have at most \numoutact outgoing actions will be assigned with \action by the grouping function. The reasoning about the equality of the \grpfctN values, the obtained equivalence classes and the resulting set of states $\states'$ of the view is analogous to \viewminoutaction.
+It ensures that if there are one more than \numoutact outgoing transitions with an action \action at least two of the states where the transitions \redcomment{end} are in fact the same. Since this is required for all possible combinations of $\numoutact + 1$ states by the grouping function, only states that have at most \numoutact outgoing actions will be assigned with \action by the grouping function. The reasoning about the equality of the \grpfctN values, the obtained equivalence classes and the resulting set of states $\states'$ of the view is analogous to \viewminoutaction.
+
+\begin{figure}[h]
+	\begin{minipage}{.5\textwidth}
+		\hspace{5mm}
+		\input{./04/images/actions/outActIdentStrongBefore}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		\hspace{5mm}
+		\input{./04/images/actions/outActMinAfter}
+	\end{minipage}
+	\caption{Simplified representations of \mdp (left) and the \viewN \viewminoutaction on it (right)}
+	\label{fig:outActMinAfter}  
+\end{figure}
+
 
 Since we already defined \grpfctsN and hence views for a required minimal and maximal amount of times an action has to be outgoing it is now easily possible to define a view that groups states where the amount of outgoing actions is at least \numoutact and at most \numoutactb. 
 
@@ -190,6 +248,19 @@ Since we already defined \grpfctsN and hence views for a required minimal and ma
 %	\actions \cup \remset$ 
 	and $\numoutactb, \numoutact \in \natnums$ are the minimal and maximal number of transitions with action \action in order for state to be grouped. The predicates \predminoutact and \predmaxoutact are the predicates from Definition \ref{def:minoutaction} and Definition \ref{def:viewmaxoutaction} respectively.
 \end{definition}
+
+\begin{figure}[h]
+	\begin{minipage}{.5\textwidth}
+		\hspace{5mm}
+		\input{./04/images/actions/outActIdentStrongBefore}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		\hspace{5mm}
+		\input{./04/images/actions/outActMaxAfter}
+	\end{minipage}
+	\caption{Simplified representations of \mdp (left) and the \viewN \viewmaxoutaction on it (right)}
+	\label{fig:outActMaxAfter} 
+\end{figure}
 
 We already know that for a given $\state \in \states$ the expressions $\exists \state_1, \dots, \state_\numoutact \in \states: \predminoutact$ and $\forall \state_1, \dots, \state_{\numoutactb+1} \in \states: \predmaxoutact[\numoutactb]$ from Definition \ref{def:minoutaction} and Definition \ref{def:viewmaxoutaction} require that \state has minimal and maximal amount of outgoing transitions with an action \action respectively. Hence the conjunction will be true for states where the amount of outgoing transitions with action \action is element of the set $\{\numoutactb, \numoutact+1, \dots, \numoutact-1, \numoutact\}$. We will write for this that the number of outgoing actions is \emph{in the span}.
 
@@ -215,6 +286,20 @@ The new set of states $\states'$ of the view \viewspanoutaction is the union of 
 	\states_2 &:= \remstates.
 \end{align*}
 
+\begin{figure}[h]
+	\begin{minipage}{.5\textwidth}
+		\hspace{5mm}
+		\input{./04/images/actions/outActIdentStrongBefore}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		\hspace{5mm}
+		\input{./04/images/actions/outActSpanBefore}
+	\end{minipage}
+	\caption{Simplified representations of \mdp (left) and the \viewN \viewspanoutaction on it (right)}
+	\label{fig:outActSpan}
+\end{figure}
+
+
 The \viewsN above can be combined with \parllcompN. The thereby obtained \viewN requires that the respective conditions of all the combined \viewsN are met. In this sense it is a conjunctive combination.
 
 Instead of making requirements about states and group them based on whether they meet these requirements it also possible to group states that are very similar or even identical in regard to their outaction. We consider this idea with the \emph{\outactident \viewNC} in two variants: \outactidentstrong and \outactidentweak (idententiy). Firstly we will consider the variant of strong identity.
@@ -236,12 +321,33 @@ According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in 
 As mentioned earlier a \outactidentweak variant of the \outactident \viewN is also conceivable.
 
 \begin{figure}[h]
+	\begin{minipage}{.5\textwidth}
+		\hspace{5mm}
+		\input{./04/images/actions/outActIdentStrongBefore}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}		
+		\hspace{5mm}
+		\input{./04/images/actions/outActIdentStrongAfter}
+	\end{minipage}
+	
+	\caption{Simplified representations of \mdp (left) and the \viewN \viewstrongoutactident on it (right)}
+	\label{fig:outActIdentStrongAfter}
 
-	\input{./04/images/actions/outActIdentStrongBefore}
-
-	\caption{Simplified representation of \mdp (left) and the \viewN \viewinitstates on it(left)}
-	\label{fig:outActIdentStrongBefore}  
 \end{figure}
+
+\begin{figure}[h]
+	\begin{minipage}{.5\textwidth}
+		\hspace{5mm}
+		\input{./04/images/actions/outActIdentStrongBefore}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}				
+		\hspace{5mm}
+		\input{./04/images/actions/outActIdentWeakAfter}
+	\end{minipage}	
+	\caption{Simplified representations of \mdp (left) and the \viewN \viewweakoutactident on it (right)}	
+	\label{fig:outActIdentWeakAfter}  	
+\end{figure}
+
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN and $\action \in \actions$. The \viewN \viewweakoutactident is defined by its \grpfctN $\gfctweakoutactident : \states \to \imggrp$ with
@@ -632,14 +738,9 @@ This \viewN groups states that have the same set of cycles they are contained in
 
 
 \begin{figure}[h]
-	\begin{minipage}{.5\textwidth}
-		\hspace{5mm}
-		\input{./04/images/cycles/cyclesBefore}
-	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
-%		\input{./04/images/cycles/initStatesAfter}
-	\end{minipage}
-	\caption{Simplified representation of \mdp (left) and the \viewN \viewinitstates on it(left)}
+	\centering
+	\input{./04/images/cycles/cyclesBefore}			
+	\caption{Simplified representation of \mdp}
 	\label{fig:cyclesBefore}  
 \end{figure}
 
@@ -652,14 +753,9 @@ This \viewN groups states that have the same set of cycles they are contained in
 The view above might be useful when having found cycles to see what cycles specifically exist. Often it is interesting to find cycles that consist only of transitions of the same action. The following view accomplishes that.
 
 \begin{figure}[h]
-	\begin{minipage}{.5\textwidth}
-		\hspace{5mm}
-		\input{./04/images/cycles/cyclesAfterHas}
-	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
-		%		\input{./04/images/cycles/initStatesAfter}
-	\end{minipage}
-	\caption{Simplified representation of \mdp (left) and the \viewN \viewinitstates on it(left)}
+	\centering
+	\input{./04/images/cycles/cyclesAfterHas}
+	\caption{Simplified representation of the \viewN \viewhascycle on \mdp from Figure \ref{fig:cyclesBefore}}
 	\label{fig:cycleAfterHas}  
 \end{figure}
 
@@ -671,7 +767,7 @@ The view above might be useful when having found cycles to see what cycles speci
 	\begin{minipage}{.5\textwidth}
 		\input{./04/images/cycles/cyclesAfterExact5}
 	\end{minipage}
-	\caption{\viewNC \viewexactactcycle[0] (left) and \viewN \viewexactactcycle[5] the right}
+	\caption{\viewNC \viewexactactcycle[0] (left) and \viewN \viewexactactcycle[5] (right)}
 	\label{fig:cycleAfterExtact0}  
 \end{figure}
 
@@ -700,6 +796,14 @@ In definition \ref{def:exactcycleview} we stated that little grouping can occur 
 	and $\imggrp = \states \cup \remset.$
 \end{definition}
 
+\begin{figure}[h]
+	\centering
+	\input{./04/images/cycles/cyclesAfterSet0}
+	\caption{Simplified representation of the \viewN \viewhascycle on \mdp from Figure \ref{fig:cyclesBefore}} 
+	\label{fig:cycleAfterSet0}  
+\end{figure}
+
+
 Each state is mapped to the set of states resulting from joing the state sets of all the cycles the state is on. 
 
 \subsubsection{Strongly Connected Components}
@@ -707,29 +811,48 @@ Strongly connect components (\sccN) are of major importance in model checking \r
 Therefore it is feasible to consider a view utilizing strongly connected components. Deviating from most definitions we will define \sccN not as a subgraph but only as the set of its nodes. Moreover the definition is written in the terms of \achgphN.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN. A set of the from
+	Let $\chgph = \chgphtuple$ be \achgphN. A set $\scc \subseteq \states$ is called \emph{strongly connected component} if for all $\state, \state' \in \scc$ either it holds
 	\[
-		\scc = \{\state \in \states \mid  \forall \state' \in \scc : (\exists \path \in \pathset \text{ with } \pfirst(\path) = \state, \; \plast(\path) = \state') \text{ or } \state = \state'\}
+		\exists \path \in \pathset : \pfirst(\path) = \state \land \; \plast(\path) = \state'
+	\]
+	{\centering{or}}
+	\[
+	 \state = \state'\text{.}
 	\]
 	
 %	\begin{align*}
 %			\scc = \{\state_1 \in \states \mid & \; \forall \state' \in \scc : \exists n \in \natnums, \exists \; \! (\state_1, \action_1, \state_2, \action_2 \dots, \state_n, \action_n, \state') \\
 %			&\text{ where } (\state_n, \action_n, \state') \in \trans \land \forall i \in \{1, \dots, n-1\} : (\state_i, \action_i, \state_{i+1}) \in \trans \}
 %	\end{align*}
-	is called \emph{strongly connected component} of \chgph. That is for every state in the set there has to exist a sequence of transitions to every other state of the set. The state itself is always considered a reachable by itself, i.e. there does not need to exist a self loop. In consequence, each state is contained in stronlgy connected component namely at least in the one that only contains itself. The set of strongly connected components of \chgph is denoted with \setscc.
+%	That is for every state in the set there has to exist a sequence of transitions to every other state of the set. The state itself is always considered a reachable by itself, i.e. there does not need to exist a self loop. In consequence, each state is contained in stronlgy connected component namely at least in the one that only contains the state. 
+	\noindent
+	The set of all strongly connected components of \chgph is denoted with \setscc.
 \end{definition}
 
 Since the strong connection is an equivalence relation the \sccsN are equivalence classes and hence disjoint. To find \sccsN Tarjans algorithm is the classic. In the implementation an improved variant from Gabow is used supplied by the \jgrapht library. \redcomment{CITATION}
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN. The \viewN \viewscc is defined by its \grpfctN $\gfctscc : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be \achgphN and $n \in \natnums$. The \viewN \viewscc is defined by its \grpfctN $\gfctscc : \states \to \imggrp$ with
 	\[
-	\state \mapsto \scc \quad \quad \text{ where } \state \in \scc \in \setscc
+	\state \mapsto \{\scc \in \setscc \mid \state \in \scc, n \leq |\scc|\}
 	\]
 	and $\imggrp = \setscc \cup \remset$.
 \end{definition}
 
 This view groups all states together that are in the same \sccN. Because \sccsN are disjoint each \state will be mapped to its one and only \sccN. This is because... \redcomment{DISCUSSION OF EQUALITY, EQ CLASSES AND RESULTING STATES MISSING}
+
+\begin{figure}[h]
+	\begin{minipage}{.55\textwidth}
+		\hspace{5mm}
+		\input{./04/images/sccs/sccBefore}
+	\end{minipage}
+	\begin{minipage}{.5\textwidth}
+%		\hspace{5mm}
+		\input{./04/images/sccs/sccAfter}
+	\end{minipage}
+		\caption{Simplified representations of \mdp (left) and the \viewN \viewscc on it (right)}
+		\label{fig:sccMin2}  
+\end{figure}
 
 A special kind of strongly connected components is the the bottom strongly connected component.
 
@@ -749,10 +872,22 @@ A special kind of strongly connected components is the the bottom strongly conne
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN. The \viewN \viewbscc is defined by its \grpfctN $\gfctbscc : \states \to \imggrp$ with
 	\[
-	\state \mapsto \scc \quad \quad \text{ where } \state \in \scc \in \setbscc
+	\state \mapsto \{\scc \in \setbscc \mid \state \in \scc, n \leq |\scc|\}
 	\]
 	and $\imggrp = \setbscc \cup \remset$.
 \end{definition}
+
+\begin{figure}[h]
+	\begin{minipage}{.55\textwidth}
+		\hspace{5mm}
+		\input{./04/images/sccs/sccBefore}
+	\end{minipage}
+	\begin{minipage}{.5\textwidth}		
+		\input{./04/images/sccs/bsccAfter}
+	\end{minipage}
+	\caption{Simplified representations of \mdp (left) and the \viewN \viewbscc on it (right)}
+	\label{fig:bsccAfter}  
+\end{figure}
 
 In the implementation strongly connected components are determined using the algorithm of Gabow, afterwards filtering those \sccsN that have only transitions to states within the \sccN. Equality, equivalence classes and the new state set are constructed analogously to the view \viewscc.
 
