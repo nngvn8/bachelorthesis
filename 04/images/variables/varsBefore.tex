@@ -1,0 +1,89 @@
+\documentclass[tikz]{standalone}
+%\usepackage{prelude}
+\input{prelude}
+
+\usepackage{tikz}
+\newcommand{\stateppty}{draw, circle, minimum size=1cm}
+\usepackage{ifthen}
+
+
+\begin{document}
+	\newcommand{\createstate}[3]{\node[draw, circle, minimum size=1cm] (#1) at (#2) {#3}}
+	\newcommand{\basex}{0}
+	\newcommand{\basey}{0}
+	\begin{tikzpicture} [scale=2, every initial by arrow/.style={thick}]
+		\newcommand{\varstyle}[2]{\mt{\langle#1,#2\rangle}};
+		%		\createstate{s1}{3,2+4}{$\state_1$};
+
+		\node [varstate,init] (s00) at (0,0){\varstyle{0}{0}};
+		\node [varstate,right=of s00] (s01) {\varstyle{0}{1}};
+		\node [varstate,right=of s01] (s02) {\varstyle{0}{2}};
+		\node [varstate,below=of s00] (s10) {\varstyle{1}{0}};
+		\node [varstate,right=of s10] (s11) {\varstyle{1}{1}};
+		\node [varstate,right=of s11] (s12) {\varstyle{1}{2}};
+		\node [varstate,below=of s10] (s20) {\varstyle{2}{0}};
+		\node [varstate,right=of s20] (s21) {\varstyle{2}{1}};
+		\node [varstate,right=of s21] (s22) {\varstyle{2}{2}};
+		
+%		\foreach \x in {0,...,2} 
+%			\foreach \y [evaluate=\y as \i using \y+1] in {0,...,1}				
+%				{	
+%					\path [trans] (s\x\y) edge (s\x\i);
+%					};
+					
+		\path [trans] (s00) edge (s01);
+		\path [trans] (s01) edge (s02);
+		\path [trans] (s10) edge (s11);
+		\path [trans] (s11) edge (s12);
+		\path [trans] (s20) edge (s21);
+		\path [trans] (s21) edge (s22);
+		\path [trans] (s00) edge (s10);
+		\path [trans] (s10) edge (s20);
+		\path [trans] (s01) edge (s11);
+		\path [trans] (s11) edge (s21);
+		\path [trans] (s02) edge (s12);
+		\path [trans] (s12) edge (s22);
+		
+		\path [trans] (s22) edge [loop below] (s22);
+				
+%		\foreach \y in {0,...,2} 
+%			\foreach \x in {0,...,1} 
+%				{\path [trans] (s\x\y) edge (s\x+1\y);};
+		
+		
+%		\foreach \x in {0,...,4} {
+%			\foreach \y in {\x,...,4} {
+%				\x --["\ifthenelse{\x=3 \OR \y=3 \OR \x=\y}{}{\x\y}",sloped] \y;
+%				}}};
+		
+		
+		%		\node [mstate,below right=40pt and 30 pt of s2] (s5) {$\state_5$};
+%		\node [mstate,below=of s3] (s6) {$\state_6$};
+%		\node [mstate,right=55pt of s6] (s7) {$\state_7$};
+%		\node [mstate,below left=20pt and 30pt of s1] (s8) {$\state_8$};
+%		\node [mstate,below=20pt of s8] (s9) {$\state_9$};
+%		%		\node [mstate,right=of s2] (s10) {$\state_{10}$};
+%		\node [mstate,above=26pt of s5] (s10) {$\state_{10}$};
+%		
+%		
+%		
+%		\path [trans] (s1) edge (s2);
+%		\path [trans] (s1) edge (s3);
+%		\path [trans] (s1) edge (s3);
+%		\path [trans] (s1) edge (s8);
+%		\path [trans] (s2) edge (s4);
+%		\path [trans] (s3) edge (s4);
+%		\path [trans] (s3) edge (s6);
+%		\path [trans] (s5) edge (s2);
+%		\path [trans] (s5) edge (s6);
+%		\path [trans] (s5) edge (s7);
+%		\path [trans] (s6) edge (s7);
+%		\path [trans] (s9) edge (s8);
+%		\path [trans] (s9) edge (s6);
+%		
+%		\path [trans] (s2) edge [loop above] (s2);
+%		\path [trans] (s7) edge [loop right] (s7);
+%		\path [trans] (s9) edge [loop below] (s9);
+%		
+	\end{tikzpicture}
+\end{document}

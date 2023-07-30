@@ -1,0 +1,37 @@
+\documentclass[tikz,preview]{standalone}
+%\usepackage{prelude}
+\input{prelude}
+
+
+
+
+\begin{document}
+	\newcommand{\basex}{0}
+	\newcommand{\basey}{0}
+	\newcommand{\createstate}[3]{\node[draw, circle, minimum size=1cm] (#1) at (#2) {#3}}
+	
+	
+	\begin{tikzpicture} [scale=1.2, every initial by arrow/.style={thick}]
+		\newcommand{\varstyle}[2]{\mt{\langle#1,#2\rangle}};
+		
+		\node [gstate,initial,initial right,initial text=](sbot) at (0,0) {\notppty};
+		\node [gstate,left=80pt of sbot] (s00){\varstyle{0}{0}};
+		\node [gstate,below left=of sbot] (s11) {\varstyle{1}{1}};
+		\node [gstate,below=80pt of sbot] (s22) {\varstyle{2}{2}};			
+		
+		\path [trans] (s00) edge (s11);
+		\path [trans] (s11) edge (s22);
+		\path [bendtrans] (sbot) edge (s00);
+		\path [bendtrans] (sbot) edge (s11);
+		\path [bendtrans] (sbot) edge (s22);
+		\path [bendtrans] (s00) edge (sbot);
+		\path [bendtrans] (s11) edge (sbot);
+		\path [bendtrans] (s22) edge (sbot);
+		
+		\path [trans] (s22) edge [loop below] (s22);
+		
+		%		midway, at start, near start, very near start, at end, near end, very near end
+		
+		
+	\end{tikzpicture}
+\end{document}

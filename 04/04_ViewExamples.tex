@@ -225,7 +225,7 @@ It ensures that if there are one more than \numoutact outgoing transitions with 
 		\hspace{5mm}
 		\input{./04/images/actions/outActMinAfter}
 	\end{minipage}
-	\caption{Simplified representations of \mdp (left) and the \viewN \viewminoutaction on it (right)}
+	\caption{Simplified representations of \mdp (left) and the \viewN $\view[\pptyminoutact{2}{\outact}]$ on it (right)}
 	\label{fig:outActMinAfter}  
 \end{figure}
 
@@ -258,7 +258,7 @@ Since we already defined \grpfctsN and hence views for a required minimal and ma
 		\hspace{5mm}
 		\input{./04/images/actions/outActMaxAfter}
 	\end{minipage}
-	\caption{Simplified representations of \mdp (left) and the \viewN \viewmaxoutaction on it (right)}
+	\caption{Simplified representations of \mdp (left) and the \viewN $\view[\pptymaxoutact{1}{\outact}]$ on it (right)}
 	\label{fig:outActMaxAfter} 
 \end{figure}
 
@@ -295,7 +295,7 @@ The new set of states $\states'$ of the view \viewspanoutaction is the union of 
 		\hspace{5mm}
 		\input{./04/images/actions/outActSpanBefore}
 	\end{minipage}
-	\caption{Simplified representations of \mdp (left) and the \viewN \viewspanoutaction on it (right)}
+	\caption{Simplified representations of \mdp (left) and the \viewN $\view[\pptyspanoutact{1}{\outact}{1}]$ on it (right)}
 	\label{fig:outActSpan}
 \end{figure}
 
@@ -376,6 +376,19 @@ Apart from the option of directly considering one or a set of outgoing actions w
 	and $\imggrp := \natnums \cup \remset$.
 \end{definition}
 
+\begin{figure}[h]
+	\begin{minipage}{.5\textwidth}
+		\hspace{5mm}
+		\input{./04/images/actions/outActIdentStrongBefore}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}						
+		\centering
+		\input{./04/images/actions/outActSetSizeAfter}
+	\end{minipage}	
+	\caption{Simplified representations of \mdp (left) and the \viewN \viewoutactsetsize on it (right)}	
+	\label{fig:outActSetSize}  	
+\end{figure}
+
 The notion of the view is similar to utilize the outdegree, with the difference being here that ougoing transitions with the same action are considered as one single edge. This reflects on the options available for nondeterminism in this state.
 
 The sepcialcase of there only being one single ougoing action is worth a distinct view, since it hides all nondeterministic choices, but nothing more.
@@ -390,6 +403,19 @@ The sepcialcase of there only being one single ougoing action is worth a distinc
 	\]
 	and $\imggrp := \natnums \cup \remset$.
 \end{definition}
+
+\begin{figure}[h]
+	\begin{minipage}{.5\textwidth}
+		\hspace{5mm}
+		\input{./04/images/actions/outActIdentStrongBefore}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}						
+		\centering
+		\input{./04/images/actions/outActSingleAfter}
+	\end{minipage}	
+	\caption{Simplified representations of \mdp (left) and the \viewN \viewoutactsetsize on it (right)}	
+	\label{fig:outActSingle}  	
+\end{figure}
 
 \subsubsection{Ingoing Actions}
 Analogously to Outgoing Actions views of utilizing ingoing actions are feasable. Since there is no difference apart from the definitions itself, we only provide the definitions.
@@ -549,6 +575,18 @@ The set of states $\states'$ of \viewparamvalueseq is the union of the equivalen
 	\states_2 &:= \remstates.
 \end{align*}
 
+\begin{figure}[h]
+	\begin{minipage}{.6\textwidth}
+		%		\hspace{5mm}		
+		\input{./04/images/variables/varsBefore}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		\input{./04/images/variables/varsValEqAfter}
+	\end{minipage}
+	\caption{Simplified representations of \mdp (left) and the \viewN \viewdistance on it (right)}
+	\label{fig:varsValEq}  
+\end{figure}
+
 Analogously a view that requires inequality instead of equality is feasible.
 
 \begin{definition}
@@ -563,7 +601,7 @@ Analogously a view that requires inequality instead of equality is feasible.
 	where $\imggrp := \imggrpbinview$.
 \end{definition}
 
-If states are to be grouped with the requirement of several variables equaling or not equaling specified values this can be achieved by using \parllcompN. 
+If states are to be grouped with the requirement of several variables equaling or not equaling specified values this can be achieved by using \parllcompN.
 
 To allow even more flexibility a view can be used that also allows a combination of requirements on variables in a disjunctive manner. To extend this idea to its full potential we will define a \viewN that allows requirements using a disjunctive normal formal (DNF). To formalize this view more efficiently we will write $\varstate[,i]$ short for $\vareval(\state, \var_i)$ where $x_i \in \vars$ and $i \in \natnums$. We define the symbol \eqorneq to be an element of the set $\{=,\neq\}$. That is to say, whenever it is used each time written it is a representative for either the symbol $=$ or $\neq$. It allows to write one symbol whenever $=$ and $\neq$ could or should be possible. Moreover for this context we consider $(\varstate[,i] = \varval)$ as a literal and $(\varstate[,i] \neq \varval)$ as its negation. We write $(\varstate[,i] \eqorneq \varval)$ for a literal that could be negated or not negated.
 
@@ -590,6 +628,18 @@ The DNF allows us to specify a requirement in disjunctive normal form about vari
 
 \redcomment{DISCUSSION OF EQUALITY, EQ CLASSES AND RESULTING STATES MISSING}
 
+\begin{figure}[h]
+	\begin{minipage}{.6\textwidth}
+		%		\hspace{5mm}		
+		\input{./04/images/variables/varsBefore}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		\input{./04/images/variables/varsDnfAfter}
+	\end{minipage}
+	\caption{Simplified representations of \mdp (left) and the \viewN \viewparamdnf on it (right)}
+	\label{fig:varsDnf}  
+\end{figure}
+
 Analogously a view based on a conjunctive normal formal can be defined that may be more convenient, depending on the query.
 
 \begin{definition}
@@ -604,7 +654,7 @@ Analogously a view based on a conjunctive normal formal can be defined that may 
 	proposition logical formula in disjunctive normal form where
 	\begin{itemize}
 			\item $\varstate[,i_k], a_{i_k} \in \varevalimg$ with $i_k\in \natnums$ and $k \in \{1, \dots, l_m\}$
-			\item $l_1 < l_2 < \dots < l_m$ and $m$ is the number of clauses in $c(s)$
+			\item $l_1 < l_2 < \dots < l_m$ are natural numbers and $m$ is the number of clauses in $c(s)$
 		\end{itemize}
 	The \viewN \viewparamcnf is defined by its \grpfctN $\gfctparamcnf : \states \to \imggrp$ with
 	\[
@@ -636,6 +686,18 @@ With this grouping function we directly map to the value of the variable. Hence 
 \]
 According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewparamvalident.
 
+\begin{figure}[h]
+	\begin{minipage}{.6\textwidth}
+		%		\hspace{5mm}		
+		\input{./04/images/variables/varsBefore}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		\input{./04/images/variables/varValIdentAfter}
+	\end{minipage}
+	\caption{Simplified representations of \mdp (left) and the \viewN \viewparamvalident on it (right)}
+	\label{fig:varValIdent}  
+\end{figure}
+
 
 \subsection{Utilizing the MDP Graphstructure}
 \subsubsection{Distance}
@@ -647,7 +709,7 @@ Considering distances in a graph can be very helpful to get an overview of a gra
 	Let $\chgph = \chgphtuple$ be \achgphN. A (simple and finite) \emph{path} \path is a sequence \pathsecfull alternating between states and actions where $n \in \natnums, \{\state_1, \dots, \state_{n}\} \subseteq \states$ is a set of distinct states,  $\{\action_1, \dots, \action_{n}\} \subseteq \actions$ and for all $i \in \{1, \dots, n\}$ it is $(\state_i,\action_i, \state_{i+1}) \in \trans$. 
 	
 	\noindent
-	It is $\pfirst(\path) := \state_0$ and $\plast(\path) := \state_n$ and \pathset the set of all paths in \chgph.
+	It is $\pfirst(\path) := \state_1$ and $\plast(\path) := \state_n$ and \pathset the set of all paths in \chgph.
 \end{definition}
 
 \begin{definition}
@@ -656,9 +718,15 @@ Considering distances in a graph can be very helpful to get an overview of a gra
 \end{definition}
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN. The \emph{distance} from $\smstates \subseteq \states$ to $\state \in \states$ is the length of the shortest path from a state $\smstate \in \smstates$ to \state. That is $dist(\chgph, \smstates, \state) := \text{min}\{\lenpath(\path) \mid \path \in \pathset, \; \pfirst(\path) \in \smstates, \; \plast(\path) \in \state\}$.
+	Let $\chgph = \chgphtuple$ be \achgphN and . The \emph{distance} between disjoint $\states_1, \states_2 \subseteq \states$ is the length of the shortest path from a state $\state_1 \in \states_1$ to a $\state_2 \in \states_2$. That is, if $\states_1 \cap \states_2 = \emptyset$ it is		
+	\[
+		\distP(\chgph, \states_1, \states_2) := \min\{\lenpath(\path) \mid \path \in \pathset, \; \pfirst(\path) \in \states_1, \; \plast(\path) \in \states_2\},
+	\]
+	\noindent
+	If $\states_1 \cap \states_2 \neq \emptyset$, it is $\distP(\chgph, \states_1, \states_2) := 0$.
 \end{definition}
 
+For a given \chgphN \chgph with state set \states and $\state \in \states, \smstates \subseteq \states$ we write $\distP(\mdp, \smstates, \state)$ short for $\distP(\mdp, \smstates, \{\state\})$ and $\distP(\mdp, \state, \smstates)$ short for $\distP(\mdp, \{\state\}, \smstates)$.
 For a \viewN that applies to the whole and utilizes distance it only makes sense to consider a given set of states from which one the distance is measured. An intuitive choice for such set is the set of initial states. The following algorithm calculates the distance of each node from a given set $\smstates \subseteq \states$ considering granularity \grandist:
 
 \redcomment{Implementation Algorithm}
@@ -666,12 +734,25 @@ For a \viewN that applies to the whole and utilizes distance it only makes sense
 The set \fctdistdefault declares the returned set of \redcomment{ALGORITHM}. The implementation ensures that for every state $\state$ there exists a pair $(\state, \distval)$ in \fctdistdefault. The following view groups states that have the same distance to the set measured with the amounts of transitions necessary to reach the the closest \smstates considering the granularity \grandist.
 
 \begin{definition}
-		Let $\chgph = \chgphtuple$ be \achgphN and $\smstates \subseteq \states$ arbitrary. \redcomment{$\fctdistdefault$ IMPLEMENTATION IN PSEUDOCODE? DEFINITION BEFORE?} The \viewN \viewdistance is defined by its \grpfctN $\gfctdistance : \states \to \imggrp$ with 
+		Let $\chgph = \chgphtuple$ be \achgphN $n \in \natnums$and $\smstates \subseteq \states$ arbitrary. \redcomment{$\fctdistdefault$ IMPLEMENTATION IN PSEUDOCODE? DEFINITION BEFORE?} The \viewN \viewdistance is defined by its \grpfctN $\gfctdistance : \states \to \imggrp$ with 
 		\[
-		\state \mapsto \distval \quad \quad \text{where } (\state, \distval) \in \fctdistdefault
+		\state \mapsto \distval - (\distval \text{ mod } n) \quad \quad \text{where } \distval = \distP(\chgph,\smstates, \state)
 		\]
-		and $M = \natnums \cup \{\inf\} \cup \remset$.
+		and $\imggrp = \natnums \cup \{\inf\} \cup \remset$.
 \end{definition}
+
+\begin{figure}[h]
+	\begin{minipage}{.6\textwidth}
+		%		\hspace{5mm}		
+		\input{./04/images/distance/distBefore}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		\input{./04/images/distance/distForwAfter}
+	\end{minipage}
+	\caption{Simplified representations of \mdp (left) and the \viewN \viewdistance on it (right)}
+	\label{fig:Distance}  
+\end{figure}
+
 
 \redcomment{Variants of ALGORITHM which allow directinoless or only reverse traversal of the \mdpN are provided in the appendix. The respective views would utilize their returned set in the exact same way. That is, \fctdistdefault is replaced with the set of the respective algorithm and nothing else changes.}
 
@@ -799,7 +880,7 @@ In definition \ref{def:exactcycleview} we stated that little grouping can occur 
 \begin{figure}[h]
 	\centering
 	\input{./04/images/cycles/cyclesAfterSet0}
-	\caption{Simplified representation of the \viewN \viewhascycle on \mdp from Figure \ref{fig:cyclesBefore}} 
+	\caption{Simplified representation of the \viewN \viewcycleset on \mdp from Figure \ref{fig:cyclesBefore}} 
 	\label{fig:cycleAfterSet0}  
 \end{figure}
 

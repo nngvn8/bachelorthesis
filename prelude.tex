@@ -53,7 +53,8 @@
 
 \tikzset{
 	mstate/.style={draw, circle, minimum size=.94cm}, 
-	gstate/.style={draw, rectangle, minimum size=.8cm}, 
+	gstate/.style={draw, rectangle, minimum size=.8cm},
+	varstate/.style={draw,rectangle, rounded corners, minimum size=1}, 
 	trans/.style={draw, ->, thick},
 	bendtrans/.style={draw, ->, thick, bend left=10},
 	bendtransr/.style={draw, ->, thick, bend right=10},
@@ -175,21 +176,30 @@
 \newcommand{\pptyinactsingle}{\mt{|\inacts(\state)|_1}}
 \newcommand{\pptyexactcycle}[1]{\mt{\{\cycle_{#1}\}}}
 \newcommand{\pptyexactactcycle}[1]{\mt{\{\cycle_{\action,{#1}}\}}}
+\newcommand{\pptyhasoutact}[1][\action]{\mt{\exists#1}}
+\newcommand{\pptyminoutact}[2]{\mt{#1\leq#2}}
+\newcommand{\pptymaxoutact}[2]{\mt{#2\leq#1}}
+\newcommand{\pptyspanoutact}[3]{\mt{#1\leq#2\leq#3}}
+\newcommand{\pptyhasinact}[1][\action]{\mt{\exists#1}}
+\newcommand{\pptymininact}[2]{\mt{#1\leq#2}}
+\newcommand{\pptymaxinact}[2]{\mt{#2\leq#1}}
+\newcommand{\pptyspaninact}[3]{\mt{#1\leq#2\leq#3}}
+\newcommand{\pptyparamvalident}[1]{\mt{Var:#1}}
 
 \newcommand{\gfctatomicprops}{\mt{\grpfct[\atomicprops]}}
 \newcommand{\gfctinitstates}{\mt{\grpfct[\initstates]}}
-\newcommand{\gfcthasoutaction}{\mt{\grpfct[\exists\outact]}}
-\newcommand{\gfctminoutaction}{\mt{\grpfct[\numoutact\leq\outact]}}
-\newcommand{\gfctmaxoutaction}{\mt{\grpfct[\outact\leq\numoutact]}}
-\newcommand{\gfctspanoutaction}{\mt{\grpfct[\numoutactb\leq\outact\leq\numoutact]}}
+\newcommand{\gfcthasoutaction}{\mt{\grpfct[\pptyhasoutact]}}
+\newcommand{\gfctminoutaction}{\mt{\grpfct[\pptyminoutact{\numoutact}{\outact}]}}
+\newcommand{\gfctmaxoutaction}{\mt{\grpfct[\pptymaxoutact{\numoutact}{\outact}]}}
+\newcommand{\gfctspanoutaction}{\mt{\grpfct[\pptyspanoutact{\numoutactb}{\outact}{\numoutact}]}}
 \newcommand{\gfctoutactsetsize}{\mt{\grpfct[\pptyoutactsetsize]}}
 \newcommand{\gfctoutactsingle}{\mt{\grpfct[\pptyoutactsingle]}}
 \newcommand{\gfctstrongoutactident}{\mt{\grpfct[\outacts(\state)_=]}}
 \newcommand{\gfctweakoutactident}{\mt{\grpfct[\outacts(\state)_\approx]}}
-\newcommand{\gfcthasinaction}{\mt{\grpfct[\exists\inact]}}
-\newcommand{\gfctmininaction}{\mt{\grpfct[\numinact\leq\inact]}}
-\newcommand{\gfctmaxinaction}{\mt{\grpfct[\inact\leq\numinact]}}
-\newcommand{\gfctspaninaction}{\mt{\grpfct[\numinactb\leq\inact\leq\numinact]}}
+\newcommand{\gfcthasinaction}{\mt{\grpfct[\pptyhasinact]}}
+\newcommand{\gfctmininaction}{\mt{\grpfct[\pptymininact{\numinact}{\inact}]}}
+\newcommand{\gfctmaxinaction}{\mt{\grpfct[\pptymaxinact{\numinact}{\inact}]}}
+\newcommand{\gfctspaninaction}{\mt{\grpfct[\pptyspaninact{\numinactb}{\inact}{\numinact}]}}
 \newcommand{\gfctinactsetsize}{\mt{\grpfct[\pptyinactsetsize]}}
 \newcommand{\gfctinactsingle}{\mt{\grpfct[\pptyinactsingle]}}
 \newcommand{\gfctstronginactident}{\mt{\grpfct[\inacts(\state)_=]}}
@@ -199,7 +209,7 @@
 \newcommand{\gfctparamdnf}{\mt{\grpfct[VarDNF]}}
 \newcommand{\gfctparamcnf}{\mt{\grpfct[VarCNF]}}
 \newcommand{\gfctparamvalueseqopt}[1][\varval]{\mt{\grpfct[\var = #1]}}
-\newcommand{\gfctparamvalident}{\mt{\grpfct[\vareval(\state,\var)]}}
+\newcommand{\gfctparamvalident}[1][\varval]{\mt{\grpfct[\pptyparamvalident{#1}]}}
 \newcommand{\gfctdistance}{\mt{\grpfct[\pptydistance]}}
 \newcommand{\gfcthascycle}{\mt{\grpfct[\exists\cycle]}}
 \newcommand{\gfctexactcycle}[1][\mt{n}]{\mt{\grpfct[\pptyexactcycle{#1}]}}
@@ -211,18 +221,18 @@
 
 \newcommand{\viewatomicprops}{\mt{\view[\atomicprops]}}
 \newcommand{\viewinitstates}{\mt{\view[\initstates]}}
-\newcommand{\viewhasoutaction}{\mt{\view[\exists\outact]}}
-\newcommand{\viewminoutaction}{\mt{\view[\numoutact\leq\outact]}}
-\newcommand{\viewmaxoutaction}{\mt{\view[\outact\leq\numoutact]}}
-\newcommand{\viewspanoutaction}{\mt{\view[\numoutactb\leq\outact\leq\numoutact]}}
+\newcommand{\viewhasoutaction}{\mt{\view[\pptyhasoutact]}}
+\newcommand{\viewminoutaction}{\mt{\view[\pptyminoutact{\numoutact}{\outact}]}}
+\newcommand{\viewmaxoutaction}{\mt{\view[\pptymaxoutact{\numoutact}{\outact}]}}
+\newcommand{\viewspanoutaction}{\mt{\view[\pptyspanoutact{\numoutactb}{\outact}{\numoutact}]}}
 \newcommand{\viewoutactsetsize}{\mt{\view[\pptyoutactsetsize]}}
 \newcommand{\viewoutactsingle}{\mt{\view[\pptyoutactsingle]}}
 \newcommand{\viewstrongoutactident}{\mt{\view[\outacts(\state)_=]}}
 \newcommand{\viewweakoutactident}{\mt{\view[\outacts(\state)_\approx]}}
-\newcommand{\viewhasinaction}{\mt{\view[\exists\inact]}}
-\newcommand{\viewmininaction}{\mt{\view[\numinact\leq\inact]}}
-\newcommand{\viewmaxinaction}{\mt{\view[\inact\leq\numinact]}}
-\newcommand{\viewspaninaction}{\mt{\view[\numinactb\leq\inact\leq\numinact]}}
+\newcommand{\viewhasinaction}{\mt{\view[\pptyhasinact]}}
+\newcommand{\viewmininaction}{\mt{\view[\pptymininact{\numinact}{\inact}]}}
+\newcommand{\viewmaxinaction}{\mt{\view[\pptymaxinact{\numinact}{\inact}]}}
+\newcommand{\viewspaninaction}{\mt{\view[\pptyspaninact{\numinactb}{\inact}{\numinact}]}}
 \newcommand{\viewinactsetsize}{\mt{\view[\pptyinactsetsize]}}
 \newcommand{\viewinactsingle}{\mt{\view[\pptyinactsingle]}}
 \newcommand{\viewstronginactident}{\mt{\view[\inacts(\state)_=]}}
@@ -231,7 +241,7 @@
 \newcommand{\viewparamvaluesneq}{\mt{\view[\var \neq \varval]}}
 \newcommand{\viewparamdnf}{\mt{\view[VarDNF]}}
 \newcommand{\viewparamcnf}{\mt{\view[VarCNF]}}
-\newcommand{\viewparamvalident}{\mt{\view[\vareval(\state,\var)]}}
+\newcommand{\viewparamvalident}[1][\varval]{\mt{\view[\pptyparamvalident{#1}]}}
 \newcommand{\viewdistance}{\mt{\view[\pptydistance]}}
 \newcommand{\viewhascycle}{\mt{\view[\exists\cycle]}}
 \newcommand{\viewexactcycle}[1][\mt{n}]{\mt{\view[\pptyexactcycle{#1}]}}
@@ -252,10 +262,10 @@
 \newcommand{\predmaxinact}[1][\numinact]{\mt{Q_{\inact\leq#1}(\state,\state_1, \dots, \state_{#1+1})}}
 \newcommand{\predmininact}[1][\numinact]{\mt{Q_{#1\leq\inact}(\state,\state_1, \dots, \state_{#1})}}
 
-\newcommand{\outact}{\mt{\overrightarrow{\action}}}
+\newcommand{\outact}[1][\action]{\mt{\overrightarrow{#1}}}
 \newcommand{\outacts}{\mt{\overrightarrow{\actions}}}
 \newcommand{\inact}{\mt{\overleftarrow{\action}}}
-\newcommand{\inacts}{\mt{\overleftarrow{\actions}}}
+\newcommand{\inacts}[1][\action]{\mt{\overleftarrow{#1}}}
 
 %%Parameters
 \newcommand{\vars}[1][\mdp]{\mt{V\!ar_{#1}}}
@@ -280,6 +290,7 @@
 \newcommand{\pfirst}{\mt{first}}
 \newcommand{\plast}{\mt{last}}
 \newcommand{\pathset}{\mt{\path_\chgph}}
+\newcommand{\distP}{\mt{dist}}
 
 %Cycles
 \newcommand{\cyclesecfull}{\mt{(\state_0, \action_0, \state_1, \action_1, \dots, \action_{n-1}, \state_0)}}

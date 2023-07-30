@@ -1,0 +1,28 @@
+\documentclass[tikz,preview]{standalone}
+%\usepackage{prelude}
+\input{prelude}
+
+\begin{document}
+	\newcommand{\basex}{0}
+	\newcommand{\basey}{0}
+	\newcommand{\createstate}[3]{\node[draw, circle, minimum size=1cm] (#1) at (#2) {#3}}
+	
+	
+	\begin{tikzpicture} [scale=2, every initial by arrow/.style={thick}]
+		
+		
+		\node [gstate,init] (set3) at (0,0) {$3$};
+		\node [gstate,below=50pt of set3] (set1) {$1$};
+		
+		\path [trans,bend right=35] (set3) edge node [midway, left] {\actionc} (set1);
+		\path [trans,bend right=10] (set3) edge node [midway, right] {\actionb} (set1);
+		\path [trans,bend left=32] (set3) edge node [midway, right] {\action} (set1);
+		
+		\path [trans] (set3) edge [loop above] node [midway, right=4pt] {$\action,\actionb,\actionc$} (set3);
+		\path [trans] (set1) edge [loop below] node [midway, right=4pt] {$\action,\actionc$} (set1);
+		
+
+		
+		
+	\end{tikzpicture}
+\end{document}

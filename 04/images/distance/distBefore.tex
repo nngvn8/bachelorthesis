@@ -1,0 +1,64 @@
+\documentclass[tikz]{standalone}
+%\usepackage{prelude}
+\input{prelude}
+
+\usepackage{tikz}
+\newcommand{\stateppty}{draw, circle, minimum size=1cm}
+
+
+\begin{document}
+	\newcommand{\createstate}[3]{\node[draw, circle, minimum size=1cm] (#1) at (#2) {#3}}
+	\newcommand{\basex}{0}
+	\newcommand{\basey}{0}
+	\begin{tikzpicture} [every initial by arrow/.style={thick}]
+		%		\createstate{s1}{3,2+4}{$\state_1$};
+		\path 
+		(\basex,  \basey+2) node[mstate, initial, initial text=, initial distance=15pt] (s1) {$\state_1$} 
+		;
+		
+		\node [mstate,right=of s1] (s2) {$\state_2$};
+		\node [mstate,below=of s1] (s3) {$\state_3$};
+		\node [mstate,below=of s2] (s4) {$\state_4$};
+		\node [mstate,right=of s4] (s5) {$\state_5$};
+		%		\node [mstate,below right=40pt and 30 pt of s2] (s5) {$\state_5$};
+		\node [mstate,below=of s3] (s6) {$\state_6$};
+		\node [mstate,right=55pt of s6] (s7) {$\state_7$};
+		\node [mstate,below left=20pt and 30pt of s1] (s8) {$\state_8$};
+		\node [mstate,below=20pt of s8] (s9) {$\state_9$};
+		%		\node [mstate,right=of s2] (s10) {$\state_{10}$};
+		\node [mstate,above=26pt of s5] (s10) {$\state_{10}$};
+		
+%		\node [above right=-4pt of s1] (ls1) {$\{\}$};
+%		\node [above right=-6pt of s2] (ls2) {$\{a,b\}$};
+%		\node [above right=-4pt of s3] (ls3) {$\{a,b\}$};
+%		\node [above right=0pt and -8pt of s4] (ls4) {$\{a\}$};
+%		\node [above right=-4pt of s5] (ls5) {$\{b\}$};
+%		\node [below left=-4pt of s6] (ls6) {$\{a,b\}$};
+%		\node [below left=-4pt of s7] (ls7) {$\{b\}$};
+%		\node [above left=-4pt of s8] (ls8) {$\{a\}$};
+%		\node [above left=-4pt of s9] (ls9) {$\{a\}$};
+%		\node [above right=-4pt of s10] (ls10) {$\{\}$};
+		
+		
+		
+		
+		\path [trans] (s1) edge (s2);
+		\path [trans] (s1) edge (s3);
+		\path [trans] (s1) edge (s3);
+		\path [trans] (s1) edge (s8);
+		\path [trans] (s2) edge (s4);
+		\path [trans] (s3) edge (s4);
+		\path [trans] (s3) edge (s6);
+		\path [trans] (s5) edge (s2);
+		\path [trans] (s5) edge (s6);
+		\path [trans] (s5) edge (s7);
+		\path [trans] (s6) edge (s7);
+		\path [trans] (s9) edge (s8);
+		\path [trans] (s9) edge (s6);
+		
+		\path [trans] (s2) edge [loop above] (s2);
+		\path [trans] (s7) edge [loop right] (s7);
+		\path [trans] (s9) edge [loop below] (s9);
+		
+	\end{tikzpicture}
+\end{document}
