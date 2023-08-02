@@ -9,4 +9,86 @@ Performance Cycles -> Selection of states and induced subgraph easily possible p
 -> in general generating views on subgraphs easily possible (only when needed for performance)
 Clustering exact Cycles when clustering exact cycles
 
+
+\subsection{Break down Mdp into overseeable parts}
+\begin{itemize}
+	\item USE: dinging Philosopher
+	\item consider dining Philosophers with
+	\item current graphical Representation looks as follows
+	\item only has about 1000 states in case studies prism mdp with about ... states
+	\item in general seems simple
+	\item parameters cluster: allows looking at just one module
+	\item also interleaving of arbitrary modules
+	\item
+	\item hasAction or OutAction-Ident for specific MDP-that run through configuration phases
+	
+\end{itemize}
+
+\subsection{Find out why illegal states is reached}
+In this chapter we want to show how views can be used for debugging. In this specific case we assume that we observed unwanted behavior or model checking results. We know that some states - that is some assignment of variables - are not allowed. We will check if these states are in fact not reachable.
+
+We will consider the following small MDP the represents two systems that intend to send information via a unshareable medium. With a probability of $0.8$ a system can establish a connection and with probability of $0.2$ establishing a connection will fail. After an established connection access to the medium shall only be granted, if it is not occupied by the other system. If the medium is not occupied the system starts sending, otherwise it waits until the medium is free. The termination of the transmission is modeled with probabilities. There is 50 percent chance of terminating the transmission and a 50 percent chances of continuing.
+
+The state <2,2> should not be reachable, since it represents the situation of the two systems occupying the unshareable medium at the same time. We will check if this state in fact is not reachable.
+
+We observe, that this state is reachable. The questions occurs how and why. In order to obtain this information we should investigate by which state this critical state has been reached. One way of accomplishing that is to look into the database that stores states and transitions. They look as follows. 
+
+An even better approach is to look in the model file, which looks as follows:
+
+Persons with experience in working with prism models, might quickly spot the issue, especially because this is a rather small \mdp. With less experienced people or a lot larger models, finding an issue becomes much more difficult. Hence, let us see how views can help us.
+
+Firstly we will use the view \viewdistance from that state on. Because in the current version of the project not expansion has not been implemented yet we will use a custom view that emulates this feature
+
+\begin{definition}
+	content...
+\end{definition}
+
+We will use partial application with \gfctdistance(s) = 1 to exapand that state. The MDP-Graph then looks as in \redcomment{Figure}. It is to see that the state only contains a single state namely with the id seven. In the current version of implementation it is not possible, to obtain the parameter values. With the database file we obtain that this is the state where $x=2$ and $y=1$. Thus, we see that is possible for the second system to send on the medium although it is already occupied by the first system!
+
+When now looking at the prism file we can see why this is the case. In line when y=1 there is a 50 percent chance to enter y=2. This line originally was intended for termination of the transmission. From y=1 it should not be possible to enter y=2 if x=2. After fixing this, the state no longer appears after the application of \viewparamdnf(....).
+
+	
+	\begin{itemize}
+		\item USE: two process switch 
+		\item illegal state has been reached?
+		\item given state 2,2 should not be reachable
+		\item is reachable
+		\item is only!
+		\item apply distance cluster
+		\item emulate not yet feature of expansion
+		\item use identityView (with Parameters)
+		\item see in Database
+		\item fix in File
+	\end{itemize}
+
+
+%\subsection{Find out how why we reach a certain state}
+%%	\item two dies
+%%	\item property cluster
+
+\subsection{Understand and Exploring an MDP + SCC - Cycles?!}
+\begin{itemize}
+	\item USE: scc with loops
+	\item begin with variables: reason: give overview of certain modules
+	\item \redcomment{find relevant variables: try group on some variable (error messages)}
+	\item go through variables see what they might do
+	\item activity = binary state
+	\item config1 some configuration
+	\item config2 also configuration but seems suspicious
+	\item time and phases <- both beautifully show structure
+	\item time apply strongly connected components -> structure of mdp very clear
+	\item apply init to see where it start
+	\item maxReward is infinite -> not wanted
+	\item search for cycles
+	\item are cycles $\to$ exact cycles \redcomment{maybe exact cycles}
+	\item fix mdp $\to$ no more cycles $\to$ show no more cycles
+	
+\end{itemize}
+
+\subsection{Performance}
+
+\subsection{Critical remarks}
+init cluster obsolete
+no found usage for quantity on of actions or exact identity
+
 \end{document}
