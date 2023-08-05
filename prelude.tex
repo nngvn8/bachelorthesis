@@ -14,7 +14,7 @@
 \usepackage{amssymb} % doteqdot
 \usepackage[dvipsnames]{xcolor}
 \usepackage{standalone}
-\usepackage{tikz}
+\usepackage{tikz}[mode=buildnew]
 \usepackage{cite}
 \usepackage{xspace}
 \usepackage{relsize}
@@ -96,6 +96,9 @@
 \newcommand{\viewNC}{\nm{View}}
 \newcommand{\viewsN}{\nm{views}}
 \newcommand{\viewsNC}{\nm{Views}}
+\newcommand{\grpfctsubN}{\nm{detached grouping function}}
+\newcommand{\grpfctsubNC}{\nm{detached grouping function}}
+\newcommand{\grpfctsubNCC}{\nm{Detached Grouping Function}}
 \newcommand{\grpfctN}{\nm{grouping function}}
 \newcommand{\grpfctNC}{\nm{Grouping function}}
 \newcommand{\grpfctNCC}{\nm{Grouping Function}}
@@ -143,16 +146,24 @@
 
 % CORE DEFINITIONS
 \newcommand{\grpfct}[1][\viewppty]{\mt{F_{#1}}}
+\newcommand{\grpfctsub}[1][\viewppty]{\mt{\tilde{F}_{#1}}}
 \newcommand{\eqrelview}{\mt{R}}
 \newcommand{\eqclassv}[1][\state]{\mt{\eqclass{#1}{\eqrelview}}}
 \newcommand{\eqclasssetv}[1][\states]{\eqclassv[{#1}]} %OLD: \bigcup_{\state \in \states} \eqclassv
 \newcommand{\viewid}{\mt{\mdp}}
 \newcommand{\view}[1][\viewppty]{\mt{\viewid_{#1}}}
 \newcommand{\imggrp}{\mt{\arbset}}
+\newcommand{\imggrpsub}{\mt{X}}
 \newcommand{\viewppty}{\mt{\theta}}
-\newcommand{\pll}{\mt{\;\!||\;\!}}
+\newcommand{\pll}{\mt{\;\!\pllpure\;\!}}
+\newcommand{\pllrev}{\mt{\pllpure^{-1}}}
+\newcommand{\pllpure}{\mt{||}}
+\newcommand{\compselectset}{\mt{Z}}
+\newcommand{\compselectpure}{\mt{\pllpure_\compselectset}}
+\newcommand{\compselect}{\mt{\;\pllpure_\compselectset\;}}
 \newcommand{\remstates}{\mt{\bigcup_{\state \in \states \setminus \states_1}\{\{\state\}\}}}
 \newcommand{\remelem}{\mt{\bullet}}
+\newcommand{\nogroupset}{\mt{\xi}}
 \newcommand{\remset}{\mt{\{\bot\}}}
 \newcommand{\gfctpll}{\mt{\grpfct[\pll]}}
 \newcommand{\group}{\mt{\top}}
@@ -160,6 +171,8 @@
 \newcommand{\viewappset}{\mt{\tilde{\states}}}
 \newcommand{\hasppty}{\mt{\top}}
 \newcommand{\notppty}{\mt{\bot}}
+\newcommand{\disregardelem}{\mt{\Delta}}
+\newcommand{\disregardelements}{\mt{{\disregardelem_1, \dots, \disregardelem_n}}}
 
 
 %\newcommand{\mdp}{def}\mdp
@@ -356,6 +369,10 @@
 \newcommand{\bigsum}[2][]{\mt{\mathlarger{\sum}_{#2}^{#1}}}
 \newcommand{\bbigsum}[2][]{\mt{\mathlarger{\mathlarger{\sum}}_{#2}^{#1}}}
 \newcommand{\invimage}[2]{#1^{\mt{-1}(#2)}}
+\newcommand{\img}{\mt{Img}}
 
 %tickz
 %% \definecolor{darkred}{RGB}{196, 42, 42}
+
+%implementation
+\newcommand{\pmcvis}{\nm{PMC-Vis}}

@@ -15,9 +15,14 @@ In the preliminaries transition systems and Markov Chains were listed as simpler
 The conceptional idea of a \viewN is to group states by some criteria and structure the rest of the system accordingly. To formalize the grouping we define a dedicated function.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \chgphN, \smstates a subset of \states and \arbset be an arbitrary set \redcomment{with $\remelem \in \arbset$}. We call any function $\grpfct : \states \to \imggrp$ with
-	$\tilde\grpfct(s) = \remelem \text{ if } \state \notin \smstates$.
+	Let \smstates and \arbset be an arbitrary sets with $\remelem \in \arbset$. The function $\grpfctsub : \smstates \to \imggrp$ is called \emph{\grpfctsubN}, where the symbol \viewppty is an unique identifier.
 	
+	\label{def:grpfctsub}
+\end{definition}
+
+
+\begin{definition}
+	Let $\chgph = \chgphtuple$ be \achgphN and $\grpfctsub : \smstates \to \imggrp$ a detached grouping function where $\smstates \subseteq \states$. The function $\grpfct : \states \to \imggrp$ with	
 	
 	\[
 	\state \mapsto
@@ -25,22 +30,29 @@ The conceptional idea of a \viewN is to group states by some criteria and struct
 		\tilde\grpfct(s),				& \text{if } \state \in \smstates \\ 		\remelem,          	& \text{otherwise}
 	\end{cases}
 	\]
-	where $\tilde\grpfct : \states \to \imggrp$.
 	
-	a \emph{\grpfctN}. The symbol \viewppty is a unique identifier.
+	is called \emph{\grpfctN}. The symbol \viewppty is an unique identifier.
 	
 	\label{def:grpfct}
 \end{definition}
 
-The identifier \viewppty normally hints the objective of the grouping function. Two states are \redcomment{grouped (should be Definition?)} to a new state if and only if the grouping function maps them to the same value \redcomment{if that value is not the unique symbol \remelem}. The mapping to the symbol \remelem will be used whenever a state is supposed to be excluded from the grouping. The definition offers an easy way of defining groups of states. It is also very close to the actual implementation later on. The exact mapping depends on the desired grouping. In order to define a new set of states for the \viewN, we define an equivalence relation \eqrelview based on a given grouping function \grpfct.
+
+
+The \grpfctsubN is used formalize the behavior that groupings can also only be defined on a subset of states, while still obtaining a total function on the set of states \states. We write $M(\grpfct)$ and $M(\grpfctsub)$ to refer to the their codomain of \grpfct and \grpfctsub respectively. The identifier \viewppty normally hints the objective of the grouping function. Two states will be grouped to a new state if and only if the grouping function maps them to the same value if that value is not the unique symbol \remelem. The mapping to the symbol \remelem will be used whenever a state is supposed to be excluded from the grouping. The definition offers an easy way of creating groups of states. It is also very close to the actual implementation later on. The exact mapping depends on the desired grouping. In order to define a new set of states for the \viewN, we define an equivalence relation \eqrelview based on a given grouping function \grpfct.
 
 \begin{definition}
-	Let \grpfct be a grouping function. We define the equivalence relation $\eqrelview :=\{ (\state_1, \state_2) \in \states \times \states \mid \grpfct(\state_1) = \grpfct(\state_2) \neq \bot\} \cup \{(\state, \state)  \mid \state \in \states\}$
+	Let $\nogroupset := \{\remelem\} \cup \bigcup_{n \in \natnums} \{t \in \{\remelem\}^{n+1} \mid \exists t'\in \nogroupset : t' \in \{\remelem\}^n\}$.
+\end{definition}
+
+With this definition it is $\nogroupset = \{\remelem, (\remelem, \remelem), (\remelem, \remelem, \remelem), \dots\}$ an infinite set. That is, it contains every arbitrary sized tuple only containing the symbol \remelem. This generalization to arbitrary large tuples with \remelem is needed for composition in section \ref{ch:composition}.
+
+\begin{definition}
+	Let \grpfct be a grouping function. We define the equivalence relation $\eqrelview :=\{ (\state_1, \state_2) \in \states \times \states \mid \grpfct(\state_1) = \grpfct(\state_2) \notin \nogroupset\} \cup \{(\state, \state)  \mid \state \in \states\}$
 	
 	\label{def:eqrelview}
 \end{definition}
 
-\eqrelview is an equivalence relation because it is reflexive, transitive and symmetric. \eqrelview is reflexive because $\{(\state, \state)  \mid \state \in \states\} \subseteq \eqrelview$. Thus for all states \state it is $(\state, \state) \in \eqrelview$. Therefore for the properties transitivity and symmetry we only consider distinct $\state_1, \state_2 \in \states$. If $\grpfct(\smstate) = \remelem$ with \smstate being one of states $\state_1$ or $\state_2$ it is $(\state_1, \state_2) \notin \eqrelview$. Hence when considering transitivity and symmetry we assume $\grpfct(\state_1), \grpfct(\state_2) \neq \remelem$. If $\grpfct(\state_1) = \grpfct(\state_2)$ it is obviously also $\grpfct(\state_2) = \grpfct(\state_1)$, which means if $(\state_1, \state_2) \in \eqrelview$ it follows that $(\state_2, \state_1) \in \eqrelview$. Hence \eqrelview is symmetric. The property directly conveyed from equality. In the same way transitivity directly conveys from the equality relation to \eqrelview.
+\eqrelview is an equivalence relation because it is reflexive, transitive and symmetric. \eqrelview is reflexive because $\{(\state, \state)  \mid \state \in \states\} \subseteq \eqrelview$. Thus for all states \state it is $(\state, \state) \in \eqrelview$. Therefore for the properties transitivity and symmetry we only consider distinct $\state_1, \state_2 \in \states$. Consider $(\state_1, \state_2) \in \states \times \states$. If $\grpfct(\state_1) \in \nogroupset$, then it is either $\grpfct(\state_2) = \grpfct(\state_1) \in \nogroupset$ or $\grpfct(\state_2) \neq \grpfct(\state_1)$. In both cases it follows from definition of \eqrelview that $(\state_1, \state_2) \notin \eqrelview$. If $\grpfct(\state_2) \in \nogroupset$ it directly follow from the definition of \eqrelview that $(\state_1, \state_2) \notin \eqrelview$. So for  $\grpfct(\state_1) \in \nogroupset$ or  $\grpfct(\state_2) \in \nogroupset$ it follows that $(\state_1, \state_2) \notin \eqrelview$. Hence when considering transitivity and symmetry we assume $\grpfct(\state_1), \grpfct(\state_2) \notin \nogroupset$. If $\grpfct(\state_1) = \grpfct(\state_2)$ it is obviously also $\grpfct(\state_2) = \grpfct(\state_1)$, which means if $(\state_1, \state_2) \in \eqrelview$ it follows that $(\state_2, \state_1) \in \eqrelview$. Hence \eqrelview is symmetric. The property directly conveyed from equality. In the same way transitivity directly conveys from the equality relation to \eqrelview.
 
 We observe that two states $\state_1, \state_2$ are grouped to a new state if and only if $(\state_1, \state_2) \in \eqrelview$. This is the case if and only if $\state_1, \state_2 \in \eqclassv[\state_1] = \eqclassv[\state_2]$ where $\eqclassv[\state_i]$ for $i \in \natnums$ denotes the respective equivalence class of \eqrelview, i.e. $\eqclassv[\smstate] := \{\state \in \states \mid (\state,\smstate) \in \eqrelview\}$. \eqclasssetv denotes the set of all equivalence classes of \eqrelview, i.e. $\eqclasssetv := \bigcup_{\state \in \states}\{\eqclassv\}$.
 
@@ -76,7 +88,6 @@ The definition of a \viewN is dependent on a given MDP and a \grpfctN $\grpfct$.
 				\item $\labelingfct': \states' \to \powerset{\atomicprops}, \eqclassv\mapsto \bigcup_{\state \in \eqclassv} \{\labelingfct(\state)\}$
 				
 			\end{itemize}
-	
 	and \eqrelview is the equivalence relation according to Definition \ref{def:eqrelview}.
 	
 
@@ -91,115 +102,209 @@ The identifier \viewppty is inherited from $\grpfct$ to \view. The identifier de
 	%	$\labelingfct(\state) =: \atomicprop \impr \atomicprop \in \labelingfct(\eqclassv)$
 \end{itemize}
 
-\redcomment{other versions feasible??}
+\subsection{View Types and Disregarding Views}
+In this section we categorize views in two view types. We will present views of two types: binary an partitioning. Given a \grpfctN $\grpfct : \states \to \imggrp$ or a detached \grpfctN $\grpfctsub : \smstates \to \imggrp$
 
-
-\subsection{Composition of Views}
-In essence views are simplification generated from \chgphN. It seems rather obvious that the composition of views is a very practical feature. Therefore in this chapter we will introduce, formalize and discuss different notions of compositions. All variants will ensure that the effect caused by each partaking views also takes effect in the composed view. Moreover it is to be generated in a way that the effect of each individual view can be reverted from the composed one. There may be restrictions in the order of removal.
-
-\subsubsection{\parllcompNCC}
-One of the most uncomplicated ideas is to group states that match in the function value of all given \grpfctsN. This idea is parallel in the sense that a set of \grpfctN is combined to a new \grpfctN in one single step.
 \begin{definition}
-	Let $\view[\viewppty_1], \view[\viewppty_2], \dots, \view[\viewppty_n]$ be \viewsN and  $\grpfct[\viewppty_1], \grpfct[\viewppty_2], \dots, \grpfct[\viewppty_n]$ be its \grpfctsN. A \emph{parallel composed \grpfctN} is a \grpfctN $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n}]: \states \to \arbset$ with
+	Let \view be a \viewN on \achgphN $\chgph = \chgphtuple$. \view is called \emph{binary} if for its \grpfctN \grpfct it is $M(\grpfct) \in \{\{\hasppty, \notppty\}, \{\remelem, \notppty\}, \{\hasppty\, \remelem\}\}$. \view is called categorizing if for its \grpfctN \grpfct it  is $\hasppty, \notppty \notin M(\grpfct)$.%holds $|M(\grpfct)| \geq 2$.
+	\label{def:viewtypes}
+\end{definition}
+
+The notion of a binary view is that it maps each state to whether or not it has a certain property. The symbol \hasppty shall be used if it has the property and the symbol \notppty shall be used if it does not have the property. The symbol \remelem can either be used to not group states that have the property or to not group state states that do not have the property. The case of ${\grpfct}[\states] = \{\hasppty, \notppty\}$ may seem of rather little benefit, since the resulting view only contains two states. In the actual implementation such a view might be very useful, as at the tier of visualization there will be the feature of expanding grouped states and show the ones they contain. Hence, at runtime it can be decided which states are to be shown, rather than in the phase of preprocessing.
+
+The notion of a categorizing \viewN is that categorizes states to groups, which have a certain property. One could argue that binary \viewsN as well categorize states in two groups that have in common to share having or not having a certain property. We defined categorizing \viewsN as in Definition \ref{def:viewtypes} so that a view either is binary or categorizing to distinguish between the intention of a \viewN.
+
+For binary \view we already presented three cases in which a view is called binary. We will now further elaborate on those cases and generalize the concept and also enable it with categorizing views. When looking at the Elements of the set $\{\{\hasppty, \notppty\}, \{\remelem, \notppty\}, \{\hasppty\, \remelem\}\}$ we observe that for distinct $s,t$ in the set it is $|s|-|s \; \cap \; t| = 1$, i.e. $s$ and $t$ only differ in one element. We declare the case when $\remelem \in M(\grpfct)$ a special case, because instead of assignment of \hasppty or \notppty, the symbol \remelem is assigned, to avoid grouping on states with this property. In general it may be that grouping on states that would be mapped to a certain value should not be grouped. To accomplish this we define disregarding \viewsN.
+
+\begin{definition}
+	Let $\chgph = \chgphtuple$ be \achgphN and $\grpfctsub : \smstates \to \imggrp$ a detached grouping function where $\smstates \subseteq \states$. The \viewN $\view^\disregardelements$ is defined by its grouping function $\grpfct^\disregardelements : \states \to \imggrp$ where it is $\grpfctsub^\disregardelements : \smstates \to \imggrp$ with
+	\[
+	\state \mapsto
+	\begin{cases}
+		\tilde\grpfct(\state),				& \text{if } \grpfctsub(\state) \notin \{\disregardelements\} \\ 		\remelem,          	& \text{otherwise}
+	\end{cases}
+	\]
+	Its \grpfctN $\grpfct^\disregardelements$ is called \grpfct \emph{disregarding} \disregardelements and the respective \viewN $\view^\disregardelements$ is called \view \emph{disregarding} \disregardelements. 
+\end{definition}
+
+With a disregarding \viewN grouping is avoided if its detached \grpfctN would map to any of the values \disregardelements. That is when reading $\view^\disregardelements$ we know that no grouping occurs on states with one of the properties \disregardelements. In a sense states with these properties are shown - maybe amongst others if $\smstates \subset \states$. For this thesis we will only consider disregarding views for $n = 1$. Normally we will define binary views as the disregarding $\view^\hasppty$ and perceive them as filters that show use states with that property. 
+For $n = 1$ $\view$ can be obtained from $\view^\hasppty$ with 
+\[
+\grpfctsub(\state) = 
+\begin{cases}
+	\hasppty,				& \text{if } \grpfctsub^\hasppty(\state) = \remelem  \\
+	\grpfctsub^\hasppty(\state),       		& \text{otherwise }
+\end{cases}
+\]
+and $\view^\notppty$ from $\view$ with
+\[
+\grpfctsub^\notppty(\state) = 
+\begin{cases}
+	\grpfctsub^\hasppty(\state),       		&\text{if } \grpfctsub^\hasppty(\state) = \remelem  \\ 
+	\remelem,				&\text{otherwise } 
+\end{cases}
+\]
+
+Similarly $\view$ can be obtained from $\view^\notppty$ and $\view^\hasppty$ from $\view$. Hence it suffices to give one Definition for binary view. For categorizing views we normally wont use disregarding views.
+
+%These have the advantage of being revertible, even if only the detached disregarding \grpfctN is available. This is because if $\grpfctsub^\disregardelem(\state) = \remelem$ we know $\grpfctsub(\state) = \disregardelem$. If $n > 1$ for $\grpfctsub^\disregardelements(\state) = \remelem$ the value $\grpfct(\state)$ is ambigous. When choosing $n = 1$
+
+\subsection{Composition of Views} \label{ch:composition}
+In essence views are a simplification generated from \chgphN. It seems rather obvious that the composition of views is a very practical feature, in order to combine simplifications. Therefore in this chapter we will introduce, formalize and discuss different notions of compositions. All variants will ensure that the effect caused by each partaking views also takes effect in the composed view. Moreover it is to be generated in a way that the effect of each individual view can be reverted from the composed one. There may be restrictions in the order of removal.
+
+\subsubsection{\parllcompNCC} 
+In this section we will introduce the concept of parallel composition. The most apparent idea is to group states that match in the function value of all given \grpfctsN. This idea is parallel in the sense that a set of \grpfctN is combined to a new \grpfctN in one single step.
+
+\begin{definition}
+	Let $\view[\viewppty_1], \view[\viewppty_2], \dots, \view[\viewppty_n]$ be \viewsN, and $\grpfct[\viewppty_1], \grpfct[\viewppty_2], \dots, \grpfct[\viewppty_n]$ be their corresponding \grpfctsN. The \grpfctN $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n}]: \states \to \arbset$ is defined with
 	\[
 	\state \mapsto (\grpfct[\viewppty_1](\state), \grpfct[\viewppty_2](\state), \dots, \grpfct[\viewppty_n](\state))
 	\] 
-	The respective parallel composed view is denoted with $\view[\viewppty_1 \pll \viewppty_2 \pll \dots \pll 
-	\viewppty_n]$.
-		
+	and called \emph{parallel composed grouping function}.
+	The corresponding parallel composed view is denoted as $\view[\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n]$.
+\end{definition}
+
+Note that for $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n}]$ if $\grpfct[\viewppty_1](\state) = \grpfct[\viewppty_2](\state) = \dots = \grpfct[\viewppty_n](\state) = \remelem$ the state \state will not be grouped with any other state due to Definition \ref{def:eqrelview} of \eqrelview. An important property of parallel composed \grpfctsN is, that they defying order. That is, with regard to the impact on grouping the order of the included \grpfctsN does not matter.
+
+\begin{proposition}
+	Let $\grpfct[u]$ and $\grpfct[v]$ be non parallel composed \grpfctsN and \states a set of states. For all $\state_1, \state_2 \in \states$ it holds that
+	\[
+	\grpfct[u \pll v](\state_1) = \grpfct[u \pll v](\state_2) \iff \grpfct[v \pll u](\state_1) = \grpfct[v \pll u](\state_2)
+	\]
+\end{proposition}
+
+\begin{proof}
+	Let $\grpfct[u]$ and $\grpfct[v]$ be \grpfctsN, $\state_1, \state_2 \in \states$ and
+	\begin{align*}
+		\grpfct[u \pll v](\state_1) &= (\grpfct[u](\state_1), \grpfct[v](\state_1)) =: (a, b) \\
+		\grpfct[u \pll v](\state_2) &= (\grpfct[u](\state_2), \grpfct[v](\state_2)) =: (x, y)			
+	\end{align*}
+	Then it is
+	\begin{align*}
+		\grpfct[v \pll u](\state_1) &= (\grpfct[v](\state_1), \grpfct[u](\state_1)) = (b, a) \\
+		\grpfct[v \pll u](\state_2) &= (\grpfct[v](\state_2), \grpfct[u](\state_2)) = (y, x)
+	\end{align*}
+	It follows that
+	\[
+	\grpfct[u \pll v](\state_1) = \grpfct[u \pll v](\state_2) \iff \grpfct[v \pll u](\state_1) = \grpfct[v \pll u](\state_2)
+	\]
+	because $(a, b) = (x, y) \iff a = x \,\, \land \,\, b = y \iff (b, a) = (y, x)$.
+\end{proof}
+
+We define the operator \pll in order to build and modify parallel composed \viewsN. 
+
+\begin{definition}
+	The operator \pll maps two \grpfctsN to a new \grpfctN. It is defined recursively.
+	\begin{enumerate}
+		\item $(\grpfct[\viewppty_1] \pll \grpfct[\viewppty_2])(\state) := (\grpfct[\viewppty_1](\state),\grpfct[\viewppty_2](\state)) = \grpfct[\viewppty_1 \pll \viewppty_2](\state)$ \\
+		if it is not $\grpfct[\viewppty_1] = \grpfct[x] \pll \grpfct[y]$ or $\grpfct[\viewppty_2] = \grpfct[x] \pll \grpfct[y]$ for some \grpfctsN \grpfct[x], \grpfct[y]
+		\item $((\grpfct[\viewppty_1], \dots, \grpfct[\viewppty_n]) \pll \grpfct[\viewppty])(\state) := (\grpfct[\viewppty_1](\state), \dots, \grpfct[\viewppty_n](\state), \grpfct[\viewppty](\state)) = \grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n \pll \viewppty}](\state)$ 
+		\\ if for all $i \in \{1, \dots, n\}$ it is not $\grpfct[\viewppty_i] = \grpfct[x] \pll \grpfct[y]$ for some \grpfctsN \grpfct[x], \grpfct[y]
+	\end{enumerate}
+	
 \end{definition}
 
 
-The operator \pll used in the definition is inspired from the operator used in electric circuits, when the respective elements are connected in parallel.
+We write $\view[\viewppty_1] \pll \view[\viewppty_2]$ for $\view[\viewppty_1 \pll \viewppty_2]$ defined by the grouping function \grpfctN $\grpfct[\viewppty_1] \pll \grpfct[\viewppty_2] = \grpfct[\viewppty_1 \pll \viewppty_2]$.
+%The operator \pll used in the definition is inspired from the operator used in electric circuits, when the respective elements are connected in parallel. 
 
-If we want to speak about this grouping function in a general way, where it is only of importance that we refer to this type of composition and the given \grpfctsN are of no importance, we will denote a \emph{\parllcompN \grpfctN} with \gfctpll.
 
-The operator \pll in \gfctpll is associative with respect to the grouped states. That is exactly the same states are grouped no matter where parenthesis are put.
-\begin{proposition}
-	Let $\grpfct[u], \grpfct[v], \grpfct[w]$ be \grpfctsN and \states a set of states. For all $\state_1, \state_2 \in \states$ it holds that
+%If we want to speak about this grouping function in a general way, where it is only of importance that we refer to this type of composition and the given \grpfctsN are of no importance, we will denote a \emph{\parllcompN \grpfctN} with \gfctpll.
+
+%The operator \pll in \gfctpll is associative with respect to the grouped states. That is exactly the same states are grouped no matter where parenthesis are put.
+%\begin{proposition}
+%	Let $\grpfct[u], \grpfct[v], \grpfct[w]$ be \grpfctsN and \states a set of states. For all $\state_1, \state_2 \in \states$ it holds that
+%	\[
+%	\grpfct[(u \pll v) \pll w](\state_1) = \grpfct[(u \pll v) \pll w](\state_2) \iff \grpfct[u \pll (v \pll w)](\state_1) = \grpfct[u \pll (v \pll w)](\state_2)
+%	\]
+%\end{proposition}
+%
+%\begin{proof}
+%Let $\grpfct[u], \grpfct[v], \grpfct[w]$ be \grpfctsN and \states a set of states with $\state \in \states$. It is
+%\begin{equation*}
+%	\begin{aligned}[c]
+%			&\grpfct[u \pll v](\state) = (\grpfct[u](\state), \grpfct[v](\state)) \\
+%			&\grpfct[(u \pll v) \pll w](\state) = ((\grpfct[u](\state), \grpfct[v](\state)), \grpfct[w](\state))
+%		\end{aligned}
+%	\quad\quad\quad\quad\quad
+%	\begin{aligned}[c]
+%			&\grpfct[v \pll w](\state) = (\grpfct[v](\state), \grpfct[w](\state)) \\
+%			&\grpfct[u \pll (v \pll w)](\state) = (\grpfct[u](\state), (\grpfct[v](\state), \grpfct[w](\state))\\
+%		\end{aligned}					
+%\end{equation*}
+%\\
+%\noindent
+%Let $\state_1, \state_2 \in \states$ be arbitrary. Moreover let %$\grpfct[((u \pll v) \pll w)](\state_1) =: ((a,b),c)$ and $\grpfct[u \pll (v \pll w)](\state_1) =: ((x, y), z)$, then $\grpfct[u \pll (v \pll w)](\state_1) = (a, (b, c))$ and $\grpfct[u \pll (v \pll w)](\state_2) = (x, (y, z))$
+%\begin{equation*}
+%	\begin{aligned}[c]
+%			&\grpfct[(u \pll v) \pll w](\state_1) =: ((a,b),c) \text{ and} \\
+%			&\grpfct[(u \pll v) \pll w](\state_2) =: ((x, y), z) \text{.}
+%		\end{aligned}
+%	\quad\quad\text{Then it is}\quad\quad
+%	\begin{aligned}[c]
+%			&\grpfct[u \pll (v \pll w)](\state_1) = (a, (b, c)) \text{ and} \\
+%			&\grpfct[u \pll (v \pll w)](\state_2) = (x, (y, z)).
+%		\end{aligned}
+%	\quad\quad\quad				
+%\end{equation*}
+%
+%\noindent
+%Then it is
+%\[
+%	\grpfct[(u \pll v) \pll w](\state_1) = \grpfct[(u \pll v) \pll w](\state_2) \iff \grpfct[u \pll (v \pll w)](\state_1) = \grpfct[u \pll (v \pll w)](\state_2)
+%\]
+%
+%\noindent
+%This is because
+%\begin{align*}
+%	&((a, b), c) = ((x, y), z) \\
+%	\iff \quad &(a, b) = (x, y) \land c = z \\
+%	\iff \quad &a = x \land b = y \land c = z \\
+%	\iff \quad &a = x \land (b, c) = (y, z) \\
+%	\iff \quad &(a, (b, c)) = (x, (y, z))
+%\end{align*}
+%\end{proof}
+
+Note that the operator \pll is not associative, since it is left evaluated. Moreover, for expressions of the form $\grpfct[\viewppty] \pll (\grpfct[\viewppty_1], \dots, \grpfct[\viewppty_n])$ it is not defined. This is no issue since parallel composed grouping function defy order. For the same reason \pll is communicative, with respect to the induced relation \eqrelview.
+
+\begin{definition}
+	Let $\grpfct[\viewppty_1 \pll \dots \pll \viewppty_n]$ be a parallel composed grouping function. The operator \pllrev is defined as
 	\[
-	\grpfct[(u \pll v) \pll w](\state_1) = \grpfct[(u \pll v) \pll w](\state_2) \iff \grpfct[u \pll (v \pll w)](\state_1) = \grpfct[u \pll (v \pll w)](\state_2)
+	\grpfct[\viewppty_1, \dots, \viewppty_n] \pllrev \grpfct[\viewppty_i] := (\grpfct[\viewppty_1], \dots, \grpfct[\viewppty_{i-1}],\grpfct[\viewppty_i+1], \dots, \grpfct[n]) = \grpfct[\viewppty_1 \pll \dots \pll \viewppty_{i-1} \pll \viewppty_{i+1} \pll \dots \pll \viewppty_n]
 	\]
-\end{proposition}
+\end{definition}
 
-\begin{proof}
-Let $\grpfct[u], \grpfct[v], \grpfct[w]$ be \grpfctsN and \states a set of states with $\state \in \states$. It is
-\begin{equation*}
-	\begin{aligned}[c]
-			&\grpfct[u \pll v](\state) = (\grpfct[u](\state), \grpfct[v](\state)) \\
-			&\grpfct[(u \pll v) \pll w](\state) = ((\grpfct[u](\state), \grpfct[v](\state)), \grpfct[w](\state))
-		\end{aligned}
-	\quad\quad\quad\quad\quad
-	\begin{aligned}[c]
-			&\grpfct[v \pll w](\state) = (\grpfct[v](\state), \grpfct[w](\state)) \\
-			&\grpfct[u \pll (v \pll w)](\state) = (\grpfct[u](\state), (\grpfct[v](\state), \grpfct[w](\state))\\
-		\end{aligned}					
-\end{equation*}
-\\
-\noindent
-Let $\state_1, \state_2 \in \states$ be arbitrary. Moreover let %$\grpfct[((u \pll v) \pll w)](\state_1) =: ((a,b),c)$ and $\grpfct[u \pll (v \pll w)](\state_1) =: ((x, y), z)$, then $\grpfct[u \pll (v \pll w)](\state_1) = (a, (b, c))$ and $\grpfct[u \pll (v \pll w)](\state_2) = (x, (y, z))$
-\begin{equation*}
-	\begin{aligned}[c]
-			&\grpfct[(u \pll v) \pll w](\state_1) =: ((a,b),c) \text{ and} \\
-			&\grpfct[(u \pll v) \pll w](\state_2) =: ((x, y), z) \text{.}
-		\end{aligned}
-	\quad\quad\text{Then it is}\quad\quad
-	\begin{aligned}[c]
-			&\grpfct[u \pll (v \pll w)](\state_1) = (a, (b, c)) \text{ and} \\
-			&\grpfct[u \pll (v \pll w)](\state_2) = (x, (y, z)).
-		\end{aligned}
-	\quad\quad\quad				
-\end{equation*}
+The operator \pllrev is the reversing operator to \pll. Given a parallel composed view and a in it contained grouping function it removes this view. We write $\view[\viewppty_1 \pll \dots \pll \viewppty_n] \pllrev \view[\viewppty_i]$ for the view defined by the \grpfctN $\grpfct[\viewppty_1 \pll \dots \pll \viewppty_{i-1} \pll \viewppty_{i+1} \pll \dots \pll \viewppty_n]$.
 
-\noindent
-Then it is
-\[
-	\grpfct[(u \pll v) \pll w](\state_1) = \grpfct[(u \pll v) \pll w](\state_2) \iff \grpfct[u \pll (v \pll w)](\state_1) = \grpfct[u \pll (v \pll w)](\state_2)
-\]
+\subsubsection{Selective Composition} \label{subsec:selecitvecomp}
+Selective composition is a variant of parallel composition. It aims for application of the grouping function only on certain states, where the other composing functions have a certain value.
 
-\noindent
-This is because
-\begin{align*}
-	&((a, b), c) = ((x, y), z) \\
-	\iff \quad &(a, b) = (x, y) \land c = z \\
-	\iff \quad &a = x \land b = y \land c = z \\
-	\iff \quad &a = x \land (b, c) = (y, z) \\
-	\iff \quad &(a, (b, c)) = (x, (y, z))
-\end{align*}
-\end{proof}
-
-The operator \pll in \gfctpll is also commutative with respect of the states being grouped.
-
-\begin{proposition}
-	Let $\grpfct[u]$ and $\grpfct[v]$ be \grpfctsN and \states a set of states. For all $\state_1, \state_2 \in \states$ it holds that
+\begin{definition}
+	Let $\view[\viewppty_1 \pll \viewppty_2 \pll \dots \pll 
+	\viewppty_n]$ be a parallel composed view with its \grpfctN $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n}]$, where $n$ might be 1 and let \view be another view with its \grpfctN \grpfct. 
+	We write $\imggrp_i$ for the image of $\grpfct[\viewppty_i]$. 
+	Given a set $\compselectset \subseteq \{ (\grpfct[\viewppty_i], a) \mid a \in \imggrp_i, i \in \{1, \dots, n\}\}$ the operator \compselectpure is defined as $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n}] \compselect \grpfct := \grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n} \pll \viewppty]: \states \to \arbset$ with
 	\[
-	\grpfct[u \pll v](\state_1) = \grpfct[u \pll v](\state_2) \iff \grpfct[v \pll u](\state_1) = \grpfct[v \pll u](\state_2)
+	\state \mapsto
+	\begin{cases}
+		(\grpfct[\viewppty_1](\state), \dots, \grpfct[\viewppty_n](\state),  \grpfct[\viewppty](\state))				& \text{if } \forall i \in \{1, \dots, n\} : (\grpfct[\viewppty_i], \grpfct[\viewppty_i](\state)) \in \compselectset \\ 		
+		(\grpfct[\viewppty_1](\state), \dots, \grpfct[\viewppty_n](\state),  \remelem),          	& \text{otherwise}
+	\end{cases}
 	\]
-\end{proposition}
-
-\begin{proof}
-Let $\grpfct[u]$ and $\grpfct[v]$ be \grpfctsN, $\state_1, \state_2 \in \states$ and
-\begin{align*}
-	\grpfct[u \pll v](\state_1) &= (\grpfct[u](\state_1), \grpfct[v](\state_1)) =: (a, b) \\
-	\grpfct[u \pll v](\state_2) &= (\grpfct[u](\state_2), \grpfct[v](\state_2)) =: (x, y)			
-\end{align*}
-Then it is
-\begin{align*}
-	\grpfct[v \pll u](\state_1) &= (\grpfct[v](\state_1), \grpfct[u](\state_1)) = (b, a) \\
-	\grpfct[v \pll u](\state_2) &= (\grpfct[v](\state_2), \grpfct[u](\state_2)) = (y, x)
-\end{align*}
-It follows that
-\[
-	\grpfct[u \pll v](\state_1) = \grpfct[u \pll v](\state_2) \iff \grpfct[v \pll u](\state_1) = \grpfct[v \pll u](\state_2)
-\]
-because $(a, b) = (x, y) \iff a = x \,\, \land \,\, b = y \iff (b, a) = (y, x)$.
-
 	
-\end{proof}
+	\noindent
+	Then $\view[\viewppty_1 \pll \viewppty_2 \pll \dots \pll 
+	\viewppty_n \pll \viewppty]$ is a parallel composed \viewN with $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n} \pll \viewppty]$ being its parallel composed \grpfctN.
+\end{definition}
 
+The set \compselectset determines on which states the \viewN \view shall take effect. For instance, $\compselectset = \{(\grpfct[\viewppty_1], a_1),(\grpfct[\viewppty_1], b_1), (\grpfct[\viewppty_2], a_2)\}$ induces that \view only takes effect if 
 
-\redcomment{Other variants missing if existent}
-\redcomment{Subsetapplication missing}
+\[
+	((\grpfct[\viewppty_1] = a_1) \lor (\grpfct[\viewppty_1] = b_1)) \land (\grpfct[\viewppty_2] = a_2)
+\]
+
+That is, if this boolean expression is false the last entry in the tuple is \remelem and only otherwise it is $\grpfct(\state)$.
+
 
 
 \end{document}

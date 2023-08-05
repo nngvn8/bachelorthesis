@@ -8,7 +8,7 @@
 \section{Preliminaries}
 
 %\subsection{Transition Systems}
-\viewsNC will be defined on \chgphN. Instead of directly providing the definition of \chgphN we will consider less powerful classes of models to represent systems that are extended by \chgphsN.
+\viewsNC will be defined on \chgphsN. Instead of directly providing the definition of \chgphN we will consider less powerful classes of models to represent systems that are extended by \chgphsN.
 
 Firstly we will consider transition systems. Transition systems are basically digraphs consisting of \emph{states} and \emph{transitions} in place of nodes and edges. A state describes some information about a system at a certain moment of its behavior. Considering a traffic light displaying green could be considered as one state whereas displaying red could be another one. Transitions model the progression of the system from one state to another one. Sticking to the example of the traffic light a transition could model the switch from state green light being displayed to the state of red light being displayed. There are several variants of transitions systems. We will use transition systems with \emph{action names} and \emph{atomic propositions} for states as in \redcomment{BAIER}. Actions are used for communication between processes. We denote them with Greek letters ($\alpha, \beta, \gamma, \dots$). Atomic propositions are simple facts about states. For instance "x is greater than 20" or "red and yellow light are on" could be atomic propositions. They are assigned to a state by a Labeling function \labelingfct.
 
@@ -123,6 +123,7 @@ For convenience for $\state_1, \state_2 \in \states$ and $\action \in \actions$ 
 \redcomment{not sure if I should: $I := \initdistrib$ thereby meaning the underlying set}
 
 \redcomment{CONVENTION END TEST}
+\redcomment{Handshaking and Prism}
 
 \begin{figure}[h]
 	\input{./02/images/exampleMdp}

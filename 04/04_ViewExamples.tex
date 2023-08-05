@@ -606,11 +606,19 @@ If states are to be grouped with the requirement of several variables equaling o
 To allow even more flexibility a view can be used that also allows a combination of requirements on variables in a disjunctive manner. To extend this idea to its full potential we will define a \viewN that allows requirements using a disjunctive normal formal (DNF). To formalize this view more efficiently we will write $\varstate[,i]$ short for $\vareval(\state, \var_i)$ where $x_i \in \vars$ and $i \in \natnums$. We define the symbol \eqorneq to be an element of the set $\{=,\neq\}$. That is to say, whenever it is used each time written it is a representative for either the symbol $=$ or $\neq$. It allows to write one symbol whenever $=$ and $\neq$ could or should be possible. Moreover for this context we consider $(\varstate[,i] = \varval)$ as a literal and $(\varstate[,i] \neq \varval)$ as its negation. We write $(\varstate[,i] \eqorneq \varval)$ for a literal that could be negated or not negated.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN, $\var \in \vars$, $\varval \in \varevalimg$ and
-	\[
-	d(s) = ((\varstate[,11] \eqorneq \varval_{11}) \land \dots \land (\varstate[,1l_1] \eqorneq \varval_{1l_1})) \lor \dots \lor ((\varstate[,k1] \eqorneq \varval_{k1}) \land \dots \land (\varstate[,kl_k]  \eqorneq \varval_{kl_k}))
-	\]
-	proposition logical formulae in disjunctive normal form where $\varstate[,{ij}], a_{ij} \in \varevalimg$ 		
+	Let $\chgph = \chgphtuple$ be \achgphN and 
+	\begin{align*}
+		c(s) = &((\varstate[,i_1] \eqorneq \varval_{i_1}) \land \dots \land (\varstate[,i_{l_1}] \eqorneq \varval_{i_{l_1}})) \; \lor \\
+		&((\varstate[,i_{l_1+1}] \eqorneq \varval_{i_{l_1+1}}) \land \dots \land (\varstate[,i_{l_2}] \eqorneq \varval_{i_{l_2}})) \; \lor  \\
+		&\dots \\ 
+		&((\varstate[,i_{(l_{m-1})+1}] \eqorneq \varval_{i_{(l_{m-1})+1}}) \land \dots \land (\varstate[,i_{l_m}]  \eqorneq \varval_{i_{l_m}}))
+	\end{align*}
+	
+	proposition logical formula in disjunctive normal form where
+	\begin{itemize}
+		\item $\varstate[,i_k], a_{i_k} \in \varevalimg$ with $i_k\in \natnums$ and $k \in \{1, \dots, l_m\}$
+		\item $l_1 < l_2 < \dots < l_m$ are natural numbers and $m$ is the number of clauses in $c(s)$
+	\end{itemize}		
 	The \viewN \viewparamdnf is defined by its \grpfctN $\gfctparamdnf : \states \to \imggrp$ with
 	\[
 	\state \mapsto
@@ -655,7 +663,7 @@ Analogously a view based on a conjunctive normal formal can be defined that may 
 	\begin{itemize}
 			\item $\varstate[,i_k], a_{i_k} \in \varevalimg$ with $i_k\in \natnums$ and $k \in \{1, \dots, l_m\}$
 			\item $l_1 < l_2 < \dots < l_m$ are natural numbers and $m$ is the number of clauses in $c(s)$
-		\end{itemize}
+	\end{itemize}
 	The \viewN \viewparamcnf is defined by its \grpfctN $\gfctparamcnf : \states \to \imggrp$ with
 	\[
 	\state \mapsto
@@ -707,6 +715,13 @@ Considering distances in a graph can be very helpful to get an overview of a gra
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN. A (simple and finite) \emph{path} \path is a sequence \pathsecfull alternating between states and actions where $n \in \natnums, \{\state_1, \dots, \state_{n}\} \subseteq \states$ is a set of distinct states,  $\{\action_1, \dots, \action_{n}\} \subseteq \actions$ and for all $i \in \{1, \dots, n\}$ it is $(\state_i,\action_i, \state_{i+1}) \in \trans$. 
+	
+	\noindent
+	It is $\pfirst(\path) := \state_1$ and $\plast(\path) := \state_n$ and \pathset the set of all paths in \chgph.
+\end{definition}
+
+\begin{definition}
+	Let $\chgph = \chgphtuple$ be \achgphN. A (simple and finite) \emph{undirected path} \path is a sequence \pathsecfull alternating between states and actions where $n \in \natnums, \{\state_1, \dots, \state_{n}\} \subseteq \states$ is a set of distinct states,  $\{\action_1, \dots, \action_{n}\} \subseteq \actions$ and for all $i \in \{1, \dots, n\}$ it is $(\state_i,\action_i, \state_{i+1}) \in \trans$ or ~$(\state_{i+1},\action_i, \state_{i}) \in \trans$. 
 	
 	\noindent
 	It is $\pfirst(\path) := \state_1$ and $\plast(\path) := \state_n$ and \pathset the set of all paths in \chgph.
