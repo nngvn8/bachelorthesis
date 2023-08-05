@@ -589,17 +589,17 @@ The set of states $\states'$ of \viewparamvalueseq is the union of the equivalen
 
 Analogously a view that requires inequality instead of equality is feasible.
 
-\begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN, $\var \in \vars$ and $\varval \in \varevalimg$. The view \viewparamvaluesneq is defined by its \grpfctN $\gfctparamvaluesneq : \states \to \imggrp$ with
-	\[
-	\state \mapsto
-	\begin{cases}
-			\group, &\text{if } \vareval(\state, \var) \neq \varval\\
-			\remelem, 	&\text{otherwise}
-		\end{cases}
-	\]
-	where $\imggrp := \imggrpbinview$.
-\end{definition}
+%\begin{definition}
+%	Let $\chgph = \chgphtuple$ be \achgphN, $\var \in \vars$ and $\varval \in \varevalimg$. The view \viewparamvaluesneq is defined by its \grpfctN $\gfctparamvaluesneq : \states \to \imggrp$ with
+%	\[
+%	\state \mapsto
+%	\begin{cases}
+%			\group, &\text{if } \vareval(\state, \var) \neq \varval\\
+%			\remelem, 	&\text{otherwise}
+%		\end{cases}
+%	\]
+%	where $\imggrp := \imggrpbinview$.
+%\end{definition}
 
 If states are to be grouped with the requirement of several variables equaling or not equaling specified values this can be achieved by using \parllcompN.
 
@@ -721,10 +721,10 @@ Considering distances in a graph can be very helpful to get an overview of a gra
 \end{definition}
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN. A (simple and finite) \emph{undirected path} \path is a sequence \pathsecfull alternating between states and actions where $n \in \natnums, \{\state_1, \dots, \state_{n}\} \subseteq \states$ is a set of distinct states,  $\{\action_1, \dots, \action_{n}\} \subseteq \actions$ and for all $i \in \{1, \dots, n\}$ it is $(\state_i,\action_i, \state_{i+1}) \in \trans$ or ~$(\state_{i+1},\action_i, \state_{i}) \in \trans$. 
+	Let $\chgph = \chgphtuple$ be \achgphN. A (simple and finite) \emph{undirected path} \pathbi is a sequence \pathsecfull alternating between states and actions where $n \in \natnums, \{\state_1, \dots, \state_{n}\} \subseteq \states$ is a set of distinct states,  $\{\action_1, \dots, \action_{n}\} \subseteq \actions$ and for all $i \in \{1, \dots, n\}$ it is $(\state_i,\action_i, \state_{i+1}) \in \trans$ or $(\state_{i+1},\action_i, \state_{i}) \in \trans$. 
 	
 	\noindent
-	It is $\pfirst(\path) := \state_1$ and $\plast(\path) := \state_n$ and \pathset the set of all paths in \chgph.
+	It is $\pfirst(\pathbi) := \state_1$ and $\plast(\pathbi) := \state_n$ and \pathbiset the set of all undirected paths in \chgph.
 \end{definition}
 
 \begin{definition}
@@ -733,15 +733,15 @@ Considering distances in a graph can be very helpful to get an overview of a gra
 \end{definition}
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN and . The \emph{distance} between disjoint $\states_1, \states_2 \subseteq \states$ is the length of the shortest path from a state $\state_1 \in \states_1$ to a $\state_2 \in \states_2$. That is, if $\states_1 \cap \states_2 = \emptyset$ it is		
+	Let $\chgph = \chgphtuple$ be \achgphN. The \emph{distance} between disjoint $\states_1, \states_2 \subseteq \states$ is the length of the shortest path from a state $\state_1 \in \states_1$ to a $\state_2 \in \states_2$. That is, if $\states_1 \cap \states_2 = \emptyset$ it is		
 	\[
-		\distP(\chgph, \states_1, \states_2) := \min\{\lenpath(\path) \mid \path \in \pathset, \; \pfirst(\path) \in \states_1, \; \plast(\path) \in \states_2\},
+		\distpath(\chgph, \states_1, \states_2) := \min\{\lenpath(\path) \mid \path \in \pathset, \; \pfirst(\path) \in \states_1, \; \plast(\path) \in \states_2\},
 	\]
 	\noindent
-	If $\states_1 \cap \states_2 \neq \emptyset$, it is $\distP(\chgph, \states_1, \states_2) := 0$.
+	If $\states_1 \cap \states_2 \neq \emptyset$, it is $\distpath(\chgph, \states_1, \states_2) := 0$.
 \end{definition}
 
-For a given \chgphN \chgph with state set \states and $\state \in \states, \smstates \subseteq \states$ we write $\distP(\mdp, \smstates, \state)$ short for $\distP(\mdp, \smstates, \{\state\})$ and $\distP(\mdp, \state, \smstates)$ short for $\distP(\mdp, \{\state\}, \smstates)$.
+For a given \chgphN \chgph with state set \states and $\state \in \states, \smstates \subseteq \states$ we write $\distpath(\mdp, \smstates, \state)$ short for $\distpath(\mdp, \smstates, \{\state\})$ and $\distpath(\mdp, \state, \smstates)$ short for $\distpath(\mdp, \{\state\}, \smstates)$.
 For a \viewN that applies to the whole and utilizes distance it only makes sense to consider a given set of states from which one the distance is measured. An intuitive choice for such set is the set of initial states. The following algorithm calculates the distance of each node from a given set $\smstates \subseteq \states$ considering granularity \grandist:
 
 \redcomment{Implementation Algorithm}
@@ -751,7 +751,7 @@ The set \fctdistdefault declares the returned set of \redcomment{ALGORITHM}. The
 \begin{definition}
 		Let $\chgph = \chgphtuple$ be \achgphN $n \in \natnums$and $\smstates \subseteq \states$ arbitrary. \redcomment{$\fctdistdefault$ IMPLEMENTATION IN PSEUDOCODE? DEFINITION BEFORE?} The \viewN \viewdistance is defined by its \grpfctN $\gfctdistance : \states \to \imggrp$ with 
 		\[
-		\state \mapsto \distval - (\distval \text{ mod } n) \quad \quad \text{where } \distval = \distP(\chgph,\smstates, \state)
+		\state \mapsto \distval - (\distval \text{ mod } n) \quad \quad \text{where } \distval = \distpath(\chgph,\smstates, \state)
 		\]
 		and $\imggrp = \natnums \cup \{\inf\} \cup \remset$.
 \end{definition}
@@ -767,6 +767,24 @@ The set \fctdistdefault declares the returned set of \redcomment{ALGORITHM}. The
 	\caption{Simplified representations of \mdp (left) and the \viewN \viewdistance on it (right)}
 	\label{fig:Distance}  
 \end{figure}
+
+\begin{definition}
+	Let $\chgph = \chgphtuple$ be \achgphN. The \emph{reverse distance} between disjoint $\states_1, \states_2 \subseteq \states$ is the length of the shortest path to a state $\state_1 \in \states_1$ from a $\state_2 \in \states_2$. That is, if $\states_1 \cap \states_2 = \emptyset$ it is		
+	\[
+	\distpathrev(\chgph, \states_1, \states_2) := \min\{\lenpath(\path) \mid \path \in \pathset, \; \plast(\path) \in \states_1, \; \pfirst(\path) \in \states_2\},
+	\]
+	\noindent
+	If $\states_1 \cap \states_2 \neq \emptyset$, it is $\distpathrev(\chgph, \states_1, \states_2) := 0$.
+\end{definition}
+
+\begin{definition}
+	Let $\chgph = \chgphtuple$ be \achgphN. The \emph{reverse distance} between disjoint $\states_1, \states_2 \subseteq \states$ is the length of the shortest path from a state $\state_1 \in \states_1$ to a $\state_2 \in \states_2$ ignoring the direction of edges. That is, if $\states_1 \cap \states_2 = \emptyset$ it is		
+	\[
+	\distpathbi(\chgph, \states_1, \states_2) := \min\{\lenpath(\pathbi) \mid \pathbi \in \pathbiset, \; \pfirst(\pathbi) \in \states_1, \; \plast(\pathbi) \in \states_2\},
+	\]
+	\noindent
+	If $\states_1 \cap \states_2 \neq \emptyset$, it is $\distpathbi(\chgph, \states_1, \states_2) := 0$.
+\end{definition}
 
 
 \redcomment{Variants of ALGORITHM which allow directinoless or only reverse traversal of the \mdpN are provided in the appendix. The respective views would utilize their returned set in the exact same way. That is, \fctdistdefault is replaced with the set of the respective algorithm and nothing else changes.}

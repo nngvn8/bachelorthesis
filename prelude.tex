@@ -181,7 +181,7 @@
 
 
 % EXAMPLE VIEWS
-\newcommand{\pptydistance}{\mt{\longleftrightarrow}}
+\newcommand{\pptydistance}{\mt{\distpath}}
 \newcommand{\pptycycleset}{\mt{\cup{\{\state\}_\cycle}}}
 \newcommand{\pptyoutactsetsize}{\mt{|\outacts(\state)|}}
 \newcommand{\pptyoutactsingle}{\mt{|\outacts(\state)|_1}}
@@ -291,6 +291,33 @@
 \newcommand{\someparam}{\mt{\tilde{x}}}
 \newcommand{\eqorneq}{\mt{\;\doteqdot\;}}
 
+
+
+
+%\makeatletter
+%\newcommand{\overleftrightsmallarrow}{\mathpalette{\overarrowsmall@\leftrightarrowfill@}}
+%\newcommand{\overrightsmallarrow}{\mathpalette{\overarrowsmall@\rightarrowfill@}}
+%\newcommand{\overleftsmallarrow}{\mathpalette{\overarrowsmall@\leftarrowfill@}}
+%\newcommand{\overarrowsmall@}[3]{%
+%	\vbox{%
+%		\ialign{%
+%			##\crcr
+%			#1{\smaller@style{#2}}\crcr
+%			\noalign{\nointerlineskip}%
+%			$\m@th\hfil#2#3\hfil$\crcr
+%		}%
+%	}%
+%}
+%\def\smaller@style#1{%
+%	\ifx#1\displaystyle\scriptstyle\else
+%	\ifx#1\textstyle\scriptstyle\else
+%	\scriptscriptstyle
+%	\fi
+%	\fi
+%}
+%\makeatother
+%\newcommand{\te}[1]{\overleftrightsmallarrow{#1}}
+
 % Distance
 \newcommand{\fctdist}{\mt{distance}}
 \newcommand{\fctdistdefault}{\mt{\fctdist(\chgph, \smstates, \grandist)}}
@@ -298,13 +325,16 @@
 \newcommand{\grandist}{\mt{n}}
 \let\path\oldpath
 \newcommand{\path}{\mt{P}}
+\newcommand{\pathbi}{\mt{\bar{\path}}}
 \newcommand{\pathsecfull}{\mt{(\state_1, \action_1, \state_2, \action_2, \dots, \action_{n-1}, \state_n)}}
 \newcommand{\lenpath}{\mt{len}}
 \newcommand{\pfirst}{\mt{first}}
 \newcommand{\plast}{\mt{last}}
 \newcommand{\pathset}{\mt{\path_\chgph}}
-\newcommand{\distP}{\mt{dist}}
-
+\newcommand{\pathbiset}{\mt{\pathbi_\chgph}}
+\newcommand{\distpath}{\mt{\overrightarrow{dist}}}
+\newcommand{\distpathrev}{\mt{\overleftarrow{dist}}}
+\newcommand{\distpathbi}{\mt{\overline{dist}}}
 %Cycles
 \newcommand{\cyclesecfull}{\mt{(\state_0, \action_0, \state_1, \action_1, \dots, \action_{n-1}, \state_0)}}
 \newcommand{\fctfindcycles}{\mt{findCycles}}
