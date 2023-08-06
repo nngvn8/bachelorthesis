@@ -6,7 +6,7 @@
 \begin{document}
 \section{View Examples}
 In this chapter we will introduce and discuss some \viewN examples created by the author. Their purpose is to understand the idea and concept of a \viewN and get to know some views that might be useful in real world applications. \\
-When considering \viewsN we only want into account those that utilize properties of MDPs or that do computations that are also feasible on normal graphs but are of explicit relevance MDPs.
+When considering \viewsN we only want to take into account those that utilize properties of MDPs or that do computations that are also feasible on normal graphs but are of explicit relevance MDPs.
 \subsection{Views Utilizing MDP Components}
 In this subsection we will introduce some views the are purely based on the components of an \mdpN. Their will neither be computations on the graph-structure of an MDP nor computations using the result vector.
 \subsubsection{Atomic Propositions}
@@ -27,7 +27,7 @@ One of the least involved approaches to create a view is to base it on the atomi
 
 
 \begin{definition}	
-	Let $\chgph = \chgphtuple$ be \achgphN. The view \viewatomicprops is defined by its grouping function \gfctatomicprops \grpfctN with $\gfctatomicprops : \states \to \imggrp, {\state}\mapsto{\labelingfct(\state)}$.
+	Let $\chgph = \chgphtuple$ be \achgphN and $\smstates \subseteq \states$. The view \viewatomicprops is defined by its grouping function \gfctatomicprops \grpfctN with $\gfctatomicprops : \states \to \imggrp, {\state}\mapsto{\labelingfct(\state)}$.
 \end{definition}
 
 The grouping function is exactly the labeling function i.e. for all $\state \in \states$ it is $\gfctatomicprops(\state) := \labelingfct(\state)$. So it is $\gfctatomicprops(\state_1) = \gfctatomicprops(\state_2) \iff \labelingfct(\state_1) = \labelingfct(\state_2)$. According to Definition \ref{def:eqrelview} for $\smstate \in \states$ it is $\eqclassv[\smstate] = \{\state \in \states \mid \labelingfct(\state) = \labelingfct(\smstate)\}$.
@@ -54,7 +54,7 @@ Although this view might seem rather simple because essentially it only performs
 An a little more involved idea than directly using a given function is to utilize the set of initial states. We can group states that have a probability greater zero, that they are started from. In practice this might be useful to quickly find all initial states.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN and $\initstates := \{\state \in \states \mid \state \in \init\}$. The view \viewinitstates is defined by its \grpfctN with $\gfctinitstates : \states \to \imggrp$ with 
+	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\initstates := \{\state \in \states \mid \state \in \init\}$. The view \viewinitstates is defined by its \grpfctN with $\gfctinitstates : \states \to \imggrp$ with 
 	
 	\[
 	\state \mapsto
@@ -99,7 +99,7 @@ We will write a state \state has an outgoing action \action if there exists a st
 The most obvious variant to group states is to group states that \emph{have} a given outgoing action.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN and $\action \in \actions$. The view \viewhasoutaction is defined by its \grpfctN $\gfcthasoutaction : \states \to \imggrp$ with 
+	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The view \viewhasoutaction is defined by its \grpfctN $\gfcthasoutaction : \states \to \imggrp$ with 
 	
 	\[
 	\state \mapsto
@@ -153,7 +153,7 @@ Since actions are a very important part of \chgphsN as well as of its more power
 For example we could require that a given action has to be outgoing a minimum amount of times. 
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN and $\action \in \actions$. The view \viewminoutaction is defined by its \grpfctN $\gfctminoutaction : \states \to \arbset$ with
+	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The view \viewminoutaction is defined by its \grpfctN $\gfctminoutaction : \states \to \arbset$ with
 	
 	\[
 	\state \mapsto
@@ -194,7 +194,7 @@ By this we obtain the \viewN $\viewminoutaction$ for a given \chgphN \chgph wher
 In a similar fashion we define view that groups states where at most a certain number of times a given action is outgoing. 
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN and $\action \in \actions$. The view \viewmaxoutaction is defined by its \grpfctN $\gfctmaxoutaction : \states \to \arbset$ with
+	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The view \viewmaxoutaction is defined by its \grpfctN $\gfctmaxoutaction : \states \to \arbset$ with
 	
 	\[
 	\state \mapsto
@@ -233,7 +233,7 @@ It ensures that if there are one more than \numoutact outgoing transitions with 
 Since we already defined \grpfctsN and hence views for a required minimal and maximal amount of times an action has to be outgoing it is now easily possible to define a view that groups states where the amount of outgoing actions is at least \numoutact and at most \numoutactb. 
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN and $\action \in \actions$. The view 
+	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The view 
 	\viewspanoutaction is defined by its \grpfctN $\gfctspanoutaction : \states \to \arbset$ with
 	
 	\[
@@ -305,7 +305,7 @@ The \viewsN above can be combined with \parllcompN. The thereby obtained \viewN 
 Instead of making requirements about states and group them based on whether they meet these requirements it also possible to group states that are very similar or even identical in regard to their outaction. We consider this idea with the \emph{\outactident \viewNC} in two variants: \outactidentstrong and \outactidentweak (idententiy). Firstly we will consider the variant of strong identity.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN and $\action \in \actions$. The \viewN \viewstrongoutactident is defined by its \grpfctN $\gfctstrongoutactident : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The \viewN \viewstrongoutactident is defined by its \grpfctN $\gfctstrongoutactident : \states \to \imggrp$ with
 	\[
 	\state \mapsto	
 	\{(\action, \numoutact) \mid \action \in \actions, \numoutact \text{ is the number of times that \action is outgoing from } \state\}
@@ -350,7 +350,7 @@ As mentioned earlier a \outactidentweak variant of the \outactident \viewN is al
 
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN and $\action \in \actions$. The \viewN \viewweakoutactident is defined by its \grpfctN $\gfctweakoutactident : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The \viewN \viewweakoutactident is defined by its \grpfctN $\gfctweakoutactident : \states \to \imggrp$ with
 	\[
 	\state \mapsto \{\action \in \actions \mid \exists \state' \in \states : (\state, \action, \state') \in \trans\} 	
 	\]
@@ -369,7 +369,7 @@ According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in 
 Apart from the option of directly considering one or a set of outgoing actions with possible quantities it is also possible to only consider the quantity of outgoing actions without regarding the any specific action.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN and $\action \in \actions$. The \viewN \viewoutactsetsize is defined by its \grpfctN $\gfctoutactsetsize : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The \viewN \viewoutactsetsize is defined by its \grpfctN $\gfctoutactsetsize : \states \to \imggrp$ with
 	\[
 	\state \mapsto |\{\action \in \actions \mid \exists \state' \in \states : (\state, \action, \state') \in \trans\}|
 	\]
@@ -394,7 +394,7 @@ The notion of the view is similar to utilize the outdegree, with the difference 
 The sepcialcase of there only being one single ougoing action is worth a distinct view, since it hides all nondeterministic choices, but nothing more.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN and $\action \in \actions$. The \viewN \viewoutactsingle is defined by its \grpfctN $\gfctoutactsingle : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The \viewN \viewoutactsingle is defined by its \grpfctN $\gfctoutactsingle : \states \to \imggrp$ with
 	\[\state \mapsto 
 	\begin{cases}
 		\group, &\text{if } |\{\action \in \actions \mid \exists \state' \in \states : (\state, \action, \state') \in \trans\}| = 1 \\ 
@@ -421,7 +421,7 @@ The sepcialcase of there only being one single ougoing action is worth a distinc
 Analogously to Outgoing Actions views of utilizing ingoing actions are feasable. Since there is no difference apart from the definitions itself, we only provide the definitions.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN and $\action \in \actions$. The view \viewhasinaction is defined by its \grpfctN $\gfcthasinaction : \states \to \imggrp$ with 
+	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The view \viewhasinaction is defined by its \grpfctN $\gfcthasinaction : \states \to \imggrp$ with 
 	
 	\[
 	\state \mapsto
@@ -437,7 +437,7 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN and $\action \in \actions$. The view \viewmininaction is defined by its \grpfctN $\gfctmininaction : \states \to \arbset$ with
+	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The view \viewmininaction is defined by its \grpfctN $\gfctmininaction : \states \to \arbset$ with
 	
 	\[
 	\state \mapsto
@@ -458,7 +458,7 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 \end{definition}
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN and $\action \in \actions$. The view \viewmaxinaction is defined by its \grpfctN $\gfctmaxinaction : \states \to \arbset$ with
+	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The view \viewmaxinaction is defined by its \grpfctN $\gfctmaxinaction : \states \to \arbset$ with
 	
 	\[
 	\state \mapsto
@@ -478,7 +478,7 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 \end{definition}
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN and $\action \in \actions$. The view 
+	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The view 
 	\viewspaninaction is defined by its \grpfctN $\gfctspaninaction : \states \to \arbset$ with
 	
 	\[
@@ -495,7 +495,7 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 \end{definition}
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN and $\action \in \actions$. The \viewN \viewstronginactident is defined by its \grpfctN $\gfctstronginactident : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The \viewN \viewstronginactident is defined by its \grpfctN $\gfctstronginactident : \states \to \imggrp$ with
 	\[
 	\state \mapsto	
 	\{(\action, \numinact) \mid \action \in \actions, \numinact \text{ is the number of times that \action is ingoing from } \state\}
@@ -504,7 +504,7 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 \end{definition}
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN and $\action \in \actions$. The \viewN \viewweakinactident is defined by its \grpfctN $\gfctweakinactident : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The \viewN \viewweakinactident is defined by its \grpfctN $\gfctweakinactident : \states \to \imggrp$ with
 	\[
 	\state \mapsto \{\action \in \actions \mid \exists \state' \in \states : (\state', \action, \state) \in \trans\} 	
 	\]
@@ -512,7 +512,7 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 \end{definition}
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN and $\action \in \actions$. The \viewN \viewinactsetsize is defined by its \grpfctN $\gfctinactsetsize : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The \viewN \viewinactsetsize is defined by its \grpfctN $\gfctinactsetsize : \states \to \imggrp$ with
 	\[
 	\state \mapsto |\{\action \in \actions \mid \exists \state' \in \states : (\state', \action, \state) \in \trans\}|
 	\]
@@ -550,7 +550,7 @@ The most apparent idea for a \viewN utilizing variables is to group states that 
 \redcomment{state has variable not here uptil now because probably not used}
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN, $\var \in \vars$ and $\varval \in \varevalimg$. The view \viewparamvalueseq is defined by its \grpfctN $\gfctparamvalueseq : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$, $\var \in \vars$ and $\varval \in \varevalimg$. The view \viewparamvalueseq is defined by its \grpfctN $\gfctparamvalueseq : \states \to \imggrp$ with
 	\[
 	\state \mapsto
 	\begin{cases}
@@ -590,7 +590,7 @@ The set of states $\states'$ of \viewparamvalueseq is the union of the equivalen
 Analogously a view that requires inequality instead of equality is feasible.
 
 %\begin{definition}
-%	Let $\chgph = \chgphtuple$ be \achgphN, $\var \in \vars$ and $\varval \in \varevalimg$. The view \viewparamvaluesneq is defined by its \grpfctN $\gfctparamvaluesneq : \states \to \imggrp$ with
+%	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$, $\var \in \vars$ and $\varval \in \varevalimg$. The view \viewparamvaluesneq is defined by its \grpfctN $\gfctparamvaluesneq : \states \to \imggrp$ with
 %	\[
 %	\state \mapsto
 %	\begin{cases}
@@ -606,7 +606,7 @@ If states are to be grouped with the requirement of several variables equaling o
 To allow even more flexibility a view can be used that also allows a combination of requirements on variables in a disjunctive manner. To extend this idea to its full potential we will define a \viewN that allows requirements using a disjunctive normal formal (DNF). To formalize this view more efficiently we will write $\varstate[,i]$ short for $\vareval(\state, \var_i)$ where $x_i \in \vars$ and $i \in \natnums$. We define the symbol \eqorneq to be an element of the set $\{=,\neq\}$. That is to say, whenever it is used each time written it is a representative for either the symbol $=$ or $\neq$. It allows to write one symbol whenever $=$ and $\neq$ could or should be possible. Moreover for this context we consider $(\varstate[,i] = \varval)$ as a literal and $(\varstate[,i] \neq \varval)$ as its negation. We write $(\varstate[,i] \eqorneq \varval)$ for a literal that could be negated or not negated.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN and 
+	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and 
 	\begin{align*}
 		c(s) = &((\varstate[,i_1] \eqorneq \varval_{i_1}) \land \dots \land (\varstate[,i_{l_1}] \eqorneq \varval_{i_{l_1}})) \; \lor \\
 		&((\varstate[,i_{l_1+1}] \eqorneq \varval_{i_{l_1+1}}) \land \dots \land (\varstate[,i_{l_2}] \eqorneq \varval_{i_{l_2}})) \; \lor  \\
@@ -651,7 +651,7 @@ The DNF allows us to specify a requirement in disjunctive normal form about vari
 Analogously a view based on a conjunctive normal formal can be defined that may be more convenient, depending on the query.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN and 
+	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and 
 	\begin{align*}
 		c(s) = &((\varstate[,i_1] \eqorneq \varval_{i_1}) \lor \dots \lor (\varstate[,i_{l_1}] \eqorneq \varval_{i_{l_1}})) \; \land \\
 		&((\varstate[,i_{l_1+1}] \eqorneq \varval_{i_{l_1+1}}) \lor \dots \lor (\varstate[,i_{l_2}] \eqorneq \varval_{i_{l_2}})) \; \land  \\
@@ -681,7 +681,7 @@ The only difference from the \viewN \viewparamcnf to the \viewN \viewparamdnf is
 The views discussed before reduce the \chgphN in a very precise but also manual manner, because it not only dictates the variable but also its value. A more general approach is to stipulate only the variable but not its value. This way states will be grouped that have the same value for that variable with no regard to the actual value of that variable. This idea could be achieved with a view based on the \grpfctN $\grpfct[\varval_1 ]$%\pll \dots \pll \gfctparamvalueseqopt[\varval_n]]$ with $\redcomment{\vareval(\states, \var)} = \{\varval_1, \dots, \varval_n\}$ and $|\vareval(\states,\var)| = n$. This grouping function just groups on every possible value for the variable \var. Since this is \redcomment{not very practical} we define a view that achieves this result in a more direct and more efficient way.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN. The view \viewparamvalident is defined by its \grpfctN $\gfctparamvalident : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be \achgphN and $\smstates \subseteq \states$. The view \viewparamvalident is defined by its \grpfctN $\gfctparamvalident : \states \to \imggrp$ with
 	\[
 	\state \mapsto \vareval(\state,\var)
 	\]
@@ -749,7 +749,7 @@ For a \viewN that applies to the whole and utilizes distance it only makes sense
 The set \fctdistdefault declares the returned set of \redcomment{ALGORITHM}. The implementation ensures that for every state $\state$ there exists a pair $(\state, \distval)$ in \fctdistdefault. The following view groups states that have the same distance to the set measured with the amounts of transitions necessary to reach the the closest \smstates considering the granularity \grandist.
 
 \begin{definition}
-		Let $\chgph = \chgphtuple$ be \achgphN $n \in \natnums$and $\smstates \subseteq \states$ arbitrary. \redcomment{$\fctdistdefault$ IMPLEMENTATION IN PSEUDOCODE? DEFINITION BEFORE?} The \viewN \viewdistance is defined by its \grpfctN $\gfctdistance : \states \to \imggrp$ with 
+		Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$, $n \in \natnums$ and $\smstates \subseteq \states$ arbitrary. \redcomment{$\fctdistdefault$ IMPLEMENTATION IN PSEUDOCODE? DEFINITION BEFORE?} The \viewN \viewdistance is defined by its \grpfctN $\gfctdistance : \states \to \imggrp$ with 
 		\[
 		\state \mapsto \distval - (\distval \text{ mod } n) \quad \quad \text{where } \distval = \distpath(\chgph,\smstates, \state)
 		\]
@@ -791,11 +791,11 @@ The set \fctdistdefault declares the returned set of \redcomment{ALGORITHM}. The
 
 
 
-\subsubsection{Double Directed Edges with same Action}
-\redcomment{NOT SURE IF SHOULD BE INCLUDED}
-\begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN.
-\end{definition}
+%\subsubsection{Double Directed Edges with same Action}
+%\redcomment{NOT SURE IF SHOULD BE INCLUDED}
+%\begin{definition}
+%	Let $\chgph = \chgphtuple$ be \achgphN.
+%\end{definition}
 
 \subsubsection{Cycles}
 A cycle is a structure that can exist in every graph. The concept of cycles is not specific to \chgphsN or any of its more specialized variants. The purpose of this thesis is to discuss views that utilize domain specific knowledge or if a general concept is of special relevance when exploring \achgphN. The former and the latter apply on cycles.
@@ -822,7 +822,7 @@ With the formalization done we will introduce some views utilizing the concept c
 
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN and $n \in \natnums$. The \viewN \viewhascycle is defined by its \grpfctN $\gfcthascycle : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $n \in \natnums$. The \viewN \viewhascycle is defined by its \grpfctN $\gfcthascycle : \states \to \imggrp$ with
 	\[
 	\state \mapsto
 	\begin{cases}
@@ -839,7 +839,7 @@ This \viewN groups all states that are contained in cycle with a length of at le
 \redcomment{DISCUSSION OF EQUALITY, EQ CLASSES AND RESULTING STATES MISSING}
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN and $n \in \natnums$. The \viewN \viewexactcycle is defined by its \grpfctN $\gfctexactcycle : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $n \in \natnums$. The \viewN \viewexactcycle is defined by its \grpfctN $\gfctexactcycle : \states \to \imggrp$ with
 	\[
 	\state \mapsto \{\cycle \in \cycleset \mid \state \in \cycle\}
 	\]
@@ -888,7 +888,7 @@ The view above might be useful when having found cycles to see what cycles speci
 
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN and $n \in \natnums$. The \viewN \viewexactactcycle is defined by its \grpfctN $\gfctexactactcycle : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $n \in \natnums$. The \viewN \viewexactactcycle is defined by its \grpfctN $\gfctexactactcycle : \states \to \imggrp$ with
 	\[
 	\state \mapsto \{\cycle \in \cycleset \mid \state \in \cycle, \tilde{\action} \in \cycle, \forall \action \in \cycle : \action = \tilde{\action} \}
 	\]
@@ -903,7 +903,7 @@ The view specializes the view from Definition \ref{def:exactcycleview} in the se
 In definition \ref{def:exactcycleview} we stated that little grouping can occur when mapping on the set of cycles in all of which the state is contained. Hence we provide the definition and implemenation of a view that groups states even though their set of cycles is not equal, but there is sufficient similarity in the cycles they are on.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN and $n \in \natnums$. The \viewN \viewcycleset is defined by its \grpfctN $\gfctcycleset : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $n \in \natnums$. The \viewN \viewcycleset is defined by its \grpfctN $\gfctcycleset : \states \to \imggrp$ with
 	\[
 	\state \mapsto \{\smstate \in \states \mid \state, \smstate \in \cycle \in \cycleset\}
 	\]
@@ -925,7 +925,7 @@ Strongly connect components (\sccN) are of major importance in model checking \r
 Therefore it is feasible to consider a view utilizing strongly connected components. Deviating from most definitions we will define \sccN not as a subgraph but only as the set of its nodes. Moreover the definition is written in the terms of \achgphN.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN. A set $\scc \subseteq \states$ is called \emph{strongly connected component} if for all $\state, \state' \in \scc$ either it holds
+	Let $\chgph = \chgphtuple$ be \achgphN and $\smstates \subseteq \states$. A set $\scc \subseteq \states$ is called \emph{strongly connected component} if for all $\state, \state' \in \scc$ either it holds
 	\[
 		\exists \path \in \pathset : \pfirst(\path) = \state \land \; \plast(\path) = \state'
 	\]
@@ -946,7 +946,7 @@ Therefore it is feasible to consider a view utilizing strongly connected compone
 Since the strong connection is an equivalence relation the \sccsN are equivalence classes and hence disjoint. To find \sccsN Tarjans algorithm is the classic. In the implementation an improved variant from Gabow is used supplied by the \jgrapht library. \redcomment{CITATION}
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN and $n \in \natnums$. The \viewN \viewscc is defined by its \grpfctN $\gfctscc : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $n \in \natnums$. The \viewN \viewscc is defined by its \grpfctN $\gfctscc : \states \to \imggrp$ with
 	\[
 	\state \mapsto \{\scc \in \setscc \mid \state \in \scc, n \leq |\scc|\}
 	\]
@@ -984,7 +984,7 @@ A special kind of strongly connected components is the the bottom strongly conne
 \redcomment{These are of special relevance because..}
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN. The \viewN \viewbscc is defined by its \grpfctN $\gfctbscc : \states \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be \achgphN and $\smstates \subseteq \states$. The \viewN \viewbscc is defined by its \grpfctN $\gfctbscc : \states \to \imggrp$ with
 	\[
 	\state \mapsto \{\scc \in \setbscc \mid \state \in \scc, n \leq |\scc|\}
 	\]
