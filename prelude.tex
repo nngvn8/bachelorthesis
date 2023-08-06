@@ -147,6 +147,8 @@
 % CORE DEFINITIONS
 \newcommand{\grpfct}[1][\viewppty]{\mt{F_{#1}}}
 \newcommand{\grpfctsub}[1][\viewppty]{\mt{\tilde{F}_{#1}}}
+%\newcommand{\grpfctimg}[1]{\mt{{\grpfct}[{#1}]}}
+%\newcommand{\fctimg}[2]{\mt{{#1}[{#2}]}}
 \newcommand{\eqrelview}{\mt{R}}
 \newcommand{\eqclassv}[1][\state]{\mt{\eqclass{#1}{\eqrelview}}}
 \newcommand{\eqclasssetv}[1][\states]{\eqclassv[{#1}]} %OLD: \bigcup_{\state \in \states} \eqclassv
@@ -167,7 +169,7 @@
 \newcommand{\remset}{\mt{\{\bot\}}}
 \newcommand{\gfctpll}{\mt{\grpfct[\pll]}}
 \newcommand{\group}{\mt{\top}}
-\newcommand{\imggrpbinview}{\mt{\{\group, \remelem\}}}
+\newcommand{\imggrpbinview}{\mt{\{\remelem, \notppty\}}}
 \newcommand{\viewappset}{\mt{\tilde{\states}}}
 \newcommand{\hasppty}{\mt{\top}}
 \newcommand{\notppty}{\mt{\bot}}
@@ -245,12 +247,12 @@
 \newcommand{\gfctscc}{\mt{\grpfct[\pptyscc]}}
 \newcommand{\gfctbscc}{\mt{\grpfct[\pptybscc]}}
 
-\newcommand{\gfctsubatomicprops}{\mt{\grpfct[\pptyatomicprops]}}
-\newcommand{\gfctsubinitstates}{\mt{\grpfct[\pptyinitstates]}}
-\newcommand{\gfctsubhasoutaction}{\mt{\grpfct[\pptyhasoutact]}}
-\newcommand{\gfctsubminoutaction}{\mt{\grpfct[\pptyminoutact{\numoutact}{\outact}]}}
-\newcommand{\gfctsubmaxoutaction}{\mt{\grpfct[\pptymaxoutact{\numoutact}{\outact}]}}
-\newcommand{\gfctsubspanoutaction}{\mt{\grpfct[\pptyspanoutact{\numoutactb}{\outact}{\numoutact}]}}
+\newcommand{\gfctsubatomicprops}{\mt{\grpfctsub[\pptyatomicprops]}}
+\newcommand{\gfctsubinitstates}{\mt{\grpfctsub[\pptyinitstates]}}
+\newcommand{\gfctsubhasoutaction}{\mt{\grpfctsub[\pptyhasoutact]}}
+\newcommand{\gfctsubminoutaction}{\mt{\grpfctsub[\pptyminoutact{\numoutact}{\outact}]}}
+\newcommand{\gfctsubmaxoutaction}{\mt{\grpfctsub[\pptymaxoutact{\numoutact}{\outact}]}}
+\newcommand{\gfctsubspanoutaction}{\mt{\grpfctsub[\pptyspanoutact{\numoutactb}{\outact}{\numoutact}]}}
 \newcommand{\gfctsuboutactsetsize}{\mt{\grpfctsub[\pptyoutactsetsize]}}
 \newcommand{\gfctsuboutactsingle}{\mt{\grpfctsub[\pptyoutactsingle]}}
 \newcommand{\gfctsubstrongoutactident}{\mt{\grpfctsub[\pptystrongoutactident]}}
