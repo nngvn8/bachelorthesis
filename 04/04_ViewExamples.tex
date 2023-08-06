@@ -58,7 +58,7 @@ An a little more involved idea than directly using a given function is to utiliz
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\initstates := \{\state \in \states \mid \state \in \init\}$. The \viewN \viewinitstates is defined by its \grpfctN \gfctinitstates where $\gfctsubinitstates : \smstates \to \imggrp$ with 
 	
 	\[
-	\gfctinitstates(\state) =
+	\gfctsubinitstates(\state) =
 	\begin{cases}
 			\remelem,				& \text{if } \state \in \initstates \\
 			\notppty,          	& \text{otherwise}
@@ -70,12 +70,12 @@ An a little more involved idea than directly using a given function is to utiliz
 
 For $\state_1,\state_2 \in \states$ it is $\gfctinitstates(\state_1) = \gfctinitstates(\state_2)$ \iffN $\state_1, \state_2 \in \initstates$ or $\state_1 = \state_2$. According to Definition \ref{def:eqrelview} it is 
 \begin{align*}
-	\eqclassv &= \{\state \in \states \mid \gfctinitstates(\state) = \group\} &\text{for } \state \in \initstates \text{ and} \\
-	\eqclassv &= \{\state \in \states \mid \gfctinitstates(\state) = \{\state\} \} = \{\state\} &\text{for } \state \notin \initstates.
+	\eqclassv &= \{\state \in \states \mid \gfctinitstates(\state) = \remelem\} = \{\state\} &\text{for } \state \in \initstates \text{ and} \\
+	\eqclassv &= \{\state \in \states \mid \gfctinitstates(\state) = \notppty \}  &\text{for } \state \notin \initstates.
 \end{align*}
 
 
-By this we obtain the \viewN $\viewinitstates$ for a given \achgphN \chgph where: $\states' = \bigcup_{\state \in \states} \{\eqclassv\} = \{\state \in \states \mid \state \in \initstates\}\cup \bigcup_{\state \in \states \setminus \initstates}\{\{\state\}\}$.
+By this we obtain the \viewN $\viewinitstates$ for a given \achgphN \chgph where: $\states' = \bigcup_{\state \in \states} \{\eqclassv\} = \{\state \in \states \mid \state \notin \initstates\}\cup \bigcup_{\state \in \initstates}\{\{\state\}\}$.
 
 All other components are constructed as in Definition \ref{def:view}.
 
@@ -91,13 +91,15 @@ All other components are constructed as in Definition \ref{def:view}.
 	\label{fig:initStatesExmp}  
 \end{figure}
 
+In Figure \ref{fig:initStatesExmp} we can observe the effect of \viewinitstates. In the simplified representation of \achgphN on the left the states $\state_1$ and $\state_3$ are marked as initial states ($\state_1, \state_3 \in \initstates$). Hence these two are not grouped whereas the remaining two are grouped.
+
 
 \subsubsection{Outgoing Actions}
-Another crucial component of \achgphN is its set of actions \actions. Actions are used for interprocesscommunication und synchronization. In this subsection we will provide and dicuss some views utilizing actions on transitions that are outgonig from a state. 
-%For simplicity we will write "outgoing action \action" short for "transition with outgoing action \action" analogously we will write "ingoing action \action" short for "transition with ingoing action \action". We
-We will write a state \state has an outgoing action \action if there exists a state $\state'$ with $(\state, \action, \state') \in \trans$. For a state \state, ingoing action \action we say it has an ingoing action \action if there exist a state $\state'$ with $(\state', \action, \state) \in \trans$.
+Another crucial component of \achgphN is its set of actions \actions. Actions are used for interprocesscommunication und synchronization. In this subsection we will provide and discuss some views utilizing actions on transitions that are outgonig from a state. 
+%For simplicity we will write "outgoing action \action" short for "transition with outgoing action \action" analogously we will write "incoming action \action" short for "transition with incoming action \action". We
+We will write a state \state has an outgoing action \action if there exists a state $\state'$ with $(\state, \action, \state') \in \trans$. For a state \state, we say it has an incoming action \action if there exist a state $\state'$ with $(\state', \action, \state) \in \trans$.
 
-The most obvious variant to group states is to group states that \emph{have} a given outgoing action.
+The most apparent notion to group states is to group states that \emph{have} a given outgoing action.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The \viewN \viewhasoutaction is defined by its \grpfctN \gfcthasoutaction where $\gfctsubhasoutaction : \states \to \imggrp$ with
@@ -119,15 +121,17 @@ there exist $\state_{a},\state_{b} \in \states$ with
 $(\state_1, \action, \state_{a}), (\state_2, \action, \state_{b}) \in \trans$ (i.e. they have the same outgoing action \action) or $\state_1 = \state_2$. 
 In accordance with Definition \ref{def:eqrelview} it is
 \begin{align*}
-	\eqclassv &= \{\state \in \states \mid \gfcthasoutaction(\state) = \action\} &\exists\state' \in \states : (\state, \action, \state') \in \trans \\
-	\eqclassv &= \{\state \in \states \mid \gfcthasoutaction(\state) = \state\} = \{s\} &\text{ otherwise}
+	\eqclassv &= \{\state \in \states \mid \gfcthasoutaction(\state) = \remelem\} = \{s\} &\text{if }\exists\state' \in \states : (\state, \action, \state') \in \trans \\
+	\eqclassv &= \{\state \in \states \mid \gfcthasoutaction(\state) = \notppty\}  &\text{ otherwise}
 \end{align*}
  %if for all $\state' \in \states : (\state,\action,\state') \notin \trans$.
 
 Thereby we obtain the \viewN \viewhasoutaction for a given \chgphN \chgph where $\states' = \bigcup_{\state \in \states} \{\eqclassv\} =: \states_1 \cup \states_2$ where
 \begin{align*}
-	 \states_1 &:= \{\state \in \states \mid \exists \state' \in \states: (\state, \action, \state') \in \trans\} = \{\state \in \states \mid \state \text{ has outgoing action \action }\} \\
-	\states_2 &:= \remstates.
+	\states_1 &:= \{\{\state\} \mid \state \in \states,\, \exists \state' \in \states: (\state, \action, \state') \in \trans\}\} \\
+	&\;= \{\{\state\} \mid \state \in \states,\, \gfctminoutaction(\state) = \remelem\} = \nogroupstates \text{   and} \\
+	\states_2 &:= \{\{\state \in \states \mid \lnot \exists \state' \in \states: (\state, \action, \state') \in \trans\}\} \\
+	&\;= \{\{\state \in \states \mid \gfctminoutaction(\state) = \notppty\}\}.
 \end{align*}
 
 \begin{figure}[h]
@@ -139,16 +143,13 @@ Thereby we obtain the \viewN \viewhasoutaction for a given \chgphN \chgph where 
 		\hspace{5mm}
 		\input{./04/images/actions/outActHasAfter}
 	\end{minipage}
-	\caption{Simplified representations of \mdp (left) and the \viewN \viewhasoutaction on it (right)}
+	\caption{Simplified representations of \mdp (left) and the \viewN $\viewhasoutaction(\action)$ on it (right)}
 	\label{fig:outActHasAfter}  
 \end{figure}
 
+In Figure \ref{fig:outActHasAfter} we can observe the effect of $\viewhasoutaction(\action)$. In the simplified representation of \achgphN on the left the action \action is outgoing from states $\state_1, \state_2, \state_3$ and $\state_4$, whereas it is not outgoing from $\state_5$ and $\state_6$. Hence, $\state_1, \dots, \state_4$ are not grouped but shown, and states $\state_5$ and $\state_6$ are grouped.
 
-
-
-
-Since actions are a very important part of \chgphsN as well as of its more powerful siblings MDPs and MCs it seems useful to further enhance this \viewN and look at variants of it. Instead of only grouping states that only \emph{have} outgoing actions we could also quantify the amount of times that action should be outgoing.
-
+Since actions are a very important part of \chgphsN and TS it seems useful to further enhance this \viewN and look at variants of it. Instead of only grouping states that only \emph{have} outgoing actions we could also quantify the amount of times that action should be outgoing.
 
 
 For example we could require that a given action has to be outgoing a minimum amount of times. 
@@ -175,22 +176,37 @@ For example we could require that a given action has to be outgoing a minimum am
 	\label{def:minoutaction}
 \end{definition}
 
-The number  and  
 The predicate \predminoutact requires that there are transitions with action \action to \numoutact distinct states.
 
 For $\state_1,\state_2 \in \states$ it is $\gfctminoutaction(\state_1) = \gfctminoutaction(\state_2)$ \iffN there exist distinct $\state_{a_1}, \dots, \state_{a_\numoutact} \in \states$ and distinct $\state_{b_1}, \dots, \state_{b_\numoutact} \in \states$ so that $(\state_1, \action, \state_{a_1}), \dots, (\state_1, \action, \state_{a_\numoutact}) \in \trans$ and $(\state_2, \action, \state_{b_1}), \dots, (\state_2, \action, \state_{b_\numoutact}) \in \trans$ or $\state_1 = \state_2$. According to Definition \ref{def:eqrelview} it is 
 \begin{align*}
-	\eqclassv &= \{\state \in \states \mid \gfctminoutaction(\state) = \action\} &\text{if } \predminoutact \\ 
-	\eqclassv &= \{\state \in \states \mid \gfctminoutaction(\state) = \state\} = \{\state\} &\text{ otherwise}
+	\eqclassv &= \{\state \in \states \mid \gfctminoutaction(\state) = \remelem\} = \{\state\} &\text{if } \exists \state_1, \dots, \state_\numoutact \in \states:  \predminoutact \\ 
+	\eqclassv &= \{\state \in \states \mid \gfctminoutaction(\state) = \notppty\} &\text{ otherwise}
 \end{align*}
 
 By this we obtain the \viewN $\viewminoutaction$ for a given \chgphN \chgph where $\states' = \bigcup_{\state \in \states} \{\eqclassv\} =: \states_1 \cup \states_2$ where 
 
 \begin{align*}
-	\states_1 &:= \{\state \in \states \mid \exists \state_1, \dots, \state_\numoutact \in \states: \predminoutact\} \\ %(\state, \action, \state_1), \dots, (\state, \action, \state_\numoutact) \in \trans, |\{\state_1, \dots, \state_\numoutact\}| = \numoutact\} \\ 
-	&\hspace{1.15mm}= \{\state \in \states \mid \text{the action } \action \text{ is outgoing at least } \numoutact \text{ times} \} \text{ and} \\
-	\states_2 &:= \remstates.	
+	\states_1 &:= \{\{\state\} \mid \state \in \states,\, \exists \state_1, \dots, \state_\numoutact \in \states: \predminoutact\} \\
+	&\;= \{\{\state\} \mid \state \in \states,\, \gfctminoutaction(\state) = \remelem\} = \nogroupstates \text{   and} \\
+	\states_2 &:= \{\{\state \in \states \mid \lnot \exists \state_1, \dots, \state_\numoutact \in \states: \predminoutact\}\} \\
+	&\;= \{\{\state \in \states \mid \gfctminoutaction(\state) = \notppty\}\}.
 \end{align*}
+
+\begin{figure}[h]
+	\begin{minipage}{.5\textwidth}
+		\hspace{5mm}
+		\input{./04/images/actions/outActIdentStrongBefore}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		\hspace{5mm}
+		\input{./04/images/actions/outActMinAfter}
+	\end{minipage}
+	\caption{Simplified representations of \mdp (left) and the \viewN $\viewminoutaction(\action,2)$ on it (right).}
+	\label{fig:outActMinAfter}  
+\end{figure}
+
+In Figure \ref{fig:outActMinAfter} we can observe the effect of $\viewminoutaction(\action,2)$. In the simplified representation of \achgphN on the left the action \action is outgoing zero times from $\state_5, \state_6$, one time from $\state_3, \state_4$ and two times from $\state_1, \state_2$. Hence, $\state_1$ and $\state_2$ are not grouped but shown, and states $\state_3, \dots, \state_6$ are grouped.
 
 In a similar fashion we define \viewN that groups states where at most a certain number of times a given action is outgoing. 
 
@@ -215,7 +231,7 @@ In a similar fashion we define \viewN that groups states where at most a certain
 	\label{def:viewmaxoutaction}
 \end{definition}
 
-It ensures that if there are one more than \numoutact outgoing transitions with an action \action at least two of the states where the transitions \redcomment{end} are in fact the same. Since this is required for all possible combinations of $\numoutact + 1$ states by the grouping function, only states that have at most \numoutact outgoing actions will be assigned with \action by the grouping function. The reasoning about the equality of the \grpfctN values, the obtained equivalence classes and the resulting set of states $\states'$ of the \viewN is analogous to \viewminoutaction.
+It ensures that if there are one more than \numoutact outgoing transitions with an action \action at least two of the states where the transitions end are in fact the same. Since this is required for all possible combinations of $\numoutact + 1$ states by the grouping function, only states that have at most \numoutact outgoing actions will be assigned with \remelem by the grouping function. The reasoning about the equality of the \grpfctN values, the obtained equivalence classes and the resulting set of states $\states'$ of the \viewN is analogous to \viewminoutaction.
 
 \begin{figure}[h]
 	\begin{minipage}{.5\textwidth}
@@ -224,14 +240,15 @@ It ensures that if there are one more than \numoutact outgoing transitions with 
 	\end{minipage}%
 	\begin{minipage}{.5\textwidth}
 		\hspace{5mm}
-		\input{./04/images/actions/outActMinAfter}
+		\input{./04/images/actions/outActMaxAfter}
 	\end{minipage}
-	\caption{Simplified representations of \mdp (left) and the \viewN $\view[\pptyminoutact{2}{\outact}]$ on it (right)}
-	\label{fig:outActMinAfter}  
+	\caption{Simplified representations of \mdp (left) and the \viewN $\viewmaxoutaction(\action,1)$ on it (right)}
+	\label{fig:outActMaxAfter} 
 \end{figure}
 
+In Figure \ref{fig:outActMaxAfter} we can observe the effect of $\viewmaxoutaction(\action,1)$. In the simplified representation of \achgphN on the left the action \action is outgoing zero times from $\state_5, \state_6$, one time from $\state_3, \state_4$ and two times from $\state_1, \state_2$. Hence, $\state_3, \dots, \state_6$ are not grouped but shown, and states $\state_1$ and $\state_2$ are grouped.
 
-Since we already defined \grpfctsN and hence views for a required minimal and maximal amount of times an action has to be outgoing it is now easily possible to define a \viewN that groups states where the amount of outgoing actions is at least \numoutact and at most \numoutactb. 
+Since we already defined \grpfctsN and hence \viewsN for a required minimal and maximal amount of times an action has to be outgoing it is now easily possible to define a \viewN that groups states where the amount of outgoing actions is at least \numoutact and at most \numoutactb. 
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The \viewN 
@@ -250,19 +267,6 @@ Since we already defined \grpfctsN and hence views for a required minimal and ma
 	and $\numoutactb, \numoutact \in \natnums$ are the minimal and maximal number of transitions with action \action in order for state to be grouped. The predicates \predminoutact and \predmaxoutact are the predicates from Definition \ref{def:minoutaction} and Definition \ref{def:viewmaxoutaction} respectively.
 \end{definition}
 
-\begin{figure}[h]
-	\begin{minipage}{.5\textwidth}
-		\hspace{5mm}
-		\input{./04/images/actions/outActIdentStrongBefore}
-	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
-		\hspace{5mm}
-		\input{./04/images/actions/outActMaxAfter}
-	\end{minipage}
-	\caption{Simplified representations of \mdp (left) and the \viewN $\view[\pptymaxoutact{1}{\outact}]$ on it (right)}
-	\label{fig:outActMaxAfter} 
-\end{figure}
-
 We already know that for a given $\state \in \states$ the expressions $\exists \state_1, \dots, \state_\numoutact \in \states: \predminoutact$ and $\forall \state_1, \dots, \state_{\numoutactb+1} \in \states: \predmaxoutact[\numoutactb]$ from Definition \ref{def:minoutaction} and Definition \ref{def:viewmaxoutaction} require that \state has minimal and maximal amount of outgoing transitions with an action \action respectively. Hence the conjunction will be true for states where the amount of outgoing transitions with action \action is element of the set $\{\numoutactb, \numoutact+1, \dots, \numoutact-1, \numoutact\}$. We will write for this that the number of outgoing actions is \emph{in the span}.
 
 For a given state \state and action \action we set
@@ -274,17 +278,16 @@ For a given state \state and action \action we set
 for convenience. \formoutact is true  \iffN the number of outgoing actions is in the span. For $\state_1, \state_2 \in \states$ it is $\gfctspanoutaction(\state_1) = \gfctspanoutaction(\state_2)$ \iffN $\formoutact[\state_1] \land \formoutact[\state_2]$ or $\state_1 = \state_2$. Then its equivalence classes are
 
 \begin{align*}
-	\eqclassv &= \{\state \in \states \mid \gfctspanoutaction(\state) = \action\} &\formoutact \text{ true} \\
-	\eqclassv &= \{\state \in \states \mid \gfctspanoutaction(\state) = \state\} = \{\state\} &\text{ otherwise}	
+	\eqclassv &= \{\state \in \states \mid \gfctspanoutaction(\state) = \remelem\} = \{\state\} &\text{if } \formoutact \text{ true} \\
+	\eqclassv &= \{\state \in \states \mid \gfctspanoutaction(\state) = \notppty\} &\text{ otherwise}	
 \end{align*}
 
 The new set of states $\states'$ of the \viewN \viewspanoutaction is the union of the equivalence classes of equivalence relation \eqrelview on the set of states \states of the original \chgphN. Hence it is $\states' = \bigcup_{\state \in \states} \eqclassv =: \states_1 \cup \states_2$ where
 
 \begin{align*}
-	\states_1 &:= \{\state \in \states \mid \gfctspanoutaction(\state) = \action\} \\
-	&\hspace{1.15mm}= \{\state \in \states  \mid \formoutact \text{ true}\} \\
-	&\hspace{1.15mm}= \{\state \in \states \mid \text{the action } \action \text{ is outgoing } \numoutactb \text{ to } \numoutact \text{ times}\} \text{ and} \\
-	\states_2 &:= \remstates.
+	\states_1 &:= \{\{\state\} \mid \state \in \states, \, \formoutact \text{ true}\} \\
+	&\;= \{\{\state\} \mid \state \in \states, \, \gfctspanoutaction(\state) = \remelem\} = \nogroupstates \\
+	\states_2 &:= \{\{\state \in \states  \mid \formoutact \text{ false}\}\} = \{\{\state \in \states \mid \gfctspanoutaction(\state) = \notppty\}\}.
 \end{align*}
 
 \begin{figure}[h]
@@ -296,12 +299,14 @@ The new set of states $\states'$ of the \viewN \viewspanoutaction is the union o
 		\hspace{5mm}
 		\input{./04/images/actions/outActSpanBefore}
 	\end{minipage}
-	\caption{Simplified representations of \mdp (left) and the \viewN $\view[\pptyspanoutact{1}{\outact}{1}]$ on it (right)}
+	\caption{Simplified representations of \mdp (left) and the \viewN $\viewspanoutaction(1, \action, 1)$ on it (right)}
 	\label{fig:outActSpan}
 \end{figure}
 
+In Figure \ref{fig:outActSpan} we can observe the view of $\viewspanoutaction(1, \action, 1)$ on \mdp. It shows states that have the action \action at least one time outgoing and at most 1 one time. Hence, it does not group states, where the action \action is outgoing exactly once. All all remaining states are grouped. In the simplified representation of \achgphN on the left the action \action is outgoing zero times from $\state_5, \state_6$, one time from $\state_3, \state_4$ and two times from $\state_1, \state_2$. Hence, $\state_4, \dots, \state_5$ are not grouped but shown, and the remaining states $\state_1, \state_2, \state_5, \state_6$ are grouped.
 
-The \viewsN above can be combined with \parllcompN. The thereby obtained \viewN requires that the respective conditions of all the combined \viewsN are met. In this sense it is a conjunctive combination.
+
+%The \viewsN above can be combined with \parllcompN. The thereby obtained \viewN requires that the respective conditions of all the combined \viewsN are met. In this sense it is a conjunctive combination.
 
 Instead of making requirements about states and group them based on whether they meet these requirements it also possible to group states that are very similar or even identical in regard to their outaction. We consider this idea with the \emph{\outactident \viewNC} in two variants: \outactidentstrong and \outactidentweak (idententiy). Firstly we will consider the variant of strong identity.
 
@@ -314,12 +319,11 @@ Instead of making requirements about states and group them based on whether they
 	and $\imggrp := \actions \times \natnums_0 \cup \remset$.
 \end{definition}
 
-The \grpfctN asserts to each state a set of pairs. Note that a pair is contained int the set for each action $\action \in \actions$. In case there is no outgoing transition from state \state with an action \action it is $(\action, 0) \in \gfctstrongoutactident$. For $\state_1, \state_2 \in \states$ it is $\gfctstrongoutactident(\state_1) = \gfctstrongoutactident(\state_2)$ \iffN $\state_1$ and $\state_2$ are mapped to the same set of pairs. By Definition \ref{def:eqrelview} the obtained equivalence classes of \eqrelview are
+The \grpfctN asserts to each state a set of pairs. Note that a pair is contained in the set for each action $\action \in \actions$. In case there is no outgoing transition from state \state with an action \action it is $(\action, 0) \in \gfctstrongoutactident$. For $\state_1, \state_2 \in \states$ it is $\gfctstrongoutactident(\state_1) = \gfctstrongoutactident(\state_2)$ \iffN $\state_1$ and $\state_2$ are mapped to the same set of pairs. By Definition \ref{def:eqrelview} the obtained equivalence classes of \eqrelview are
 \[
-	\eqclassv := \{\state \in \states \mid \gfctstrongoutactident(\state) = \{(\action_1, \numoutact_1), \dots, (\action_l, \numoutact_l)\}, l = |\actions|\}
+	\eqclassv := \{\state \in \states \mid \gfctstrongoutactident(\state) = \{(\action_1, \numoutact_1), \dots, (\action_l, \numoutact_l)\}\} \text{  where } l = |\actions|
 \]
 According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewstrongoutactident. All other components of \viewstrongoutactident are as usual structured in accordance with the Definition \ref{def:view}.
-As mentioned earlier a \outactidentweak variant of the \outactident \viewN is also conceivable.
 
 \begin{figure}[h]
 	\begin{minipage}{.5\textwidth}
@@ -336,6 +340,42 @@ As mentioned earlier a \outactidentweak variant of the \outactident \viewN is al
 
 \end{figure}
 
+In Figure \ref{fig:outActIdentStrongAfter} we can observe the \viewN $\viewstrongoutactident$ on \mdp (both simplified representations). 
+For \viewstrongoutactident it is \gfctstrongoutactident :
+
+\begin{minipage}{.45\textwidth}
+\begin{align*}
+	\state_1 &\mapsto \{(\action,2), (\actionb,1), (\actionc,1)\} \\
+	\state_2 &\mapsto \{(\action,2), (\actionb,1), (\actionc,1)\} \\
+	\state_3 &\mapsto \{(\action,1), (\actionb,1), (\actionc,1)\} \\	
+\end{align*}
+\end{minipage}
+\begin{minipage}{.55\textwidth}
+\begin{align*}
+	\state_4 &\mapsto \{(\action,1), (\actionb,0), (\actionc,0)\} \\
+	\state_5 &\mapsto \{(\action,0), (\actionb,0), (\actionc,1)\} \\
+	\state_6 &\mapsto \{(\action,0), (\actionb,0), (\actionc,1)\} \\
+\end{align*}
+\end{minipage}
+
+because these are number of corresponding outgoing actions from each state. We see that the sets are equal for $\state_1$ and $\state_2$ and for $\state_5$ and $\state_6$. Hence, these two pairs are grouped to a new to new states. The remaining states are not grouped with another state. The equivalences classes containing them are singleton sets.
+
+As mentioned earlier a \outactidentweak variant of the \outactident \viewN is also conceivable. To ease readability for $\state \states$ we write $\outacts(\state)$ for the set $\{\action \in \actions \mid \exists \state' \in \states : (\state, \action, \state') \in \trans\}$
+
+\begin{definition}
+	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The \viewN \viewweakoutactident is defined by its \grpfctN \gfctweakoutactident where $\gfctsubweakoutactident : \smstates \to \imggrp$ with
+	\[
+	\state \mapsto \outacts(\state)
+	\]
+	and $\imggrp := \actions \cup \remset$.
+\end{definition}
+
+For $\state_1, \state_2 \in \states$ it is $\gfctweakoutactident(\state_1) = \gfctweakoutactident(\state_2)$ \iffN they are mapped to the same set of actions. Hence the equivalence classes of \eqrelview are
+\[
+	\eqclassv[\smstate] = \{ \state \in \states \mid \gfctweakoutactident(\state) = \gfctweakoutactident(\smstate) =: \{\action_1, \dots, \action_l\}\} \text{  where } l \leq |\actions|.
+\]
+According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewweakoutactident.
+
 \begin{figure}[h]
 	\begin{minipage}{.5\textwidth}
 		\hspace{5mm}
@@ -349,33 +389,42 @@ As mentioned earlier a \outactidentweak variant of the \outactident \viewN is al
 	\label{fig:outActIdentWeakAfter}  	
 \end{figure}
 
+In Figure \ref{fig:outActIdentWeakAfter} we can observe the \viewN $\viewweakoutactident$ on \chgph (both simplified representations). 
+For \viewweakoutactident it is \gfctweakoutactident :
 
-\begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The \viewN \viewweakoutactident is defined by its \grpfctN \gfctweakoutactident where $\gfctsubweakoutactident : \smstates \to \imggrp$ with
-	\[
-	\state \mapsto \{\action \in \actions \mid \exists \state' \in \states : (\state, \action, \state') \in \trans\} 	
-	\]
-	and $\imggrp := \actions \cup \remset$.
-\end{definition}
-\redcomment{condition of image-set written in inconsistent style to strong identity. Swap strong and weak (order)?}
-
-\redcomment{The grouping function maps to the set of outgoing actions of a state and thereby discards information about the number of times an actions is outgoing. If an action is not outgoing from a state it is not contained in the set.}
-
-For $\state_1, \state_2 \in \states$ it is $\gfctweakoutactident(\state_1) = \gfctweakoutactident(\state_2)$ \iffN they are mapped to the same set of actions. Hence the equivalence classes of \eqrelview are
-\[
-	\eqclassv[\smstate] = \{ \state \in \states \mid \gfctweakoutactident(\state) = \gfctweakoutactident(\smstate) =: \{\action_1, \dots, \action_l\}, l \in \natnums\}.
-\]
-According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewweakoutactident.
+\begin{minipage}{.45\textwidth}
+	\begin{align*}
+		\state_1 &\mapsto \{\action, \actionb, \actionc\} \\
+		\state_2 &\mapsto \{\action, \actionb, \actionc\} \\
+		\state_3 &\mapsto \{\action, \actionb, \actionc\} \\		
+	\end{align*}
+\end{minipage}
+\begin{minipage}{.55\textwidth}
+	\begin{align*}
+		\state_4 &\mapsto \{\action\} \\
+		\state_5 &\mapsto \{\actionc\} \\
+		\state_6 &\mapsto \{\actionc\} \\		
+	\end{align*}
+\end{minipage}
+because these are the corresponding outgoing actions from each state. We see that the sets are equal for $\state_1,\state_2$ and $\state_3$ and for $\state_5$ and $\state_6$. Hence, the state set of the \viewN \viewweakoutactident on \chgph has the state set $\{\{\state_1, \state_2, \state_3\}, \{\state_4\}, \{\state_5, \state_5\}\}$.
 
 Apart from the option of directly considering one or a set of outgoing actions with possible quantities it is also possible to only consider the quantity of outgoing actions without regarding the any specific action.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The \viewN \viewoutactsetsize is defined by its \grpfctN \gfctoutactsetsize where $\gfctsuboutactsetsize : \smstates \to \imggrp$ with
 	\[
-	\state \mapsto |\{\action \in \actions \mid \exists \state' \in \states : (\state, \action, \state') \in \trans\}|
+	\state \mapsto |\outacts(\state)|
 	\]
 	and $\imggrp := \natnums \cup \remset$.
 \end{definition}
+
+For $\state_1, \state_2 \in \states$ it is $\gfctoutactsetsize(\state_1) = \gfctoutactsetsize(\state_2)$ \iffN they are mapped to the same set of actions. Hence the equivalence classes of \eqrelview are
+\begin{align*}
+	\eqclassv[\smstate] &= \{ \state \in \states \mid \gfctoutactsetsize(\state) = \gfctoutactsetsize(\smstate)\} \\
+	&= \{ \state \in \states \mid \outacts(\state) = \outacts(\smstate)\}
+\end{align*}
+
+According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewweakoutactident.
 
 \begin{figure}[h]
 	\begin{minipage}{.5\textwidth}
@@ -390,21 +439,39 @@ Apart from the option of directly considering one or a set of outgoing actions w
 	\label{fig:outActSetSize}  	
 \end{figure}
 
-The notion of the \viewN is similar to utilize the outdegree, with the difference being here that ougoing transitions with the same action are considered as one single edge. This reflects on the options available for nondeterminism in this state.
+In Figure \ref{fig:outActSetSize} we can observe the view of $\viewoutactsetsize$ on \chgph. In the simplified representation of \achgphN on the states $\state_1, \state_2, \state_3$ have the outgoing actions $\action, \actionb, \actionc$, the state $\state_4$ has the outgoing action \action and the state $\state_5, \state_6$ have the outgoing action \actionc. Hence, the number of outgoing actions for $\state_1, \state_2, \state_3$ is three and for $\state_4, \state_5, \state_6$ is one. That is why each of these states become a new single state in the \viewN \viewoutactsetsize.
+
+The notion of the \viewN \viewoutactsetsize is similar to utilize the outdegree, with the difference being here that ougoing transitions with the same action are considered as one single edge. This reflects on the options available for nondeterminism in this state.
 
 The sepcialcase of there only being one single ougoing action is worth a distinct view, since it hides all nondeterministic choices, but nothing more.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The \viewN \viewoutactsingle is defined by its \grpfctN \gfctoutactsingle where $\gfctsuboutactsingle : \smstates \to \imggrp$ with
 	\[
-	\gfctsuboutactsingle(\state) = 
+	\gfctsuboutactsingle(\state) =
 	\begin{cases}
-		\remelem, &\text{if } |\{\action \in \actions \mid \exists \state' \in \states : (\state, \action, \state') \in \trans\}| = 1 \\ 
-		\notppty, &\text{otherwise}
+		\hasppty, &\text{if } |\outacts(\state)| = 1 \\ 
+		\remelem, &\text{otherwise}
 	\end{cases}
 	\]
 	and $\imggrp := \natnums \cup \remset$.
 \end{definition}
+
+Note that this view groups on states that \emph{have} the property. This is the case because the intention of the view is to hide \states in which there is no nondeterministic selection of an action.
+
+Two states $\state_1, \state_2 \in \states$ are grouped \iffN $\gfctoutactsingle(\state_1) = \gfctoutactsingle(\state_2)$. Hence the the equivalence classes of \eqrelview are:
+
+\begin{align*}
+	\eqclassv &= \{\state \in \states \mid \gfctspanoutaction(\state) = \remelem\} = \{\state\} &\text{if } |\outacts(\state)|=1 \\
+	\eqclassv &= \{\state \in \states \mid \gfctspanoutaction(\state) = \notppty\} &\text{ otherwise}	
+\end{align*}
+
+Thereby we obtain the \viewN $\viewminoutaction$ for a given \chgphN \chgph where $\states' = \bigcup_{\state \in \states} \{\eqclassv\} =: \states_1 \cup \states_2$ where 
+
+\begin{align*}
+	\states_1 &:= \{\{ \state \in \states \mid |\outacts(\state)| = 1\}\} = \{\{\state \in \states \mid \gfctminoutaction(\state) = \hasppty\}\}  \text{   and} \\
+	\states_2 &:= \{\{\state\} \mid \state \in \states, \mid |\outacts(\state)| \neq 1\}\} = \{\{\state\} \mid \state \in \states, \, \gfctminoutaction(\state) = \remelem\}\} = \nogroupstates[\states_1].
+\end{align*}
 
 \begin{figure}[h]
 	\begin{minipage}{.5\textwidth}
@@ -419,8 +486,10 @@ The sepcialcase of there only being one single ougoing action is worth a distinc
 	\label{fig:outActSingle}  	
 \end{figure}
 
-\subsubsection{Ingoing Actions}
-Analogously to Outgoing Actions views of utilizing ingoing actions are feasable. Since there is no difference apart from the definitions itself, we only provide the definitions.
+In Figure \ref{fig:outActSingle} we can observe the view of $\viewoutactsingle$ on \chgph. In the simplified representation of \achgphN on the states $\state_5$ and $\state_6$ are the only states with only one outgoing action. Hence, these two are grouped and the remaining four states are not grouped with any other state, but shown.
+
+\subsubsection{Incoming Actions}
+Analogously to Outgoing Actions views of utilizing incoming actions are feasable. Since there is no difference apart from the definitions itself, we only provide the definitions.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The \viewN \viewhasinaction is defined by its \grpfctN \gfcthasinaction where $\gfctsubhasinaction : \smstates \to \imggrp$ with
@@ -451,7 +520,7 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 	
 	where $\imggrp := \imggrpbinview$,
 %	 $\numinact \in \natnums$ 
-	 is the minimum amount of times a transition with action \action has to be ingoing in order to be grouped with the other states and
+	 is the minimum amount of times a transition with action \action has to be incoming in order to be grouped with the other states and
 	\[
 	\predmininact := ((\state_1, \action, \state), \dots, (\state_\numinact, \action, \state) \in \trans) \land |\{\state_1, \dots, \state_\numinact\}| = \numinact
 	\]
@@ -472,7 +541,7 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 	
 	where $\imggrp := \imggrpbinview$
 %	$\numinact \in \natnums$ 
-	 is the maximal number of times a transition with action \action may be ingoing and 
+	 is the maximal number of times a transition with action \action may be incoming and 
 	\[
 	\predmaxinact := ((\state_1, \action, \state), \dots, (\state_{\numinact+1}, \action, \state) \in \trans) \implies \bigvee_{\mathclap{\substack{i,j \in \{1,\dots, \numinact+1\} \\ i < j}}} \state_i = \state_j
 	\]
@@ -500,7 +569,7 @@ Analogously to Outgoing Actions views of utilizing ingoing actions are feasable.
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The \viewN \viewstronginactident is defined by its \grpfctN \gfctstronginactident where $\gfctsubstronginactident : \smstates \to \imggrp$ with
 	\[
 	\state \mapsto	
-	\{(\action, \numinact) \mid \action \in \actions, \numinact \text{ is the number of times that \action is ingoing from } \state\}
+	\{(\action, \numinact) \mid \action \in \actions, \numinact \text{ is the number of times that \action is incoming from } \state\}
 	\]
 	and $\imggrp := (\actions \times \natnums_0) \cup \remset$.
 \end{definition}

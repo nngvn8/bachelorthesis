@@ -18,8 +18,8 @@
 		(\basex,		\basey) 		node[gstate,init] (s1) 	{$\state_1$} 
 		(\basex+2,		\basey+0) 		node[gstate] (s2) 	{$\state_2$} 
 		(\basex+1,		\basey-1.2) 	node[gstate] (s3) 	{$\state_3$} 
-		(\basex,		\basey-2) 		node[gstate] (sbot) 	{$\notppty$} 
-		(\basex+2,		\basey-2) 		node[gstate] (s5) 	{$\state_5$}
+		(\basex,		\basey-2) 		node[gstate] (s4) 	{$\state_4$} 
+		(\basex+2,		\basey-2) 		node[gstate] (sbot) {$\notppty$}
 		
 		;
 		
@@ -27,17 +27,17 @@
 		\path [bendtrans] 	(s1) 	edge node [midway,above]				{\action} 		(s2);
 		\path [bendtrans] 	(s1) 	edge node [near end,above right=-2pt]	{\actionb} 		(s3);
 		\path [bendtransr] 	(s1) 	edge node [midway,below left]	{\action} 		(s3);
-		\path [trans] 		(s1) 	edge node [midway,above left]	{\actionc} 		(sbot);
+		\path [trans] 		(s1) 	edge node [midway,above left]	{\actionc} 		(s4);
 		\path [bendtrans] 	(s2) 	edge node [midway,below]		{\actionb} 		(s1);
-		\path [bendtransr] 	(s2) 	edge node [midway,left]			{\actionb} 		(s5);
-		\path [bendtrans] 	(s2) 	edge node [midway,right]		{\actionc} 		(s5);
+		\path [bendtransr] 	(s2) 	edge node [midway,left]			{\actionb} 		(sbot);
+		\path [bendtrans] 	(s2) 	edge node [midway,right]		{\actionc} 		(sbot);
 		\path [trans] 		(s3)	edge node [midway,above left]	{\actionc} 		(s2);
-		\path [trans] 		(s3)	edge node [midway,above left]	{\action} 		(sbot);
-		\path [trans] 		(s5)	edge node [midway,above left]	{\actionc} 		(sbot);
+		\path [trans] 		(s3)	edge node [midway,above left]	{\action} 		(s4);
+		\path [trans] 		(sbot)	edge node [midway,above left]	{\actionc} 		(s4);
 		
 		\path [trans] 		(s2) 	edge [loop above] node [midway,right=4pt] {\action} 	(s2);
 		\path [trans] 		(s3) 	edge [loop right] node [midway,below=4pt] {\actionb} 	(s3);
-		\path [trans] 		(sbot) 	edge [loop below] node [midway,right=4pt] {\action,\actionc} 	(sbot);
+		\path [trans] 		(s4) 	edge [loop below] node [midway,right=4pt] {\action,\actionc} 	(s4);
 		
 		
 		%		midway, at start, near start, very near start, at end, near end, very near end

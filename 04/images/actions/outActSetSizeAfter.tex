@@ -11,8 +11,11 @@
 	\begin{tikzpicture} [scale=2, every initial by arrow/.style={thick}]
 		
 		
-		\node [gstate,init] (set3) at (0,0) {$3$};
-		\node [gstate,below=50pt of set3] (set1) {$1$};
+%		\node [gstate,init] (set3) at (0,0) {$3$};
+%		\node [gstate,below=50pt of set3] (set1) {$1$};
+		
+		\node [gstate,init] (set3) at (0,0) {$\{\state_1, \state_2, \state_3\}$};
+		\node [gstate,below=50pt of set3] (set1) {$\{\state_4, \state_5, \state_6\}$};
 		
 		\path [trans,bend right=35] (set3) edge node [midway, left] {\actionc} (set1);
 		\path [trans,bend right=10] (set3) edge node [midway, right] {\actionb} (set1);

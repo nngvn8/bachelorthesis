@@ -14,10 +14,19 @@
 	\begin{tikzpicture} [scale=2, every initial by arrow/.style={thick}]
 		
 		
+%		\path
+%		(\basex+1,		\basey) 		node[gstate,init, initial left] (s123) 	{$\state_1, \state_2,\state_3$} 
+%		(\basex,		\basey-1.5) 	node[gstate] (s4) 	{$\state_4$} 
+%		(\basex+2,		\basey-1.5)		node[gstate] (s56) 	{$\state_5,\state_6$} 
+%		
+%		(s123)++(0.25,0)		node[minimum size=0.8cm] (s123loop) 	{} 
+%		(s56)++(0.1,0)		node[minimum size=0.8cm] (s56loop) 	{} 
+%		
+%		;
 		\path
-		(\basex+1,		\basey) 		node[gstate,init, initial left] (s123) 	{$\state_1, \state_2,\state_3$} 
-		(\basex,		\basey-1.5) 	node[gstate] (s4) 	{$\state_4$} 
-		(\basex+2,		\basey-1.5)		node[gstate] (s56) 	{$\state_5,\state_6$} 
+		(\basex+1,		\basey) 		node[gstate,init, initial left] (s123) 	{$\{\state_1, \state_2,\state_3\}$} 
+		(\basex,		\basey-1.5) 	node[gstate] (s4) 	{$\{\state_4\}$} 
+		(\basex+2,		\basey-1.5)		node[gstate] (s56) 	{$\{\state_5,\state_6\}$} 
 		
 		(s123)++(0.25,0)		node[minimum size=0.8cm] (s123loop) 	{} 
 		(s56)++(0.1,0)		node[minimum size=0.8cm] (s56loop) 	{} 
@@ -30,10 +39,12 @@
 		\path [bendtrans] (s123) 	edge node [midway,right]		{\actionc} 		(s56);
 		
 		
-		\path [trans] 	(s56) 	edge node [midway,above]	{\actionc} 		(s4);		
-		\path [trans] 		(s123loop) 	edge [loop, in=10, out=60,looseness=6, shorten >= -1pt] node [midway,right] {\actionb} 	(s123loop);
-		\path [trans] 		(s4) 	edge [loop below] node [midway,right] {\action} 	(s4);
-		\path [trans] 		(s56loop) 	edge [loop right] node [midway,above] {\actionc} 	(s56loop);
+		\path [trans] 	(s56) 	edge node [midway,above]	{\actionc} 		(s4);
+		\path [trans]	(s123) edge [loop above] node [midway, right=4pt] {\actionb}	(s123);	
+%		\path [trans] 		(s123loop) 	edge [loop, in=10, out=60,looseness=6, shorten >= -1pt] node [midway,right] {\actionb} 	(s123loop);
+		\path [trans] 		(s4) 	edge [loop below] node [midway,right=4pt] {\action} 	(s4);
+		\path [trans]		(s56) 	edge [loop below] node [midway,right=4pt] {\actionc} (s56);
+%		\path [trans] 		(s56loop) 	edge [loop right] node [midway,above] {\actionc} 	(s56loop);
 		
 		
 	\end{tikzpicture}
