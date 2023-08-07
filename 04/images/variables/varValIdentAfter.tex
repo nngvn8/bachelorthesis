@@ -12,16 +12,25 @@
 	
 	
 	\begin{tikzpicture} [scale=2, every initial by arrow/.style={thick}]
-		\newcommand{\varstyle}[2]{\mt{\langle#1,#2\rangle}};
+%		\newcommand{\varstyle}[2]{\mt{\langle#1,#2\rangle}};
 		
-		\node [gstate,init](x0) at (0,0) {$x=0$};
-		\node [gstate,below=of x0] (x1) {$x=1$};
-		\node [gstate,below=of x1] (x2) {$x=2$};
+%		\node [gstate,init](x0) at (0,0) {$x=0$};
+%		\node [gstate,below=of x0] (x1) {$x=1$};
+%		\node [gstate,below=of x1] (x2) {$x=2$};
+		\node [gstate,init](x0) at (0,0) {$\varstyle{0}{0}, \varstyle{0}{1},\varstyle{0}{2}$};
+		\node [gstate,below=of x0] (x1) {$\varstyle{1}{0}, \varstyle{1}{1},\varstyle{1}{2}$};
+		\node [gstate,below=of x1] (x2) {$\varstyle{2}{0}, \varstyle{2}{1},\varstyle{2}{2}$};
+		
+		\node [minimum size=.8cm, right=-22pt of x0] (x0loop) {};
+		\node [minimum size=.8cm, right=-22pt of x1] (x1loop) {};
+		
 		
 		
 		\path [trans] (x0) edge (x1);
 		\path [trans] (x1) edge (x2);
 		
+		\path [trans] (x0loop) edge [loop right] (x0loop);
+		\path [trans] (x1loop) edge [loop right] (x1loop);
 		\path [trans] (x2) edge [loop below] (x2);
 
 		

@@ -13,8 +13,8 @@
 	
 	\begin{tikzpicture} [scale=2.4, every initial by arrow/.style={thick}]
 		
-		\newcommand{\disth}{60pt}
-		\newcommand{\distv}{60pt}
+		\newcommand{\disth}{-20pt}
+		\newcommand{\distv}{20pt}
 		
 		\node at (0,0) {};
 		
@@ -23,10 +23,14 @@
 %		\node [gstate,below=\distv of s16] (s4) {$\state_4$};
 %		\node [gstate,below=\distv of s2369] (s810) {$\state_8, \state_{10}$};
 		
-		\node [gstate,init] (s16) at (\basex,\basey) {$0$};
-		\node [gstate,right=\disth of s16] (s2369) {$1$};
-		\node [gstate,below=\distv of s16] (s4) {$2$};
-		\node [gstate,below=\distv of s2369] (s810) {$3$};
+%		\node [gstate,init] (s16) at (\basex,\basey) {$0$};
+%		\node [gstate,right=\disth of s16] (s2369) {$1$};
+%		\node [gstate,below=\distv of s16] (s4) {$2$};
+%		\node [gstate,below=\distv of s2369] (s810) {$3$};
+		\node [gstate,init] (s16) at (\basex,\basey) {$\{\state_1, \state_6\}$};
+		\node [gstate,below right=\distv and \disth of s16] (s2369) {$\{\state_2, \state_3, \state_7, \state_8\}$};
+		\node [gstate,below left=\distv and \disth of s2369] (s4) {$\{\state_4\}$};
+		\node [gstate,below right=\distv and \disth of s4] (s810) {$\{\state_5, \state_9, \state_{10}\}$};
 		
 		\path [trans] (s16) edge (s2369);
 		\path [trans] (s2369) edge (s4);

@@ -209,6 +209,8 @@
 \newcommand{\pptyparamvalueseqopt}{\mt{\var = \varval}}
 \newcommand{\pptyparamvalident}{\mt{Var:\varval}}
 \newcommand{\pptydistance}{\mt{\distpath}}
+\newcommand{\pptydistancerev}{\mt{\distpathrev}}
+\newcommand{\pptydistancebi}{\mt{\distpathbi}}
 \newcommand{\pptyhascycle}{\mt{\exists\cycle}}
 \newcommand{\pptyexactactcycle}{\mt{\{\cycle_{\action,n}\}}}
 \newcommand{\pptycycleset}{\mt{\cup{\{\state\}_\cycle}}}
@@ -241,6 +243,8 @@
 \newcommand{\gfctparamvalueseqopt}{\mt{\pptyparamvalueseqopt}}
 \newcommand{\gfctparamvalident}{\mt{\grpfct[\pptyparamvalident]}}
 \newcommand{\gfctdistance}{\mt{\grpfct[\pptydistance]}}
+\newcommand{\gfctdistancerev}{\mt{\grpfct[\pptydistancerev]}}
+\newcommand{\gfctdistancebi}{\mt{\grpfct[\pptydistancebi]}}
 \newcommand{\gfcthascycle}{\mt{\grpfct[\pptyhascycle]}}
 \newcommand{\gfctexactcycle}{\mt{\grpfct[\pptyexactcycle]}}
 \newcommand{\gfctcycleset}{\mt{\grpfct[\pptycycleset]}}
@@ -273,6 +277,8 @@
 \newcommand{\gfctsubparamvalueseqopt}{\mt{\pptyparamvalueseqopt}}
 \newcommand{\gfctsubparamvalident}{\mt{\grpfctsub[\pptyparamvalident]}}
 \newcommand{\gfctsubdistance}{\mt{\grpfctsub[\pptydistance]}}
+\newcommand{\gfctsubdistancerev}{\mt{\grpfctsub[\pptydistancerev]}}
+\newcommand{\gfctsubdistancebi}{\mt{\grpfctsub[\pptydistancebi]}}
 \newcommand{\gfctsubhascycle}{\mt{\grpfctsub[\pptyhascycle]^\hasppty}}
 \newcommand{\gfctsubexactcycle}{\mt{\grpfctsub[\pptyexactcycle]}}
 \newcommand{\gfctsubcycleset}{\mt{\grpfctsub[\pptycycleset]}}
@@ -306,6 +312,8 @@
 \newcommand{\viewparamvalueseqopt}{\mt{\pptyparamvalueseqopt}}
 \newcommand{\viewparamvalident}{\mt{\view[\pptyparamvalident]}}
 \newcommand{\viewdistance}{\mt{\view[\pptydistance]}}
+\newcommand{\viewdistancerev}{\mt{\view[\pptydistancerev]}}
+\newcommand{\viewdistancebi}{\mt{\view[\pptydistancebi]}}
 \newcommand{\viewhascycle}{\mt{\view[\pptyhascycle]}}
 \newcommand{\viewexactcycle}{\mt{\view[\pptyexactcycle]}}
 \newcommand{\viewcycleset}{\mt{\view[\pptycycleset]}}
@@ -367,10 +375,11 @@
 \newcommand{\varstate}[1][]{\mt{\var_{\state#1}}}
 \newcommand{\varval}{\mt{a}}
 \newcommand{\vareval}[1][\mdp]{\mt{V\!arEval_{#1}}}
-\newcommand{\varevalimg}[1][\mdp]{\mt{\vareval(\states,\vars)}}
+\newcommand{\varevalimg}[1][\mdp]{\mt{\vareval[#1][\states,\vars]}}
 \newcommand{\varevalimgset}{\mt{\arbset}}
 \newcommand{\someparam}{\mt{\tilde{x}}}
 \newcommand{\eqorneq}{\mt{\;\doteqdot\;}}
+\newcommand{\varstyle}[2]{\mt{\langle#1,#2\rangle}}
 
 
 
@@ -407,7 +416,7 @@
 \let\path\oldpath
 \newcommand{\path}{\mt{P}}
 \newcommand{\pathbi}{\mt{\bar{\path}}}
-\newcommand{\pathsecfull}{\mt{(\state_1, \action_1, \state_2, \action_2, \dots, \action_{n-1}, \state_n)}}
+\newcommand{\pathsecfull}{\mt{(\state_0, \action_0, \state_1, \action_1, \dots, \action_{n}, \state_{n+1})}}
 \newcommand{\lenpath}{\mt{len}}
 \newcommand{\pfirst}{\mt{first}}
 \newcommand{\plast}{\mt{last}}

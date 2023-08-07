@@ -12,7 +12,7 @@
 	
 	
 	\begin{tikzpicture} [scale=1.2, every initial by arrow/.style={thick}]
-		\newcommand{\varstyle}[2]{\mt{\langle#1,#2\rangle}};
+%		\newcommand{\varstyle}[2]{\mt{\langle#1,#2\rangle}};
 		
 		\node [gstate,initial,initial right,initial text=](sbot) at (0,0) {\notppty};
 		\node [gstate,left=80pt of sbot] (s00){\varstyle{0}{0}};
@@ -29,6 +29,7 @@
 		\path [bendtrans] (s22) edge (sbot);
 		
 		\path [trans] (s22) edge [loop below] (s22);
+		\path [trans] (sbot) edge [loop above] (sbot);
 		
 		%		midway, at start, near start, very near start, at end, near end, very near end
 		

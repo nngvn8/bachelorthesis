@@ -486,7 +486,7 @@ Thereby we obtain the \viewN $\viewminoutaction$ for a given \chgphN \chgph wher
 	\label{fig:outActSingle}  	
 \end{figure}
 
-In Figure \ref{fig:outActSingle} we can observe the view of $\viewoutactsingle$ on \chgph. In the simplified representation of \achgphN on the states $\state_5$ and $\state_6$ are the only states with only one outgoing action. Hence, these two are grouped and the remaining four states are not grouped with any other state, but shown.
+In Figure \ref{fig:outActSingle} we can observe the view of $\viewoutactsingle$ on \chgph. In the simplified representation of \achgphN, the states $\state_5$ and $\state_6$ are the only states with only one outgoing action. Hence, these two are grouped and the remaining four states are not grouped with any other state, but shown.
 
 \subsubsection{Incoming Actions}
 Analogously to Outgoing Actions views of utilizing incoming actions are feasable. Since there is no difference apart from the definitions itself, we only provide the definitions.
@@ -634,16 +634,16 @@ The most apparent idea for a \viewN utilizing variables is to group states that 
 
 The \viewN \viewparamvalueseq groups states that share the same value for a given variable. For $\state_1, \state_2$ it is $\gfctparamvalueseq(\state_1) = \gfctparamvalueseq(\state_2)$ \iffN $\vareval(\state_1, \var) = \vareval(\state_2, \var)$ or $\state_1 = \state_2$. The obtained equivalence classes are
 \begin{align*}
-	\eqclassv &= \{\state \in \states \mid \vareval(\state, \var) = \varval\} \\
-	\eqclassv &= \{\state \in \states \mid \gfctparamvalueseq(\state) = \state\} = \{\state\}
+	\eqclassv &= \{\state \in \states \mid \gfctparamvalueseq(\state) = \remelem\} = \{\state\} &\text{if \vareval(\state, \var) = \varval} \\
+	\eqclassv &= \{\state \in \states \mid \gfctparamvalueseq(\state) = \notppty\} &\text{otherwise}
 \end{align*}
 
 The set of states $\states'$ of \viewparamvalueseq is the union of the equivalence classes of \eqrelview. It is $\states' = \bigcup_{\state \in \states} \eqclassv =: \states_1 \cup \states_2$ where
 
 \begin{align*}
-	\states_1 &:= \{\state \in \states \mid \gfctparamvalueseq(\state) = \varval\} \\
-	&\hspace{1.15mm}= \{\state \in \states  \mid \vareval(\state, \var) = \varval\} \text{ and} \\
-	\states_2 &:= \remstates.
+	\states_1 &:= \{\{\state\} \mid \state \in \states, \, \vareval(\state, \var) = \varval\} \\
+	&\;= \{\{\state\} \mid \state \in \states, \, \gfctparamvalueseq(\state) = \remelem\} = \nogroupstates \\
+	\states_2 &:= \{\{\state \in \states  \mid \vareval(\state, \var) \neq \varval\}\} = \{\{\state \in \states \mid \gfctparamvalueseq(\state) = \notppty\}\}.
 \end{align*}
 
 \begin{figure}[h]
@@ -654,11 +654,13 @@ The set of states $\states'$ of \viewparamvalueseq is the union of the equivalen
 	\begin{minipage}{.5\textwidth}
 		\input{./04/images/variables/varsValEqAfter}
 	\end{minipage}
-	\caption{Simplified representations of \mdp (left) and the \viewN \viewdistance on it (right)}
+	\caption{Simplified representations of \mdp with the state set $\states = \{\varstyle{x}{y} \mid x,y \in \{0, 1, 2\}\}$ (left) and the \viewN $\viewparamvalueseq(y=1)$ on it (right)}
 	\label{fig:varsValEq}  
 \end{figure}
 
-Analogously a \viewN that requires inequality instead of equality is feasible.
+In Figure \ref{fig:varsValEq} we can observe the view of $\viewparamvalueseq(y=1)$ on \chgph, in which states with $y=1$ are not grouped, but all the remaining ones.
+
+%Analogously a \viewN that requires inequality instead of equality is feasible.
 
 %\begin{definition}
 %	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$, $\var \in \vars$ and $\varval \in \varevalimg$. The \viewN \viewparamvaluesneq is defined by its \grpfctN \gfctparamvaluesneq where $\gfctsubparamvaluesneq : \smstates \to \imggrp$ with
@@ -705,7 +707,18 @@ To allow even more flexibility a \viewN can be used that also allows a combinati
 
 The DNF allows us to specify a requirement in disjunctive normal form about variables. States are mapped to the same value depending on whether or not they meet this requirement.
 
-\redcomment{DISCUSSION OF EQUALITY, EQ CLASSES AND RESULTING STATES MISSING}
+The \viewN \viewparamdnf groups states that share the same value for a given variable. For $\state_1, \state_2$ it is $\gfctparamdnf(\state_1) = \gfctparamdnf(\state_2)$ \iffN $\vareval(\state_1, \var) = \vareval(\state_2, \var)$ or $\state_1 = \state_2$. The obtained equivalence classes are
+\begin{align*}
+	\eqclassv &= \{\state \in \states \mid \gfctparamdnf(\state) = \remelem\} = \{\state\} &\text{if } d(s) \text{ true} \\
+	\eqclassv &= \{\state \in \states \mid \gfctparamdnf(\state) = \notppty\} &\text{otherwise}
+\end{align*}
+
+The set of states $\states'$ of \viewparamdnf is the union of the equivalence classes of \eqrelview. It is $\states' = \bigcup_{\state \in \states} \eqclassv =: \states_1 \cup \states_2$ where
+
+\begin{align*}
+	\states_1 &:= \{\{\state\} \mid \state \in \states, \, d(s) \text{ true}\} = \{\{\state\} \mid \state \in \states, \, \gfctparamdnf(\state) = \remelem\} = \nogroupstates \\
+	\states_2 &:= \{\{\state \in \states  \mid d(s) \text{ false}\}\} = \{\{\state \in \states \mid \gfctparamdnf(\state) = \notppty\}\}.
+\end{align*}
 
 \begin{figure}[h]
 	\begin{minipage}{.6\textwidth}
@@ -715,7 +728,7 @@ The DNF allows us to specify a requirement in disjunctive normal form about vari
 	\begin{minipage}{.5\textwidth}
 		\input{./04/images/variables/varsDnfAfter}
 	\end{minipage}
-	\caption{Simplified representations of \mdp (left) and the \viewN \viewparamdnf on it (right)}
+	\caption{Simplified representations of \mdp $\states = \{\varstyle{x}{y} \mid x,y \in \{0, 1, 2\}\}$ (left) and the \viewN \viewparamdnf with $d(s) = ((x=0) \land (y=0)) \lor ((x=1) \land (y=1)) \lor ((x=2) \land (y=2))$  on it (right)}
 	\label{fig:varsDnf}  
 \end{figure}
 
@@ -744,19 +757,20 @@ Analogously a \viewN based on a conjunctive normal formal can be defined that ma
 		\end{cases}
 	\]
 	
-	where $\imggrp := \{\group, \remelem\}$.
+	where $\imggrp := \imggrpbinview$.
 \end{definition}
 
-The only difference from the \viewN \viewparamcnf to the \viewN \viewparamdnf is whether the respective formulae is in conjunctive or disjunctive normal form.\redcomment{CITATION} Since each formulae in conjunctive normal form can tan be transformed to a formulae in disjunctive normal form and vice verse neither on of the \viewsN can perform an action the other can not. Hence there is no difference in expressivity, but there may be one in size. Therefore both views have been implemented and formalized. 
+The only difference from the \viewN \viewparamcnf to the \viewN \viewparamdnf is whether the respective formulae is in conjunctive or disjunctive normal form.\redcomment{CITATION} Since each formulae in conjunctive normal form can be transformed to a formulae in disjunctive normal form and vice versa neither on of the \viewsN can perform an action the other can not. Hence there is no difference in expressivity, but there may be one in size. Therefore both views have been implemented and formalized. For finite \chgphsN they present an interface to performing arbitrary groupings on the state set utilizing parameter values. Equality, equivalence classes and the new state set behave and are constructed analogously to the \viewN \viewparamdnf.
 
-The views discussed before reduce the \chgphN in a very precise but also manual manner, because it not only dictates the variable but also its value. A more general approach is to stipulate only the variable but not its value. This way states will be grouped that have the same value for that variable with no regard to the actual value of that variable. This idea could be achieved with a \viewN based on the \grpfctN $\grpfct[\varval_1 ]$%\pll \dots \pll \gfctparamvalueseqopt[\varval_n]]$ with $\redcomment{\vareval(\states, \var)} = \{\varval_1, \dots, \varval_n\}$ and $|\vareval(\states,\var)| = n$. This grouping function just groups on every possible value for the variable \var. Since this is \redcomment{not very practical} we define a \viewN that achieves this result in a more direct and more efficient way.
+The views discussed before reduce the \chgphN in a very precise but also manual manner, because it not only dictates the variable but also its value. A more general approach is to stipulate only the variable but not its value. This way states will be grouped that have the same value for that variable with no regard to the actual value of that variable. 
+%This idea could be achieved with a \viewN based on the \grpfctN $\grpfct[\varval_1 ]$%\pll \dots \pll \gfctparamvalueseqopt[\varval_n]]$ with $\redcomment{\vareval(\states, \var)} = \{\varval_1, \dots, \varval_n\}$ and $|\vareval(\states,\var)| = n$. This grouping function just groups on every possible value for the variable \var. Since this is \redcomment{not very practical} we define a \viewN that achieves this result in a more direct and more efficient way.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN and $\smstates \subseteq \states$. The \viewN \viewparamvalident is defined by its \grpfctN \gfctparamvalident where $\gfctsubparamvalident : \smstates \to \imggrp$ with
 	\[
 	\state \mapsto \vareval(\state,\var)
 	\]
-	and $\imggrp := \vareval(\states, \var)$.
+	and $\imggrp := \varevalimg \cup \{\remelem\}$.
 \end{definition}
 
 With this grouping function we directly map to the value of the variable. Hence for $\state_1, \state_2 \in \states$ it is $\gfctparamvalident(\state_1) = \gfctparamvalident(\state_2)$ \iffN they are mapped to the value $\varval \in \imggrp$. Hence the equivalence classes of \eqrelview are
@@ -773,16 +787,18 @@ According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in 
 	\begin{minipage}{.5\textwidth}
 		\input{./04/images/variables/varValIdentAfter}
 	\end{minipage}
-	\caption{Simplified representations of \mdp (left) and the \viewN \viewparamvalident on it (right)}
+	\caption{Simplified representations of \mdp $\states = \{\varstyle{x}{y} \mid x,y \in \{0, 1, 2\}\}$ (left) and the \viewN $\viewparamvalident(x)$ on it (right).}
 	\label{fig:varValIdent}  
 \end{figure}
+
+In Figure \ref{fig:varValIdent} we can observe the view of $\viewparamvalident$ on \chgph. States are grouped in which $x$ has the same value. It is $x \in \{0, 1, 2\}$. Hence, the states $\varstyle{0}{0}, \varstyle{0}{1},\varstyle{0}{2}$ are grouped because in all of them it is $x=0$. For the same reason $\varstyle{1}{0}, \varstyle{1}{1},\varstyle{1}{2}$ grouped with $x=1$ and $\varstyle{2}{0}, \varstyle{2}{1},\varstyle{2}{2}$ with $x=2$.
 
 
 \subsection{Utilizing the MDP Graphstructure}
 \subsubsection{Distance}
 Considering distances in a graph can be very helpful to get an overview of a graph. Likewise it helps a lot with understanding the structure of \achgphN. In order to consider the distance between nodes we will need to formalize it.
 
-\redcomment{definition is very simlar to execution fragments! Citation?}
+\redcomment{definition is very similar to execution fragments! Citation?}
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN. A (simple and finite) \emph{path} \path is a sequence \pathsecfull alternating between states and actions where $n \in \natnums, \{\state_1, \dots, \state_{n}\} \subseteq \states$ is a set of distinct states,  $\{\action_1, \dots, \action_{n}\} \subseteq \actions$ and for all $i \in \{1, \dots, n\}$ it is $(\state_i,\action_i, \state_{i+1}) \in \trans$. 
@@ -804,15 +820,49 @@ Considering distances in a graph can be very helpful to get an overview of a gra
 \end{definition}
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN. The \emph{distance} between disjoint $\states_1, \states_2 \subseteq \states$ is the length of the shortest path from a state $\state_1 \in \states_1$ to a $\state_2 \in \states_2$. That is, if $\states_1 \cap \states_2 = \emptyset$ it is		
+	Let $\chgph = \chgphtuple$ be \achgphN. The \emph{distance} between disjoint $\states_1, \states_2 \subseteq \states$ is the length of the shortest path from a state $\state_1 \in \states_1$ to a $\state_2 \in \states_2$ or infinity if no such path exists. That is, if $\states_1 \cap \states_2 = \emptyset$ it is		
 	\[
-		\distpath(\chgph, \states_1, \states_2) := \min\{\lenpath(\path) \mid \path \in \pathset, \; \pfirst(\path) \in \states_1, \; \plast(\path) \in \states_2\},
+		\distpath(\chgph, \states_1, \states_2) := 
+		\begin{cases}
+			\min\{\lenpath(\path) \mid \path \in P_{\states_1 \to \states_2}\}, &\text{if } P_{\states_1 \to \states_2} \neq \emptyset \\
+			\infty, &\text{otherwise}
+		\end{cases}
 	\]
+	where $P_{\states_1 \to \states_2} := \{\path \in \pathset \mid \pfirst(\path) \in \states_1, \; \plast(\path) \in \states_2\}$. \\
 	\noindent
 	If $\states_1 \cap \states_2 \neq \emptyset$, it is $\distpath(\chgph, \states_1, \states_2) := 0$.
+	\label{def:distance}
 \end{definition}
 
-For a given \chgphN \chgph with state set \states and $\state \in \states, \smstates \subseteq \states$ we write $\distpath(\mdp, \smstates, \state)$ short for $\distpath(\mdp, \smstates, \{\state\})$ and $\distpath(\mdp, \state, \smstates)$ short for $\distpath(\mdp, \{\state\}, \smstates)$.
+\begin{definition}
+	Let $\chgph = \chgphtuple$ be \achgphN. The \emph{reverse distance} between disjoint $\states_1, \states_2 \subseteq \states$ is the length of the shortest path from a state $\state_2 \in \states_2$ to a $\state_1 \in \states_1$ or infinity if no such path exists. That is, if $\states_1 \cap \states_2 = \emptyset$ it is		
+	\[
+	\distpathrev(\chgph, \states_1, \states_2) := 
+	\begin{cases}
+		\min\{\lenpath(\path) \mid \path \in P_{\states_1 \leftarrow \states_2}\}, &\text{if } P_{\states_1 \leftarrow \states_2} \neq \emptyset \\
+		\infty, &\text{otherwise}
+	\end{cases}
+	\]
+	where $P_{\states_1 \leftarrow \states_2} := \{\path \in \pathset \mid \plast(\path) \in \states_1, \; \pfirst(\path) \in \states_2\}$. \\
+	\noindent
+	If $\states_1 \cap \states_2 \neq \emptyset$, it is $\distpathrev(\chgph, \states_1, \states_2) := 0$.
+\end{definition}
+
+\begin{definition}
+	Let $\chgph = \chgphtuple$ be \achgphN. The \emph{undirected distance} between disjoint $\states_1, \states_2 \subseteq \states$ is the length of the shortest undirected path from a state $\state_1 \in \states_1$ to a state $\state_2 \in \states_2$  or infinity if no such path exists. That is, if $\states_1 \cap \states_2 = \emptyset$ it is		
+	\[
+	\distpathbi(\chgph, \states_1, \states_2) := 
+	\begin{cases}
+		\min\{\lenpath(\pathbi) \mid \pathbi \in P_{\states_1 - \states_2}\}, &\text{if } P_{\states_1 - \states_2} \neq \emptyset \\
+		\infty, &\text{otherwise}
+	\end{cases}
+	\]
+	where $P_{\states_1 - \states_2} := \{\pathbi \in \pathbiset \mid \pfirst(\pathbi) \in \states_1, \; \plast(\pathbi) \in \states_2\}$. \\
+	\noindent
+	If $\states_1 \cap \states_2 \neq \emptyset$, it is $\distpathbi(\chgph, \states_1, \states_2) := 0$.
+\end{definition}
+
+For a given \chgphN \chgph with state set \states and $\state \in \states, \smstates \subseteq \states$ we write $\distpath(\mdp, \smstates, \state)$ short for $\distpath(\mdp, \smstates, \{\state\})$ and $\distpath(\mdp, \state, \smstates)$ short for $\distpath(\mdp, \{\state\}, \smstates)$. We do so in the same way for \distpathbi and \distpathrev.
 For a \viewN that applies to the whole and utilizes distance it only makes sense to consider a given set of states from which one the distance is measured. An intuitive choice for such set is the set of initial states. The following algorithm calculates the distance of each node from a given set $\smstates \subseteq \states$ considering granularity \grandist:
 
 \redcomment{Implementation Algorithm}
@@ -820,45 +870,120 @@ For a \viewN that applies to the whole and utilizes distance it only makes sense
 The set \fctdistdefault declares the returned set of \redcomment{ALGORITHM}. The implementation ensures that for every state $\state$ there exists a pair $(\state, \distval)$ in \fctdistdefault. The following \viewN groups states that have the same distance to the set measured with the amounts of transitions necessary to reach the the closest \smstates considering the granularity \grandist.
 
 \begin{definition}
-		Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$, $n \in \natnums$ and $\smstates \subseteq \states$ arbitrary. \redcomment{$\fctdistdefault$ IMPLEMENTATION IN PSEUDOCODE? DEFINITION BEFORE?} The \viewN \viewdistance is defined by its \grpfctN \gfctdistance where $\gfctsubdistance : \smstates \to \imggrp$ with 
+		Let $\chgph = \chgphtuple$ be \achgphN, $\bar{\states} \subseteq \smstates \subseteq \states$ and $n \in \natnums$. The \viewN \viewdistance is defined by its \grpfctN \gfctdistance where $\gfctsubdistance : \smstates \to \imggrp$ with 
 		\[
-		\state \mapsto \distval - (\distval \text{ mod } n) \quad \quad \text{where } \distval = \distpath(\chgph,\smstates, \state)
+		\gfctdistance(\state) =
+		\begin{cases}
+			 \distval - (\distval \text{ mod } n), &\text{if } d \neq \infty \\
+			 \infty, &\text{otherwise}
+		\end{cases}		
 		\]
-		and $\imggrp = \natnums \cup \{\inf\} \cup \remset$.
+		where $\distval = \distpath(\chgph,\bar{\states}, \state)$ and $\imggrp = \natnums \cup \{\infty\} \cup \remset$.
 \end{definition}
 
+The number $n$ from the definition is the granularity of the distance cluster. For $n = 2$ we have for $d = 0 : 0 - 0 = 0$, for $d = 1 : 1 - 1 = 0$, for $d = 2 : 2 - 0 = 2$ and for $d = 3 : 3 - 1 = 2$ where each time the subtrahend is $d \text{ mod } 2$. We see that, \gfctdistance maps $\distpath(\chgph,\smstates, \state)$ to next smaller natural number that is dividable by $n$, which means the granularity causes that $\gfctdistance(\state)$ is a multiple of $n$.
+
+In \viewdistance two states $\state_1, \state_2 \in \states$ are grouped \iffN $\gfctdistance(\state_1) = \gfctdistance(\state_2)$. Hence the equivalence classes in \eqrelview are 
+\begin{align*}
+	\eqclassv &= \{\state' \in \states \mid \gfctdistance(\state') = \gfctdistance(\state) = \tilde{d} \in \natnums\}  &\text{if } \distpath(\chgph, \bar{\states}, \state) \neq \infty \\
+	\eqclassv &= \{\state \in \states \mid \gfctdistance(\state) = \infty\} &\text{otherwise } 
+\end{align*}
+
+Thereby the obtained set of states $\states'$ of \viewparamvalueseq is the union of the equivalence classes of \eqrelview. It is $\states' = \bigcup_{\state \in \states} \eqclassv =: \states_1 \cup \states_2$ where
+
+\begin{align*}
+	\states_1 &:= \{\{\state \in \states \mid \distpath(\chgph, \bar{\states}, \state) = \distval - (\distval \text{ mod } n) =: \tilde{d} \neq \infty\} \mid \tilde{d} \in \gfctdistance[\states]\} \\
+	&\;= \{\{\state \in \states \mid \gfctdistance(\chgph, \bar{\states}, \state) = \distval - (\distval \text{ mod } n) =: \tilde{d} \neq \infty\} \mid \tilde{d} \in \gfctdistance[\states]\} \text{ and}\\
+	\states_2 &:= \{\{\state \in \states  \mid \distpath(\chgph, \bar{\states}, \state) = \infty\}\} = \{\{\state \in \states \mid \gfctdistance(\state) = \infty\}\}.
+\end{align*}
+
 \begin{figure}[h]
-	\begin{minipage}{.6\textwidth}
+	\begin{minipage}{.45\textwidth}
 		%		\hspace{5mm}		
 		\input{./04/images/distance/distBefore}
 	\end{minipage}%
-	\begin{minipage}{.5\textwidth}
+	\begin{minipage}{.18\textwidth}
 		\input{./04/images/distance/distForwAfter}
 	\end{minipage}
-	\caption{Simplified representations of \mdp (left) and the \viewN \viewdistance on it (right)}
+	\begin{minipage}{.35\textwidth}
+		\hspace{30mm}
+		\vspace{1.5mm}
+		\input{./04/images/distance/distForwGran2After}
+	\end{minipage}	
+	\caption{Simplified representations of \mdp (left), the \viewsN $\viewdistance(\{\state_1, \state_6\}, 1)$ (middle) and $\viewdistance(\{\state_1, \state_6\}, 2)$ on it (right). \redcomment{CANNOT SHIFT RIGHT DIAGRAM FURTHER TO THE RIGHT}}
 	\label{fig:Distance}  
 \end{figure}
 
-\begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN. The \emph{reverse distance} between disjoint $\states_1, \states_2 \subseteq \states$ is the length of the shortest path to a state $\state_1 \in \states_1$ from a $\state_2 \in \states_2$. That is, if $\states_1 \cap \states_2 = \emptyset$ it is		
-	\[
-	\distpathrev(\chgph, \states_1, \states_2) := \min\{\lenpath(\path) \mid \path \in \pathset, \; \plast(\path) \in \states_1, \; \pfirst(\path) \in \states_2\},
-	\]
-	\noindent
-	If $\states_1 \cap \states_2 \neq \emptyset$, it is $\distpathrev(\chgph, \states_1, \states_2) := 0$.
-\end{definition}
+In Figure \ref{fig:varValIdent} we can observe the \viewsN $\viewdistance(\{\state_1, \state_6\}, 1)$ (middle) and $\viewdistance(\{\state_1, \state_6\}, 2)$ (right) on \chgph. It is
+
+\redcomment{Can not get rid of left indent below in left minipage}
+
+\begin{minipage}{.4\textwidth}
+	\begin{align*}
+		\hspace{-10mm}
+		\distpath(\chgph, \{\state_1, \state_6\}, \state_i) &= 0 \text{ for } i \in \{1,6\},\\
+		\distpath(\chgph, \{\state_1, \state_6\}, \state_i) &= 2 \text{ for } i = 4,
+	\end{align*}	
+\end{minipage}
+\begin{minipage}{.5\textwidth}
+	\begin{align*}
+		\hspace{10mm}
+	 	\distpath(\chgph, \{\state_1, \state_6\}, \state_i) &= 1 \text{ for } i \in \{2,3,7,8\},\\
+		\distpath(\chgph, \{\state_1, \state_6\}, \state_i) &= \infty \text{ for } i \in \{5,9,10\}
+	\end{align*}
+\end{minipage}
+
+
+This how we obtain, the set of states of $\viewdistance(\{\state_1, \state_6\}, 1)$ as displayed in the figure. For $\viewdistance(\{\state_1, \state_6\}, 2)$ (right) the states $\{\state_1, \state_6\}$ and $\{\state_2, \state_3, \state_7, \state_8\}$ of $\viewdistance(\{\state_1, \state_6\}, 1)$ merge into one, as $\gfctdistance(\state_i) = 0 - (0 \text{ mod } 2) = 0 - 0 = 0 = 1 - 1 =1 - (1 \text{ mod } 2) = \gfctdistance(\state_j)$ for $j \in \{1,6\}$ and $i \in \{2,3,7,8\}$.
+
+A probable usecase of a view is to find out how a certain state is or was reached. For this we define a \viewN that group states that have the same distance from a given state, when only traversing transitions backwards.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN. The \emph{reverse distance} between disjoint $\states_1, \states_2 \subseteq \states$ is the length of the shortest path from a state $\state_1 \in \states_1$ to a $\state_2 \in \states_2$ ignoring the direction of edges. That is, if $\states_1 \cap \states_2 = \emptyset$ it is		
+	Let $\chgph = \chgphtuple$ be \achgphN, $\bar{\states} \subseteq \smstates \subseteq \states$ and $n \in \natnums$. The \viewN \viewdistancerev is defined by its \grpfctN \gfctdistancerev where $\gfctsubdistancerev : \smstates \to \imggrp$ with 
 	\[
-	\distpathbi(\chgph, \states_1, \states_2) := \min\{\lenpath(\pathbi) \mid \pathbi \in \pathbiset, \; \pfirst(\pathbi) \in \states_1, \; \plast(\pathbi) \in \states_2\},
+	\gfctdistancerev(\state) =
+	\begin{cases}
+		\distval - (\distval \text{ mod } n), &\text{if } d \neq \infty \\
+		\infty, &\text{otherwise}
+	\end{cases}		
 	\]
-	\noindent
-	If $\states_1 \cap \states_2 \neq \emptyset$, it is $\distpathbi(\chgph, \states_1, \states_2) := 0$.
+	where $\distval = \distpathrev(\chgph,\bar{\states}, \state)$ and $\imggrp = \natnums \cup \{\infty\} \cup \remset$.
 \end{definition}
 
+Note that the only difference of \viewdistancerev to \viewdistance is that \distpathrev is used instead of \distpath, with the only difference of \distpath and \distpathrev being that $\pfirst(\path)$ and $\plast(\path)$ are swapped. Hence, equality, equivalence classes and the new state set behave and are constructed analogously to the \viewN \viewdistance.
 
-\redcomment{Variants of ALGORITHM which allow directinoless or only reverse traversal of the \mdpN are provided in the appendix. The respective views would utilize their returned set in the exact same way. That is, \fctdistdefault is replaced with the set of the respective algorithm and nothing else changes.}
+For cases where the direction of transitions is of no further importance we define a \viewN \viewdistancebi utilizing \distpathbi.
+
+\begin{definition}
+	Let $\chgph = \chgphtuple$ be \achgphN, $\bar{\states} \subseteq \smstates \subseteq \states$ and $n \in \natnums$. The \viewN \viewdistancebi is defined by its \grpfctN \gfctdistancebi where $\gfctsubdistancebi : \smstates \to \imggrp$ with 
+	\[
+	\gfctdistancebi(\state) =
+	\begin{cases}
+		\distval - (\distval \text{ mod } n), &\text{if } d \neq \infty \\
+		\infty, &\text{otherwise}
+	\end{cases}		
+	\]
+	where $\distval = \distpathbi(\chgph,\bar{\states}, \state)$ and $\imggrp = \natnums \cup \{\infty\} \cup \remset$.
+\end{definition}
+
+Again, because the only difference of \viewdistancebi to \viewdistance is that \distpathbi is used instead of \distpath, we omit explaining behavior and construction of equality, equivalence classes and the new state set.
+
+\redcomment{Variants of ALGORITHM which allow directionless or only reverse traversal of the \mdpN are provided in the appendix. The respective views would utilize their returned set in the exact same way. That is, \fctdistdefault is replaced with the set of the respective algorithm and nothing else changes.}
+
+\begin{figure}[h]
+	\begin{minipage}{.5\textwidth}
+		\hspace{15mm}		
+		\input{./04/images/distance/distRevAfter}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		\hspace{10mm}		
+		\input{./04/images/distance/distBiAfter}
+	\end{minipage}	
+	\caption{Simplified representations of the \viewsN $\viewdistancerev(\{\state_1, \state_6\}, 1)$ (middle) and $\viewdistancebi(\{\state_1, \state_9\}, 1)$ (right) on the \chgph from Figure \ref{fig:Distance}.} 
+	\label{fig:DistanceRevBi}  
+\end{figure}
+
+\redcomment{Explanation could be added}
 
 
 
@@ -1074,7 +1199,7 @@ A special kind of strongly connected components is the the bottom strongly conne
 	\label{fig:bsccAfter}  
 \end{figure}
 
-In the implementation strongly connected components are determined using the algorithm of Gabow, afterwards filtering those \sccsN that have only transitions to states within the \sccN. Equality, equivalence classes and the new state set are constructed analogously to the \viewN \viewscc.
+In the implementation strongly connected components are determined using the algorithm of Gabow, afterwards filtering those \sccsN that have only transitions to states within the \sccN. Equality, equivalence classes and the new state set behave and are constructed analogously to the \viewN \viewscc.
 
 \subsection{Utilizing the MDP Result Table}
 In this section we will discuss \viewsN utilizing the result table. The actual implementation is relies on one powerful \viewN that can set to perform arbitrary actions using model checking results.
