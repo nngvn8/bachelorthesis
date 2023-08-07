@@ -12,14 +12,22 @@
 	\begin{tikzpicture} [scale=3, every initial by arrow/.style={thick}]
 		
 		
+%		\path
+%		(\basex,		\basey) 		node[gstate,init, initial left] (sbot) 	{$\notppty$} 
+%		
+%		;
+%		
+%		\node[gstate, above right = of sbot] (t1) 	{$\scc_1$};
+%		\node[gstate, below right = of sbot] (t2) 	{$\scc_2$};
+%		\node[gstate, above right = of t2] 	 (t3) 	{$\scc_3$};
 		\path
-		(\basex,		\basey) 		node[gstate,init, initial left] (sbot) 	{$\notppty$} 
+		(\basex,		\basey) 		node[gstate,init, initial left] (sbot) 	{$\emptyset$} 
 		
 		;
 		
-		\node[gstate, above right = of sbot] (t1) 	{$\scc_1$};
-		\node[gstate, below right = of sbot] (t2) 	{$\scc_2$};
-		\node[gstate, above right = of t2] 	 (t3) 	{$\scc_3$};
+		\node[gstate, above right = 30pt and 0pt of sbot] (t1) 	{$\{\state_2, \state_3, \state_4, \state_5\}$};
+		\node[gstate, below right = 30pt and 0pt of sbot] (t2) 	{$\{\state_{10}, \state_{11}, \state_{12}\}$};
+		\node[gstate, above right = 30pt and -10pt of t2] 	 (t3) 	{$\{\state_6, \state_7, \state_8, \state_9\}$};
 		
 	
 		\path [trans] 		(sbot) 	edge node [midway,above]	{} 		(t1);		

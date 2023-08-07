@@ -1022,7 +1022,7 @@ With the formalization done we will introduce some views utilizing the concept c
 	\[
 	\gfctsubhascycle(\state) =
 	\begin{cases}
-			\remelem, &\text{if } \cycleset \neq \emptyset \\
+			\remelem, &\text{if } \exists \cycle \in \cycleset : \state \in \cycle \\
 			\notppty, &\text{otherwise}
 		\end{cases}
 	\]
@@ -1030,9 +1030,33 @@ With the formalization done we will introduce some views utilizing the concept c
 	and $\imggrp = \{\group, \remelem\}$.
 \end{definition}
 
-This \viewN groups all states that are contained in cycle with a length of at least $n$. It is to note that the affinity of a state to one or several respective cycles is lost.
+This \viewN groups all states that are contained in cycle with a length of at least $n$. It is to note that the affinity of a state to one or several respective cycles is lost. For $\state_1, \state_2$ they are grouped $\gfcthascycle(\state_1) = \gfcthascycle(\state_2) \neq \remelem$. Hence, the obtained equivalence classes are
+\begin{align*}
+	\eqclassv &= \{\state \in \states \mid \gfcthascycle(\state) = \remelem\} = \{\state\} &\text{if } \exists \cycle \in \cycleset : \state \in \cycle \\
+	\eqclassv &= \{\state \in \states \mid \gfcthascycle(\state) = \notppty\} &\text{otherwise}
+\end{align*}
 
-\redcomment{DISCUSSION OF EQUALITY, EQ CLASSES AND RESULTING STATES MISSING}
+The set of states $\states'$ of \viewhascycle is the union of the equivalence classes of \eqrelview. It is $\states' = \bigcup_{\state \in \states} \eqclassv =: \states_1 \cup \states_2$ where
+
+\begin{align*}
+	\states_1 &:= \{\{\state\} \mid \state \in \states, \,\text{if } \exists \cycle \in \cycleset : \state \in \cycle\} \\
+	&\;= \{\{\state\} \mid \state \in \states, \, \gfcthascycle(\state) = \remelem\} = \nogroupstates \\
+	\states_2 &:= \{\{\state \in \states  \mid \text{if } \exists \cycle \in \cycleset : \state \in \cycle \}\} = \{\{\state \in \states \mid \gfcthascycle(\state) = \notppty\}\}.
+\end{align*}
+
+\begin{figure}[h]
+	\centering
+	\input{./04/images/cycles/cyclesBefore}			
+	\caption{Simplified representation of \mdp}
+	\label{fig:cyclesBefore}  
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\input{./04/images/cycles/cyclesAfterHas}
+	\caption{Simplified representations of the \viewN \viewhascycle on \chgph from Figure \ref{fig:cyclesBefore}. The states $\state_{12}$ and $\state_{13}$ are grouped since they are the only states not on a cycle.}
+	\label{fig:cycleAfterHas}  
+\end{figure}
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $n \in \natnums$. The \viewN \viewexactcycle is defined by its \grpfctN \gfctexactcycle where $\gfctsubexactcycle : \smstates \to \imggrp$ with
@@ -1044,30 +1068,18 @@ This \viewN groups all states that are contained in cycle with a length of at le
 	\label{def:exactcycleview}
 \end{definition}
 
-This \viewN groups states that have the same set of cycles they are contained in. Thus if $C_1$ and $C_2$ are distinct cycles and $\state_1, \state_2 \in \cycle_1$ and $\state_1 \in \cycle_2$ but $\state_2 \notin \cycle_2$ they are not grouped. It suffices that a state is on one cycle that the other one is not on, in order for the states not being grouped. In graphs with many cycles this can lead to little grouping.
+This \viewN groups states that have the same set of cycles they are contained in. Thus if $\cycle_1$ and $\cycle_2$ are distinct cycles and $\state_1, \state_2 \in \cycle_1$ and $\state_1 \in \cycle_2$ but $\state_2 \notin \cycle_2$ they are not grouped. It suffices that a state is on one cycle that the other one is not on, in order for the states not being grouped. In graphs with many cycles this can lead to little grouping.
 
+Two states $\state_1, \state_2$ are grouped if $\gfctexactcycle(\state_1) = \gfctexactcycle(\state_2) \neq \remelem$. Hence, the obtained equivalence classes are
+\begin{align*}
+	\eqclassv &= \{\state' \in \states \mid \gfctexactcycle(\state') = \gfctexactcycle(\state) = \{\cycle_1, \dots, \cycle_n\} \subseteq \cycleset\}
+\end{align*}
 
-\begin{figure}[h]
-	\centering
-	\input{./04/images/cycles/cyclesBefore}			
-	\caption{Simplified representation of \mdp}
-	\label{fig:cyclesBefore}  
-\end{figure}
-
-
-
-\redcomment{DISCUSSION OF EQUALITY, EQ CLASSES AND RESULTING STATES MISSING}
+According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewexactcycle.
 
 \redcomment{GREEDY APPROACHES (STATE ON SINGLE CYCLE), AND SET APPROACH s $\to$ $C_1 \cup C_2$ omitted because not sure if needed}
 
-The \viewN above might be useful when having found cycles to see what cycles specifically exist. Often it is interesting to find cycles that consist only of transitions of the same action. The following \viewN accomplishes that.
-
-\begin{figure}[h]
-	\centering
-	\input{./04/images/cycles/cyclesAfterHas}
-	\caption{Simplified representation of the \viewN \viewhascycle on \mdp from Figure \ref{fig:cyclesBefore}}
-	\label{fig:cycleAfterHas}  
-\end{figure}
+The \viewN above might be useful when having found cycles to see what cycles specifically exist. It might be interesting to find cycles that consist only of transitions of the same action. The following \viewN accomplishes that.
 
 \begin{figure}[h]
 	\begin{minipage}{.5\textwidth}
@@ -1077,11 +1089,39 @@ The \viewN above might be useful when having found cycles to see what cycles spe
 	\begin{minipage}{.5\textwidth}
 		\input{./04/images/cycles/cyclesAfterExact5}
 	\end{minipage}
-	\caption{\viewNC \viewexactactcycle[0] (left) and \viewN \viewexactactcycle[5] (right)}
-	\label{fig:cycleAfterExtact0}  
+	\caption{\viewNC $\viewexactcycle(2)$ (left) and \viewN $\viewexactcycle(5)$ (right) on \chgph from Figure \ref{fig:cyclesBefore}}
+	\label{fig:cycleAfterExtact}  
 \end{figure}
 
+In Figure \ref{fig:cycleAfterExtact} we can observe the \viewsN of $\viewexactcycle(2)$ and $\viewexactcycle(5)$ on \chgph from Figure \ref{fig:cyclesBefore}. In the simplified representation of \achgphN, we find six cycles of size at least two:
 
+\begin{align*}
+	\cycle_1 &= (\state_1, \action, \state_2, \action, \state_3, \actionb, \state_4, \actionb, \state_5, \actionb, \state_6, \actionb, \state_7, \action, \state_8, \actionb, \state_1) \\
+	\cycle_2 &= (\state_1, \action, \state_2, \action, \state_3, \action, \state_7, \action, \state_8, \actionb, \state_1) \\
+	\cycle_3 &= (\state_3, \actionb, \state_4, \actionb, \state_5, \actionb, \state_6, \actionb, \state_7, \actionb, \state_3) \\
+	\cycle_4 &= (\state_7, \actionc, \state_9, \actionc, \state_{10}, \actionc, \state_{11}, \actionc, \state_7) \\
+	\cycle_5 &= (\state_1, \action, \state_2, \actionc, \state_7, \action, \state_8, \actionb, \state_1) \\
+	\cycle_6 &= (\state_3, \action, \state_7, \actionb, \state_3)
+\end{align*}
+
+\viewNC $\viewexactcycle(3)$ results as displayed as in the simplified representation on the left because because the following states are contained in exactly these cycles
+
+\begin{align*}
+	\state_1, \state_2, \state_8 &\text{ in } \cycle_1, \cycle_2, \cycle_5 \\
+	\state_3 &\text{ in } \cycle_1, \cycle_2, \cycle_3, \cycle_5, \cycle_6 \\
+	\state_7 &\text{ in } \cycle_1, \cycle_2, \cycle_3, \cycle_4, \cycle_5, \cycle_6 \\
+	\state_4, \state_5, \state_6 &\text{ in } \cycle_1, \cycle_3 \\
+	\state_9, \state_{10}, \state_{11} &\text{ in } \cycle_4
+\end{align*}
+and $\state_{12}$ and $\state_{13}$ are contained in no cycle of size at least two, i.e. $\gfctexactcycle(\state_{12}) = \gfctexactcycle(\state_{13}) = \emptyset$. For the $\viewexactcycle(5)$ it is $\cycle_{\chgph, 5} = \{\cycle_1, \cycle_2, \cycle_3\}$. Thereby we have the following states being exactly contained in these cycles:
+
+\begin{align*}
+	\state_1, \state_2, \state_8 &\text{ in } \cycle_1, \cycle_2 \\
+	\state_3 &\text{ in } \cycle_1, \cycle_2, \cycle_3 \\
+	\state_7 &\text{ in } \cycle_1, \cycle_2, \cycle_3 \\
+	\state_4, \state_5, \state_6 &\text{ in } \cycle_1, \cycle_3 \\
+\end{align*}
+and $\gfctexactcycle(\state) = \emptyset$ for all remaining states \state.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $n \in \natnums$. The \viewN \viewexactactcycle is defined by its \grpfctN \gfctexactactcycle where $\gfctsubexactactcycle : \smstates \to \imggrp$ with
@@ -1092,11 +1132,25 @@ The \viewN above might be useful when having found cycles to see what cycles spe
 	and $\imggrp = \powerset{\cycleset} \cup \remset.$
 \end{definition}
 
-The \viewN specializes the \viewN from Definition \ref{def:exactcycleview} in the sense that it additionally requires for all $\cycle \in \gfctexactcycle$ that all actions occurring in the cycle are the same. \redcomment{doubling to above definition?}
+The \viewN specializes the \viewN from Definition \ref{def:exactcycleview} in the sense that it additionally requires for all $\cycle \in \gfctexactcycle$ that all actions occurring in the cycle are the same.The reasoning about the equality of the \grpfctN values, the obtained equivalence classes and the resulting set of states $\states'$ of the \viewN is analogous to \viewexactcycle and thus omitted.
 
-\redcomment{NO DISCUSSION IF PREVIOUSLY}
+\begin{figure}[h]
+	\centering	
+	\input{./04/images/cycles/cyclesAfterExactAct0}	
+	\caption{Simplified representation of the \viewN \viewcycleset on \mdp from Figure \ref{fig:cyclesBefore}}
+	\label{fig:cycleAfterExactAct2}
+\end{figure}
 
-In definition \ref{def:exactcycleview} we stated that little grouping can occur when mapping on the set of cycles in all of which the state is contained. Hence we provide the definition and implemenation of a \viewN that groups states even though their set of cycles is not equal, but there is sufficient similarity in the cycles they are on.
+In Figure \ref{fig:cycleAfterExactAct2} the simplified representation of $\viewexactactcycle(2)$ on \chgph from Figure \ref{fig:cyclesBefore} can be observed. From cycles listed in the discussion of Figure \ref{fig:cycleAfterExtact} only $\cycle_3$ and $\cycle_4$ consist of transitions with the same actions, i.e. only $\cycle_3, \cycle_4 \in \gfctexactactcycle[\states]$ for $n = 2$. The \viewN \viewexactactcycle in Figure \ref{fig:cycleAfterExactAct2} results because the following states are contained in exactly these cycles
+
+\begin{align*}
+	\state_3, \state_4, \state_5, \state_6 &\text{ in } \cycle_3 \\
+	\state_7 &\text{ in } \cycle_3, \cycle_4 \\
+	\state_9, \state_{10}, \state_{11} &\text{ in } \cycle_4
+\end{align*}
+and for all remaining states \states it is $\gfctexactactcycle(\state) = \emptyset$.
+
+When discussing definition \ref{def:exactcycleview} we stated that little grouping can occur when mapping on the set of cycles in all of which the state is contained. Hence we provide the definition and implementation of a \viewN that groups states even though their set of cycles is not equal, but there is sufficient similarity in the cycles they are on. This might be useful to find clusters of cycles.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $n \in \natnums$. The \viewN \viewcycleset is defined by its \grpfctN \gfctcycleset where $\gfctsubcycleset : \smstates \to \imggrp$ with
@@ -1109,16 +1163,17 @@ In definition \ref{def:exactcycleview} we stated that little grouping can occur 
 \begin{figure}[h]
 	\centering
 	\input{./04/images/cycles/cyclesAfterSet0}
-	\caption{Simplified representation of the \viewN \viewcycleset on \mdp from Figure \ref{fig:cyclesBefore}} 
+	\caption{Simplified representation of the \viewN $\viewcycleset(2)$ on \mdp from Figure \ref{fig:cyclesBefore}} 
 	\label{fig:cycleAfterSet0}  
 \end{figure}
 
+In Figure \ref{fig:cycleAfterSet0} the simplified representation of $\viewexactactcycle(2)$ on \chgph from Figure \ref{fig:cyclesBefore} can be observed. Since it is $n=2$ we consider the same cycles as in the discussion of Figure \ref{fig:cycleAfterExtact}. It is $\state_1, \dots, \state_8 \in \cycle_1$. Hence, for $i \in \{1, \dots, 8\}$ it is $\gfctcycleset(\state_i) \subseteq \{\state_1, \dots, \state_8\}$. For $\state \in \{\state_1, \dots, \state_8\} \setminus \{\state_7\}$ there is no cycle containing any other state than $\{\state_1, \dots, \state_8\}$. Thus, for $i \in \{1, \dots, 8\}$ it is $\gfctcycleset(\state_i) = \{\state_1, \dots, \state_8\}$.For the state $\state_7$ it is $\gfctcycleset(\state_7) = \{\state_1, \dots, \state_{11}\}$ because of $\state_7 \in \cycle_4$ and $\state_{12}, \state_{13}$ are contained in no cycle of length at least two. Also because $\state_{12}, \state_{13}$ are contained in no cycle of length at least two it is $\gfctcycleset(\state_{12}) = \gfctcycleset(\state_{13}) = \emptyset$. Obviously for $\state_9, \state_{10}, \state_{11}$ it is $\gfctcycleset(\state_i) = \{\state_7, \state_9, \state_{10}, \state_{11}\}$ because it is only $\state_9, \state_{10}, \state_{11} \in \cycle_4$ as $\state_7$ denies them being on any other (\emph{simple}) cycle. Thereby the grouping results in a view as depicted as simplified representation in Figure \ref{fig:cycleAfterSet0}.
 
-Each state is mapped to the set of states resulting from joing the state sets of all the cycles the state is on. 
+
+Each state is mapped to the set of states resulting from joining the state sets of all the cycles the state is on. 
 
 \subsubsection{Strongly Connected Components}
-Strongly connect components (\sccN) are of major importance in model checking \redcomment{I think so because I found the terms many times in the book. Remaining question: really? why?}
-Therefore it is feasible to consider a \viewN utilizing strongly connected components. Deviating from most definitions we will define \sccN not as a subgraph but only as the set of its nodes. Moreover the definition is written in the terms of \achgphN.
+Strongly connect components (\sccN) are are interesting when exploring \achgphN because they group states where may happen some complex operation. Morover finding strongly connected components is way more efficient than finding cycles. Since every cycle also is a strongly connected component finding strongly connected components can be seen as finding a set that contains cycles. Therefore it is feasible to consider a \viewN utilizing strongly connected components. Deviating from most definitions we will define \sccN not as a subgraph but only as the set of its nodes. Moreover the definition is written in the terms of \achgphN.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN and $\smstates \subseteq \states$. A set $\scc \subseteq \states$ is called \emph{strongly connected component} if for all $\state, \state' \in \scc$ either it holds
@@ -1136,7 +1191,7 @@ Therefore it is feasible to consider a \viewN utilizing strongly connected compo
 %	\end{align*}
 %	That is for every state in the set there has to exist a sequence of transitions to every other state of the set. The state itself is always considered a reachable by itself, i.e. there does not need to exist a self loop. In consequence, each state is contained in stronlgy connected component namely at least in the one that only contains the state. 
 	\noindent
-	The set of all strongly connected components of \chgph is denoted with \setscc.
+	The set of all strongly connected components of \chgph, that contain at least $n$ states, is denoted with \setscc.
 \end{definition}
 
 Since the strong connection is an equivalence relation the \sccsN are equivalence classes and hence disjoint. To find \sccsN Tarjans algorithm is the classic. In the implementation an improved variant from Gabow is used supplied by the \jgrapht library. \redcomment{CITATION}
@@ -1144,12 +1199,16 @@ Since the strong connection is an equivalence relation the \sccsN are equivalenc
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $n \in \natnums$. The \viewN \viewscc is defined by its \grpfctN \gfctscc where $\gfctsubscc : \smstates \to \imggrp$ with
 	\[
-	\state \mapsto \{\scc \in \setscc \mid \state \in \scc, n \leq |\scc|\}
+	\state \mapsto \{\scc \in \setscc \mid \state \in \scc\}
 	\]
 	and $\imggrp = \setscc \cup \remset$.
 \end{definition}
 
-This \viewN groups all states together that are in the same \sccN. Because \sccsN are disjoint each \state will be mapped to its one and only \sccN. This is because... \redcomment{DISCUSSION OF EQUALITY, EQ CLASSES AND RESULTING STATES MISSING}
+This \viewN groups all states together that are in the same \sccN. Note that for all states \state \gfctscc(\state) is a singleton set because \sccsN are disjoint. That is, each state is mapped to the set only containing its strongly connected component or to the empty set if its \sccN has less than $n$ elements. In the \viewN \viewscc two states $\state_1, \state_2 \in \states$ are grouped if $\gfctscc(\state_1) = \gfctscc(\state_2) \neq \remelem$. Hence the equivalence classes are:
+\begin{align*}
+	\eqclassv &= \{\state' \in \states \mid \gfctscc(\state') = \gfctscc(\state) =: \scc \in \setscc\} \quad\quad\quad \text{for } \state \in \scc
+\end{align*}
+According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewexactcycle.
 
 \begin{figure}[h]
 	\begin{minipage}{.55\textwidth}
@@ -1160,32 +1219,36 @@ This \viewN groups all states together that are in the same \sccN. Because \sccs
 %		\hspace{5mm}
 		\input{./04/images/sccs/sccAfter}
 	\end{minipage}
-		\caption{Simplified representations of \mdp (left) and the \viewN \viewscc on it (right)}
+		\caption{Simplified representations of \mdp (left) and the \viewN $\viewscc(2)$ on it (right)}
 		\label{fig:sccMin2}  
 \end{figure}
+
+In Figure \ref{fig:sccMin2} the simplified representation of $\viewscc(2)$ (right) on \chgph (left) can be observed.. The \sccsN in \chgph are $\{\state_1\}, \{\state_2, \state_3, \state_4, \state_5\}, \{\state_6, \state_7, \state_8, \state_9\}, \{\state_{10}, \state_{11}, \state_{12}\}$ and $\{\state_{13}\}$. Because the \sccN of state $\state_{13}$ has not cardinality two but one it is mapped to the empty set and would be grouped with any other \state whoms strongly connected component has less than two elements.
 
 A special kind of strongly connected components is the the bottom strongly connected component.
 
 \begin{definition}
-	Let \scc be a \sccN. A \emph{bottom strongly connected component} (\bsccN) is a \sccN where it holds that: \redcomment{concurrent versions}
+	Let \scc be a \sccN. A \emph{bottom strongly connected component} (\bsccN) is a \sccN where it holds that:
 	\[
 	\forall \state \in \scc : \forall (\state, \action, \state') \in \trans : \state' \in \scc
 	\]
-	\[
-	\forall \state \in \scc : \bigsum{t \in \scc} \trans(\state, t) = 1
-	\]
-	That is from \scc there is no state reachable outside of \scc. The set of bottom strongly connected components of \chgph is denoted with \setbscc.
+%	\[
+%	\forall \state \in \scc : \bigsum{t \in \scc} \trans(\state, t) = 1
+%	\]
+	That is from \scc there is no state reachable outside of \scc. The set of all bottom strongly connected components of \chgph, that contain at least $n$ states, is denoted with \setbscc.
 \end{definition}
 
-\redcomment{These are of special relevance because..}
+\redcomment{Bottom strongly connected components are of relevance because they pose a terminal structure of an \chgph that can not be left.}
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN and $\smstates \subseteq \states$. The \viewN \viewbscc is defined by its \grpfctN \gfctbscc where $\gfctsubbscc : \smstates \to \imggrp$ with
 	\[
-	\state \mapsto \{\scc \in \setbscc \mid \state \in \scc, n \leq |\scc|\}
+	\state \mapsto \{\scc \in \setbscc \mid \state \in \scc\}
 	\]
 	and $\imggrp = \setbscc \cup \remset$.
 \end{definition}
+
+The \viewN \viewbscc groups all states together that are in the same \bsccN. That is, it is a specialization of \viewscc, because instead of all \sccsN the set is no restricted to the ones where there is no outgoing transition to another \sccN. Hence, equality, equivalence classes and the state set behave and are constructed very similarly.
 
 \begin{figure}[h]
 	\begin{minipage}{.55\textwidth}
@@ -1195,16 +1258,29 @@ A special kind of strongly connected components is the the bottom strongly conne
 	\begin{minipage}{.5\textwidth}		
 		\input{./04/images/sccs/bsccAfter}
 	\end{minipage}
-	\caption{Simplified representations of \mdp (left) and the \viewN \viewbscc on it (right)}
+	\caption{Simplified representations of \mdp (left) and the \viewN \viewbscc(0) on it (right)}
 	\label{fig:bsccAfter}  
 \end{figure}
 
-In the implementation strongly connected components are determined using the algorithm of Gabow, afterwards filtering those \sccsN that have only transitions to states within the \sccN. Equality, equivalence classes and the new state set behave and are constructed analogously to the \viewN \viewscc.
+In Figure \ref{fig:bsccAfter} the simplified representation of $\viewbscc(0)$ (right) on \chgph (left) can be observed. The \sccsN in \chgph are $\{\state_1\}, \{\state_2, \state_3, \state_4, \state_5\}, \{\state_6, \state_7, \state_8, \state_9\}, \{\state_{10}, \state_{11}, \state_{12}\}$ and $\{\state_{13}\}$. The only ones where there is no state with an outgoing transition to state in another \sccN are $\{\state_6, \state_7, \state_8, \state_9\}$ and $\{\state_{13}\}$. Hence these two sets of states become a new state \viewbscc while all remaining states are mapped to $\emptyset$ and thereby grouped together.
 
-\subsection{Utilizing the MDP Result Table}
-In this section we will discuss \viewsN utilizing the result table. The actual implementation is relies on one powerful \viewN that can set to perform arbitrary actions using model checking results.
+In the implementation strongly connected components are determined using the algorithm of Gabow, afterwards filtering those \sccsN that have only transitions to states within the \sccN. When bottom strongly connected components are to be determined the found set of strongly connected components is then filtered, retaining those, that meet the requirement of being a \bsccN.
 
-\redcomment{needhelp Understanding Cluster}
+\subsection{Utilizing the Model Chekcking results}
+In this theses we wont go into detail about model checking. Basic goals of model checking are calculating minimal and maximal expected values or probabilities. When model checking an \chgph these results are calculated statewisely. In this section we call an arbitrary expectation or probability \emph{property}. We will group based on the value of a property.
+
+\begin{definition}
+	The function $\propfct : \states \to \realnums$ is called \emph{property function}. It maps each state to a property value.
+\end{definition}
+
+\begin{definition}
+		Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$, $\propfct : \states \to \realnums$ a property function and $Z = \{Z_1, \dots, Z_n\}$ a partition on $\propfct[\states]$. \redcomment{NAME MISSING}
+		\[
+		\state \mapsto Z_i \quad\quad\quad \text{where } \propfct(\state) \in Z_i \in Z \;\; (i \in \{1, \dots, n\}) 
+		\]
+\end{definition}
+\redcomment{Ideas that came, when writing this part now: Disjunctive composition! Has}
+
 
 	
 \end{document} 

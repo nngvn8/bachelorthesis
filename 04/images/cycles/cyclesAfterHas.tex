@@ -13,8 +13,8 @@
 		%		\createstate{s1}{3,2+4}{$\state_1$};
 		\path
 		(\basex,		\basey+2) 		node[gstate] (s1) 	{$\state_1$} 
-		(\basex+2,		\basey+4) 		node[gstate,initial,initial text=,initial distance=18pt] (s2) 	{$\state_2$} 
-		(\basex+5,		\basey+3.5) 	node[gstate] (s3) 	{$\state_3$} 
+		(\basex+2,		\basey+4) 		node[gstate] (s2) 	{$\state_2$} 
+		(\basex+5,		\basey+3.5) 	node[gstate,initial above,initial text=,initial distance=18pt] (s3) 	{$\state_3$} 
 		(\basex+8,		\basey+4) 		node[gstate] (s4) 	{$\state_4$}
 		(\basex+10,		\basey+2) 		node[gstate] (s5) 	{$\state_5$}
 		(\basex+8,		\basey+0) 		node[gstate] (s6) 	{$\state_6$}
@@ -33,7 +33,7 @@
 		\path [trans] (s5)	edge node [midway,below right]{\actionb} 	(s6);
 		\path [trans] (s6) 	edge node [midway,above]{\actionb} 			(s7);
 		\path [trans] (s7)	edge node [midway,above]{\action} 			(s8);
-		\path [trans] (s8) 	edge node [midway,below left]{\action} 			(s1);
+		\path [trans] (s8) 	edge node [midway,below left]{\actionb} 			(s1);
 		\path [trans] (s7) 	edge node [midway,above right=-2pt]{\actionc} 	(s9);
 		\path [trans] (s9) 	edge node [midway,above left]{\actionc} 	(s10);
 		\path [trans] (s10)	edge node [midway,above right]{\actionc} 	(s11);

@@ -25,7 +25,6 @@ supposed to give a short overview how view are implemented from a conceptional p
 	\item visualization in general and also visualization after grouping was not part of the objective of the thesis and already present. As within the thesis there is one general approach how the resulting new graph is generated.
 	\item every view class is registered in a public enum used to select which view is to be generated
 	\item every view class is derived from general view class.
-	\redcomment{\item in the implementation view still have the deprecated name cluster}
 	\item every view class has some private attributes to store information like
 	\item every view class has the methods
 	\item the most relevant one is build cluster. It consist of 4 parts. 1. Checking if it is already build aborting if so. 2.create a new column in the database where the results of the grouping function are to be saved. 3. The actual computing part of the grouping function, where for every state an SQL Query adding the respective grouping function value is added to a list of SQL Query strings. 4. all the SQL queries that contain the insertion operation of the grouping function value being executed.

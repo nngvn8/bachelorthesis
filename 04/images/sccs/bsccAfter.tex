@@ -13,17 +13,17 @@
 		
 		
 		\path
-		(\basex,		\basey) 		node[gstate,init, initial left] (sbot) 	{$\notppty$} 
+		(\basex,		\basey) 		node[gstate,init, initial left] (sbot) 	{$\emptyset$} 
 		
 		;
 		
-		\node[gstate, above right = 20pt and 60pt of sbot] (t1) 	{$\scc_1$};
-		\node[gstate, below right = 20pt and 60pt of sbot] (t2) 	{$\scc_2$};
+		\node[gstate, above right = 30pt and 70pt of sbot, anchor=center] (t1) 	{$\{\state_2, \state_3, \state_4, \state_5\}$};
+		\node[gstate, below right = 30pt and 70pt of sbot, anchor=center] (t2) 	{$\{\state_{13}\}$};
 			
 		
 		\path [trans] 		(sbot) 	edge node [midway,above]	{} 		(t1);		
-		\path [bendtrans] 	(sbot) 	edge node [midway,above]	{} 		(t2);		
-		\path [bendtrans] 	(t2) 	edge node [midway,above]	{} 		(sbot);		
+		\path [trans] 	(sbot) 	edge node [midway,above]	{} 		(t2);		
+%		\path [bendtrans] 	(t2) 	edge node [midway,above]	{} 		(sbot);		
 				
 		\path [trans] (sbot)	edge [loop above] (bot);
 		\path [trans] (t1)	edge [loop above] (t1);
