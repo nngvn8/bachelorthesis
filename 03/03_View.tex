@@ -6,7 +6,7 @@
 
 \begin{document}
 	
-\section{View}
+\section{View}  \label{ch:view}
 Views are the central objective of this thesis. The purpose of a \viewN is to obtain a simplification of a given \chgphN.  It is an independent \chgphN derived from a given \chgphN and represents a (simplified) \viewN on the given one - hence the name. Thereby the original \chgphN is retained.
 
 In the preliminaries transition systems and Markov Chains were listed as simpler version of \mdpsN. Roughly speaking transition systems and \mdpsN are special \mdpsN namely that have no probability distribution in each state for each action or no actions. When defining \viewsN it seems feasible to do so for the most general system of the ones of consideration.That is why we will define views on \mdpsN. Only for specific views and their implementation it is to be kept in mind that if they regard an action or the probability distribution of an action in a state it is not applicable to transitions systems or MCs respectively. \redcomment{topic init states}
@@ -295,6 +295,7 @@ Selective composition is a variant of parallel composition. It aims for applicat
 	\noindent
 	Then $\view[\viewppty_1 \pll \viewppty_2 \pll \dots \pll 
 	\viewppty_n \pll \viewppty]$ is a parallel composed \viewN with $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n} \pll \viewppty]$ being its parallel composed \grpfctN.
+	\label{def:compositionselective}
 \end{definition}
 
 The set \compselectset determines on which states the \viewN \view shall take effect. For instance, $\compselectset = \{(\grpfct[\viewppty_1], a_1),(\grpfct[\viewppty_1], b_1), (\grpfct[\viewppty_2], a_2)\}$ induces that \view only takes effect if 

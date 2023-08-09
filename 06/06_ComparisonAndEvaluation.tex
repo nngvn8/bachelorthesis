@@ -4,13 +4,13 @@
 
 
 \begin{document}
-\section{Comparison and Evaluation}
+\section{Comparison and Evaluation} \label{ch:eval}
 Performance Cycles -> Selection of states and induced subgraph easily possible perform cycle search only on subset of graph 
 -> in general generating views on subgraphs easily possible (only when needed for performance)
 Clustering exact Cycles when clustering exact cycles
 
 
-\subsection{Explore Modules}\ref{subsec:eval_modules}
+\subsection{Explore Modules} \label{subsec:evalmodules}
 
 One Purpose of \viewsN is to simplify \mdpsN to make them better understandable. Due to the state explosion problem already rather simple systems can become very hard to oversee. As an example consider the concurrency problem Dining Philosophers, where n philosophers have to share n-1 forks and each of them needs two to eat. They are sitting on a round table with forks between them. Each of them only has access to fork to their left and right, if it is not already occupied. When representing the problem with an \mdpN the choice of which fork the philosopher tries to pick is made at random with an uniform distribution. The respective prism File is shown in \redcomment{add Screenshot appendix}.
 

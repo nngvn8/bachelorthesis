@@ -3,8 +3,8 @@
 \input{prelude}
 
 
-\begin{document}
-\section{View Examples}
+\begin{document} 
+\section{View Examples} \label{ch:viewexmp}
 In this chapter we will introduce and discuss some \viewN examples created by the author. Their purpose is to understand the idea and concept of a \viewN and get to know some views that might be useful in real world applications. \\
 When considering \viewsN we only want to take into account those that utilize properties of MDPs or that do computations that are also feasible on normal graphs but are of explicit relevance MDPs.
 \subsection{Views Utilizing MDP Components}
@@ -968,8 +968,6 @@ For cases where the direction of transitions is of no further importance we defi
 
 Again, because the only difference of \viewdistancebi to \viewdistance is that \distpathbi is used instead of \distpath, we omit explaining behavior and construction of equality, equivalence classes and the new state set.
 
-\redcomment{Variants of ALGORITHM which allow directionless or only reverse traversal of the \mdpN are provided in the appendix. The respective views would utilize their returned set in the exact same way. That is, \fctdistdefault is replaced with the set of the respective algorithm and nothing else changes.}
-
 \begin{figure}[h]
 	\begin{minipage}{.5\textwidth}
 		\hspace{15mm}		
@@ -1194,7 +1192,7 @@ Strongly connect components (\sccN) are are interesting when exploring \achgphN 
 	The set of all strongly connected components of \chgph, that contain at least $n$ states, is denoted with \setscc.
 \end{definition}
 
-Since the strong connection is an equivalence relation the \sccsN are equivalence classes and hence disjoint. To find \sccsN Tarjans algorithm is the classic. In the implementation an improved variant from Gabow is used supplied by the \jgrapht library. \redcomment{CITATION}
+Since the strong connection is an equivalence relation the \sccsN are equivalence classes and hence disjoint. To find \sccsN Tarjan's and Sahir's algorithm is the classic \cite{Sharir1981}. In the implementation an improved variant from Gabow \cite{Gabow2000} is used supplied by the \jgrapht library.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $n \in \natnums$. The \viewN \viewscc is defined by its \grpfctN \gfctscc where $\gfctsubscc : \smstates \to \imggrp$ with

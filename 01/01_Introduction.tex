@@ -4,6 +4,66 @@
 
 \begin{document}
 \section{Introduction}
+
+\begin{itemize}
+	\item The topic of this thesis is Data Preparation for PMC-visualization, where PMC stands for probabilistic model checking. For this domain specific information and knowledge shall be used.
+	Model checking is a formal model-based method for system verification that is based on models describing the possible system behavior in mathematically precise and unambigous manner. A state in the model refers to a possible state of the system. More precisely model checking is an automated technique for given finite-state model and given property, to check if the property holds for every state \cite[chs. 1.1 and 1.2]{Baier2008}.
+	\item Probabilistic model checking allows not only nondeterministic transitions in the models checked, but also probabilistic ones. It is enabling to properly model and check systems in which also occur stochastic phenomena. 
+	\item The major limitation for algorithms running on the set of states of models, in order to model check them, is the state explosion problem. The state explosion problem states that the number of states grow exponentially in the number of variables in a program graph or the number of components in concurrent systems \cite[ch. 2.3]{Baier2008}. Already simple system models can lead to complex system behavior and an immense amount of states. This is not only a problem for algorithms but also humans who need to understand, analyze and review models in the context of model checking.
+	\item An interactive visualization can assist with this issue and even be made use of to achieve further goals such as debugging or model repair. However, the pure data volume is left unaffected.
+	\item There are visualization techniques for multivariate networks (networks where nodes and relationships have attributes) which can be used for larger amounts of data. But even these perform poorly for very large amounts of data as they are easily achievable with models used in model checking \cite{Kerren2014,Nobre2019}. 
+	
+	\item Moreover they represent approaches that are not specific to the domain.
+	\item In this thesis we want to explore approaches that use domain specific information and knowledge to preprocess data, that is then utilized for visualization.
+	\item Preprocessing is an approach to clean up and prepare data for Data Mining and Machine Learning. The goal is to prepare and clean up data so that they meet the requirements in order for algorithms being able to analyze them. In order to achieve that data is reduced if there is too little, inferred if there is not sufficient or cleaned if it includes noise or errors. Since the state explosion problem causes an immense amount of states approaches that reduce the amount of data are of interest. Methods reducing the amount of data either reduce the size of a single sample (feature selection), reduce the amount of samples (data elimination) or cluster samples to one single sample (data selection)\cite{Famili1997,Garcia2016}. Even though such methods exist they are not domain specific. Still concepts presented in this thesis are similar to the notion data selection.
+	Apart from
+	\item \redcomment{graph abstractions??}
+	\item Apart from \redcomment{XXXX} there exist domain specific to simplify \mdpsN. 
+	\item 
+	\item These define equivalence or order relations on the set of states, if these states can simulate each other stepwisely or in several steps with respect to atomic propositions, which causes preservation of certain logical formulae used in model checking.
+	\item Although certain logical formulae and hence model checking properties are preserved other information is lost.  
+	\item We introduce a concept that is very similar to abstraction \cite[pp. 499]{Baier2008}, but without permanently using on information. Moreover, its intention is to show humans interacting with the visualization the most information possible, rather than preserving logical formulae.
+	\item The introduced concept will be called \viewN.
+	\item After giving some fundamentals about the systems where \viewsN may be applied in chapter \ref{ch:prelim} we will formalize \viewsN, discuss types and operations on and with them in chapter \ref{ch:view}.
+	\item  In chapter \ref{ch:viewexmp} we will give examples of views utilizing \chgphN components, \viewsN utilizing the \chgphN structure and \viewsN utilizing results of model checking.
+	\item For this thesis the scope of views considered is limited to those that do not take advantage of the probabilities in \chgphsN.
+	\item Lastly the \viewsN will be evaluated in chapter \ref{ch:eval} by considering three usecases how \viewsN can be applied and used in order to help understanding the graph.
+	\item The thesis is aimed introducing a concept to get simplified representations on \chgphsN and exploring ideas for such simplifcations. It is written in the context of a project developing a predicitive model checking visualization tool at the chair in which some of the ideas may be used.
+	
+\end{itemize}
+
+%\begin{itemize}
+%	\item Objective of this thesis: Preprocessing of pmc-visualization
+%	\item where pmc probablistic model checking
+%	\item model checking: formal model-based method for system verification that is based on models describing the possible system behavior in mathematically precise and unambigous manner. A state in the model is refers to a possible state of the system. More precisely model checking is an automated technique for given finite-state model and given property, to check if the property holds for every state  \cite[chs. 1.1 and 1.2]{Baier2008}
+%	\item model checking
+%	\item problems with model checking
+%	\item probabilistic model checking allows not only nondeterministic transitions in the models checked, but also probabilistic ones. It is enabling to properly model and check systems in which also occur stochastic phenomena. 
+%	\item The major limitation for algorithms running on the set of states of models, in order to model check them, is the state explosion problem. The state explosion problem states that the number of states grow exponentially in the number of variables in a programm graph or the number of components in concurrent systems \cite[ch. 2.3]{Baier2008}. Already simple system models can lead to complex system behavior and an immense amount of states. This is not only a problem for algorithms but also humans who need to understand, analyze and review models in the context of model checking.
+%	\item state exponential growth of states in number of variables in a programm graph or the number of components in concurrent system \cite[ch. 2.3]{Baier2008}
+%	\item interactive visualization can help
+%	\item visualization has some tools of its own as in 
+%	\item not domain specific 
+%	\item want to use domain specific to preprocess data for visualization
+%	\item preprocessing is ... 
+%	\item includes teqnuiqes as
+%	\item normally used for algos -> some of general approaches usable but concrete techniques not really
+%	\item graph abstractions
+%	\item from pmc book
+%	\item what we want to is very similar
+%	\item these have disadvantge of losing information
+%	\item after giving some fundamentals about the systems where views may be applied in Chapter 2 we will the concept of
+%	\item formalize views, discuss types of views and operations on and with them 
+%	\item  In chaptergive examples of views utilizing mdp components, view utilizing the mdp structure and utilizing results of model checking
+%	\item limit scope to views that do not take adavantage of the probabilities of mdps
+%	\item evaluate them by considering three usecases how views can be applied and used in order to help understanding the graph
+%	\item thesis is aimed introducing a concept to get simplified representations on mdps and exploring ideas for such simplifcations.
+%	\item it is written in the context of a project at the chair developing a predicitive model checking visualization tool in which some of the ideas may be used.
+%	
+%\end{itemize}
+
+
+
 PMC is short for Probabilistic Model Checking.
 
 Model Checking is...
@@ -78,6 +138,7 @@ Apart from the methods available in visualization there exist domain specific ab
 	\item \redcomment{"Partial order reduction attempts to analyze only a fragment ˆTS of the full transition
 	system TS by ignoring several interleavings of independent actions."}
 	
+	
 %	\begin{itemize}
 %		\item on TS can simulate the other one stepwisely
 %		\item Simulating one has at least one matching action for each action of the simulated one			
@@ -89,6 +150,44 @@ Apart from the methods available in visualization there exist domain specific ab
 %		\item same atomic props
 %		\item for every successor there must exist an successor in the other MDP that are in relation
 %	\end{itemize}
+\end{itemize}
+
+\begin{itemize}
+	\item DATA PREPROCESSING is for algorithms!
+	\item GRACIA (context data Mining)
+	\item adapt data to requirement for data mining
+	\item data imperfect: containing incosistencies, redundancies
+	\item step between Problem understanding and mining (at End result exploitation)
+	\item Data preprocessing tasks: cleaning, mining, normalization, transformation, missing values imputation, integration, noise identification
+	\item problems: missing information $\to$ missing value imputation, noise (false values) $\to$
+	\item Dimensionality Reduction: Complexity, Understandability, Overfitting, Diminished Discriminative Power (far close, close far)
+	\item feature reduction: subset of features original problem, that still appropriately describe it
+	\item space transformation: new set of features combining orignal ones (no selection of promising)
+	\item instance reduction: decrease samples size without reducing quality of knowledge that can be extracted from it (reduce instances or create new ones)
+	\begin{itemize}
+		\item instance selection: minimum subset, independent algorithm, remove redundant (cleaning)
+		\item instance generation: remove but create also new artificial to fill gaps
+	\end{itemize}
+	\item Discretization: quantitative data to qualitative, build partition on quantitative, information loss (used very much!)
+	\item FAMILI
+	\item Data preprocessing may be performed on the data for the following reasons:
+	\begin{itemize}
+		\item solving data problems that prevent analysis
+		\item understanding the nature and performing more meaningful analysis
+		\item extracting more meaningful knowledge given set data
+	\end{itemize}
+	\item problems with data
+	\begin{itemize}
+		\item too much data: noisy and corrupt, feature extraction, irrelevant data, numeric/symbolic data (qualitative, quantitative)
+		\item too little data: missing attributes, missing attribute values, small amount of data
+		\item fractured data: incompatible, multiple sources, multiple levels of granularity
+	\end{itemize}
+	\item preprocessing techniques 
+	\begin{itemize}
+		\item Transformation: filtering, ordering editing, noise modelling
+		\item Information Gathering: visualization, elimination, selection, pca, sampeling
+		\item Generation of new information: new features, time series analysis, data fusion, Simulation, Dimensional analysis, constructive induction
+	\end{itemize}
 \end{itemize}
 
 In alternative to these general approaches domain specific preprocessing can be used to gain certain views on a given MDP that display areas or sets of states in a summarized more compact form. For this purpose structural properties as well as criteria obtained from the result vectors and their containing optimal actions can be utilized.
