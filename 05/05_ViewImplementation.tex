@@ -5,46 +5,40 @@
 
 \begin{document}
 \section{View Implementation} \label{ch:viewimpl}
-supposed to give a short overview how \viewN are implemented from a conceptional perspective. No more than 1 to 2 pages.
 
-\noindent
+The focus of this chapter is to delve into the implementation details of the "pmc-vis" web application, particularly concentrating on the mechanisms behind views and their integration within the system. The application primarily serves the purpose of exploring and visualizing \mdpsN. \viewsNC are used for preprocessing data and give simplified perspectives on \mdpsN.
+
+
+The pmc-vis project is a web-based application designed for MDP exploration and visualization. Since it is a web-based application the project can be divided into two main components: the frontend and the backend. The frontend is responsible for rendering visualizations and providing various customization options for viewing MDPs. The backend supplies data to the frontend in JSON format. It consists of three parts: several prism models, the Java server, and multiple databases. The Java server interacts with the prism models, controls them, parses them, and creates a dedicated database for each model. These databases primarily store the structure of \mdpsN, divided into two tables: one for states and another for transitions.
+
+Information such as property values are stored in dedicated columns in the respective state table. Whenever a new property is introduced, a new column is added to the database, assigning property values to each state. Similarly, values obtained from the grouping function of a particular view are stored in designated columns.
+
+Views are implemented within the server on the backend side in the 
+%\lstinline[breaklines=true]{prism.core.views} 
+\texttt{prism.core.views} package \redcomment{lstinline doesnt work for some reason}. 
+Each view is represented by a Java class. While individual views often have their own dedicated class, sometimes multiple similar views are implemented within a single class. All views inherit from an abstract class called "View." This abstract class contains common attributes and methods required by all views. Many of these are used for testing and I/O. In \redcomment{Figure} an overview of relevant attributes and methods is shown. The method is \texttt{buildView()} is of particular importance as it computes the mappings of the grouping function and updates the corresponding state table in the database. The process involves 1) checking prerequisites, 2) creating a new column for storing grouping results, 3) applying the grouping function, which returns the mapped values in the form of a list of SQL queries and 4) executing these SQL queries to insert the computed values.
+
+Creating a new view entails implementing the grouping function, the method \texttt{getCollumn()} , and any necessary private attributes. This approach matches the formal definition of \viewsN and ensures consistency in the process of generating \viewsN, given that each view is essentially defined by its grouping function.
+
+Parallel composition of views is achieved by simply creating another view, resulting in the grouping function entries being written to a new column in the database. Selective composition involves setting a  restriction that corresponds to $Z$ from Definition \ref{def:compositionselective}. This restriction is realized with a map, mapping column names to lists of allowed values. In contrast to the formalization this restriction is then used to generate an SQL Query, that selects states from the database that meet this requirement. This is achieved by setting the where clause of the SQL statement to a boolean formulae in conjunctive normal form that expresses the requirement.
+
+The concept of disregarding views is implemented a little less general as in the formalization. In this context, the variable "semigrouping" plays a crucial role, indicating whether something should be grouped or not. For categorizing views disregarding the disregarded value is fixed empty set or string. That is, only for states that would otherwise be mapped to an empty set or string, it can be set whether they are to be grouped. For instance, in the case of the \viewN \viewscc with a parameter "n" equal to 3, the variable "semigrouping" determines whether states in an \sccN with less than three states are grouped together. For binary views, an enumeration value decides whether \hasppty or \notppty should possibly be disregarded (not grouped), in the case of the variable "semigrouping" being true.
+
+To create a view, one accesses \nolinkurl{localhost:8080/<model\_id>/view:<viewname>?param=<param\_val\_1>\&param=<param\_val\_2>..."} via a browser, assuming the backend and frontend are operational. Afterward, accessing \nolinkurl{localhost:3000/?id=<model\_id>/} displays the graphical \viewN representation. The accessing of \nolinkurl{localhost:8080} causes the call of \texttt{createView()}, which creates a new view by calling its constructor, saves it in the internal list of views and finally calls \texttt{build()} on it, which causes the the grouping function values of the view being written to the database. When accessing \nolinkurl{localhost:3030} the frontend calls the backend which then creates and provides the JSON file to the frontend with the information stored in the database. This includes the saved information about the grouping function mappings.
+
+The implementation of views utilizes an internal graph structure that was particularly essential for views that employ grouping based on the structural properties of the MDP graph. To facilitate this, the application utilizes the \jgrapht library, which not only provides graph structures but also offers many common graph algorithms. This library was selected because it is the most common, most up to date java library for graphs with the best documentation and broadest functionality. The MDP itself is represented by the class MdpGraph that inherits from the class DirectedWeightedPseudgraph from the \jgrapht library. A directed weighted pseudograph has been chosen because it is directed, allows weights, self loops and multiple edges between nodes, as they occur in \chgphsN, where the weights are set to the transition probabilities, edges are transitions and nodes are states.
+
+To maintain a lightweight graph, nodes and vertices are represented as long values, referring to state and transition IDs. Information about states and transitions is accessible via hashmaps within the "MdpGraph" class. These hashmaps facilitate modular access to essential information for view functionalities.
+
+Apart from implementation of \viewsN and by them required classes and data structures, several functionalities have been implemented to allow the following actions at runtime without restarting the server:
 \begin{itemize}
-	\item implementation in web application pmc-vis that aims for exploring and viewing mdps.
-	\item since it is a webbased application the general project structure consists of two parts: the fronted and the backend. 
-	\item the frontend is responsible for the vizualization and provides several options to do so.
-	\item the backend supplies the data for the frontend in json format. Inernally it consists of three parts. The prism model, the java server and several databases. It controls a set of prism models, parses them and creates q database for each of them, containing the MDP structure. Each files contains two tables. One for the states one for transitions, where in both each line represents a state or a transition. 
-	\item information such as properties are written to the respective state table. For a new property a new collumn is added assigning each state the value of the property. In the same way the mapped values from the groupingfunction of a \viewN are stored in a dedicated collumn \redcomment{example?}
-	
-	\item \viewsN are implemented in the server on the backend in the package prism.core.views.
-	\item In general each \viewN is a dedicated java class, but sometimes several similar views are realized in a single java class
-	\item All views are derived from an abstract class View, which contains attributes that shall be available in all \viewsN, as well as methods that are needed by all views. Many of these are used for testing and I/O. In \redcomment{Figure} an overview of relevant attributes and methods is shown.	
-	\item The most important method is buildView() which accomplishes that the mappings of the grouping function are computed and written to the states table in the database of the model it is built on. It consist of 4 parts. 1. Checking if requirements for building a \viewN are met such as if the \viewN is not already built 2.create a new column in the database where the results of the grouping function are to be saved. 3. The actual application of the grouping function, where for every state an SQL Query the grouping function value is added to a list of SQL Query strings. This list is the return value of groupingFunction() 4. all the SQL queries that contain the insertion operation of the grouping function value being executed.
-	\item when implementing a new \viewN only the grouping function, getCollumn (and some I/O) as well as for the \viewN necessary private attributes have to be implemented. This makes sense because the process of actually generating the \viewN is always the same as it was already notable in the definitions of a view, where every \viewN is defined by its grouping function.
-	\item parallel composition is accomplished by simply building another view. This causes the grouping function entries to be written in a new collumn in the datatabse.
-	\item selective composition is achieved by setting a restriction that corresponds to Z from the Definition \ref{def:compositionselective}. This restriction is realized as a Map, that maps collumn names of the database to a list of values (Strings)
-	\item in contrast to the formalization this restriction is the used to compute an SQL Query, that selects states from the database that meet this requirement. This is accomplished by creating a query in which the where clause is boolean formulae in conjunctive normal form for a selection of collumns which values are allowed
-	\item the notation of disregarding views is implemented a little less general as it has been formalized here.
-	\item In general the variable semigrouping says whether or not something is not grouped. For categorizing \viewsN this option is fixed to one value. Only states that would otherwise be mapped to the empty set or string can instead not be grouped. An example is the \viewN \viewscc with $n = 3$. For this \viewN it can be selected with the variable semigrouping wheter or not states that are in an \sccN with less than three states are grouped. For binary views it can be selected with an enumeration value if \hasppty or \notppty shall be disregarded.
-	
-	\item to create a view currenty localhost:8080/<model\_id>/view:<viewname>?param=<param\_val\_1\&param=<param\_val2>... has to accessed via a browser, assumed the backend server and the frontend to be running. With <param\_val> required values for the view can be provided. Afterwards with localhost:3000/?id=<model\_id>/ the graphical representation of \viewN is displayed relying on the created json file from the backend. This has been created with the access of localhost:8080...
-	\item This caused a call of createView() which uses <viewname> to select which view is to be created and hands over the paramaters. After the View-Object has been instanciated it is called buildView() on it.
-	\item Apart from the actual implementation several functionalties have been implemented to allow the following actions at runtime without restarting the servers:
-	\begin{itemize}
-		\item Show current Information (Parameter values etc ) about \viewN as well as which \viewsN are currently built
-		\item rebuild \viewN with new parameters
-		\item remove all views or specific ones by providing id or name		
-	\end{itemize}
-	
-	
-	\item DATASTRUCTURE/GRAPH
-	\item implementation of views rely on an internal graph structure that was necessary for the views that implement grouping based on structural properties of the MDP graph. Views based on MDP components firstly where implemented with direct accesses on the database but later on also adopted to the internal graph structure for performance reasons
-	\item internal graph structure the \jgrapht library was used. It supplies graph structures as well as common algorithms performed on them. It was chosen because it is the most common, most up to date java library for graphs with the best documentation and broadest functionality. It is developed by ... has a java style documentation and is open source. The broad functionality assured that when implementing a \viewN it is most certainly assured that if necessary a respective algorithm is available.
-	\item The MDP was realized as a class extending an directed weighted pseudograph. The transition probabilities are stored as weights. A pseudograph has been chosen because it allows double edges as well as loops.	
-	\item in order of keeping the graph lean nodes and vertices are long values. The refer to the state id and the transition id respectively. The state id matches the one in the db whereas the transition id is newly generated because in the database a transition is a action with its probability distribution. This difference to the MDP definition is reversed with the internal graph structure for graph algorithms of the \jgrapht library to work properly on the MDP graph.
-	\item In order to access information about states and transitions, the class MdpGraph contains two hashmaps. One that maps longs to MdpState objects and one that maps longs to MdpTransition objects. The classes MdpState and MdpTranstion are inspired from the respective PRISM classes. There contain only as much information as currently neccessary for views to work. That is MdpState contains the variable values and MdpTransition contains the action. Accessing this information via a HashMap has enables a modular design if these information later on were to be rather stored somewhere else.
-	
-	\item \redcomment{example?}
-	
+	\item Display current \viewN information (Parameter values etc.) and built views
+	\item Rebuild \viewN with new parameters
+	\item Remove views by providing id or name		
 \end{itemize}
+
+
+
+
 
 \end{document}
