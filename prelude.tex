@@ -31,8 +31,10 @@
 	linkcolor=black,
 	urlcolor=black
 }
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
 
-\usetikzlibrary{calc}
+%\usetikzlibrary{calc}
 %\usepackage{xparse} % \newDocumentCommand for multiple optional arguments
 %\usepackage{titlecaps}
 
@@ -181,6 +183,7 @@
 \newcommand{\disregardelements}{\mt{{\disregardelem_1, \dots, \disregardelem_n}}}
 
 
+
 %\newcommand{\mdp}{def}\mdp
 %\newcommand{\mdpdef}
 
@@ -220,6 +223,7 @@
 \newcommand{\pptyexactcycle}{\mt{\{\cycle_n\}}}
 \newcommand{\pptyscc}{\mt{scc}}
 \newcommand{\pptybscc}{\mt{bscc}}
+\newcommand{\pptyident}{id}
 
 
 \newcommand{\gfctatomicprops}{\mt{\grpfct[\pptyatomicprops]}}
@@ -255,6 +259,7 @@
 \newcommand{\gfctexactactcycle}{\mt{\grpfct[\pptyexactactcycle]}}
 \newcommand{\gfctscc}{\mt{\grpfct[\pptyscc]}}
 \newcommand{\gfctbscc}{\mt{\grpfct[\pptybscc]}}
+\newcommand{\gfctident}{\mt{\grpfct[\pptyident]}}
 
 \newcommand{\gfctsubatomicprops}{\mt{\grpfctsub[\pptyatomicprops]}}
 \newcommand{\gfctsubinitstates}{\mt{\grpfctsub[\pptyinitstates]^\hasppty}}
@@ -289,6 +294,7 @@
 \newcommand{\gfctsubexactactcycle}{\mt{\grpfctsub[\pptyexactactcycle]}}
 \newcommand{\gfctsubscc}{\mt{\grpfctsub[\pptyscc]}}
 \newcommand{\gfctsubbscc}{\mt{\grpfctsub[\pptybscc]}}
+\newcommand{\gfctsubident}{\mt{\grpfctsub[\pptyident]}}
 
 
 \newcommand{\viewatomicprops}{\mt{\view[\pptyatomicprops]}}
@@ -324,6 +330,7 @@
 \newcommand{\viewexactactcycle}{\mt{\view[\pptyexactactcycle]}}
 \newcommand{\viewscc}{\mt{\view[\pptyscc]}}
 \newcommand{\viewbscc}{\mt{\view[\pptybscc]}}
+\newcommand{\viewident}{\mt{\view[\pptyident]}}
 
 %\newcommand{\viewatomicprops}{\mt{\view[\atomicprops]}}
 %\newcommand{\viewinitstates}{\mt{\view[\initstates]}}
@@ -497,6 +504,7 @@
 \newcommand{\bbigsum}[2][]{\mt{\mathlarger{\mathlarger{\sum}}_{#2}^{#1}}}
 \newcommand{\invimage}[2]{#1^{\mt{-1}(#2)}}
 \newcommand{\img}{\mt{Img}}
+\newcommand{\cond}{\mt{\,|\,}}
 
 %tickz
 %% \definecolor{darkred}{RGB}{196, 42, 42}

@@ -6,195 +6,68 @@
 \section{Introduction}
 
 \begin{itemize}
-	\item The topic of this thesis is Data Preparation for PMC-visualization, where PMC stands for probabilistic model checking. For this domain specific information and knowledge shall be used.
-	Model checking is a formal model-based method for system verification that is based on models describing the possible system behavior in mathematically precise and unambigous manner. A state in the model refers to a possible state of the system. More precisely model checking is an automated technique for given finite-state model and given property, to check if the property holds for every state \cite[chs. 1.1 and 1.2]{Baier2008}.
-	\item Probabilistic model checking allows not only nondeterministic transitions in the models checked, but also probabilistic ones. It is enabling to properly model and check systems in which also occur stochastic phenomena. 
+	\item PREWRITTEN INTRODUCTION
+	\item modern world heavily relies on ICT (Information and Communication Technology) systems
+	\item \redcomment{they are found in} devices used everyday as smartphones or laptops or in distributed systems such as the infrastructure sustaining the internet, but also in live saving ones utilized in medicine.
+	\item apart from performance and provided features and functionality, one of the most relevant aspects of such systems is their faulty free behavior, when active or running.
+	\item Although desirable many people have personal experience with such systems not behaving as expected, what is commonly referred to as a bug.
+	\item These can reach from a small disturbance in the user experience to inoperability of the whole system. Depending on the system the impact could be an annoyed user or financial damage of several million.
+	\item To prevent these possibly severe negative effects, methods to verify the correct behavior of a system are needed.
+	\item there exist several verification techniques
+	\item One approach for exhaustive is Model checking - a formal model-based method for system verification.
+	\item as the name suggests it is based on models describing the possible system behavior in a mathematically precise and unambigous manner. A state in the model refers to a possible state of the system. In precise terms, model checking is an automated technique, to check if a given property holds for every state of a given finite-state model. \cite[chs. 1.1 and 1.2]{Baier2008}.
+	\item Probabilistic model checking allows not only nondeterministic transitions in the models checked, but also probabilistic ones. It enables to properly model and check systems in which also stochastic phenomena are occurring. 
 	\item The major limitation for algorithms running on the set of states of models, in order to model check them, is the state explosion problem. The state explosion problem states that the number of states grow exponentially in the number of variables in a program graph or the number of components in concurrent systems \cite[ch. 2.3]{Baier2008}. Already simple system models can lead to complex system behavior and an immense amount of states. This is not only a problem for algorithms but also humans who need to understand, analyze and review models in the context of model checking.
 	\item An interactive visualization can assist with this issue and even be made use of to achieve further goals such as debugging or model repair. However, the pure data volume is left unaffected.
 	\item There are visualization techniques for multivariate networks (networks where nodes and relationships have attributes) which can be used for larger amounts of data. But even these perform poorly for very large amounts of data as they are easily achievable with models used in model checking \cite{Kerren2014,Nobre2019}. 
-	
+	\item There is graph abstraction (in Visualization) but we wont look further into that
 	\item Moreover they represent approaches that are not specific to the domain.
 	\item In this thesis we want to explore approaches that use domain specific information and knowledge to preprocess data, that is then utilized for visualization.
 	\item Preprocessing is an approach to clean up and prepare data for Data Mining and Machine Learning. The goal is to prepare and clean up data so that they meet the requirements in order for algorithms being able to analyze them. In order to achieve that data is reduced if there is too little, inferred if there is not sufficient or cleaned if it includes noise or errors. Since the state explosion problem causes an immense amount of states approaches that reduce the amount of data are of interest. Methods reducing the amount of data either reduce the size of a single sample (feature selection), reduce the amount of samples (data elimination) or cluster samples to one single sample (data selection)\cite{Famili1997,Garcia2016}. Even though such methods exist they are not domain specific. Still concepts presented in this thesis are similar to the notion data selection.
 	Apart from
-	\item \redcomment{graph abstractions??}
+	
 	\item Apart from \redcomment{XXXX} there exist domain specific to simplify \mdpsN. 
 	\item 
 	\item These define equivalence or order relations on the set of states, if these states can simulate each other stepwisely or in several steps with respect to atomic propositions, which causes preservation of certain logical formulae used in model checking.
-	\item Although certain logical formulae and hence model checking properties are preserved other information is lost.  
-	\item We introduce a concept that is very similar to abstraction \cite[pp. 499]{Baier2008}, but without permanently using on information. Moreover, its intention is to show humans interacting with the visualization the most information possible, rather than preserving logical formulae.
-	\item The introduced concept will be called \viewN.
-	\item After giving some fundamentals about the systems where \viewsN may be applied in chapter \ref{ch:prelim} we will formalize \viewsN, discuss types and operations on and with them in chapter \ref{ch:view}.
+	\item Although certain logical formulae and hence model checking properties are preserved other information is lost. In addition the computation of these computations is rather costly.
+	\item We introduce a concept, which will be called \viewN, that is very similar to abstraction \cite[pp. 499]{Baier2008}, but without permanently losing on information. Moreover, its intention is to show humans interacting with the visualization as much information possible in compact and concise form, rather than preserving logical formulae.
+	\item After giving some fundamentals about the systems where the concept \viewN may be applied in chapter \ref{ch:prelim} we will formalize \viewsN, discuss types and operations on and with them in chapter \ref{ch:view}.
 	\item  In chapter \ref{ch:viewexmp} we will give examples of views utilizing \chgphN components, \viewsN utilizing the \chgphN structure and \viewsN utilizing results of model checking.
 	\item For this thesis the scope of views considered is limited to those that do not take advantage of the probabilities in \chgphsN.
-	\item Lastly the \viewsN will be evaluated in chapter \ref{ch:eval} by considering three usecases how \viewsN can be applied and used in order to help understanding the graph.
-	\item The thesis is aimed introducing a concept to get simplified representations on \chgphsN and exploring ideas for such simplifcations. It is written in the context of a project developing a predicitive model checking visualization tool at the chair in which some of the ideas may be used.
+	\item In chapter \ref{ch:viewimpl} we will elaborate on where and how the proposed \viewsN of chapter \ref{ch:viewexmp} have been implemented
+	\item Lastly the \viewsN will be evaluated in chapter \ref{ch:eval} by considering three usecases how \viewsN can be applied and used. Moreover there will be an overview about performance and scalability of the proposed \viewsN. 
 	
-\end{itemize}
-
-%\begin{itemize}
-%	\item Objective of this thesis: Preprocessing of pmc-visualization
-%	\item where pmc probablistic model checking
-%	\item model checking: formal model-based method for system verification that is based on models describing the possible system behavior in mathematically precise and unambigous manner. A state in the model is refers to a possible state of the system. More precisely model checking is an automated technique for given finite-state model and given property, to check if the property holds for every state  \cite[chs. 1.1 and 1.2]{Baier2008}
-%	\item model checking
-%	\item problems with model checking
-%	\item probabilistic model checking allows not only nondeterministic transitions in the models checked, but also probabilistic ones. It is enabling to properly model and check systems in which also occur stochastic phenomena. 
-%	\item The major limitation for algorithms running on the set of states of models, in order to model check them, is the state explosion problem. The state explosion problem states that the number of states grow exponentially in the number of variables in a programm graph or the number of components in concurrent systems \cite[ch. 2.3]{Baier2008}. Already simple system models can lead to complex system behavior and an immense amount of states. This is not only a problem for algorithms but also humans who need to understand, analyze and review models in the context of model checking.
-%	\item state exponential growth of states in number of variables in a programm graph or the number of components in concurrent system \cite[ch. 2.3]{Baier2008}
-%	\item interactive visualization can help
-%	\item visualization has some tools of its own as in 
-%	\item not domain specific 
-%	\item want to use domain specific to preprocess data for visualization
-%	\item preprocessing is ... 
-%	\item includes teqnuiqes as
-%	\item normally used for algos -> some of general approaches usable but concrete techniques not really
-%	\item graph abstractions
-%	\item from pmc book
-%	\item what we want to is very similar
-%	\item these have disadvantge of losing information
-%	\item after giving some fundamentals about the systems where views may be applied in Chapter 2 we will the concept of
-%	\item formalize views, discuss types of views and operations on and with them 
-%	\item  In chaptergive examples of views utilizing mdp components, view utilizing the mdp structure and utilizing results of model checking
-%	\item limit scope to views that do not take adavantage of the probabilities of mdps
-%	\item evaluate them by considering three usecases how views can be applied and used in order to help understanding the graph
-%	\item thesis is aimed introducing a concept to get simplified representations on mdps and exploring ideas for such simplifcations.
-%	\item it is written in the context of a project at the chair developing a predicitive model checking visualization tool in which some of the ideas may be used.
-%	
-%\end{itemize}
-
-
-
-PMC is short for Probabilistic Model Checking.
-
-Model Checking is...
-Probabilistic means...
-
-When analyzing PMCs a result table is generated which consists of result vectors. These result vectors for example contain probability values for temporal events, expected values of random variables and other qualitative and quantitative results. For central measure so called schedulers can be used to resolve non-determinism in the MDPs which in addition to the result provide one ore more optimal actions per state.
-
-Already simple system models can lead to complex system behavior and an immense amount of states. An interactive visualization of an MDP can be used in support of understanding, analyzing and reviewing these complex systems. It can even be made use of to achieve further goals such as debugging or model repair. However, the pure data volume remains unaffected. The complexity is shifted to the visualization which has some general techniques to represent large amounts of data in a suitable way.
-
-\redcomment{WHAT EXACTLY CAN BE DONE/HAS BEEN DONE ---> INSERT HERE}
-
-Apart from the methods available in visualization there exist domain specific abstraction methods for transition systems. These are based on relations such as simulation order, simulation equivalence, bisimulation equivalence as well as trace equivalence, stutter linear time relations and stutter bisimulation equivalences. These relations can be based on the set of all possible transition systems or the set of states of one single transition system. Whereas the first declares some similarity of transition systems with regard to model check them the latter one can be used to obtain quotient systems. The set of states of such quotient system coincides with the the respective equivalence relation.
-\begin{itemize}
-	\item all relations declare that at least one of the two systems being in relation can mimic the behavior of the other one in some way. In case of equivalence the systems can mimic each other.
-	\item except for trace inclusion and trace equivalence whether such mimicking is possible depends on the existence of a specific relation $\mimicrel \subseteq \states_1 \times \states_2$ where $\states_1 \text{ and } \states_2$ are the state sets of two corresponding transition systems $\ts_1$ and $\ts_2$. The symbol \mimicrel is included in each definition of a relation on the set of all possible transition systems. In each definition it receives a different name and represents a different relation between the sets $\states_1 \text{ and } \states_2$. %Whenever $(\state_1, \state_2) \in \mimicrel$ we will also write $\state_2$ mimics $\state_1$. Sometimes it may follow that also $\state_1$ mimics $\state_2$, depending on the requirements made on \mimicrel. The term mimic is used on transition systems and \states and in both cases declares that one entity can mimic the behavior of the other one.
-	\item Depending on the type of mimicking (simulation order, bisimulation equivalence, ...) different requirements are made on \mimicrel. It is dependent on these requirements whether \mimicrel exists for a given pair of transition systems $\ts_1$ and $\ts_2$ and hence also whether or not these two transition systems are in relation.
-	\item all relations have three requirements made on \mimicrel in common.
-	\item firstly, there has to be some relationship between the initial states. That is, at least $\exists (\state_1, \state_2) \in \mimicrel \text{ with } \state_1 \in \initstates_1, \state_2 \in \initstates_2$ where $\initstates_1$ and $\initstates_2$ are the respective sets of initial states of the two transition systems $\ts_1$ and $\ts_2$ in question
-	\item Secondly for each $(\state_1, \state_2) \in \mimicrel$ the two states must have the same set of atomic propositions. That is $\labelingfct(\state_1) = \labelingfct(\state_2)$.
-	\item lastly for all $\state_1, \state_2$ with $(\state_1, \state_2) \in \mimicrel$ some requirement is made about their (not necessarily direct) successors
-	\item the mimicking types differ in the requirements they make on the relation \mimicrel with respect to initial states (1) of the two transition systems and the requirements made on the successors (2).
-	\item when one transition system can mimic another it is only required that that each initial state $\state_1 \in \initstates_1$ there is an initial state $\state_2 \in \initstates_2$ with $(\state_1,\state_2) \in \mimicrel$
-	\item when two systems mimic each other it is as well required that for each initial state $\state_1 \in \initstates_1$ it is $(\state_1, \state_2) \in \mimicrel$ with $\state_2 \in \initstates_2$ but additionally that for each $\state_2 \in \initstates_2$ it is $(\state_2, \state_1) \in \mimicrel$ with $\state_1 \in \initstates_1$.
-	\item where all of them differ is the requirements made on the successors of the states being in relation
-	\item bisimulation equivalence (\bisimeq) declares that two transition systems can mimic each other. Every two states with $(\state_1, \state_2) \in \mimicrel$ one must have an successor $\state'$ for each successor $\smstate'$of the other state so that the two successors stand in relation with respect to \mimicrel. That is the successors standing in relation again must have the same set of atomic propositions and meet the requirement regarding their successors. If a state \state is equal in its set of atomic propositions to another state \smstate and meets a respective requirement on a selection of the successors of \smstate we say it \stmimicsN it. Note that here \stmimickingN is mutual. $\state_1$ \stmimicsN $\state_2$ and vice versa. \redcomment{definition?} bisimulation equivalence is, as the name suggest, an equivalence relation on the set of all possible transition systems.
-	\item simulation order (\simorder) is weaker than bismulation. It only declares that one system can \stmimicN the other. For every two states with $(\state_1, \state_2) \in \mimicrel$ the second one must \stmimicN the first one. That is, for each successor $\state_1'$ of $\state_1$ the state $\state_2$ must have an successor $\state_2'$ so that $\state_2;$ $\stmimicsN$ $\state_1'$. In this case of the simulation order relation $\state_2'$ \stmimickingN $\state_1'$ coincides with $(\state_1', \state_2') \in \mimicrel$. For the simulation order relation it is not required that $\state_1$ can \stmimicN $\state_2$. Simulation order is a preorder on the set of all possible transition systems.
-	\item Simulation equivalence (\simequiv) declares that for two transition systems $\ts_1, \ts_2$ it holds that $\ts_1 \simorder \ts_2$ and $\ts_2 \simorder \ts_1$. It might seem like it conincides with bisimulation but it does not. For simulation order it has to hold that for a given state $\state_1$ in the mimicked system that there has to exist another state $\state_2$ in the mimicking system, that \stmimicsN $\state_1$. Although due to simulation equivalence $\state_2$ now also must have a state $\state'$ that mimics $\state_2$, it does not need to hold that $\state' = \state_1$. The state $\state_2$ could be mimicked by another state than $\state_1$. The mimicking between two states does not need to be mutual. Simulation equivalence is an equivalence relation on the set of all possible transition systems.
-	\item in general it holds that for $\ts_1, \ts_2$ being transition systems $\ts_1 \bisimeq \ts_2$ implies $\ts_1 \simequiv \ts_2$ implies $\ts_1 \simorder \ts_2$.
-	\item All of the mimicking types presented, mimicking is happening in a stepwise manner and atomic propositions are concidered as the property of concern. Choosing atomic propositions has the advantage of preserving the logical formulae used in model checking.	
-	\item bisimulation equivalence preserves CTL and CTL* formulae for finite TS without terminal states 579
-	\item simulation equivalence/order maintain LTL by trace inclusion and universally and existencially quantified fragments of CTL* \redcomment{correct?} 579
-	\item The condition of stepwise mimicking is softened with stutter simulation and bisimulation equivalence expands the concept of simulation equivalence and stutter bisimulation equivalence. Instead of requiring for each successor $\state_1'$ of a state $\state_1$ to be \stmimickedN by a direct successor of $\state_2$ it suffices if there is path to such a state $\state_2'$, that \stmimicsN $\state_1'$. All states on the path must then also \stmimicN $\state_1$. Moreover this requirement is only made for successors of $\state_1$ if the successor $\state_1'$ is not in relation to $\state_2$. 
-	\item There also is another variant of stutter bisimulation equivalence which is called stutter bisimulation divergent equivalence which we wont consider here.
-	\item So far relations on the set of all transition systems have been considered. 
-	\item All the above mentioned equivalence relations are also defined on the set of states of one single transition system. 
-	\item They are defined very similar to the relations on the set of all possible transition systems. Let $\relts \subseteq \states \times \states$ be some relation on the set of states \states of an transition system. Two states $\state_1,\state_2 \in \states$ are in relation ($(\state_1, \state_2) \in \relts$) if there exists a relation $\mimicrel \subseteq \states \times \states$ that meets some requirements. These requirements are the same as the ones used on \mimicrel for transition systems except for the condition on the initial states. That is, only the set of atomic propositions of $\state_1, \state_2$ has to be equal $(\labelingfct(\state_1) = \labelingfct(\state_2))$ and some requirement on their successors has to be met.
-	\item They are used for abstractions by defining quotient systems of a given transition system. In a quotient systems the set of states consists of the equivalence classes of the equivalence relation.
-	\begin{definition}
-		Let $\ts = \transitionsystem$ be a transition system and \relts and equivalence relation on \states. The quotient transition system is defined by $TS/\relts = (\states/\relts, \{\tau\}, \transitionrel', \initstates', \atomicprops, \labelingfct')$ where:
-		\begin{itemize}
-			\item $\initstates' := \{\eqclass{\state}{\relts} \mid \state \in \initstates\}$
-			\item $\transitionrel':= \{(\eqclass{\state}{\relts}, \tau, \eqclass{\state'}{\relts}) \mid (\state, \action, \state') \in \transitionrel\}$
-			\item $\labelingfct'(\eqclass{\state}{\relts}) := \labelingfct(\state)$
-		\end{itemize}
-	\end{definition}
-	
-	
-	
-	
-	\item holds $\ts \; \rel \; \ts/\relts$
-	
-	\item Similarily an abstract transition system using the simulation relation can be obtained... using an abstraction function
-	
-	\item \redcomment{def abstraction function, def relation}
-	
-	\item obtain smaller system that has properties with respect to formulas \redcomment{discuss how much smaller? $\to$ would rather not}
-	
-	\item expensive: to calculate with complexities
-	\begin{itemize}
-		\item bisimulation:
-		\item simulation
-		\item stutter simulation:
-		\item stutter bisimulation:
-	\end{itemize}
-	
-	\item usecase: browsability for humans \\
-	$\to$ understand and looking at the system from a human perspective of highest importance \\
-	$\to$ less expensive calculation
-	
-	\item views of an MDP aim for high comprehensibility, low performance and will conceptually be very similar to the the notion of an abstract transition system.
-	
-	\item \redcomment{"Partial order reduction attempts to analyze only a fragment ˆTS of the full transition
-	system TS by ignoring several interleavings of independent actions."}
-	
-	
-%	\begin{itemize}
-%		\item on TS can simulate the other one stepwisely
-%		\item Simulating one has at least one matching action for each action of the simulated one			
-%	\end{itemize}	
-%	\item bisimulation relation R between the two sets of states
-%	\item if exists R on sets of states -> TS1 and TS2 are bisimulation equivalent
-%	\item requirements on R for (s1 s2) $\in$ R
-%	\begin{itemize}
-%		\item same atomic props
-%		\item for every successor there must exist an successor in the other MDP that are in relation
-%	\end{itemize}
 \end{itemize}
 
 \begin{itemize}
-	\item DATA PREPROCESSING is for algorithms!
-	\item GRACIA (context data Mining)
-	\item adapt data to requirement for data mining
-	\item data imperfect: containing incosistencies, redundancies
-	\item step between Problem understanding and mining (at End result exploitation)
-	\item Data preprocessing tasks: cleaning, mining, normalization, transformation, missing values imputation, integration, noise identification
-	\item problems: missing information $\to$ missing value imputation, noise (false values) $\to$
-	\item Dimensionality Reduction: Complexity, Understandability, Overfitting, Diminished Discriminative Power (far close, close far)
-	\item feature reduction: subset of features original problem, that still appropriately describe it
-	\item space transformation: new set of features combining orignal ones (no selection of promising)
-	\item instance reduction: decrease samples size without reducing quality of knowledge that can be extracted from it (reduce instances or create new ones)
-	\begin{itemize}
-		\item instance selection: minimum subset, independent algorithm, remove redundant (cleaning)
-		\item instance generation: remove but create also new artificial to fill gaps
-	\end{itemize}
-	\item Discretization: quantitative data to qualitative, build partition on quantitative, information loss (used very much!)
-	\item FAMILI
-	\item Data preprocessing may be performed on the data for the following reasons:
-	\begin{itemize}
-		\item solving data problems that prevent analysis
-		\item understanding the nature and performing more meaningful analysis
-		\item extracting more meaningful knowledge given set data
-	\end{itemize}
-	\item problems with data
-	\begin{itemize}
-		\item too much data: noisy and corrupt, feature extraction, irrelevant data, numeric/symbolic data (qualitative, quantitative)
-		\item too little data: missing attributes, missing attribute values, small amount of data
-		\item fractured data: incompatible, multiple sources, multiple levels of granularity
-	\end{itemize}
-	\item preprocessing techniques 
-	\begin{itemize}
-		\item Transformation: filtering, ordering editing, noise modelling
-		\item Information Gathering: visualization, elimination, selection, pca, sampeling
-		\item Generation of new information: new features, time series analysis, data fusion, Simulation, Dimensional analysis, constructive induction
-	\end{itemize}
+	\item INTRODUCTION STRUCTURE (used above)
+	\item Objective of this thesis: Preprocessing of pmc-visualization
+	\item where pmc probablistic model checking
+	\item model checking: formal model-based method for system verification that is based on models describing the possible system behavior in mathematically precise and unambigous manner. A state in the model is refers to a possible state of the system. More precisely model checking is an automated technique for given finite-state model and given property, to check if the property holds for every state  \cite[chs. 1.1 and 1.2]{Baier2008}
+	\item model checking
+	\item problems with model checking
+	\item probabilistic model checking allows not only nondeterministic transitions in the models checked, but also probabilistic ones. It is enabling to properly model and check systems in which also occur stochastic phenomena. 
+	\item The major limitation for algorithms running on the set of states of models, in order to model check them, is the state explosion problem. The state explosion problem states that the number of states grow exponentially in the number of variables in a programm graph or the number of components in concurrent systems \cite[ch. 2.3]{Baier2008}. Already simple system models can lead to complex system behavior and an immense amount of states. This is not only a problem for algorithms but also humans who need to understand, analyze and review models in the context of model checking.
+	\item state exponential growth of states in number of variables in a programm graph or the number of components in concurrent system \cite[ch. 2.3]{Baier2008}
+	\item interactive visualization can help
+	\item visualization has some tools of its own as in 
+	\item not domain specific 
+	\item want to use domain specific to preprocess data for visualization
+	\item preprocessing is ... 
+	\item includes teqnuiqes as
+	\item normally used for algos -> some of general approaches usable but concrete techniques not really
+	\item graph abstractions
+	\item from pmc book
+	\item what we want to is very similar
+	\item these have disadvantge of losing information
+	\item after giving some fundamentals about the systems where views may be applied in Chapter 2 we will the concept of
+	\item formalize views, discuss types of views and operations on and with them 
+	\item  In chaptergive examples of views utilizing mdp components, view utilizing the mdp structure and utilizing results of model checking
+	\item limit scope to views that do not take adavantage of the probabilities of mdps
+	\item evaluate them by considering three usecases how views can be applied and used in order to help understanding the graph
+	\item thesis is aimed introducing a concept to get simplified representations on mdps and exploring ideas for such simplifcations.
+	\item it is written in the context of a project at the chair developing a predicitive model checking visualization tool in which some of the ideas may be used.
+	
 \end{itemize}
 
-In alternative to these general approaches domain specific preprocessing can be used to gain certain views on a given MDP that display areas or sets of states in a summarized more compact form. For this purpose structural properties as well as criteria obtained from the result vectors and their containing optimal actions can be utilized.
-
-
-This thesis is about the development, formalization and implementation of a collection of different \emph{\viewsN}.
-\redcomment{Views are supposed to be applicable to only a subset of a given MDP and be composable with other views}
-The input for a view is the result table of the MDP, whereas the output is a new collumn in the MDP result table that determines which states are to be grouped to a new one.
-The evaluation is performed within the existing web-based prototype of a PMC visualization platform (PMC-Viz) and on the basis of different MDP models. They are to be analyzed regarding the suitability to facilitate the understanding of complex operational models incl. analysis results and to support processes of debugging, model repair or strategy synthesis.
 \end{document}

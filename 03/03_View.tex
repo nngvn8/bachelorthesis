@@ -7,6 +7,7 @@
 \begin{document}
 	
 \section{View}  \label{ch:view}
+\redcomment{arg1}
 Views are the central objective of this thesis. The purpose of a \viewN is to obtain a simplification of a given \chgphN.  It is an independent \chgphN derived from a given \chgphN and represents a (simplified) \viewN on the given one - hence the name. Thereby the original \chgphN is retained.
 
 In the preliminaries transition systems and Markov Chains were listed as simpler version of \mdpsN. Roughly speaking transition systems and \mdpsN are special \mdpsN namely that have no probability distribution in each state for each action or no actions. When defining \viewsN it seems feasible to do so for the most general system of the ones of consideration.That is why we will define views on \mdpsN. Only for specific views and their implementation it is to be kept in mind that if they regard an action or the probability distribution of an action in a state it is not applicable to transitions systems or MCs respectively. \redcomment{topic init states}
@@ -47,7 +48,7 @@ The \grpfctsubN is used formalize the behavior that groupings can also only be d
 With this definition it is $\nogroupset = \{\remelem, (\remelem, \remelem), (\remelem, \remelem, \remelem), \dots\}$ an infinite set. That is, it contains every arbitrary sized tuple only containing the symbol \remelem. This generalization to arbitrary large tuples with \remelem is needed for composition in section \ref{ch:composition}.
 
 \begin{definition}
-	Let \grpfct be a grouping function. We define the equivalence relation $\eqrelview :=\{ (\state_1, \state_2) \in \states \times \states \mid \grpfct(\state_1) = \grpfct(\state_2) \notin \nogroupset\} \cup \{(\state, \state)  \mid \state \in \states\}$
+	Let $\chgph = \chgphtuple$ be \achgphN and \grpfct a grouping function. We define the equivalence relation $\eqrelview :=\{ (\state_1, \state_2) \in \states \times \states \mid \grpfct(\state_1) = \grpfct(\state_2) \notin \nogroupset\} \cup \{(\state, \state)  \mid \state \in \states\}$
 	
 	\label{def:eqrelview}
 \end{definition}
@@ -94,7 +95,9 @@ The definition of a \viewN is dependent on a given MDP and a \grpfctN $\grpfct$.
 	\label{def:view}	
 \end{definition}
 
-The identifier \viewppty is inherited from $\grpfct$ to \view. The identifier declares that $\grpfct$ is the \grpfctN of \view and thereby also uniquely determines \view. If a \viewN should take parameter and we want to talk about an instance of a \viewN with specific parameters $p_1, \dots, p_n$ we will write it as $\view(p_1, \dots, p_n)$. Note that the definition is in a most general form in the sense that if in a \viewN a property accounts to one piece of some entity the whole entity receives the property i.e. 
+The identifier \viewppty is inherited from $\grpfct$ to \view. The identifier declares that $\grpfct$ is the \grpfctN of \view and thereby also uniquely determines \view. If a \viewN should take parameter and we want to talk about an instance of a \viewN with specific parameters $p_1, \dots, p_n$ we will write it as $\view(p_1, \dots, p_n)$. If we want to talk about of the \grpfctN \grpfct of \view with the parameters $p_1, \dots, p_n$, we write $\grpfct(\state \cond p_1, \dots, p_n)$, where $\state \in \states$ and \states is the state set of \view.
+
+Note that the definition is in a most general form in the sense that if in a \viewN a property accounts to one piece of some entity the whole entity receives the property i.e. 
 \begin{itemize}	
 	\item $(\state_1, \action, \state_2) \in \trans \impr (\eqclassv[\state_1], \action, \eqclassv[\state_2]) \in \trans'$
 	\item $\state \in \init \impr \eqclassv \in \initdistrib'$
@@ -127,7 +130,7 @@ For binary \view we already presented three cases in which a view is called bina
 	Its \grpfctN $\grpfct^\disregardelements$ is called \grpfct \emph{disregarding} \disregardelements and the respective \viewN $\view^\disregardelements$ is called \view \emph{disregarding} \disregardelements. 
 \end{definition}
 
-With a disregarding \viewN grouping is avoided if its detached \grpfctN would map to any of the values \disregardelements. That is when reading $\view^\disregardelements$ we know that no grouping occurs on states with one of the properties \disregardelements. In a sense states with these properties are shown - maybe amongst others if $\smstates \subset \states$. For this thesis we will only consider disregarding views for $n = 1$. Normally we will define binary views as the disregarding $\view^\hasppty$ and perceive them as filters that show use states with that property. 
+With a disregarding \viewN grouping is avoided if its detached \grpfctN would map to any of the values \disregardelements. That is when reading $\view^\disregardelements$ we know that no grouping occurs on states with one of the properties \disregardelements. In a sense states with these properties are shown - maybe amongst others if $\smstates \subset \states$. For this thesis we will only consider disregarding views for $n = 1$. Normally we will define binary views as the disregarding $\view^\hasppty$ and perceive them as filters that show use states that have that property. 
 For $n = 1$ $\view$ can be obtained from $\view^\hasppty$ with 
 \[
 \grpfctsub(\state) = 
@@ -278,6 +281,8 @@ The operator \pllrev is the reversing operator to \pll. Given a parallel compose
 
 \subsubsection{Selective Composition} \label{subsec:selecitvecomp}
 Selective composition is a variant of parallel composition. It aims for application of the grouping function only on certain states, where the other composing functions have a certain value.
+
+\redcomment{change Definition!}
 
 \begin{definition}
 	Let $\view[\viewppty_1 \pll \viewppty_2 \pll \dots \pll 
