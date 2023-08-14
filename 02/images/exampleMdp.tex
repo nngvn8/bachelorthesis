@@ -7,37 +7,47 @@
 	\newcommand{\createstate}[3]{\node[draw, circle, minimum size=1cm] (#1) at (#2) {#3}}
 	\newcommand{\basex}{0}
 	\newcommand{\basey}{0}
-	\begin{tikzpicture} []
-		\newcommand{\disthor}{60pt}
-		\newcommand{\distvert}{50pt}
+	\begin{tikzpicture} [every initial by arrow/.style={thick}]
+		\newcommand{\disthor}{100pt}
+		\newcommand{\distvert}{110pt}
 		%		\createstate{s1}{3,2+4}{$\state_1$};
 		
-		\node [mstate,initial above,initial text=,initial distance=20pt] (s1) at (0,0) {$\state_1$};
+		\node [mstate,initial above,initial text=\small$0.7$,initial distance=20pt] (s1) at (0,0) {$\state_1$};
 		\node [mstate,left=\disthor of s1] (s2) {$\state_2$};
-		\node [mstate,right=\disthor of s1] (s4) {$\state_4$};
-		\node [mstate,below=\distvert of s1] (s3) {$\state_3$};
+		\node [mstate,initial right	,initial text=\small$0.1$,initial distance=20pt,right=\disthor of s1] (s4) {$\state_4$};
+		\node [mstate,initial left,initial text=\small$0.2$,initial distance=20pt,below=\distvert of s1] (s3) {$\state_3$};
 		\node [mstate,mstate,initial above,initial text=,initial distance=20pt,left=\disthor of s3] (s6) {$\state_6$};
 		\node [mstate,right=\disthor of s3] (s5) {$\state_5$};
 	
-		\path [trans] (s2) edge node [midway] {$\actionb, 0.4$} (s6);
-		\path [trans] (s1) edge node [midway] {$\actionb, 1$} (s4);
-		\path [trans] (s3) edge node [midway] {$\actionb, 0.6$} (s2);
-
-%
-%		\path [trans] (s0) edge node [midway, above] {\action} (s1);
-%		\path [trans] (s1) edge node [midway, above] {\action} (s2);
-%		\path [trans] (s3) edge node [midway, above] {\action} (s4);
-%		\path [trans] (s4) edge node [midway, above] {\action} (s5);
-%		\path [trans,out=-40, in=-100] (s6) edge node [midway, right] {\action} (s7);
-%		
-%		\path [trans] (s0) edge node [midway, right] {\actionb} (s3);
-%		\path [trans] (s1) edge node [midway, right] {\actionb} (s4);
-%		\path [trans,out=-60, in=0] (s2) edge node [midway, right] {\actionb}(s5);
-%		\path [trans] (s3) edge node [midway, right] {\actionb} (s6);
-%		\path [trans] (s4) edge node [midway, above] {\actionb} (s7);
-%		
+		\path [trans] (s2) edge node [midway,left] {\small$\actionb: 0.4$} (s6);
+		\path [trans] (s1) edge node [midway,above] {\small$\actionb: 1$} (s4);
+		\path [trans] (s3) edge node [midway,below left] {\small$\actionb: 0.6$} (s2);
 		
-%		
+		\path [bendtrans] (s2) edge node [midway,above] {\small$\actionc: 1$} (s1);
+		\path [bendtrans] (s1) edge node [midway,below] {\small$\action: 0.5$} (s2);
+
+		\path [bendtrans] (s3) edge node [near end,left] {\small$\actionc: 0.8$} (s1);
+		\path [bendtrans] (s1) edge node [near start,right] {\small$\action: 0.5$} (s3);
+
+		\path [bendtrans] (s3) edge node [near end,above left] {\small$\actionc: 0.2$} (s4);
+		\path [bendtrans] (s4) edge node [midway,below right] {\small$\action: 0.5$} (s3);
+		
+		\path [trans] (s2) edge [loop above] node [midway] {\small$\actionb:0.6$} (s2);
+		\path [trans] (s3) edge [loop below] node [midway] {\small$\actionb:0.4$} (s3);
+		\path [trans] (s4) edge [loop above] node [midway] {\small$\action:0.5, \actionc:1$} (s4);
+		\path [trans] (s5) edge [loop above] node [midway] {\small$\actionb:1$} (s5);
+		\path [trans] (s6) edge [loop below] node [midway] {\small$\action:1$} (s6);
+		
+
+		\node [above right=-4pt of s1] (ls1) {$\{\}$};
+		\node [above right=-4pt of s2] (ls2) {$\{a\}$};
+		\node [right=0pt of s3] (ls3) {$\{a,b\}$};
+		\node [above right=-4pt of s4] (ls4) {$\{b\}$};
+		\node [above right=-4pt of s5] (ls5) {$\{a\}$};
+		\node [above right=-4pt of s6] (ls6) {$\{b\}$};
+
+		
+		
 		
  	\end{tikzpicture}
 \end{document}  

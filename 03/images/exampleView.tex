@@ -1,0 +1,45 @@
+\documentclass[tikz,preview]{standalone}
+%\usepackage{prelude}
+\input{prelude}
+
+
+\begin{document}
+	\newcommand{\createstate}[3]{\node[draw, circle, minimum size=1cm] (#1) at (#2) {#3}}
+	\newcommand{\basex}{0}
+	\newcommand{\basey}{0}
+	\begin{tikzpicture} [every initial by arrow/.style={thick}]
+		\newcommand{\disthor}{90pt}
+		\newcommand{\distvert}{110pt}
+		%		\createstate{s1}{3,2+4}{$\state_1$};
+		
+		\node [gstate,initial above,initial text=\small$0.7$,initial distance=20pt] (s13) at (0,0) {$\{\state_1,\state_3\}$};
+		\node [gstate,left=\disthor of s13] (s2) {$\{\state_2\}$};
+		\node [gstate,initial right,initial text=\small$0.1$,initial distance=20pt,right=\disthor of s13] (s45) {$\{\state_4,\state_5\}$};		
+		\node [gstate,left=55pt of s2] (s6) {$\{\state_6\}$};		
+		
+		\path [trans] (s2) edge node [midway,above=-3pt] {\small$\actionb: 0.4$} (s6);
+		\path [trans] (s13) edge node [midway,above=-3pt] {\small$\actionb: 1$} (s45);
+		\path [trans] (s13) edge node [midway,above=-3pt] {\small$\actionb: 0.6$} (s2);
+		
+		\path [trans, bend left=22] (s2) edge node [midway,above=-3pt] {\small$\actionc: 1$} (s13);
+		\path [trans,bend left=13] (s13) edge node [midway,below] {\small$\action: 0.5$} (s2);
+		
+		\path [trans,bend left=20] (s13) edge node [midway,above] {\small$\actionc: 0.2$} (s45);
+		\path [trans,bend left=13] (s45) edge node [midway,below] {\small$\action: 0.5$} (s13);
+		
+		\path [trans] (s2) edge [loop above] node [midway] {\small$\actionb:0.6$} (s2);
+		\path [trans] (s13) edge [loop below] node [midway] {\small$\action:0.5,\actionb:0.2,\actionc:0.8$} (s13);
+		\path [trans] (s45) edge [loop above=-3pt] node [midway] {\small$\action:0.5, \actionb:1, \actionc:1$} (s45);
+		\path [trans] (s6) edge [loop above] node [midway] {\small$\action:1$} (s6);
+		
+		
+		\node [above right=-1pt and -18pt of s13] (ls13) {$\{a,b\}$};
+		\node [above right=-1pt and -8pt of s2] (ls2) {$\{a\}$};
+		\node [above right=-4pt of s45] (ls45) {$\{a,b\}$};
+		\node [above right=-1pt and -8pt of s6] (ls6) {$\{b\}$};
+		
+		
+		
+		
+	\end{tikzpicture}
+\end{document}  

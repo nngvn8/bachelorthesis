@@ -48,8 +48,8 @@
 		\path [trans] (json) edge node [midway] (jsonfrontend) {}  ++(right:\frontendhorpos-\backendhorpos-\backendwidth);
 		\path [trans] (java) edge node [midway,above,text width=.7cm] (jsonfrontend) {\scriptsize create if requested} (json);
 %		\path [bendtrans] (java) edge ++(down:\javavertposrelativebackend-\backendvertpos-\dbvertposrelativebackend-\dbheight-0.4); % 0.4 because minsize gstate=0.8
-		\path [bendtrans] (java) edge node [midway] (javadb) {} (db.center);
-		\path [bendtrans] (db.center) edge node [midway] (dbjava) {} (java);
+%		\path [bendtrans] (java) edge node [midway] {} (db.center);
+		\path [->, bend left] (db.center) edge node [midway] {} (java);
 		
 		\node [anchor=north west] at (\backendhorpos+\dbhorposrelativebackend+\labeldbdistline,\backendvertpos+\dbvertposrelativebackend+\dbheight-\labeldbdistline) {Database};
 		\node [draw, minimum size=.6, anchor=west] at (\dbhorpos+\statehorposrelativedb,\dbvertpos+\statevertposrelativedb) {\small State};

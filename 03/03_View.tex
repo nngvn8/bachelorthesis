@@ -8,7 +8,7 @@
 	
 \section{View}  \label{ch:view}
 
-In this chapter we will introduce the core concept of this thesis: \emph{view}. The notion of a view is to obtain a simplification of a given \mdpN. It is an independent \mdpN derived from a given \mdpN and represents a (simplified) view on the given one - hence the name. Thereby the original \mdpN is retained.
+In this chapter we will introduce the core concept of this thesis, which will be called view. The notion of a view is to obtain a simplification of a given \mdpN. It is an independent \mdpN derived from a given \mdpN and represents a (simplified) view on the given one - hence the name. Thereby the original \mdpN is retained.
 
 In the preliminaries transition systems and Markov Chains were listed as simpler version of \mdpsN. Roughly speaking transition systems and \mdpsN are special \mdpsN namely that have no probability distribution in each state for each action or no actions. When defining \viewsN it seems feasible to do so for the most general system of the ones of consideration.That is why we will define views on \mdpsN. Only for specific views and their implementation it is to be kept in mind that if they regard an action or the probability distribution of an action in a state it is not applicable to transitions systems or MCs respectively.
 
@@ -76,7 +76,10 @@ The definition of a \viewN is dependent on a given MDP and a \grpfctN $\grpfct$.
 				
 				\item $\probtfunc : \eqclasssetv \times \actions \times \eqclasssetv \to [0,1]$ with 
 				\[ 
-				\probtfunc'(\eqclassv[\state_1], \action, \eqclassv[\state_2]) = \frac{1}{|\eqclassv[\state_1]|}\bbigsum{\substack{\state_a \in \eqclassv[\state_1], \\ \state_b \in \eqclassv[\state_2]}}\probtfunc(\state_a, \action, \state_b) 
+				\probtfunc'(\eqclassv[\state_1], \action, \eqclassv[\state_2]) = 
+				\frac
+				{\bbigsum{\substack{\state_a \in \eqclassv[\state_1], \\ \state_b \in \eqclassv[\state_2]}}\probtfunc(\state_a, \action, \state_b) }
+				{\bbigsum{\state_x \in \eqclassv[\state_1], \state_y \in \states} \probtfunc(\state_x, \action, \state_y)}
 				\]
 				
 				%\{\eqclassv[\state'] \in \states' \mid \exists \state \in \eqclassv[\state'] : \state \in \init \}$
@@ -95,7 +98,7 @@ The definition of a \viewN is dependent on a given MDP and a \grpfctN $\grpfct$.
 	\label{def:view}	
 \end{definition}
 
-The identifier \viewppty is inherited from $\grpfct$ to \view. The identifier declares that $\grpfct$ is the \grpfctN of \view and thereby also uniquely determines \view. If a \viewN should take parameter and we want to talk about an instance of a \viewN with specific parameters $p_1, \dots, p_n$ we will write it as $\view(p_1, \dots, p_n)$. If we want to talk about of the \grpfctN \grpfct of \view with the parameters $p_1, \dots, p_n$, we write $\grpfct(\state \cond p_1, \dots, p_n)$, where $\state \in \states$ and \states is the state set of \view.
+The identifier \viewppty is inherited from $\grpfct$ to \view. The identifier declares that $\grpfct$ is the \grpfctN of \view and thereby also uniquely determines \view. If a \viewN should take parameter and we want to talk about an instance of a \viewN with specific parameters $p_1, \dots, p_n$ we will write it as $\view(p_1, \dots, p_n)$. If we want to talk about of the \grpfctN \grpfct of \view with the parameters $p_1, \dots, p_n$. We write $\grpfct(\state \cond p_1, \dots, p_n)$, where $\state \in \states$ and \states is the state set of \chgph. The definition of $\trans'$ is as is, because in an equivalence class there may be several states with the same outgoing action. Hence, the probability values of transitions from a state in one equivalence class to a state in another equivalence class can not just be summed up. Instead they have to be normalized with the accumulated probability of outgoing transitions from states of the equivalence class with the same action. This is what the denominator does.
 
 Note that the definition is in a most general form in the sense that if in a \viewN a property accounts to one piece of some entity the whole entity receives the property i.e. 
 \begin{itemize}	
@@ -104,6 +107,53 @@ Note that the definition is in a most general form in the sense that if in a \vi
 	\item $\forall \state \in \states : \labelingfct(\state) \in \labelingfct'(\eqclassv)$
 	%	$\labelingfct(\state) =: \atomicprop \impr \atomicprop \in \labelingfct(\eqclassv)$
 \end{itemize}
+
+\begin{exmp}
+To clarify the concept we will consider a \viewN \view on the \mdpN \mdp with $\states = \{\state_1, \dots, \state_6\}$ in Figure \ref{fig:exampleMdp}. The \view \viewN is defined by its grouping function \grpfct where $\grpfctsub : \smstates \to \imggrp$ with 
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{c|c}
+		States & $\grpfct(\state_i)$\\
+		\hline
+		$\state_1$ & $1$\\
+		$\state_3$ & $1$\\
+		$\state_4$ & $2$\\
+		$\state_5$ & $2$\\
+		$\state_6$ & $\remelem$\\
+	\end{tabular}
+\end{table}
+where $\smstates = \states \setminus \{\state_2\}$ and $\imggrp = \{1,2,\remelem\}$. We obtain $\eqclasssetv = \{\{\state_1, \state_3\}, \{\state_4, \state_5\}, \{\state_2\}, \{\state_6\}\}$, because $\grpfct(\state_1) = \grpfct(\state_3)$, $\grpfct(\state_4) = \grpfct(\state_5)$ and $\grpfct(\state_2) = \grpfct(\state_6) = \remelem \in \nogroupset$. Because in \chgph it is 
+\begin{center}
+	\begin{tabular}{lcl}
+		$\initdistrib(\state_1) = 0.7$ & \quad\quad & $\initdistrib(\state_4) = 0.1$\\
+		$\initdistrib(\state_3) = 0.2$ & \quad\quad & $\initdistrib(\state_5) = 0$\\
+	\end{tabular}
+\end{center}
+in \view it is $\initdistrib'(\{\state_1,\state_3\}) = 0.7 + 0.3 = 0.9$ and $\initdistrib'(\state_4, \state_5) = 0.1 + 0 = 0.1$. Because in \chgph it is
+\begin{center}
+	\begin{tabular}{lcl}
+	$\labelingfct(\state_1) = \emptyset$& \quad\quad & $\labelingfct(\state_4) = \{b\}$\\
+	$\labelingfct(\state_3) = \{a,b\}$ & \quad\quad & $\labelingfct(\state_5) = \{a\}$\\
+	\end{tabular}
+\end{center}
+in \view it is $\labelingfct'(\{\state_1, \state_3\}) = \labelingfct(\state_1) \cup \labelingfct(\state_3) = \{a,b\}$ and $\labelingfct'(\{\state_4, \state_5\}) = \labelingfct(\state_4) \cup \labelingfct(\state_5) = \{a,b\}$. Since $\state_2$ and $\state_6$ have not been grouped, they are mapped to same values with $\initdistrib'$ and $\labelingfct'$ in \view as with $\initdistrib$ and \labelingfct in \chgph. When considering trans we will only look at some interesting outgoing actions for some states. In \chgph it is 
+\begin{center}
+	\begin{tabular}{lcl}
+ $\trans(\state_1,\action,\state_3) = 0.5$& \quad\quad &	$\trans(\state_3,\actionb,\state_2) = 0.6$ \\
+ $\trans(\state_1,\actionb,\state_4) = 1$ & \quad\quad &	$\trans(\state_3,\actionb,\state_3) = 0.4$ \\
+	\end{tabular}
+\end{center}
+
+Because there are no other other outgoing transitions from $\state_1$ or $\state_3$ with action \actionb in \view it is 
+\begin{alignat*}{4}
+	\trans'(\eqclassv[\state_1], \actionb, \eqclassv[\state_1]) &= \frac{\trans(\state_3,\actionb,\state_3)}{0.6+1+0.4} &&= \frac{0.4}{2} &= 0.2\\
+	\trans'(\eqclassv[\state_1], \actionb, \eqclassv[\state_2]) &= \frac{\trans(\state_3,\actionb,\state_2)}{0.6+1+0.4} &&= \frac{0.6}{2} &= 0.3\\
+	\trans'(\eqclassv[\state_1], \actionb, \eqclassv[\state_4]) &= \frac{\trans(\state_1,\actionb,\state_4)}{0.6+1+0.4} &&= \;\:\frac{1}{2} &= 0.5
+\end{alignat*}
+
+because $\eqclassv[\state_1] = \{\state_1, \state_3\}, \eqclassv[\state_2] = \{\state_2\}, \eqclassv[\state_4] = \{\state_4\}$ and each time there is only one transition with that action and \redcomment{direction} \redcomment{(undefined! ..should define our intuitive?)} between the equivalence classes. The transition $\trans(\state_1,\action,\state_3) = 0.5$ is interesting because it is within an equivalence class. This causes a loop on the state $\{\state_1,\state_3\}$ in the view \view with the transition $\trans(\eqclassv[\state_1],\action,\eqclassv[\state_3]) = 0.5$. The value remains unchanged as $\trans(\eqclassv[\state_1],\action,\eqclassv[\state_3]) = 0.5$ is the only other transition with action \action outgoing from one of the states $\state_1,\state_3$. Hence the denominator of $\trans'$ in Definition \ref{def:view} is one.
+\end{exmp}
 
 \subsection{View Types and Disregarding Views}
 In this section we categorize views in two view types. We will present views of two types: binary an partitioning. Given a \grpfctN $\grpfct : \states \to \imggrp$ or a detached \grpfctN $\grpfctsub : \smstates \to \imggrp$
@@ -117,7 +167,13 @@ In this section we categorize views in two view types. We will present views of 
 	\label{def:viewtypes}
 \end{definition}
 
-The notion of a binary view is that it maps each state to whether or not it has a certain property. The symbol \hasppty shall be used if it has the property and the symbol \notppty shall be used if it does not have the property. The symbol \remelem can either be used to not group states that have the property or to not group state states that do not have the property. The case of $M(\grpfct) = \{\hasppty, \notppty\}$ may seem of rather little benefit, since the resulting view only contains two states. In the actual implementation such a view might be very useful, as at the tier of visualization there will be the feature of expanding grouped states and show the ones they contain. Hence, at runtime it can be decided which states are to be shown, rather than in the phase of preprocessing.
+\begin{figure}[t]
+	\centering \input{./03/images/exampleView}
+	\caption{\viewNC \view on \chgphN \chgph from Figure \ref{fig:exampleMdp}}
+	\label{fig:exampleView}  
+\end{figure}
+
+The notion of a binary view is that it maps each state to whether or not it has a certain property. The symbol \hasppty shall be used if it has the property and the symbol \notppty shall be used if it does not have the property. The symbol \remelem can either be used to not group states that have the property or to not group state states that do not have the property. The case of $\grpfct[\states] = \{\hasppty, \notppty\}$ may seem of rather little benefit, since the resulting view only contains two states. In the actual implementation such a view might be very useful, as at the tier of visualization there will be the feature of expanding grouped states and show the ones they contain. Hence, at runtime it can be decided which states are to be shown, rather than in the phase of preprocessing.
 
 The notion of a categorizing \viewN is that categorizes states to groups, which have a certain property. One could argue that binary \viewsN as well categorize states in two groups that have in common to share having or not having a certain property. We defined categorizing \viewsN as in Definition \ref{def:viewtypes} so that a view either is binary or categorizing to distinguish between the intention of a \viewN.
 
