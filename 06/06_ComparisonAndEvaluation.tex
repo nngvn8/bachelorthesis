@@ -20,35 +20,59 @@ Clustering exact Cycles when clustering exact cycles
 
 One Purpose of \viewsN is to simplify \mdpsN to make them better understandable. Due to the state explosion problem already rather simple systems can become very hard to oversee. As an example consider the concurrency problem Dining Philosophers, where n philosophers have to share n-1 forks and each of them needs two to eat. They are sitting on a round table with forks between them. Each of them only has access to fork to their left and right, if it is not already occupied. When representing the problem with an \mdpN the choice of which fork the philosopher tries to pick is made at random with an uniform distribution. The respective prism File is shown in \redcomment{add Screenshot appendix}.
 
-Already for only three philosophers the \mdpN has 956 states. When looking at the graphical representation from \pmcvis \redcomment{Figure} it appears to be little helpful for understanding and exploring the graph due to its sheer size. Although \redcomment{Graph} large, this \mdpN is still rather small. With already five philosophers the MDP has about 100 000 states and with 10 philosophers the resulting MDP has more than 8 billion states. The \viewN \viewparamvalident can help to only show the behavior of some Philosophers and hiding the behavior of the remaining ones. 
+Already for only three philosophers the \mdpN has 956 states. When looking at the graphical representation from \pmcvis Figure it appears to be little helpful for understanding and exploring the graph due to its sheer size. Although the graph is large, this \mdpN is still rather small. With already five philosophers the MDP has about 100 000 states and with 10 philosophers the resulting MDP has more than 8 billion states. The \viewN \viewparamvalident can help to only show the behavior of some Philosophers and hiding the behavior of the remaining ones. 
 
-The \viewN \viewparamvalident(\phil{1}) groups all states that have the same value of (\phil{1}) ignoring the values of the remaining variables. That is, the values of \phil{2} and \phil{3} are hidden, which results in only showing the module of philosopher \phil{1} \redcomment{Figure}. This may help immensely if only a specific module is of interest or the reaming modules have the same structure, as it is the case here with Dining Philosophers. After applying further views could be \viewparamvalident(\phil{1}) applied to understand or explore the module. For example if in Dining Philosophers we were interested in the part of the module where \phil{1} picks their first fork we could use the \viewN \viewparamdnf with c(s) = ({Figure}).
+\begin{figure}
+	\includegraphics[width=\textwidth]{./06/images/06_01_pure_zoomhalf.png}
+	\label{fig:0601Pure}
+	\caption{Approximately half of the \mdpN \mdp in \pmcvis}
+\end{figure}
 
-It is also possible to use the view \viewparamvalident to see the interleaved behavior of two or more modules. To see the interleaved behavior of \phil{1} and \phil{2}, we use parallel composition $\viewparamvalident(\phil{1}) \pll \viewparamvalident(\phil{2})$. This results in states $\state_1, \state_2$ being grouped where $(\gfctparamvalident (\state_1 \cond \phil{1}), \gfctparamvalident(\state_1 \cond \phil{2})) = (\gfctparamvalident(\state_2 \cond \phil{1}), \gfctparamvalident(\state_2 \cond \phil{2}))$. Hence only the value of \phil{3} is hidden which results exactly in the desired \redcomment{interleaved model} (\redcomment{Figure}).
+The \viewN $\viewparamvalident(\phil{1})$ groups all states that have the same value of (\phil{1}) ignoring the values of the remaining variables. That is, the values of \phil{2} and \phil{3} are hidden, which results in only showing the module of philosopher \phil{1} \redcomment{Figure}. This may help immensely if only a specific module is of interest or the reaming modules have the same structure, as it is the case here with Dining Philosophers. After applying further views could be \viewparamvalident(\phil{1}) applied to understand or explore the module. For example if in Dining Philosophers we were interested in the part of the module where \phil{1} picks their first fork we could use the \viewN \viewparamdnf with c(s) = ({Figure}).
+
+\begin{figure}
+	\includegraphics[width=\textwidth]{./06/images/06_01_var.png}
+	\label{fig:0601var}
+	\caption{\viewNC $\viewparamvalident(\phil{1})$}
+\end{figure}
+
+It is also possible to use the view \viewparamvalident to see the interleaved behavior of two or more modules. To see the interleaved behavior of \phil{1} and \phil{2}, we use parallel composition $\viewparamvalident(\phil{1}) \pll \viewparamvalident(\phil{2})$. This results in states $\state_1, \state_2$ being grouped where $(\gfctparamvalident (\state_1 \cond \phil{1}), \gfctparamvalident(\state_1 \cond \phil{2})) = (\gfctparamvalident(\state_2 \cond \phil{1}), \gfctparamvalident(\state_2 \cond \phil{2}))$. Hence only the value of \phil{3} is hidden which results exactly in the desired \redcomment{interleaved model} (Figure \ref{fig:0601var+var}).
+
+\begin{figure}
+	\includegraphics[width=\textwidth]{./06/images/06_01_var+var.png}
+	\label{fig:0601var+var}
+	\caption{\viewNC $\viewparamvalident(\phil{1}) \pll \viewparamvalident(\phil{2})$}
+\end{figure}
 
 In general the views \viewparamdnf and \viewparamcnf are very powerful since they allow arbitrary operations on parameters.
 
-\begin{itemize}
-	\item USE: dinging Philosopher
-	\item consider dining Philosophers with
-	\item current graphical Representation looks as follows
-	\item only has about 1000 states in case studies prism mdp with about ... states
-	\item in general seems simple
-	\item parameters cluster: allows looking at just one module
-	\item also interleaving of arbitrary modules
-	\item
-	\item hasAction or OutAction-Ident for specific MDP-that run through configuration phases
-	
-\end{itemize}
+%\begin{itemize}
+%	\item USE: dinging Philosopher
+%	\item consider dining Philosophers with
+%	\item current graphical Representation looks as follows
+%	\item only has about 1000 states in case studies prism mdp with about ... states
+%	\item in general seems simple
+%	\item parameters cluster: allows looking at just one module
+%	\item also interleaving of arbitrary modules
+%	\item
+%	\item hasAction or OutAction-Ident for specific MDP-that run through configuration phases
+%	
+%\end{itemize}
 
 \subsection{Find out why illegal states is reached}
 \newcommand{\critstate}{\mt{\varstyle{2}{2}}}
 
 In this section we want to show how views can be used for debugging. In this specific case we assume that we observed unwanted behavior or model checking results. We know that some states - that is some assignment of variables - are not allowed. We will check if these states are in fact not reachable.
 
-We will consider the following small MDP the represents two systems that intend to send information via a unshareable medium. With a probability of $0.8$ a system can establish a connection and with probability of $0.2$ establishing a connection will fail. After an established connection access to the medium shall only be granted, if it is not occupied by the other system. If the medium is not occupied the system starts sending, otherwise it waits until the medium is free. The termination of the transmission is modeled with probabilities. There is 50 percent chance of terminating the transmission and a 50 percent chances of continuing.
+We will consider the following small \mdpN the represents two systems that intend to send information via a unshareable medium. With a probability of $0.8$ a system can establish a connection and with probability of $0.2$ establishing a connection will fail. After an established connection access to the medium shall only be granted, if it is not occupied by the other system. If the medium is not occupied the system starts sending, otherwise it waits until the medium is free. The termination of the transmission is modeled with probabilities. There is 50 percent chance of terminating the transmission and a 50 percent chances of continuing.
 
-The state \critstate should not be reachable, since it represents the situation of the two systems occupying the unshareable medium at the same time. We will check if this state in fact is not reachable by using the $\viewparamcnf(c(\state))$ where $c(\state) := (x=2) \land (y=2)$. 
+The state \critstate should not be reachable, since it represents the situation of the two systems occupying the unshareable medium at the same time. We will check if this state in fact is not reachable by using the $\view[\pptyparamcnf](c(\state))$ where $c(\state) := (x=2) \land (y=2)$ (Figure \ref{fig:0602Var}). Note that we are not using any disregarding \viewN.
+
+\begin{figure}
+	\includegraphics[width=\textwidth]{./06/images/06_02_Var.png}
+	\label{fig:0602Var}
+	\caption{\viewNC $\view[\pptyparamcnf](c(\state))$}
+\end{figure}
 
 We observe, that this state is reachable, because it is shown and only reachable states are shown at all in \pmcvis. The questions occurs how and why. In order to obtain this information it should be investigated by which state this critical state \critstate has been reached. One way of accomplishing that is to look into the database that stores states and transitions. They look as follows. 
 
@@ -56,17 +80,52 @@ An even better approach is to look in the model file, which looks as follows:
 
 Persons with experience in working with prism models, might quickly spot the issue, especially because this is a rather small \mdpN. With less experienced people and especially with larger and more complicated models, finding an issue becomes much more difficult. Hence, let us see how views can help us.
 
-Firstly we will use the view \viewdistance from that state on. Because in the current version of the project expansion of grouped states to the ones they contain on a visual level, has not been implemented yet, we will use a custom \viewN that emulates this feature.
+Firstly we will use the view \viewdistance from that state on (Figure \ref{fig:0602VarDistIdDouble} (left)). Because in the current version of the project expansion of grouped states to the ones they contain on a visual level, has not been implemented yet, we will use a custom \viewN that emulates this feature.
+
+%\begin{figure}
+%	\begin{minipage}{.5\textwidth}
+%%	\begin{subfigure}
+%	\centering \includegraphics[width=.95\linewidth]{./06/images/06_02_Var+Dist.png}
+%	\label{fig:0602Var+Dist}
+%%	\caption{\viewNC $\view[\pptyparamcnf](c(\state)) \pll \viewdistance$}
+%%\end{subfigure}
+%\end{minipage}
+%\begin{minipage}{.5\textwidth}
+%%	\begin{subfigure}
+%	\hspace{10mm}
+%	\centering \includegraphics[width=\linewidth]{./06/images/06_02_Var+Dist+Id.png}
+%	\label{fig:0602Var+Dist+Id}
+%%	\caption{\viewNC $\viewNC \view[\pptyparamcnf](c(\state)) \pll \viewdistance \pll \viewident$}
+%%\end{subfigure}
+
+	
+%\end{minipage}
+%\label{fig:0602VarDistIdDouble}
+%%\caption{\viewNC $\view[\pptyparamcnf](c(\state)) \pll \viewdistance$ on the left and \viewN $\view[\pptyparamcnf](c(\state)) \pll \viewdistance \pll \viewident$}
+%\end{figure}
+
+\begin{figure}
+	\includegraphics[width=\textwidth]{./06/images/06_02_Var+Dist.png}
+	\label{fig:0602Var+Dist}
+	\caption{\viewNC $\view[\pptyparamcnf](c(\state)) \pll \viewdistance$}
+\end{figure}
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $n \in \natnums$. The \viewN \viewident is defined by its \grpfctN \gfctident where $\gfctsubident : \smstates \to \imggrp$ with
 	\[
 	\gfctsubident(\state) = \state
 	\]
-	and $\imggrp = \states \cup \remstates$.
+	and $\imggrp = \states \cup \remset$.
 \end{definition}
+
 \sloppy
-We will use partial application with $ \viewparamcnf(c(\state)) \compselect \viewident$ where $\compselectset = \{(\gfctdistance,1)\}$ to expand that state. The MDP-Graph then looks as in \redcomment{Figure}. It is to see that the state only contains a single state namely with the id seven. In the current version of implementation it is not possible, to obtain the parameter values. With the database file we obtain that this is the state where $x=2$ and $y=1$. Because $x=2$ represents the system 1 one sending and system 2 waiting, we see that is possible for the second  system to begin to send on the medium although it is already occupied by the first system!
+We will use partial application with $ \view[\pptyparamcnf](c(\state)) \compselect \viewident$ where $\compselectset = \{(\gfctdistance,1)\}$ to expand that state. The MDP-Graph then looks as in \ref{fig:0602Var+Dist+Id}. It is to see that the state only contains a single state namely with the id seven. In the current version of implementation it is not possible, to obtain the parameter values. With the database file we obtain that this is the state where $x=2$ and $y=1$. Because $x=2$ represents the system 1 one sending and system 2 waiting, we see that is possible for the second  system to begin to send on the medium although it is already occupied by the first system!
+
+\begin{figure}
+	\centering \includegraphics[width=\textwidth]{./06/images/06_02_Var+Dist+Id.png}
+	\label{fig:0602Var+Dist+Id}
+	\caption{\viewNC $\viewNC \view[\pptyparamcnf](c(\state)) \pll \viewdistance \compselect \viewident$ where $\compselectset = \{(\gfctdistance,1)\}$}
+\end{figure}
 
 When now looking at the prism file we can see why this is the case. In line when $y=1$ there is a 50 percent chance to enter $y=2$. This line originally was intended for termination of the transmission. From $y=1$ it should not be possible to enter $y=2$ if $x=2$. After fixing this, the state no longer appears after the application of $\viewparamdnf(c(\state))$
 
@@ -89,11 +148,45 @@ When now looking at the prism file we can see why this is the case. In line when
 %%	\item two dies
 %%	\item property cluster
 
-\subsection{Understand and Exploring an MDP + SCC - Cycles?!}
+\subsection{Understand and Debug \chgphN}
 
 In this subsection we want to take a look at a more complex usecase how views might help us to understand and fix a given \mdpN. We refer to the \mdp \redcomment{reference}.
 
-Firstly, we will gather some understanding of the model. We already saw in chapter ch that variables can help a lot with understanding an \chgphN. When applying \viewparamvalident(\texttt{time}) we see that the \chgphN has a limited timed behavior \redcomment{Figure (left)}. When applying \viewparamvalident(\text{phases}) we observe that the system is operating in phases\redcomment{Figure right}. If we consider \viewparamvalident(\texttt{time}) \pll \viewparamvalueseq(\texttt{phases}) we see that the phases are repeated for each iteration of time \redcomment{Figure}. However, we still don not have any information about the behavior of the system in these phases. Since this model has actions we will consider the \viewN \viewweakoutactident. We obtain that we have sets of states which only have transitions with the action \texttt{[reconfigure]} outgoing, the action \texttt{[working]} outgoing, the actions \texttt{[configure1]} outgoing, \texttt{[configure2]}, \texttt{[end\_reconfigure]}, the action \texttt{[working]} outgoing or the action \texttt{[end]} outgoing \redcomment{Figure}. By interpreting the name of the actions we see that this system seems to have a configuration phase a working phase a reconfiguring phase and an end phase. The grouping appears to be very similar to \viewparamvalident(\texttt{phases}). Hence, we consider \viewweakoutactident \pll \viewparamvalident{\texttt{phases}}. Indeed the enumeration coincides with the grouping of outgoing actions, with the exception of \texttt{[end]} and \texttt{[reconfigure]} \redcomment{timed behavior?}
+Firstly, we will gather some understanding of the model. We already saw in chapter ch that variables can help a lot with understanding an \chgphN. When applying $\viewparamvalident(\texttt{time})$ we see that the \chgphN has a limited timed behavior (Figure \ref{fig:0603time_phases} left). When applying $\viewparamvalident(\texttt{phases})$ we observe that the system is operating in phases (Figure \ref{fig:0603time_phases} right). If we consider $\viewparamvalident(\texttt{time}) \pll \viewparamvalident(\texttt{phases})$ we see that the phases are repeated for each iteration of time (Figure \ref{fig:0603time+phases} right). However, we still don not have any information about the behavior of the system in these phases. Since this model has actions we will consider the \viewN \viewweakoutactident (Figure \ref{fig:0603act}). We obtain that we have sets of states which only have transitions with the action \texttt{[reconfigure]} outgoing, the action \texttt{[working]} outgoing, the actions \texttt{[configure1]} outgoing, \texttt{[configure2]}, \texttt{[end\_reconfigure]}, the action \texttt{[working]} outgoing or the action \texttt{[end]} outgoing \redcomment{Figure}. By interpreting the name of the actions we see that this system seems to have a configuration phase a working phase a reconfiguring phase and an end phase. The grouping appears to be very similar to \viewparamvalident(\texttt{phases}). Hence, we consider $\viewweakoutactident \pll \viewparamvalident(\texttt{phases})$ (Figure \ref{fig:0603act+phases}). Indeed the enumeration coincides with the grouping of outgoing actions, with the exception of \texttt{[end]} and \texttt{[reconfigure]} \redcomment{timed behavior?}
+
+\begin{figure}
+	\begin{subfigure}{.5\textwidth}
+		\centering \includegraphics[width=\textwidth]{./06/images/06_03_time.png}
+		\label{fig:0601time}
+%		\caption{\viewNC $\viewNC \view[\pptyparamcnf](c(\state)) \pll \viewdistance \compselect \viewident$ where $\compselectset = \{(\gfctdistance,1)\}$}
+	\end{subfigure}
+	\hspace{5mm}
+	\begin{subfigure}{.5\textwidth}
+		\centering \includegraphics[width=\textwidth]{./06/images/06_03_phases.png}
+		\label{fig:0601phases}
+%		\caption{\viewNC $\viewNC \view[\pptyparamcnf](c(\state)) \pll \viewdistance \compselect \viewident$ where $\compselectset = \{(\gfctdistance,1)\}$}
+	\end{subfigure}
+	\caption{\viewNC $\viewparamvalident(\texttt{time})$ (left) and \viewN $\viewparamvalident(\texttt{phases})$ (right)}
+	\label{fig:time_phases}
+\end{figure}
+
+\begin{figure}
+	\centering \includegraphics[width=\textwidth]{./06/images/06_03_time+phases.png}
+	\label{fig:0603time+phases}
+	\caption{\viewNC $\viewparamvalident(\texttt{time}) \pll \viewparamvalident(\texttt{phases})$}
+\end{figure}
+
+\begin{figure}
+	\centering \includegraphics[width=\textwidth]{./06/images/06_03_act.png}
+	\label{fig:0603act}
+	\caption{\viewNC \viewweakoutactident}
+\end{figure}
+
+\begin{figure}
+	\centering \includegraphics[width=\textwidth]{./06/images/06_03_act+phases.png}
+	\label{fig:0603act+phases}
+	\caption{\viewNC $\viewparamvalident(\texttt{time}) \pll \viewparamvalident(\texttt{phases})$}
+\end{figure}
 
 Hence we know that the system is working for $\texttt{phase}=0$, configuring for $\texttt{phase}=1$ and termination configuration in $\texttt{phase}=2$. This process is repeated six times until $\texttt{time}=5$.
 
@@ -101,29 +194,43 @@ Hence we know that the system is working for $\texttt{phase}=0$, configuring for
 
 In general we learned that this system runs several times with choosing certain configurations each time before it runs. Its reward function rewards states that work with a better configuration. A classic model checking \redcomment{value} is to determine \redcomment{MIN EXP REWARD} and \redcomment{MAX EXP REWARD}. For \redcomment{MIN EXP REWARD} we obtain \redcomment{x}, for \redcomment{MAX EXP REWARD} \redcomment{inf}. Since the system is modeled for a finite time and each time chooses from a finite set of configurations, it is unwanted behavior, that \redcomment{MAX EXP REWARD} is infinite. We will now show how views can help to find the cause.
 
-Such behavior of infinite \redcomment{MAX EXP REWARD} is often caused by cycles. A feasible idea would be to use a view with cycles. As it will be discussed in Chapter \redcomment{Performance} these \viewsN very ressource intensive when there are larger strongly connected components. Moreover when finding strongly connected components the cycles are equally found since each cycle is a strongly connected component. The view yields that there are quite large strongly connected components (\redcomment{Figure}). To find out where these are locate we consider the parallely composed \viewN on \mdpN with \viewscc \pll \viewweakoutactident. We see that the strongly connected components are in the configuring phase. When taking a look at the prism file, we see that we can arbitrarily often switch the configuration. Hence, it is not assured that a configuration can only be selected once. This causes infinite paths in the \mdpN, which in consequence cause infinite maximal expectations. This can be fixed by assuring that a configuration can only be selected once. An easy way of accomplishing this is to sequentialize the selection of the two configurations: Firstly \texttt{[configuration1]} is selected, afterwards \texttt{[configuration2]} and finally the configuration phase ends (\texttt{[end\_configuration]} is the only available action left to take).
 
 
-\begin{itemize}
-	\item USE: scc with loops
-	\item We already saw in chapter ch that variables can help a lot with understanding an \chgph
-	\item When applying it to time and phases we see that the system has limited timed behavior and that it operates in phases
-	\item considering time pll phases we see that these phases are repeated for each time
-	\item Still no idea what the model actually does
-	\item since this view has actions it may help to use the outactions view
-	\item see phases
-	\item when activating phases pll action see that in phase=0 ... and will eventually terminate in phase=0
-	\item \redcomment{time+scc+init}
-%	\item time apply strongly connected components -> structure of mdp very clear
-%	\item apply init to see where it start
-	\item maxReward is infinite -> not wanted
-	\item search for cycles or scc
-	\item are cycles $\to$ exact cycles \redcomment{maybe exact cycles}
-	\item fix mdp $\to$ no more cycles $\to$ show no more cycles
-	
-\end{itemize}
+Such behavior of infinite \redcomment{MAX EXP REWARD} is often caused by cycles. A feasible idea would be to use a view with cycles. As it will be discussed in Chapter \redcomment{Performance} these \viewsN very ressource intensive when there are larger strongly connected components. Moreover when finding strongly connected components the cycles are equally found since each cycle is a strongly connected component. The view \viewscc yields that there are quite large strongly connected components (Figure \ref{fig:0603scc}). To find out where these are locate we consider the parallely composed \viewN on \mdpN with $\viewscc \pll \viewweakoutactident$ (Figure \ref{fig:0603scc+act}). We see that the strongly connected components are in the configuring phase. When taking a look at the prism file, we see that we can arbitrarily often switch the configuration. Hence, it is not assured that a configuration can only be selected once. This causes infinite paths in the \mdpN, which in consequence cause infinite maximal expectations. This can be fixed by assuring that a configuration can only be selected once. An easy way of accomplishing this is to sequentialize the selection of the two configurations: Firstly \texttt{[configuration1]} is selected, afterwards \texttt{[configuration2]} and finally the configuration phase ends (\texttt{[end\_configuration]} is the only available action left to take).
+
+\begin{figure}
+	\centering \includegraphics[width=\textwidth]{./06/images/06_03_scc.png}
+	\label{fig:0603scc}
+	\caption{\viewNC \viewscc}
+\end{figure}
+
+\begin{figure}
+	\centering \includegraphics[width=\textwidth]{./06/images/06_03_scc+act.png}
+	\label{fig:0603scc+act}
+	\caption{\viewNC $\viewscc \pll \viewweakoutactident$}
+\end{figure}
+
+%\begin{itemize}
+%	\item USE: scc with loops
+%	\item We already saw in chapter ch that variables can help a lot with understanding an \chgph
+%	\item When applying it to time and phases we see that the system has limited timed behavior and that it operates in phases
+%	\item considering time pll phases we see that these phases are repeated for each time
+%	\item Still no idea what the model actually does
+%	\item since this view has actions it may help to use the outactions view
+%	\item see phases
+%	\item when activating phases pll action see that in phase=0 ... and will eventually terminate in phase=0
+%	\item \redcomment{time+scc+init}
+%%	\item time apply strongly connected components -> structure of mdp very clear
+%%	\item apply init to see where it start
+%	\item maxReward is infinite -> not wanted
+%	\item search for cycles or scc
+%	\item are cycles $\to$ exact cycles \redcomment{maybe exact cycles}
+%	\item fix mdp $\to$ no more cycles $\to$ show no more cycles
+%	
+%\end{itemize}
 
 \subsection{Performance}
+
 %\newcommand{\mypath}{}
 
 %\begin{filecontents*}{\jobname-data.csv}
@@ -146,7 +253,46 @@ Such behavior of infinite \redcomment{MAX EXP REWARD} is often caused by cycles.
 %\end{filecontents*}
 
 	
-\begin{tikzpicture}
+%\begin{tikzpicture}
+%	\begin{loglogaxis}
+%		[
+%		width=\textwidth,
+%		height=8cm,
+%		xlabel={State amount},
+%		ylabel={$\frac{time}{ms}$},
+%		legend pos=north west,
+%		ymin=0, %-208000,
+%		ymax=200000% Adjust the y-axis range as needed
+%		]
+%		
+%		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/InActIdentView.csv};
+%		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/OutActIdentView.csv};
+%		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/InActView.csv};
+%		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/OutActView.csv};
+%		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/OutActSetSizeView.csv};
+%		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/VariablesView.csv};
+%		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/VariablesViewDnf.csv};
+%		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/VariablesViewCnf.csv};
+%		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/ReachabilityView.csv};
+%		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/DistanceView.csv};
+%
+%		
+%		\legend{InActIdentView, 
+%			OutActIdentView,
+%			InActView,
+%			OutActView,
+%			OutActSetSizeView,
+%			VariablesView,
+%			VariablesViewDnf,
+%			VariablesViewCnf, 
+%			ReachabilityView, 
+%			DistanceView}
+%	\end{loglogaxis}
+%\end{tikzpicture}
+	
+
+\begin{figure}
+	\begin{tikzpicture}
 	\begin{loglogaxis}
 		[
 		width=\textwidth,
@@ -154,35 +300,49 @@ Such behavior of infinite \redcomment{MAX EXP REWARD} is often caused by cycles.
 		xlabel={State amount},
 		ylabel={$\frac{time}{ms}$},
 		legend pos=north west,
-		ymin=0, %-208000,
-		ymax=200000% Adjust the y-axis range as needed
+		ymin=0,
+%		ymax=1000,  % Adjust the y-axis range as needed
 		]
 		
-		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/InActIdentView.csv};
-		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/OutActIdentView.csv};
-		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/InActView.csv};
-		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/OutActView.csv};
-		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/OutActSetSizeView.csv};
-		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/VariablesView.csv};
-		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/VariablesViewDnf.csv};
-		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/VariablesViewCnf.csv};
-		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/ReachabilityView.csv};
-		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/DistanceView.csv};
+		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {./06/PerformanceTests/GroupingFunction/InActIdentView.csv};
+		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {./06/PerformanceTests/GroupingFunction/OutActIdentView.csv};
+		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {./06/PerformanceTests/GroupingFunction/InActView.csv};
+		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {./06/PerformanceTests/GroupingFunction/OutActView.csv};
+		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {./06/PerformanceTests/GroupingFunction/OutActSetSizeView.csv};
+		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {./06/PerformanceTests/GroupingFunction/VariablesView.csv};
+		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {./06/PerformanceTests/GroupingFunction/VariablesViewDnf.csv};
+		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {./06/PerformanceTests/GroupingFunction/VariablesViewCnf.csv};
+		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {./06/PerformanceTests/GroupingFunction/ReachabilityView.csv};
+		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {./06/PerformanceTests/GroupingFunction/DistanceView.csv};
+		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {./06/PerformanceTests/GroupingFunction/SccView.csv};
+		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {./06/PerformanceTests/GroupingFunction/SccbView.csv};
+		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {./06/PerformanceTests/GroupingFunction/APView.csv};
+		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {./06/PerformanceTests/GroupingFunction/InitView.csv};
+		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {./06/PerformanceTests/GroupingFunction/PropertyView.csv};
+
 
 		
-		\legend{InActIdentView, 
-			OutActIdentView,
-			InActView,
-			OutActView,
-			OutActSetSizeView,
-			VariablesView,
-			VariablesViewDnf,
-			VariablesViewCnf, 
-			ReachabilityView, 
-			DistanceView}
+%		\legend{InActIdentView, 
+%			OutActIdentView,
+%			InActView,
+%			OutActView,
+%			OutActSetSizeView,
+%			VariablesView,
+%			VariablesViewDnf,
+%			VariablesViewCnf, 
+%			ReachabilityView, 
+%			DistanceView,
+%			SccView,
+%			SccbView,
+%			APView,
+%			InitView,
+%			PropertyView}
+
 	\end{loglogaxis}
 \end{tikzpicture}
-	
+	\caption{Gropuing Function times}
+
+\end{figure}
 \begin{tikzpicture}
 	\begin{loglogaxis}
 		[
@@ -192,45 +352,40 @@ Such behavior of infinite \redcomment{MAX EXP REWARD} is often caused by cycles.
 		ylabel={$\frac{time}{ms}$},
 		legend pos=north west,
 		ymin=0,
-		ymax=1000,  % Adjust the y-axis range as needed
+		%		ymax=1000,  % Adjust the y-axis range as needed
 		]
 		
-		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {/home/martin/Desktop/InActIdentView.csv};
-		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {/home/martin/Desktop/OutActIdentView.csv};
-		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {/home/martin/Desktop/InActView.csv};
-		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {/home/martin/Desktop/OutActView.csv};
-		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {/home/martin/Desktop/OutActSetSizeView.csv};
-		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {/home/martin/Desktop/VariablesView.csv};
-		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {/home/martin/Desktop/VariablesViewDnf.csv};
-		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {/home/martin/Desktop/VariablesViewCnf.csv};
-		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {/home/martin/Desktop/ReachabilityView.csv};
-		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {/home/martin/Desktop/DistanceView.csv};
-		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {/home/martin/Desktop/SccView.csv};
-		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {/home/martin/Desktop/SccbView.csv};
-		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {/home/martin/Desktop/APView.csv};
-		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {/home/martin/Desktop/InitView.csv};
-		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {/home/martin/Desktop/PropertyView.csv};
-
-
+	
+		\addplot table [x=StateCount, y=0AvgG, col sep=comma] {./06/PerformanceTests/GroupingFunction/OutActIdentView.csv};
+		\addplot table [x=StateCount, y=0AvgMdp, col sep=comma] {./06/PerformanceTests/MdpGraph/MdpGraph.csv};
+		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {./06/PerformanceTests/ExecuteBatch/ExecuteBatchInActIdentCSV2-all.csv};
 		
-		\legend{InActIdentView, 
-			OutActIdentView,
-			InActView,
-			OutActView,
-			OutActSetSizeView,
-			VariablesView,
-			VariablesViewDnf,
-			VariablesViewCnf, 
-			ReachabilityView, 
-			DistanceView,
-			SccView,
-			SccbView,
-			APView,
-			InitView,
-			PropertyView}
-
+		
+		
+		
+		\legend{BuildTimeView, 
+				CreateMdpGraph,
+				ExecuteBatch
+			}
+		
 	\end{loglogaxis}
 \end{tikzpicture}
+
+
+
+
+\begin{itemize}
+	\item linear performance
+	\item no view takes more than 1 second until 1 million states
+	\item 
+	\[
+	Grouping Function build time \approx \frac{|\states|}{1000} ms
+	\]
+	\[
+	Grouping Function build time \approx |\states| \mu s
+	\]
+	
+\end{itemize}
 	
 
 

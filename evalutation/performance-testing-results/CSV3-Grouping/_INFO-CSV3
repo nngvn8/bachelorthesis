@@ -1,0 +1,8 @@
+100 Iterations until 1000000 (APView only until 100000)
+using caffeine
+only Grouping Function
+
+Procedure:
+Create View without build (commented out in createView())
+groupingFctTest() is public and calls groupingFunction measuring its time
+Test took almost exactly one hour

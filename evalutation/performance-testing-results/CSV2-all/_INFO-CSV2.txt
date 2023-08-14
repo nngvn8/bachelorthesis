@@ -1,0 +1,10 @@
+400 Iterations until 1000
+200 Iterations unteil 10000
+afterwards 400 Iterations (set falsely)
+using caffeine
+
+View built with createView() and afterwards removed:
+> a lot of object creation and destruction
+> full build function (i.e. also requirements, collumn and execute Batch)
+> db write and db remove
+> very slow test

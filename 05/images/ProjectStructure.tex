@@ -1,0 +1,62 @@
+\documentclass[tikz,preview]{standalone}
+%\usepackage{prelude}
+\input{prelude}
+
+\begin{document}
+	\begin{tikzpicture}
+		\newcommand{\backendheight}{6}
+		\newcommand{\backendwidth}{9}
+		\newcommand{\backendvertpos}{0}
+		\newcommand{\backendhorpos}{0}
+		\newcommand{\frontendvertpos}{3.25}
+		\newcommand{\frontendhorpos}{12}
+		\newcommand{\frontendheight}{2}
+		\newcommand{\frontendwidth}{3}
+		\newcommand{\labelbackenddistline}{.2}
+		\newcommand{\labelfrontenddistline}{.2}
+		\newcommand{\prismvertposrelativebackend}{4.5}
+		\newcommand{\prismhorposrelativebackend}{.25}
+		\newcommand{\javavertposrelativebackend}{4.5}
+		\newcommand{\javahorposrelativebackend}{5.5}		
+		\newcommand{\jsonvertposrelativebackend}{4.5}		
+		\newcommand{\jsonhorposrelativebackend}{0}		
+		\newcommand{\dbvertposrelativebackend}{.25}		
+		\newcommand{\dbhorposrelativebackend}{4}
+		\newcommand{\dbheight}{2}
+		\newcommand{\dbwidth}{3}
+		\newcommand{\labeldbdistline}{.1}
+		\newcommand{\statevertposrelativedb}{1.05}
+		\newcommand{\statehorposrelativedb}{.4}
+		\newcommand{\transvertposrelativedb}{.4}
+		\newcommand{\transhorposrelativedb}{.4}
+		\newcommand{\dbhorpos}{\backendhorpos+\dbhorposrelativebackend}		
+		\newcommand{\dbvertpos}{\backendvertpos+\dbvertposrelativebackend}		
+		\draw[thick] (\backendhorpos, \backendhorpos) rectangle (\backendhorpos+\backendwidth, \backendvertpos+\backendheight);
+		\draw[thick] (\frontendhorpos,\frontendvertpos) rectangle (\frontendhorpos+\frontendwidth,\frontendvertpos+\frontendheight);
+		\node[minimum height=.8, anchor=north west] at (\backendhorpos+\labelbackenddistline,\backendvertpos+\backendheight-\labelbackenddistline) {Backend};
+		\node[minimum height=.8, anchor=north west] at (\frontendhorpos+\labelfrontenddistline,\frontendvertpos+\frontendheight-\labelfrontenddistline) {Frontend};
+		\node [gstate, anchor= west] (prism)at (\backendhorpos+\prismhorposrelativebackend, \backendvertpos+\prismvertposrelativebackend) {Prism Model};
+		\node [gstate] (java) at (\backendhorpos+\javahorposrelativebackend, \backendvertpos+\javavertposrelativebackend) {Java Server};
+		\node [gstate, fill=white] (json) at (\backendhorpos+\backendwidth+\jsonhorposrelativebackend, \backendvertpos+\jsonvertposrelativebackend) {JSON};
+		\draw[thick] (\backendhorpos+\dbhorposrelativebackend, \backendhorpos+\dbvertposrelativebackend) rectangle (\backendhorpos+\dbhorposrelativebackend+\dbwidth, \backendvertpos+\dbvertposrelativebackend+\dbheight);
+%		\node [gstate, minimum height=7, minimum width=4] (db) at (\dbhorposrelativebackend, \dbvertposrelativebackend) {};
+		
+
+		\node (db) at (\javahorposrelativebackend, \backendvertpos+\dbvertposrelativebackend+\dbheight) {};
+		
+		\path [trans] (prism) edge node [midway] (prismjava) {} (java);
+		\path [trans] (json) edge node [midway] (jsonfrontend) {}  ++(right:\frontendhorpos-\backendhorpos-\backendwidth);
+		\path [trans] (java) edge node [midway,above,text width=.7cm] (jsonfrontend) {\scriptsize create if requested} (json);
+%		\path [bendtrans] (java) edge ++(down:\javavertposrelativebackend-\backendvertpos-\dbvertposrelativebackend-\dbheight-0.4); % 0.4 because minsize gstate=0.8
+		\path [bendtrans] (java) edge node [midway] (javadb) {} (db.center);
+		\path [bendtrans] (db.center) edge node [midway] (dbjava) {} (java);
+		
+		\node [anchor=north west] at (\backendhorpos+\dbhorposrelativebackend+\labeldbdistline,\backendvertpos+\dbvertposrelativebackend+\dbheight-\labeldbdistline) {Database};
+		\node [draw, minimum size=.6, anchor=west] at (\dbhorpos+\statehorposrelativedb,\dbvertpos+\statevertposrelativedb) {\small State};
+		\node [draw, minimum size=.6, anchor=west] at (\dbhorpos+\transhorposrelativedb,\dbvertpos+\transvertposrelativedb) {\small Transition};
+		
+%		\node at (\backendhorpos, \dbvertpos) at ()
+		
+		
+	\end{tikzpicture}
+\end{document}

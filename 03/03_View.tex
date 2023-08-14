@@ -7,10 +7,10 @@
 \begin{document}
 	
 \section{View}  \label{ch:view}
-\redcomment{arg1}
-Views are the central objective of this thesis. The purpose of a \viewN is to obtain a simplification of a given \chgphN.  It is an independent \chgphN derived from a given \chgphN and represents a (simplified) \viewN on the given one - hence the name. Thereby the original \chgphN is retained.
 
-In the preliminaries transition systems and Markov Chains were listed as simpler version of \mdpsN. Roughly speaking transition systems and \mdpsN are special \mdpsN namely that have no probability distribution in each state for each action or no actions. When defining \viewsN it seems feasible to do so for the most general system of the ones of consideration.That is why we will define views on \mdpsN. Only for specific views and their implementation it is to be kept in mind that if they regard an action or the probability distribution of an action in a state it is not applicable to transitions systems or MCs respectively. \redcomment{topic init states}
+In this chapter we will introduce the core concept of this thesis: \emph{view}. The notion of a view is to obtain a simplification of a given \mdpN. It is an independent \mdpN derived from a given \mdpN and represents a (simplified) view on the given one - hence the name. Thereby the original \mdpN is retained.
+
+In the preliminaries transition systems and Markov Chains were listed as simpler version of \mdpsN. Roughly speaking transition systems and \mdpsN are special \mdpsN namely that have no probability distribution in each state for each action or no actions. When defining \viewsN it seems feasible to do so for the most general system of the ones of consideration.That is why we will define views on \mdpsN. Only for specific views and their implementation it is to be kept in mind that if they regard an action or the probability distribution of an action in a state it is not applicable to transitions systems or MCs respectively.
 
 \subsection{Grouping Function}
 The conceptional idea of a \viewN is to group states by some criteria and structure the rest of the system accordingly. To formalize the grouping we define a dedicated function.
@@ -109,7 +109,11 @@ Note that the definition is in a most general form in the sense that if in a \vi
 In this section we categorize views in two view types. We will present views of two types: binary an partitioning. Given a \grpfctN $\grpfct : \states \to \imggrp$ or a detached \grpfctN $\grpfctsub : \smstates \to \imggrp$
 
 \begin{definition}
-	Let \view be a \viewN on \achgphN $\chgph = \chgphtuple$. \view is called \emph{binary} if for its \grpfctN \grpfct it is $M(\grpfct) \in \{\{\hasppty, \notppty\}, \{\remelem, \notppty\}, \{\hasppty\, \remelem\}\}$. \view is called categorizing if for its \grpfctN \grpfct it  is $\hasppty, \notppty \notin M(\grpfct)$.%holds $|M(\grpfct)| \geq 2$.
+	\sloppy
+	A \viewN \view is called \emph{binary} if for every \chgphN $\chgph = \chgphtuple$ it is ${\grpfct}[\states] \in \{\{\hasppty, \notppty\}, \{\remelem, \notppty\}, \{\hasppty\, \remelem\}\}$. 
+	
+	\noindent
+	A \viewN \view is called categorizing if it is $\hasppty, \notppty \notin M(\grpfct)$.%holds $|M(\grpfct)| \geq 2$.
 	\label{def:viewtypes}
 \end{definition}
 
@@ -143,7 +147,7 @@ and $\view^\notppty$ from $\view$ with
 \[
 \grpfctsub^\notppty(\state) = 
 \begin{cases}
-	\grpfctsub^\hasppty(\state),       		&\text{if } \grpfctsub^\hasppty(\state) = \remelem  \\ 
+	\grpfctsub(\state),       		&\text{if } \grpfctsub(\state) = \hasppty  \\ 
 	\remelem,				&\text{otherwise } 
 \end{cases}
 \]
@@ -167,7 +171,7 @@ In this section we will introduce the concept of parallel composition. The most 
 	The corresponding parallel composed view is denoted as $\view[\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n]$.
 \end{definition}
 
-Note that for $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n}]$ if $\grpfct[\viewppty_1](\state) = \grpfct[\viewppty_2](\state) = \dots = \grpfct[\viewppty_n](\state) = \remelem$ the state \state will not be grouped with any other state due to Definition \ref{def:eqrelview} of \eqrelview. An important property of parallel composed \grpfctsN is, that they defying order. That is, with regard to the impact on grouping the order of the included \grpfctsN does not matter.
+Note that for $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n}]$ if $\grpfct[\viewppty_1](\state) = \grpfct[\viewppty_2](\state) = \dots = \grpfct[\viewppty_n](\state) = \remelem$ the state \state will not be grouped with any other state due to Definition \ref{def:eqrelview} of \eqrelview. An important property of parallel composed \grpfctsN is, that they defy order. That is, with regard to the impact on grouping the order of the included \grpfctsN does not matter.
 
 \begin{proposition}
 	Let $\grpfct[u]$ and $\grpfct[v]$ be non parallel composed \grpfctsN and \states a set of states. For all $\state_1, \state_2 \in \states$ it holds that
@@ -200,9 +204,9 @@ We define the operator \pll in order to build and modify parallel composed \view
 	The operator \pll maps two \grpfctsN to a new \grpfctN. It is defined recursively.
 	\begin{enumerate}
 		\item $(\grpfct[\viewppty_1] \pll \grpfct[\viewppty_2])(\state) := (\grpfct[\viewppty_1](\state),\grpfct[\viewppty_2](\state)) = \grpfct[\viewppty_1 \pll \viewppty_2](\state)$ \\
-		if it is not $\grpfct[\viewppty_1] = \grpfct[x] \pll \grpfct[y]$ or $\grpfct[\viewppty_2] = \grpfct[x] \pll \grpfct[y]$ for some \grpfctsN \grpfct[x], \grpfct[y]
+		if it is not $\grpfct[\viewppty_1] = \grpfct[x] \pll \grpfct[y]$ or $\grpfct[\viewppty_2] = \grpfct[x] \pll \grpfct[y]$ for some \grpfctsN \grpfct[x], \grpfct[y].
 		\item $((\grpfct[\viewppty_1], \dots, \grpfct[\viewppty_n]) \pll \grpfct[\viewppty])(\state) := (\grpfct[\viewppty_1](\state), \dots, \grpfct[\viewppty_n](\state), \grpfct[\viewppty](\state)) = \grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n \pll \viewppty}](\state)$ 
-		\\ if for all $i \in \{1, \dots, n\}$ it is not $\grpfct[\viewppty_i] = \grpfct[x] \pll \grpfct[y]$ for some \grpfctsN \grpfct[x], \grpfct[y]
+		\\ if for all $i \in \{1, \dots, n\}$ it is not $\grpfct[\viewppty_i] = \grpfct[x] \pll \grpfct[y]$ and also not $\grpfct \grpfct[x] \pll \grpfct[y]$ for some \grpfctsN \grpfct[x], \grpfct[y].
 	\end{enumerate}
 	
 \end{definition}
@@ -268,7 +272,7 @@ We write $\view[\viewppty_1] \pll \view[\viewppty_2]$ for $\view[\viewppty_1 \pl
 %\end{align*}
 %\end{proof}
 
-Note that the operator \pll is not associative, since it is left evaluated. Moreover, for expressions of the form $\grpfct[\viewppty] \pll (\grpfct[\viewppty_1], \dots, \grpfct[\viewppty_n])$ it is not defined. This is no issue since parallel composed grouping function defy order. For the same reason \pll is communicative, with respect to the induced relation \eqrelview.
+Note that the operator \pll is not associative, because it is not defined for expressions of the form $\grpfct[\viewppty] \pll (\grpfct[\viewppty_1], \dots, \grpfct[\viewppty_n])$. For the same reason \pll is in general not commutative (only for the base case). These are no issues since parallel composed \grpfctsN defy order. 
 
 \begin{definition}
 	Let $\grpfct[\viewppty_1 \pll \dots \pll \viewppty_n]$ be a parallel composed grouping function. The operator \pllrev is defined as
@@ -277,7 +281,7 @@ Note that the operator \pll is not associative, since it is left evaluated. More
 	\]
 \end{definition}
 
-The operator \pllrev is the reversing operator to \pll. Given a parallel composed view and a in it contained grouping function it removes this view. We write $\view[\viewppty_1 \pll \dots \pll \viewppty_n] \pllrev \view[\viewppty_i]$ for the view defined by the \grpfctN $\grpfct[\viewppty_1 \pll \dots \pll \viewppty_{i-1} \pll \viewppty_{i+1} \pll \dots \pll \viewppty_n]$.
+The operator \pllrev is the reversing operator to \pll. Given a parallel composed view and an in it contained grouping function it removes this view. We write $\view[\viewppty_1 \pll \dots \pll \viewppty_n] \pllrev \view[\viewppty_i]$ for the view defined by the \grpfctN $\grpfct[\viewppty_1 \pll \dots \pll \viewppty_{i-1} \pll \viewppty_{i+1} \pll \dots \pll \viewppty_n]$.
 
 \subsubsection{Selective Composition} \label{subsec:selecitvecomp}
 Selective composition is a variant of parallel composition. It aims for application of the grouping function only on certain states, where the other composing functions have a certain value.

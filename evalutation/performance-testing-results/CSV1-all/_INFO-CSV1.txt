@@ -1,0 +1,14 @@
+until 5000: 400 iterations
+for 10000: 200 iterations
+for 50000: 10 iterations
+for 100000: 10 iterations
+nothing above simulated
+without cafeine
+Only until 5000 outActSetSize first run
+Second run from 5000 after outActSetSize
+
+View built with createView() and afterwards removed:
+> a lot of object creation and destruction
+> full build function (i.e. also requirements, collumn and execute Batch)
+> db write and db remove
+> very slow test

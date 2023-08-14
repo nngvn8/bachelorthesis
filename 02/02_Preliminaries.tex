@@ -8,13 +8,11 @@
 \section{Preliminaries} \label{ch:prelim}
 
 %\subsection{Transition Systems}
-\viewsNC will be defined on \chgphsN. Instead of directly providing the definition of \chgphN we will consider less powerful classes of models to represent systems that are extended by \chgphsN.
+\viewsNC will be defined on \chgphsN. Instead of directly providing the definition of \achgphN we will consider less powerful classes of models to represent systems that are extended by \chgphsN.
 
-Firstly we will consider transition systems. Transition systems are basically digraphs consisting of \emph{states} and \emph{transitions} in place of nodes and edges. A state describes some information about a system at a certain moment of its behavior. Considering a traffic light displaying green could be considered as one state whereas displaying red could be another one. Transitions model the progression of the system from one state to another one. Sticking to the example of the traffic light a transition could model the switch from state green light being displayed to the state of red light being displayed. There are several variants of transitions systems. We will use transition systems with \emph{action names} and \emph{atomic propositions} for states as in \redcomment{BAIER}. Actions are used for communication between processes. We denote them with Greek letters ($\alpha, \beta, \gamma, \dots$). Atomic propositions are simple facts about states. For instance "x is greater than 20" or "red and yellow light are on" could be atomic propositions. They are assigned to a state by a Labeling function \labelingfct.
+Firstly we will consider transition systems. Transition systems are basically digraphs consisting of \emph{states} and \emph{transitions} in place of nodes and edges. A state describes some information about a system at a certain moment of its behavior. Considering a traffic light displaying green could be considered as one state whereas displaying red could be another one. Transitions model the progression of the system from one state to another one. Sticking to the example of the traffic light a transition could model the switch from state green light being displayed to the state of red light being displayed. There are several variants of transitions systems. We will use transition systems with \emph{action names} and \emph{atomic propositions} for states as in \redcomment{BAIER}. Actions are used for communication between processes. We denote them with Greek letters ($\alpha, \beta, \gamma, \dots$). Atomic propositions are simple facts about states. For instance "x is greater than 20" or "red and yellow light are on" could be atomic propositions. They are assigned to a state by a labeling function \labelingfct.
 
-\redcomment{The following definition is directly taken form Principles of Modelchecking, Baier p. 20}
-
-\begin{definition}
+\begin{definition}[\!{\cite{Baier2008}, Definition 2.1.}]
 	A \emph{transition system} TS is a tuple \transitionsystem where
 	\begin{itemize}
 		\item \states is a set of states,
@@ -40,7 +38,7 @@ In contrast with Markov Chains this nondeterministic behavior is replaced with a
 %
 %\redcomment{NOTES END}
 
-\begin{definition}
+\begin{definition}[\!{\cite{Baier2008}, Definition 10.1.}]
 	A \emph{(discrete-time) Markov chain} is a tuple $\autm = (\states, \probtfunc, \initdistrib, \atomicprops, \labelingfct)$ where 
 	\begin{itemize}
 		\item \states is a countable, nonempty set of states,
@@ -53,14 +51,14 @@ In contrast with Markov Chains this nondeterministic behavior is replaced with a
 		\item $\labelingfct : \states \to \powerset{\atomicprops}$ a labeling function.		
 	\end{itemize}
 \end{definition}
-\redcomment{Disadvantage of Markov Chain}
 
-A Markov Decision Process \autm is called \emph{finite} if \states and \atomicprops are finite. \redcomment{For finite \autm, the \emph{size} of \autm, denoted \emph{size}(\autm),  is the number of states plus the number of pairs $(\state, \state') \in \states \times \states$ with $\probtfunc(\state, \state') > 0.$ OMIT??}
+
+A Markov Chain Process \autm is called \emph{finite} if \states and \atomicprops are finite. \redcomment{For finite \autm, the \emph{size} of \autm, denoted \emph{size}(\autm),  is the number of states plus the number of pairs $(\state, \state') \in \states \times \states$ with $\probtfunc(\state, \state') > 0.$ OMIT??}
 The probability function \probtfunc specifies for each state \state the probability $\probtfunc(\state,\state')$ of moving from \state to \state' in one step. The constraint put on \probtfunc in the second item ensures that \probtfunc is a probability distribution. The value $\initdistrib(\state)$ specifies the likelihood that the system evolution starts in \state. All states \state with $\initdistrib(\state) > 0$ are  considered \emph{initial states}. States \state' with $\probtfunc(\state, \state') > 0$ are viewed as possible successors of the state \state. The operational behavior is as follows. A initial state $\state_0$ with $\initdistrib(\state_0) > 0$ is yielded. Afterwards in each state a transition is yielded at random according to the probability distribution \probtfunc in that state. \redcomment{The evolution of a Markov chain ends in a state \state \iffN $\probtfunc(\state, \state) = 1$}
-\begin{itemize}
-	\redcomment{\item has no actions \\ "As compositional approaches for Markov models are outside the scope of this monograph,
-	actions are irrelevant in this chapter and are therefore omitted."}
-\end{itemize}
+%\begin{itemize}
+%	\redcomment{\item has no actions \\ "As compositional approaches for Markov models are outside the scope of this monograph,
+%	actions are irrelevant in this chapter and are therefore omitted."}
+%\end{itemize}
 
 %\redcomment{NOTES BEGIN}
 %\begin{itemize}
@@ -78,9 +76,10 @@ The probability function \probtfunc specifies for each state \state the probabil
 
 %\subsection{Markov Decision Process} 
 
-\redcomment{NOTES BEGIN}
+%\redcomment{NOTES BEGIN}
+\redcomment{Disadvantage of Markov Chain}
 
-A \mdpN permits both probabilistic and nondeterministic choices thereby is a model that somewhat merges the concept of transition systems with the concept of Markov chains. They add probabilistic choices to transition systems or add nondeterminism to Markov chains. Probabilistic choices may be used to model the (probabilistic) behavior of the environment. But to do so statistical experiments are required to obtain adequate distributions that model the average behavior of the environment. If this information is not available too hard, too obtain, or a guarantee about system properties is required nondeterminism is the natural option for modeling in these cases. Further usecases of \mdpsN are randomized distributed algorithms and abstraction in Markov chains. Randomized distributed algorithms are nondeterministic because there is a nondeterministic choice which process performs the next step and randomized because they have rather restricted set of actions that have a random nature. Abstraction in Markov chains can be feasible if states have been grouped by \atomicprops and and have a wide range of transition probabilities. If that is the case selection of a transition is rather non deterministic and thereby can be abstracted with an \mdpN by replacing the probabilities with nondeterminism.
+An \mdpN permits both probabilistic and nondeterministic choices thereby is a model that somewhat merges the concept of transition systems with the concept of Markov chains. They add probabilistic choices to transition systems or add nondeterminism to Markov chains. Probabilistic choices may be used to model the (probabilistic) behavior of the environment. But to do so statistical experiments are required to obtain adequate distributions that model the average behavior of the environment. If this information is not available too hard to obtain, or a guarantee about system properties is required nondeterminism is the natural option for modeling in these cases. Further usecases of \mdpsN are randomized distributed algorithms and abstraction in Markov chains. Randomized distributed algorithms are nondeterministic because there is a nondeterministic choice which process performs the next step and randomized because they have rather restricted set of actions that have a random nature. Abstraction in Markov chains can be feasible if states have been grouped by \atomicprops and and have a wide range of transition probabilities. If that is the case selection of a transition is rather non deterministic and thereby can be abstracted with an \mdpN by replacing the probabilities with nondeterminism.
 %\begin{itemize}
 %	\item probabilistic choices: possible outcomes for of randomized actions -> requires statistical experiments to obtain adequate distributions that model average behavior of the environment
 %	\item information not available or guarantee about system properties is required -> nondeterminism
@@ -102,8 +101,8 @@ A \mdpN permits both probabilistic and nondeterministic choices thereby is a mod
 
 %\redcomment{NOTES END}
 
-\begin{definition}
-	A \emph{Markov decision process} is a tuple $\mdp = \mdptuple$ where
+\begin{definition}[\!{\cite{Baier2008}, Definition 10.81.}]
+	A \emph{Markov decision process} (\mdpN) is a tuple $\mdp = \mdptuple$ where
 	\begin{itemize}
 		\item \states is a countable set of states,
 		\item \actions is a set of actions,
@@ -122,13 +121,11 @@ An \mdpN is called \emph{finite} if \states, \actions and \atomicprops are finit
 
 For convenience for $\state_1, \state_2 \in \states$ and $\action \in \actions$ we will write $(\state_1, \action, \state_2) \in \probtfunc$ \iffN $\probtfunc(\state_1, \action, \state_2) > 0$, that is to say if there is a non-zero probability of evolving from state $\state_1$ to state $\state_2$ with action \action. Analogously we will write $\state \in \initdistrib$ \iffN is an initial state ($\initdistrib(\state) > 0$).
 
-\redcomment{not sure if I should: $I := \initdistrib$ thereby meaning the underlying set}
-
-\redcomment{CONVENTION END TEST}
-\redcomment{Handshaking and Prism}
+%\redcomment{not sure if I should: $I := \initdistrib$ thereby meaning the underlying set}
+\redcomment{Basic Prism}
 
 \begin{figure}[h]
-	\input{./02/images/exampleMdp}
+	\centering \input{./02/images/exampleMdp}
 	\caption{Simplified representation of \mdp (left) and the \viewN \viewinitstates on it(left)}
 	\label{fig:exampleMdp}  
 \end{figure}

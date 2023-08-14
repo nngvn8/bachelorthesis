@@ -11,12 +11,170 @@ The focus of this chapter is to delve into the implementation details of the "pm
 
 The pmc-vis project is a web-based application designed for MDP exploration and visualization. Since it is a web-based application the project can be divided into two main components: the frontend and the backend. The frontend is responsible for rendering visualizations and providing various customization options for viewing MDPs. The backend supplies data to the frontend in JSON format. It consists of three parts: several prism models, the Java server, and multiple databases. The Java server interacts with the prism models, controls them, parses them, and creates a dedicated database for each model. These databases primarily store the structure of \mdpsN, divided into two tables: one for states and another for transitions.
 
-Information such as property values are stored in dedicated columns in the respective state table. Whenever a new property is introduced, a new column is added to the database, assigning property values to each state. Similarly, values obtained from the grouping function of a particular view are stored in designated columns.
+Information such as property values are stored in dedicated columns in the respective state table. Whenever a new property is introduced, a new column is added to the database, assigning property values to each state. Similarly, values obtained from the grouping function of a particular view are stored in designated columns. \redcomment{Figure} shows an overview of the structure of the project.
+
+\begin{figure}[h]
+	\input{./05/images/ProjectStructure.tex}
+	\caption{Project Structure, showing interaction and internal structure of frontend and backend}
+	\label{fig:projectstructure}
+\end{figure}
 
 Views are implemented within the server on the backend side in the 
 %\lstinline[breaklines=true]{prism.core.views} 
 \texttt{prism.core.views} package \redcomment{lstinline doesnt work for some reason}. 
-Each view is represented by a Java class. While individual views often have their own dedicated class, sometimes multiple similar views are implemented within a single class. All views inherit from an abstract class called "View." This abstract class contains common attributes and methods required by all views. Many of these are used for testing and I/O. In \redcomment{Figure} an overview of relevant attributes and methods is shown. The method is \texttt{buildView()} is of particular importance as it computes the mappings of the grouping function and updates the corresponding state table in the database. The process involves 1) checking prerequisites, 2) creating a new column for storing grouping results, 3) applying the grouping function, which returns the mapped values in the form of a list of SQL queries and 4) executing these SQL queries to insert the computed values.
+Each view is represented by a Java class. While individual views often have their own dedicated class, sometimes multiple similar views are implemented within a single class. All views inherit from the abstract class \texttt{View}. This abstract class contains common attributes and methods required by all views. Many of these are used for testing and I/O. In listing \ref{lst:classview} an overview of relevant attributes and methods is shown. The method is \texttt{buildView()} is of particular importance as it computes the mappings of the grouping function and updates the corresponding state table in the database. The process involves 1) checking prerequisites, 2) creating a new column for storing grouping results, 3) applying the grouping function, which returns the mapped values in the form of a list of SQL queries and 4) executing these SQL queries to insert the computed values (see listing listing \ref{lst:buildview}).
+\newcommand{\commentcolor}{\color{green!60!black}}
+\newcommand{\commentcolorize}[1]{{\commentcolor#1}}
+
+\lstdefinestyle{javaStyle}{
+	language=Java,
+	basicstyle=\small\ttfamily,
+	keywordstyle=\color{blue}\bfseries,
+	commentstyle=\commentcolor,
+	stringstyle=\color{purple},
+	numbers=left,
+	numberstyle=\tiny\color{gray},
+	stepnumber=1,
+	numbersep=8pt,
+	backgroundcolor=\color{gray!10},
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	frame=single,
+	tabsize=4,
+	captionpos=b,
+	breaklines=true,
+	breakatwhitespace=false,
+%	escapeinside={\%*}{*)}
+	escapechar=\~
+}
+
+%
+%\lstdefinestyle{intellij}{
+%	backgroundcolor=\color{intellijbg},
+%	basicstyle=\ttfamily\small,
+%	commentstyle=\color{intellijcomment},
+%	keywordstyle=\color{intellijkeyword},
+%	stringstyle=\color{intellijstring},
+%	frame=single,
+%	framerule=0pt,
+%	showstringspaces=false,
+%	numbers=left,
+%	numberstyle=\tiny\color{gray},
+%	breaklines=true,
+%	breakatwhitespace=true,
+%	captionpos=b,
+%	tabsize=4,
+%	columns=fullflexible,
+%	keepspaces=true,
+%	escapechar=\!
+%}
+
+
+%\lstset{
+%	tabsize = 4, %% set tab space width
+%	showstringspaces = false, %% prevent space marking in strings, string is defined as the text that is generally printed directly to the console
+%	numbers = left, %% display line numbers on the left
+%	commentstyle = \color{green}, %% set comment color
+%	keywordstyle = \color{blue}, %% set keyword color
+%	stringstyle = \color{red}, %% set string color
+%	rulecolor = \color{black}, %% set frame color to avoid being affected by text color
+%	basicstyle = \small \ttfamily , %% set listing font and size
+%	breaklines = true, %% enable line breaking
+%	numberstyle = \tiny,
+%}
+
+
+%\begin{minipage}{.94\textwidth}
+	\begin{lstlisting}[style=javaStyle, caption={Most relevant attributes and methods of class \texttt{View}}, label={lst:classview}]
+public abstract class View implements Namespace {
+	
+	protected final ViewType type;
+	
+	protected final Model model;
+	
+	protected long id; 
+	
+	protected Set<Long> relevantStates; 
+	// refers to ~$\commentcolorize{\smstates}$~ from ~\commentcolorize{\viewN}~ definition (default: ~\commentcolorize{$\smstates := \states$}~)
+	
+	protected Map<String,Set<String>> stateRestriction 
+										   = new HashMap<>();
+	// refers to ~\commentcolorize{$Z$}~ from Definition 
+	// used to determine relevantStates
+	
+	protected boolean semiGrouping = true; ~\commentcolorize{$\remelem \in {\grpfct}[\states]$ allowed}~
+	// true: remaining states without property grouped
+	// false: remaining states without property NOT grouped
+	
+	protected enum BinaryMode {SHOW, HIDE} // ~\commentcolorize{$\disregardelem \in \{\hasppty, \notppty\}$}~
+	// HIDE: Group states that have the property 
+	// SHOW: Group states that do NOT have the property
+	
+	protected BinaryMode binaryMode = BinaryMode.SHOW;
+	// declares binary mode, only queried in binary ~\commentcolorize{\viewsN}~
+	
+	private void setRelevantStates(Map<String, Set<String>> stateRestriction) { ~\commentcolorize{...}~ }
+	
+	public void buildView() { ~\commentcolorize{...}~ }
+		
+	protected abstract List<String> groupingFunction() throws Exception;
+	// function that performs the logical part of buildView()
+	// returns list of sql statements that write the assigned value to the database
+	
+
+\end{lstlisting}
+%\end{minipage}
+%\begin{minipage}{.06\textwidth}
+%\end{minipage}
+	
+%\begin{minipage}{.02\textwidth}
+%\end{minipage}
+%\begin{minipage}{.94\textwidth}
+	\begin{lstlisting}[style=javaStyle, caption={Implementation of \texttt{buildView() function}}, label={lst:buildview}]
+public void buildView() {
+	try {	
+		// 1. View specific checks
+		if (!viewRequirementsFulfilled()) return;
+					
+		// 2. Create new Column 
+		model.getDatabase().execute(String.format("ALTER TABLE %s ADD COLUMN %s TEXT DEFAULT %s",
+		model.getStateTableName(), getCollumn(), Namespace.ENTRY_C_BLANK));
+		
+		// 3. Compute grouping function mapping
+		List<String> toExecute = groupingFunction();				
+		// 4. Write mapping to database
+		model.getDatabase().executeBatch(toExecute);
+		
+	} catch(Exception e){
+		throw new RuntimeException(e);
+	}		
+}
+
+\end{lstlisting}
+
+%\end{minipage}	
+%\begin{minipage}{.06\textwidth}
+%\end{minipage}
+%	\begin{lstlisting}[language = Java , frame = trBL , firstnumber = last , escapeinside={(*@}{@*)}]
+%		public class Factorial
+%		{
+%			public static void main(String[] args)
+%			{   final int NUM_FACTS = 100;
+%				for(int i = 0; i < NUM_FACTS; i++)
+%				System.out.println( i + "! is " + factorial(i));
+%			}
+%			
+%			public static int factorial(int n)
+%			{   int result = 1;
+%				for(int i = 2; i <= n; i++) (*@\label{for}@*)
+%				result *= i;
+%				return result;
+%			}
+%		}
+%	\end{lstlisting}
+
+
 
 Creating a new view entails implementing the grouping function, the method \texttt{getCollumn()} , and any necessary private attributes. This approach matches the formal definition of \viewsN and ensures consistency in the process of generating \viewsN, given that each view is essentially defined by its grouping function.
 
@@ -26,9 +184,9 @@ The concept of disregarding views is implemented a little less general as in the
 
 To create a view, one accesses \nolinkurl{localhost:8080/<model\_id>/view:<viewname>?param=<param\_val\_1>\&param=<param\_val\_2>..."} via a browser, assuming the backend and frontend are operational. Afterward, accessing \nolinkurl{localhost:3000/?id=<model\_id>/} displays the graphical \viewN representation. The accessing of \nolinkurl{localhost:8080} causes the call of \texttt{createView()}, which creates a new view by calling its constructor, saves it in the internal list of views and finally calls \texttt{build()} on it, which causes the the grouping function values of the view being written to the database. When accessing \nolinkurl{localhost:3030} the frontend calls the backend which then creates and provides the JSON file to the frontend with the information stored in the database. This includes the saved information about the grouping function mappings.
 
-The implementation of views utilizes an internal graph structure that was particularly essential for views that employ grouping based on the structural properties of the MDP graph. To facilitate this, the application utilizes the \jgrapht library, which not only provides graph structures but also offers many common graph algorithms. This library was selected because it is the most common, most up to date java library for graphs with the best documentation and broadest functionality. The MDP itself is represented by the class MdpGraph that inherits from the class DirectedWeightedPseudgraph from the \jgrapht library. A directed weighted pseudograph has been chosen because it is directed, allows weights, self loops and multiple edges between nodes, as they occur in \chgphsN, where the weights are set to the transition probabilities, edges are transitions and nodes are states.
+The implementation of views utilizes an internal graph structure that was particularly essential for views that employ grouping based on the structural properties of the MDP graph. To facilitate this, the application utilizes the \jgrapht library \cite{Michail2020}, which not only provides graph structures but also offers many common graph algorithms. This library was selected because it is the most common, most up to date java library for graphs with the best documentation and broadest functionality. The MDP itself is represented by the class MdpGraph that inherits from the class \texttt{DirectedWeightedPseudgraph} from the \jgrapht library. A directed weighted pseudograph has been chosen because it is directed, allows weights, self loops and multiple edges between nodes, as they occur in \chgphsN, where the weights are set to the transition probabilities, edges are transitions and nodes are states.
 
-To maintain a lightweight graph, nodes and vertices are represented as long values, referring to state and transition IDs. Information about states and transitions is accessible via hashmaps within the "MdpGraph" class. These hashmaps facilitate modular access to essential information for view functionalities.
+To maintain a lightweight graph, nodes and vertices are represented as long values, referring to state and transition IDs. Information about states and transitions is accessible via hashmaps within the \texttt{MdpGraph} class. These hashmaps facilitate modular access to essential information for view functionalities.
 
 Apart from implementation of \viewsN and by them required classes and data structures, several functionalities have been implemented to allow the following actions at runtime without restarting the server: \redcomment{based on code, link to artefact}
 \begin{itemize}
@@ -36,6 +194,8 @@ Apart from implementation of \viewsN and by them required classes and data struc
 	\item Rebuild \viewN with new parameters
 	\item Remove views by providing id or name		
 \end{itemize}
+
+These rely on several string parsing methods that have been implemented.
 
 
 
