@@ -87,40 +87,37 @@ Each view is represented by a Java class. While individual views often have thei
 
 %\begin{minipage}{.94\textwidth}
 	\begin{lstlisting}[style=javaStyle, caption={Most relevant attributes and methods of class \texttt{View}}, label={lst:classview}]
-public abstract class View implements Namespace {
+public abstract class View implements Namespace { // ~\commentcolorize{\view}~
 	
-	protected final ViewType type;
+	protected final ViewType type; // similar to identifier ~\commentcolorize{\viewppty}~
 	
-	protected final Model model;
+	protected final Model model; // ~\commentcolorize{\mdpN \mdp}~
 	
 	protected long id; 
 	
-	protected Set<Long> relevantStates; 
-	// refers to ~$\commentcolorize{\smstates}$~ from ~\commentcolorize{\viewN}~ definition (default: ~\commentcolorize{$\smstates := \states$}~)
+	protected Set<Long> relevantStates; // ~$\commentcolorize{\smstates}$~, Def. view
 	
 	protected Map<String,Set<String>> stateRestriction 
-										   = new HashMap<>();
-	// refers to ~\commentcolorize{$Z$}~ from Definition 
-	// used to determine relevantStates
+	= new HashMap<>(); // ~\commentcolorize{$Z$}~, Def. selective composition
+
 	
-	protected boolean semiGrouping = true; ~\commentcolorize{$\remelem \in {\grpfct}[\states]$ allowed}~
-	// true: remaining states without property grouped
-	// false: remaining states without property NOT grouped
+	protected boolean semiGrouping = true; // ~\commentcolorize{$\remelem \in {\grpfct}[\states]$ allowed}~
+%	// true: remaining states without property grouped
+%	// false: remaining states without property NOT grouped
 	
 	protected enum BinaryMode {SHOW, HIDE} // ~\commentcolorize{$\disregardelem \in \{\hasppty, \notppty\}$}~
 	// HIDE: Group states that have the property 
 	// SHOW: Group states that do NOT have the property
 	
-	protected BinaryMode binaryMode = BinaryMode.SHOW;
+	protected BinaryMode binaryMode = BinaryMode.SHOW; // ~\commentcolorize{$\disregardelem = \hasppty$}~
 	// declares binary mode, only queried in binary ~\commentcolorize{\viewsN}~
 	
 	private void setRelevantStates(Map<String, Set<String>> stateRestriction) { ~\commentcolorize{...}~ }
 	
 	public void buildView() { ~\commentcolorize{...}~ }
 		
-	protected abstract List<String> groupingFunction() throws Exception;
-	// function that performs the logical part of buildView()
-	// returns list of sql statements that write the assigned value to the database
+	protected abstract List<String> groupingFunction() throws Exception; // ~\commentcolorize{\grpfctsub}~, Def. detached grouping function
+	
 	
 
 \end{lstlisting}

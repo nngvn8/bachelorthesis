@@ -9,9 +9,7 @@
 
 \begin{document}
 \section{Comparison and Evaluation} \label{ch:eval}
-Performance Cycles -> Selection of states and induced subgraph easily possible perform cycle search only on subset of graph 
--> in general generating views on subgraphs easily possible (only when needed for performance)
-Clustering exact Cycles when clustering exact cycles
+In this chapter we want to show how \viewsN can be utilized in three different usecases. In subsection 6.4 we will consider take consider performance aspects.
 
 
 \subsection{Explore Modules} \label{subsec:evalmodules}
@@ -24,8 +22,8 @@ Already for only three philosophers the \mdpN has 956 states. When looking at th
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{./06/images/06_01_pure_zoomhalf.png}
-	\label{fig:0601Pure}
 	\caption{Approximately half of the \mdpN \mdp in \pmcvis}
+	\label{fig:0601Pure}
 \end{figure}
 
 The \viewN $\viewparamvalident(\phil{1})$ groups all states that have the same value of (\phil{1}) ignoring the values of the remaining variables. That is, the values of \phil{2} and \phil{3} are hidden, which results in only showing the module of philosopher \phil{1} (Figure \ref{fig:0601var}). This may help immensely if only a specific module is of interest or the reaming modules have the same structure, as it is the case here with Dining Philosophers. After applying further views could be \viewparamvalident(\phil{1}) applied to understand or explore the module. For example if in Dining Philosophers we were interested in the part of the module where \phil{1} picks their first fork we could use the \viewN \viewparamdnf with c(s) = \redcomment{missing}({Figure}).
@@ -70,8 +68,8 @@ The state \critstate should not be reachable, since it represents the situation 
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{./06/images/06_02_Var.png}
-	\label{fig:0602Var}
 	\caption{\viewNC $\view[\pptyparamcnf](c(\state))$}
+	\label{fig:0602Var}
 \end{figure}
 
 We observe, that this state is reachable, because it is shown and only reachable states are shown at all in \pmcvis. The questions occurs how and why. In order to obtain this information it should be investigated by which state this critical state \critstate has been reached. One way of accomplishing that is to look into the database that stores states and transitions. They look as follows. 
@@ -106,8 +104,8 @@ Firstly we will use the view \viewdistance from that state on (Figure \ref{fig:0
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{./06/images/06_02_Var+Dist.png}
-	\label{fig:0602Var+Dist}
 	\caption{\viewNC $\view[\pptyparamcnf](c(\state)) \pll \viewdistance$}
+	\label{fig:0602Var+Dist}
 \end{figure}
 
 \begin{definition}
@@ -123,8 +121,8 @@ We will use partial application with $ \view[\pptyparamcnf](c(\state)) \compsele
 
 \begin{figure}
 	\centering \includegraphics[width=\textwidth]{./06/images/06_02_Var+Dist+Id.png}
-	\label{fig:0602Var+Dist+Id}
 	\caption{\viewNC $\viewNC \view[\pptyparamcnf](c(\state)) \pll \viewdistance \compselect \viewident$ where $\compselectset = \{(\gfctdistance,1)\}$}
+	\label{fig:0602Var+Dist+Id}
 \end{figure}
 
 When now looking at the prism file we can see why this is the case. In line when $y=1$ there is a 50 percent chance to enter $y=2$. This line originally was intended for termination of the transmission. From $y=1$ it should not be possible to enter $y=2$ if $x=2$. After fixing this, the state no longer appears after the application of $\viewparamdnf(c(\state))$
@@ -152,62 +150,58 @@ When now looking at the prism file we can see why this is the case. In line when
 
 In this subsection we want to take a look at a more complex usecase how views might help us to understand and fix a given \mdpN. We refer to the \mdp \redcomment{reference}.
 
-Firstly, we will gather some understanding of the model. We already saw in chapter ch that variables can help a lot with understanding an \chgphN. When applying $\viewparamvalident(\texttt{time})$ we see that the \chgphN has a limited timed behavior (Figure \ref{fig:0603time_phases} left). When applying $\viewparamvalident(\texttt{phases})$ we observe that the system is operating in phases (Figure \ref{fig:0603time_phases} right). If we consider $\viewparamvalident(\texttt{time}) \pll \viewparamvalident(\texttt{phases})$ we see that the phases are repeated for each iteration of time (Figure \ref{fig:0603time+phases} right). However, we still don not have any information about the behavior of the system in these phases. Since this model has actions we will consider the \viewN \viewweakoutactident (Figure \ref{fig:0603act}). We obtain that we have sets of states which only have transitions with the action \texttt{[reconfigure]} outgoing, the action \texttt{[working]} outgoing, the actions \texttt{[configure1]} outgoing, \texttt{[configure2]}, \texttt{[end\_reconfigure]}, the action \texttt{[working]} outgoing or the action \texttt{[end]} outgoing \redcomment{Figure}. By interpreting the name of the actions we see that this system seems to have a configuration phase a working phase a reconfiguring phase and an end phase. The grouping appears to be very similar to \viewparamvalident(\texttt{phases}). Hence, we consider $\viewweakoutactident \pll \viewparamvalident(\texttt{phases})$ (Figure \ref{fig:0603act+phases}). Indeed the enumeration coincides with the grouping of outgoing actions, with the exception of \texttt{[end]} and \texttt{[reconfigure]} \redcomment{timed behavior?}
+Firstly, we will gather some understanding of the model. We already saw in chapter ch that variables can help a lot with understanding an \chgphN. When applying $\viewparamvalident(\texttt{time})$ we see that the \chgphN has a limited timed behavior (Figure \ref{fig:0603time_phases} left). When applying $\viewparamvalident(\texttt{phases})$ we observe that the system is operating in phases (Figure \ref{fig:0603timeandphases} right). If we consider $\viewparamvalident(\texttt{time}) \pll \viewparamvalident(\texttt{phases})$ we see that the phases are repeated for each iteration of time (Figure \ref{fig:0603time+phases} right). However, we still don not have any information about the behavior of the system in these phases. Since this model has actions we will consider the \viewN \viewweakoutactident (Figure \ref{fig:0603act}). We obtain that we have sets of states which only have transitions with the action \texttt{[reconfigure]} outgoing, the action \texttt{[working]} outgoing, the actions \texttt{[configure1]} outgoing, \texttt{[configure2]}, \texttt{[end\_reconfigure]}, the action \texttt{[working]} outgoing or the action \texttt{[end]} outgoing \redcomment{Figure}. By interpreting the name of the actions we see that this system seems to have a configuration phase a working phase a reconfiguring phase and an end phase. The grouping appears to be very similar to \viewparamvalident(\texttt{phases}). Hence, we consider $\viewweakoutactident \pll \viewparamvalident(\texttt{phases})$ (Figure \ref{fig:0603act+phases}). Indeed the enumeration coincides with the grouping of outgoing actions, with the exception of \texttt{[end]} and \texttt{[reconfigure]} \redcomment{timed behavior?}
 
 \begin{figure}
 	\begin{subfigure}{.5\textwidth}
 		\centering \includegraphics[width=\textwidth]{./06/images/06_03_time.png}
-		\label{fig:0601time}
+%		\label{fig:0601time}
 %		\caption{\viewNC $\viewNC \view[\pptyparamcnf](c(\state)) \pll \viewdistance \compselect \viewident$ where $\compselectset = \{(\gfctdistance,1)\}$}
 	\end{subfigure}
 	\hspace{5mm}
 	\begin{subfigure}{.5\textwidth}
 		\centering \includegraphics[width=\textwidth]{./06/images/06_03_phases.png}
-		\label{fig:0601phases}
+%		\label{fig:0601phases}
 %		\caption{\viewNC $\viewNC \view[\pptyparamcnf](c(\state)) \pll \viewdistance \compselect \viewident$ where $\compselectset = \{(\gfctdistance,1)\}$}
 	\end{subfigure}
 	\caption{\viewNC $\viewparamvalident(\texttt{time})$ (left) and \viewN $\viewparamvalident(\texttt{phases})$ (right)}
-	\label{fig:time_phases}
+	\label{fig:timeandphases}
 \end{figure}
 
 \begin{figure}
 	\centering \includegraphics[width=\textwidth]{./06/images/06_03_time+phases.png}
-	\label{fig:0603time+phases}
 	\caption{\viewNC $\viewparamvalident(\texttt{time}) \pll \viewparamvalident(\texttt{phases})$}
+	\label{fig:0603time+phases}
 \end{figure}
 
 \begin{figure}
 	\centering \includegraphics[width=\textwidth]{./06/images/06_03_act.png}
-	\label{fig:0603act}
 	\caption{\viewNC \viewweakoutactident}
+	\label{fig:0603act}
 \end{figure}
 
 \begin{figure}
 	\centering \includegraphics[width=\textwidth]{./06/images/06_03_act+phases.png}
-	\label{fig:0603act+phases}
 	\caption{\viewNC $\viewparamvalident(\texttt{time}) \pll \viewparamvalident(\texttt{phases})$}
+	\label{fig:0603act+phases}
 \end{figure}
 
 Hence we know that the system is working for $\texttt{phase}=0$, configuring for $\texttt{phase}=1$ and termination configuration in $\texttt{phase}=2$. This process is repeated six times until $\texttt{time}=5$.
 
-\redcomment{No sccs?}
-
 In general we learned that this system runs several times with choosing certain configurations each time before it runs. Its reward function rewards states that work with a better configuration. A classic model checking \redcomment{value} is to determine \redcomment{MIN EXP REWARD} and \redcomment{MAX EXP REWARD}. For \redcomment{MIN EXP REWARD} we obtain \redcomment{x}, for \redcomment{MAX EXP REWARD} \redcomment{inf}. Since the system is modeled for a finite time and each time chooses from a finite set of configurations, it is unwanted behavior, that \redcomment{MAX EXP REWARD} is infinite. We will now show how views can help to find the cause.
-
-
 
 Such behavior of infinite \redcomment{MAX EXP REWARD} is often caused by cycles. A feasible idea would be to use a view with cycles. As it will be discussed in Chapter \redcomment{Performance} these \viewsN very ressource intensive when there are larger strongly connected components. Moreover when finding strongly connected components the cycles are equally found since each cycle is a strongly connected component. The view \viewscc yields that there are quite large strongly connected components (Figure \ref{fig:0603scc}). To find out where these are locate we consider the parallely composed \viewN on \mdpN with $\viewscc \pll \viewweakoutactident$ (Figure \ref{fig:0603scc+act}). We see that the strongly connected components are in the configuring phase. When taking a look at the prism file, we see that we can arbitrarily often switch the configuration. Hence, it is not assured that a configuration can only be selected once. This causes infinite paths in the \mdpN, which in consequence cause infinite maximal expectations. This can be fixed by assuring that a configuration can only be selected once. An easy way of accomplishing this is to sequentialize the selection of the two configurations: Firstly \texttt{[configuration1]} is selected, afterwards \texttt{[configuration2]} and finally the configuration phase ends (\texttt{[end\_configuration]} is the only available action left to take).
 
 \begin{figure}
 	\centering \includegraphics[width=\textwidth]{./06/images/06_03_scc.png}
-	\label{fig:0603scc}
 	\caption{\viewNC \viewscc}
+	\label{fig:0603scc}
 \end{figure}
 
 \begin{figure}
 	\centering \includegraphics[width=\textwidth]{./06/images/06_03_scc+act.png}
-	\label{fig:0603scc+act}
 	\caption{\viewNC $\viewscc \pll \viewweakoutactident$}
+	\label{fig:0603scc+act}
 \end{figure}
 
 %\begin{itemize}
@@ -231,65 +225,19 @@ Such behavior of infinite \redcomment{MAX EXP REWARD} is often caused by cycles.
 
 \subsection{Performance}
 
-%\newcommand{\mypath}{}
+\viewsNC shall be used on \mdpsN that may have millions of states. For this reason in this section we will consider the time to create a new view. In addition we will take a look at the build time of internal graph structure (\texttt{mdpGraph}) that is based on the \jgrapht library, with respect to its built time and memory occupation. The tests have been performed on a Dell XPS 9370 (16 GB RAM, i7-8550U) with Manjaro KDE. Only neccesary tools where opened when the test were running: Firefox and IntelliJ.
 
-%\begin{filecontents*}{\jobname-data.csv}
-%	Label,Value1,Value2,Value3,Value4,Value5
-%	0AvgE,1.56,143.6825,731.915,1453.03,7224.115,14019.515
-%	0AvgE,1.185,149.6225,740.02,1443.485,7052.24,14057.555
-%	0AvgE,1.4575,147.245,742.82,1442.6925,-208850.57,13966.92
-%	0AvgE,1.485,146.2,723.14,1444.5275,7129.49,13993.525
-%	0AvgE,1.255,138.5075,744.0925,1447.485,7142.6975
-%	0AvgE,1.235,141.4575,706.7,1451.49,7147.5425
-%	0AvgE,1.1225,144.505,738.2375,1434.465,7113.315
-%	0AvgE,0.0,0.0,0.0,0.0,0.0
-%	0AvgE,1.205,142.015,721.815,1430.955,7116.9075
-%	0AvgE,1.2375,137.605,722.835,1438.2875,7114.205
-%	0AvgE,1.2875,140.7325,727.565,1448.615,7129.48
-%	0AvgE,1.31,145.5025,721.4975,1450.7375,7069.8225
-%	0AvgE,1.3675,151.515,721.07,1452.62,7079.61
-%	0AvgE,1.35,136.7,716.2725,1434.4725,6994.88
-%	0AvgE,1.25,140.3975,719.32,1455.34,7091.1425
-%\end{filecontents*}
+Time was measured with self written class \texttt{Timer} which utilizes the package \texttt{java.time.LocalTime}. Class implementation and sample usecase are provided in the appendix \redcomment{to be added in the appendix}. Memory occupation has been measured with with the tool Java Object Layout (JOL) provided by openJDK. The method used was \texttt{totalSize()} in \texttt{org.openjdk.jol.info.GraphLayout}. For the benchmark one single scalable \mdpN is used (prism model file in appendix). Sizes considered are 50, 100, 500,1 000, 5 000, 10 000, 50 000, 100 000, 500 000 and 1 000 000. Using one single scalable \mdpN means that execution times and memory occupied might vary with differing graph structure of the \mdpN. This is especially the case for \viewsN based on the graph structure. Hence  in this section we will give more of an overview of the expected values for creation times and memory occupation rather than a detailed analysis.
 
+Firstly we will consider the time required to create \viewsN. All \viewsN are created 100 times for each considered size of the \mdpN. Their execution times for each sizes then are averaged. As we know from Chapter \ref{ch:viewimpl} creating a view involves to instantiate the object and execute the build function. The instantiation only involves setting a hand full of private attributes. Since the amount of attributes of a view is fix and their size does not cohere with the size of the \mdpN, the is instantiation time is negligible. Building \texttt{mdpGraph} is also part of instantiating a \viewN in case it has not yet been built on the model, but will be considered separately. Hence, we will focus on the time occupied by the \texttt{buildView()} method. As we know from section \ref{ch:viewimpl} the build \texttt{buildView()} method splits into four parts: 1) checking prerequisites ("prechecks"), 2) creating a new column, 3) executing \grpfctN 4) write results to database. Firstly we will consider the computation time for the grouping function as the time actions performed in the steps 1) 2) and 4) are almost identical or identical.
 	
-%\begin{tikzpicture}
-%	\begin{loglogaxis}
-%		[
-%		width=\textwidth,
-%		height=8cm,
-%		xlabel={State amount},
-%		ylabel={$\frac{time}{ms}$},
-%		legend pos=north west,
-%		ymin=0, %-208000,
-%		ymax=200000% Adjust the y-axis range as needed
-%		]
-%		
-%		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/InActIdentView.csv};
-%		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/OutActIdentView.csv};
-%		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/InActView.csv};
-%		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/OutActView.csv};
-%		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/OutActSetSizeView.csv};
-%		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/VariablesView.csv};
-%		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/VariablesViewDnf.csv};
-%		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/VariablesViewCnf.csv};
-%		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/ReachabilityView.csv};
-%		\addplot table [x=StateCount, y=0AvgE, col sep=comma] {/home/martin/Desktop/DistanceView.csv};
-%
-%		
-%		\legend{InActIdentView, 
-%			OutActIdentView,
-%			InActView,
-%			OutActView,
-%			OutActSetSizeView,
-%			VariablesView,
-%			VariablesViewDnf,
-%			VariablesViewCnf, 
-%			ReachabilityView, 
-%			DistanceView}
-%	\end{loglogaxis}
-%\end{tikzpicture}
-	
+In Figure \ref{fig:grpfcttimes} we see the averaged execution times (100 executions) of \texttt{groupingFunction} for the different \viewsN. It is to see that the execution times overall are very similar and behave linear to the amount of states of the \mdpN. For \mdpsN with up to 1 million states for no \viewN the execution time of its grouping function exceeds 1.5 seconds. Variation in the magnitude of microseconds with very small \mdpsN are to be expected. In general the performance results as shown indicates very good scalability with respect of views being usable on large models. This very good performance is to large portion attributed to the graphstructure provided by \jgrapht.
+
+In Figure \ref{fig:compdbgraphgrpfct} we see the execution time of the grouping function compared to executing the generated SQL statements (writing results/mappings to database) and the creation of the \texttt{mdpGraph}. We see that apart from prechecks, the execution time of the grouping function is the least time consuming operation. Most time is taken by writing the results to the database, where even building the \texttt{mdpGraph} is faster. Times for writing to the database, refer to the at this time present implementation of the database of \pmcvis which might be subject to changes in the future.
+
+As stated before the performance of computing grouping functions that quickly heavily rely on the implemented graph structure (\texttt{mdpGraph}). This graph structure is held in memory and become quite large for \mdpsN with about one million states. The \redcomment{Figure} displays the measured deep size (including referenced objects) of the \texttt{mdpGraph}. As one would expect the size of the \texttt{mdpGraph} is linear to the size of the \mdpN. Additionally, it can be seen that up to 1.3 GB of memory are occupied for the graph alone if, the \mdpN reaches about 1 million states. Depending on the operating system, the amount of memory built into the machine (PC) and the currently available memory, it is possible to utilize the \texttt{mdpGraph} even for large \mdpsN. Still it is to be kept in mind that this only is the size of the built graph object. When reading from the database in order to build the \texttt{mdpGraph} more memory is needed as objects containing the information from the database also temporarily stay in memory. \pmcvis itself will also require memory as other possibly unrelated process that run on the system. On the machine used for testing, building the \texttt{mdpGraph} for \mdpsN with about 1 million states and creating views on them was still reasonable, while at the same time also close to the memory limitation of the system.
+
+In general we conclude that computation of grouping functions is rather quick and scalable. Building times of the \texttt{mdpGraph} are reasonable, but entails heavy memory utilization. Database accesses are the most time consuming fraction of the time needed to create a view. 
 
 \begin{figure}
 	\begin{tikzpicture}
@@ -340,10 +288,13 @@ Such behavior of infinite \redcomment{MAX EXP REWARD} is often caused by cycles.
 
 	\end{loglogaxis}
 \end{tikzpicture}
-	\caption{Gropuing Function times}
-
+	\caption{Average grouping function computation times}
+	\label{fig:grpfcttimes}
 \end{figure}
-\begin{tikzpicture}
+
+
+\begin{figure}
+	\begin{tikzpicture}
 	\begin{loglogaxis}
 		[
 		width=\textwidth,
@@ -363,34 +314,44 @@ Such behavior of infinite \redcomment{MAX EXP REWARD} is often caused by cycles.
 		
 		
 		
-		\legend{BuildTimeView, 
-				CreateMdpGraph,
-				ExecuteBatch
+		\legend{Grouping Function, 
+				Create MDP Graph,
+				Write to Database
 			}
 		
 	\end{loglogaxis}
-\end{tikzpicture}
+	\end{tikzpicture}
+	\caption{Average times for grouping function computation (1 representative from Figure \ref{fig:grpfcttimes}), writing to the database and building the \texttt{mdpGraph}}
+	\label{fig:compdbgraphgrpfct}
+\end{figure}
 
 
-
-
-\begin{itemize}
-	\item linear performance
-	\item no view takes more than 1 second until 1 million states
-	\item 
-	\[
-	Grouping Function build time \approx \frac{|\states|}{1000} ms
-	\]
-	\[
-	Grouping Function build time \approx |\states| \mu s
-	\]
-	
-\end{itemize}
-	
-
-
-\subsection{Critical remarks}
-no found usage for quantity on of actions or exact identity
-performanc cycle cluster
+\begin{figure}
+	\begin{tikzpicture}
+		\begin{loglogaxis}
+			[
+			width=\textwidth,
+			height=8cm,
+			xlabel={State amount},
+			ylabel={$\frac{time}{ms}$},
+			legend pos=north west,
+			ymin=0,
+			%		ymax=1000,  % Adjust the y-axis range as needed
+			]
+			
+			
+			\addplot table [x=StateCount, y=MdpSizeByte, col sep=comma] {./06/PerformanceTests/MdpGraph/MdpGraphSize.csv};
+			
+				
+%			\legend{BuildTimeView, 
+%				CreateMdpGraph,
+%				ExecuteBatch
+%			}
+			
+		\end{loglogaxis}
+	\end{tikzpicture}
+	\caption{Size of \texttt{mdpGraph} for different model sizes}
+	\label{fig:sizemdpgraph}
+\end{figure}
 
 \end{document}
