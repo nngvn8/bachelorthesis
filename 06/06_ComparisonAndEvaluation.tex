@@ -163,7 +163,7 @@ When now looking at the prism file (Figure \ref{fig:0602prismbefore}) we can see
 
 In this subsection we want to take a look at a more complex usecase how views might help us to understand and fix a given \mdpN. We refer to the \mdpN \redcomment{appendix}.
 
-\begin{figure}
+\begin{figure}[!htb]
 	\includegraphics[width=\textwidth, height=20cm,
 	keepaspectratio]{./06/prism/scc-loops.png}
 	\caption{Given MDP}
@@ -172,7 +172,7 @@ In this subsection we want to take a look at a more complex usecase how views mi
 
 Firstly, we will gather some understanding of the model. We already saw in chapter ch that variables can help a lot with understanding an \chgphN. When applying $\viewparamvalident(\texttt{time})$ we see that the \chgphN has a limited timed behavior (Figure \ref{fig:0603timeandphases} left). When applying $\viewparamvalident(\texttt{phases})$ we observe that the system is operating in phases (Figure \ref{fig:0603timeandphases} right). If we consider $\viewparamvalident(\texttt{time}) \pll \viewparamvalident(\texttt{phases})$ we see that the phases are repeated for each iteration of time (Figure \ref{fig:0603time+phases} right). However, we still don not have any information about the behavior of the system in these phases. Since this model has actions we will consider the \viewN \viewweakoutactident (Figure \ref{fig:0603act}). We obtain that we have sets of states which only have transitions with the action \texttt{[reconfigure]} outgoing, the action \texttt{[working]} outgoing, the actions \texttt{[configure1]} outgoing, \texttt{[configure2]}, \texttt{[end\_reconfigure]}, the action \texttt{[working]} outgoing or the action \texttt{[end]} outgoing \redcomment{Figure}. By interpreting the name of the actions we see that this system seems to have a configuration phase a working phase a reconfiguring phase and an end phase. The grouping appears to be very similar to \viewparamvalident(\texttt{phases}). Hence, we consider $\viewweakoutactident \pll \viewparamvalident(\texttt{phases})$ (Figure \ref{fig:0603act+phases}). Indeed the enumeration coincides with the grouping of outgoing actions, with the exception of \texttt{[end]} and \texttt{[reconfigure]} \redcomment{timed behavior?}
 
-\begin{figure}
+\begin{figure}[!htb]
 	\begin{subfigure}{.5\textwidth}
 		\centering \includegraphics[width=\textwidth]{./06/images/06_03_time.png}
 %		\label{fig:0601time}
@@ -188,7 +188,7 @@ Firstly, we will gather some understanding of the model. We already saw in chapt
 	\label{fig:0603timeandphases}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!htb]
 	\centering \includegraphics[width=\textwidth]{./06/images/06_03_time+phases.png}
 	\caption{\viewNC $\viewparamvalident(\texttt{time}) \pll \viewparamvalident(\texttt{phases})$}
 	\label{fig:0603time+phases}
@@ -200,7 +200,7 @@ Firstly, we will gather some understanding of the model. We already saw in chapt
 	\label{fig:0603act}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!htb]
 	\centering \includegraphics[width=\textwidth]{./06/images/06_03_act+phases.png}
 	\caption{\viewNC $\viewparamvalident(\texttt{time}) \pll \viewparamvalident(\texttt{phases})$}
 	\label{fig:0603act+phases}
@@ -212,19 +212,19 @@ In general we learned that this system runs several times with choosing certain 
 
 Such behavior of infinite \redcomment{MAX EXP REWARD} is often caused by cycles. A feasible idea would be to use a view with cycles. As it will be discussed in Chapter \redcomment{Performance} these \viewsN very ressource intensive when there are larger strongly connected components. Moreover when finding strongly connected components the cycles are equally found since each cycle is a strongly connected component. The view \viewscc yields that there are quite large strongly connected components (Figure \ref{fig:0603scc}). To find out where these are locate we consider the parallely composed \viewN on \mdpN with $\viewscc \pll \viewweakoutactident$ (Figure \ref{fig:0603scc+act}). We see that the strongly connected components are in the configuring phase. When taking a look at the prism file, we see that we can arbitrarily often switch the configuration. Hence, it is not assured that a configuration can only be selected once. This causes infinite paths in the \mdpN, which in consequence cause infinite maximal expectations. This can be fixed by assuring that a configuration can only be selected once. An easy way of accomplishing this is to sequentialize the selection of the two configurations: Firstly \texttt{[configuration1]} is selected, afterwards \texttt{[configuration2]} and finally the configuration phase ends (\texttt{[end\_configuration]} is the only available action left to take) (Figure \ref{fig:0603sccloopsafter}).
 
-\begin{figure}
+\begin{figure}[!htb]
 	\centering \includegraphics[width=\textwidth]{./06/images/06_03_scc.png}
 	\caption{\viewNC \viewscc}
 	\label{fig:0603scc}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[!htb]
 	\centering \includegraphics[width=\textwidth]{./06/images/06_03_scc+act.png}
 	\caption{\viewNC $\viewscc \pll \viewweakoutactident$}
 	\label{fig:0603scc+act}
 \end{figure}
-/home/martin/Desktop/Bachelor Thessis/document/06/prism/scc-loops.png
-\begin{figure}
+
+\begin{figure}[!htb]
 	\centering \includegraphics[width=\textwidth, height=20cm,
 	keepaspectratio]{./06/prism/scc-loops-after.png}
 	\caption{\viewNC $\view[\pptyparamcnf](c(\state))$}

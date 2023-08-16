@@ -358,7 +358,7 @@ For \viewstrongoutactident it is \gfctstrongoutactident :
 \end{align*}
 \end{minipage}
 
-because these are number of corresponding outgoing actions from each state. We see that the sets are equal for $\state_1$ and $\state_2$ and for $\state_5$ and $\state_6$. Hence, these two pairs are grouped to a new to new states. The remaining states are not grouped with another state. The equivalences classes containing them are singleton sets.
+because these are number of corresponding outgoing actions from each state. We see that the sets are equal for $\state_1$ and $\state_2$ and for $\state_5$ and $\state_6$. Hence, these two pairs are each grouped to a new to new states. The remaining states are not grouped with another state. The equivalences classes containing them are singleton sets.
 
 As mentioned earlier a \outactidentweak variant of the \outactident \viewN is also conceivable. To ease readability for $\state \states$ we write $\outacts(\state)$ for the set $\{\action \in \actions \mid \exists \state' \in \states : (\state, \action, \state') \in \trans\}$
 
@@ -770,7 +770,7 @@ The views discussed before reduce the \chgphN in a very precise but also manual 
 	and $\imggrp := \varevalimg \cup \{\remelem\}$.
 \end{definition}
 
-With this grouping function we directly map to the value of the variable. Hence for $\state_1, \state_2 \in \states$ it is $\gfctparamvalident(\state_1) = \gfctparamvalident(\state_2)$ \iffN they are mapped to the value $\varval \in \imggrp$. Hence the equivalence classes of \eqrelview are
+With this grouping function we directly map to the value of the variable. Hence for $\state_1, \state_2 \in \states$ it is $\gfctparamvalident(\state_1) = \gfctparamvalident(\state_2)$ \iffN they are mapped to the same value $\varval \in \imggrp$. Hence the equivalence classes of \eqrelview are
 \[
 \eqclassv[\smstate] = \{ \state \in \states \mid \vareval(\state) = \vareval(\smstate)\}.
 \]
@@ -789,7 +789,7 @@ According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in 
 \end{figure}
 
 In Figure \ref{fig:varValIdent} we can observe the view of $\viewparamvalident$ on \chgph. States are grouped in which $x$ has the same value. It is $x \in \{0, 1, 2\}$. Hence, the states $\varstyle{0}{0}, \varstyle{0}{1},\varstyle{0}{2}$ are grouped because in all of them it is $x=0$. For the same reason $\varstyle{1}{0}, \varstyle{1}{1},\varstyle{1}{2}$ grouped with $x=1$ and $\varstyle{2}{0}, \varstyle{2}{1},\varstyle{2}{2}$ with $x=2$.
-\subsubsection{Model Checking Results}
+\subsubsection{Property Values and Model Checking Results}
 Apart from direct and indirect components of an \mdpN there are other values linked to states. These can be given by a reward structure or results from model checking. A reward structure simply assigns values to each state. Results from model checking are also available statewisely. Although we do not want to go into detail with model checking in this thesis values determined by it are minimal and maximal probabilities or expected values (e.g. of rewards). We abstract from the exact type of value or its origin and formalize this notion with an arbitrary function that assigns a value to each state and utilize it to define a \viewN. Note that there might be several such functions (e.g.reward structure and several model checking results) for an \chgphN.
 
 \begin{definition}
@@ -801,11 +801,16 @@ Apart from direct and indirect components of an \mdpN there are other values lin
 	\[
 		Z_i = 
 		\begin{cases}
-			[\min\propfct[\states], \min\propfct[\states] + \frac{r}{2}), &\text{if } i=1 \\
+			[z_{min}, z_{min} + \frac{r}{2}), &\text{if } i=1 \\
 			[i \cdot r -  \frac{r}{2}, i \cdot r +  \frac{r}{2}), &\text{if } i\in\{2,\dots, n-1\} \\
-			(\max\propfct[\states]-\frac{r}{2}, \max\propfct[\states]], &\text{if } i = n
+			(z_{max}-\frac{r}{2}, z_{max}, &\text{if } i = n
 		\end{cases}
 	\]
+	where 
+\begin{align*}
+	z_{min} &= \min\propfct[\states] - (\min\propfct[\states] \text{ mod } r) \\
+	z_{max} &= \max\propfct[\states] - (\max\propfct[\states] \text{ mod } r) + \frac{r}{2}
+\end{align*}	
 	The \viewN \viewprop is defined by its \grpfctN \gfctprop where $\gfctsubprop : \smstates \to \imggrp$ with
 	\[
 	\state \mapsto r \cdot i \quad\quad\quad \text{where } \propfct(\state) \in Z_i \in Z \;\; (i \in \{1, \dots, n\}) 
@@ -816,6 +821,26 @@ Apart from direct and indirect components of an \mdpN there are other values lin
 With this \viewN a partition on the image of \propfct is built, based on the granularity $r$. The partition $Z$ is finite since the image of \propfct is finite because \mdpsN in this thesis are assumed finite as \redcomment{in practice model checking for infinite \mdpsN is not possible}. The smaller the granularity $r$ the more elements the partition has, and vice versa. In the implementation for each state \state the value $r \cdot i$ of $\propfct(\state)$ is directly determined using rounding. The formalization as in the definition above was chosen, because it conveys the notion more clearly.
 \redcomment{Ideas that came, when writing this part now: Disjunctive composition! Has}
 \redcomment{Discussion Euquivalence classes and Example missing}
+\redcomment{four cluster}
+\begin{figure}[h]
+	\begin{minipage}{.6\textwidth}
+		%		\hspace{5mm}
+		\input{./04/images/property/propBefore}
+	\end{minipage}%
+	\begin{minipage}{.5\textwidth}
+		\input{./04/images/ap/apIdentAfter}
+	\end{minipage}
+	\caption{Simplified representations of \mdp (left) and the \viewN \viewatomicprops on it (right)}
+	\label{fig:PropBeforeAfter}  
+\end{figure}
+
+Two states $\state_1, \state_2$ are grouped if $\gfctprop(\state_1) = \gfctprop(\state_2) \neq \remelem$. Hence, the obtained equivalence classes are
+\begin{align*}
+	\eqclassv &= \{\state' \in \states \mid \gfctprop(\state') = \gfctprop(\state) =: r \cdot i\} \\
+	&= \{\state' \in \states \mid \propfct{\state}, \propfct{\state'} \in Z_i =: [r \cdot i - \frac{r}{2}, r \cdot i + \frac{r}{2})\}
+\end{align*}
+
+According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewprop.
 
 
 \subsection{Utilizing the MDP Graphstructure}

@@ -37,6 +37,13 @@
 \usepackage{listings, xcolor}
 \usepackage{graphicx}
 \usepackage{subcaption}
+\usepackage[section]{placeins}
+
+\let\Oldsection\section
+\renewcommand{\section}{\FloatBarrier\Oldsection}
+
+\let\Oldsubsection\subsection
+\renewcommand{\subsection}{\FloatBarrier\Oldsubsection}
 
 \usetikzlibrary{calc}
 %\usepackage{xparse} % \newDocumentCommand for multiple optional arguments

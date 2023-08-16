@@ -4,20 +4,14 @@
 
 \begin{document}
 \section{Outlook}
-%Many other views accomplishable with the properties view. ie Initcluster
-%AP Cluster has Cycle
-%All implemented Clusters in Appendix (only definition)
-%Own implementation of cycles with same actions
-%\intmodn \eqclassv{s} \natnums in symbol list
-%%$\rcirclearrowleft$
-%Implementation of own algorithms
-%Distance Cluster Forward backward both
-%$\circlearrowleft$
-%870 End Components possible
-%probabilities = 1
-%Generalize disregarding views
-%sequential composition
-%already is active, Datastructure that tracks which views have been deactivated and activates them if still existent
+
+In this bachelor thesis we proposed concept to preprocess data for visualization which we called view. We presented, defined and discussed types and operations on views and proposed example views. For some of them use cases have been presented, that show applicability in practice. Apart from the formalization all features of views of views and all proposed views have been implemented in the context of the project \pmcvis. The implementation relies on a fast but memory hungry graph structure provided by the \jgrapht library.
+
+In conclusion it can be said that the formalization concisely describes the notion of the concept view, which assists in understanding the implementation and might be of use to develop other simplification approaches on model checking related systems. For proposed example views it is to note that the author had little experience in working with \mdpsN. Hence, most views are not motivated by the way in which a view might serve when working with an \mdpN but rather what simplifications on \mdpsN are possible taking to account its components and structure. The use cases shown only pose small selection of what might be possible. The true practicability will be proven when used in practice. Also \mdpN-experienced users actually working with views in practice will most likely yield further ideas of views that may be helpful.
+
+Apart from practice driven advancements for views and their use cases, also from a theoretical perspective there is still room for exploration of concepts. For one it has not been taken advantage of probabilities present in \mdpsN, as considering views with probabilities would have exceeded the scope of a bachelor thesis. Furthermore, there might be advanced concepts from other disciplines that can be exploited to gain simplifications on \mdpsN.
+
+The provided implementation serves as a solid framework to implement further views. As mentioned before it is quite memory intensive. The \mdpN used for testing with 5 million states could not be built on the testing machine due to lack of memory. Thereby for a given amount of available memory, the data structure poses a hard limitation to the applicability of views in practice if the \mdpN exceeds a certain size. This issue can be addressed by not utilizing the datastrucuture (\texttt{mdpGraph}) but directly accessing the database. This enables views to be used on almost arbitrary large \mdpsN. While this is a great advantage its downside is an immense drop in performance (rise in built times), compared to the used \texttt{mdpGraph}, as the database accesses with the current version of \pmcvis are magnitudes slower than accessing the information in the \texttt{mdpGraph}. This is due to the fact that the \texttt{mdpGraph} consists of very efficient datastructures such as hash maps and hash sets that lie in memory whereas accessing the database, entails accessing the storage of the machine, which in principle is much slower than accessing memory. Especially if statewise database accesses are to be performed, this causes immense execution times in creating a view.
 
 
 \end{document}

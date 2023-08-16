@@ -350,9 +350,9 @@ Selective composition is a variant of parallel composition. It aims for applicat
 	We write $\imggrp_i$ for the image of $\grpfct[\viewppty_i]$. 
 	Given a set $\compselectset \subseteq \{ (\grpfct[\viewppty_i], a) \mid a \in \imggrp_i, i \in \{1, \dots, n\}\}$ the operator \compselectpure is defined as $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n}] \compselect \grpfct := \grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n} \pll \viewppty]: \states \to \arbset$ with
 	\[
-	\state \mapsto (\grpfct[\viewppty_1](\state), \dots, \grpfct'[\viewppty_n](\state)
+	\state \mapsto (\grpfct[\viewppty_1](\state), \dots, \grpfct[\viewppty_n]'(\state))
 	\]
-	where $\grpfct'[\viewppty] : \states \to \imggrp$ with $\grpfctsub'[\viewppty] : \smstates \to \imggrp, \state \to \grpfct(\state)$ and $\smstates := \{\state \in \states \mid \forall i \in \{1, \dots, n\} : (\grpfct[\viewppty_i], \grpfct[\viewppty_i](\state)) \in \compselectset\}$.
+	where $\grpfct' : \states \to \imggrp$ with $\grpfctsub' : \smstates \to \imggrp, \state \to \grpfct(\state)$ and $\smstates := \{\state \in \states \mid \forall i \in \{1, \dots, n\} : (\grpfct[\viewppty_i], \grpfct[\viewppty_i](\state)) \in \compselectset\}$.
 	
 	
 	
