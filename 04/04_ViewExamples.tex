@@ -68,7 +68,7 @@ An a little more involved idea than directly using a given function is to utiliz
 	and $\imggrp := \imggrpbinview$.
 \end{definition}
 
-For $\state_1,\state_2 \in \states$ it is $\gfctinitstates(\state_1) = \gfctinitstates(\state_2)$ \iffN $\state_1, \state_2 \in \initstates$ or $\state_1 = \state_2$. According to Definition \ref{def:eqrelview} it is 
+For $\state_1,\state_2 \in \states$ it is $\gfctinitstates(\state_1) = \gfctinitstates(\state_2)$ \iffN $\state_1, \state_2 \notin \initstates$ or $\state_1 = \state_2$. According to Definition \ref{def:eqrelview} it is 
 \begin{align*}
 	\eqclassv &= \{\state \in \states \mid \gfctinitstates(\state) = \remelem\} = \{\state\} &\text{for } \state \in \initstates \text{ and} \\
 	\eqclassv &= \{\state \in \states \mid \gfctinitstates(\state) = \notppty \}  &\text{for } \state \notin \initstates.
@@ -118,7 +118,7 @@ The most apparent notion to group states is to group states that \emph{have} a g
 
 For $\state_1,\state_2 \in \states$ it is $\gfcthasoutaction(\state_1) = \gfcthasoutaction(\state_2)$ \iffN 
 there exist $\state_{a},\state_{b} \in \states$ with 
-$(\state_1, \action, \state_{a}), (\state_2, \action, \state_{b}) \in \trans$ (i.e. they have the same outgoing action \action) or $\state_1 = \state_2$. 
+$(\state_1, \action, \state_{a}), (\state_2, \action, \state_{b}) \in \trans$ (i.e. they have \action as outgoing action). 
 In accordance with Definition \ref{def:eqrelview} it is
 \begin{align*}
 	\eqclassv &= \{\state \in \states \mid \gfcthasoutaction(\state) = \remelem\} = \{s\} &\text{if }\exists\state' \in \states : (\state, \action, \state') \in \trans \\
@@ -797,51 +797,84 @@ Apart from direct and indirect components of an \mdpN there are other values lin
 \end{definition}
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$, $r \in \realnums$ a granularity, $\propfct : \states \to \realnums$ a property function given and a partition $Z = \{Z_1, \dots, Z_n\}$ on $\propfct[\states]$ where 
+	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$, $r \in \realnums$ a granularity, $\propfct : \states \to \realnums$ a property function given and the by $r$ induced partition $Z =\bigcup_{i \in \integers}Z_i$ on \realnums where
 	\[
 		Z_i = 
 		\begin{cases}
-			[z_{min}, z_{min} + \frac{r}{2}), &\text{if } i=1 \\
-			[i \cdot r -  \frac{r}{2}, i \cdot r +  \frac{r}{2}), &\text{if } i\in\{2,\dots, n-1\} \\
-			(z_{max}-\frac{r}{2}, z_{max}, &\text{if } i = n
+			[i \cdot r -  \frac{r}{2}, i \cdot r +  \frac{r}{2}), &\text{if } i > 0 \\
+			(i \cdot r -  \frac{r}{2}, i \cdot r +  \frac{r}{2}), &\text{if } i = 0 \\
+			(i \cdot r -  \frac{r}{2}, i \cdot r +  \frac{r}{2}]&\text{if } i < 0
 		\end{cases}
+%		\begin{cases}
+%			[z_{min}, z_{min} + \frac{r}{2}), &\text{if } i=1 \\
+%			[i \cdot r -  \frac{r}{2}, i \cdot r +  \frac{r}{2}), &\text{if } i\in\{2,\dots, n-1\} \\
+%			(z_{max}-\frac{r}{2}, z_{max}, &\text{if } i = n
+%		\end{cases}
 	\]
-	where 
-\begin{align*}
-	z_{min} &= \min\propfct[\states] - (\min\propfct[\states] \text{ mod } r) \\
-	z_{max} &= \max\propfct[\states] - (\max\propfct[\states] \text{ mod } r) + \frac{r}{2}
-\end{align*}	
+%	where 
+%\begin{align*}
+%	z_{min} &= \min\propfct[\states] - (\min\propfct[\states] \text{ mod } r) \\
+%	z_{max} &= \max\propfct[\states] - (\max\propfct[\states] \text{ mod } r) + \frac{r}{2}
+%\end{align*}	
 	The \viewN \viewprop is defined by its \grpfctN \gfctprop where $\gfctsubprop : \smstates \to \imggrp$ with
 	\[
-	\state \mapsto r \cdot i \quad\quad\quad \text{where } \propfct(\state) \in Z_i \in Z \;\; (i \in \{1, \dots, n\}) 
+	\state \mapsto r \cdot i \quad\quad\quad \text{where } \propfct(\state) \in Z_i \in Z
 	\]
 	and $\imggrp = \realnums \cup \remset$.
 \end{definition}
 
-With this \viewN a partition on the image of \propfct is built, based on the granularity $r$. The partition $Z$ is finite since the image of \propfct is finite because \mdpsN in this thesis are assumed finite as \redcomment{in practice model checking for infinite \mdpsN is not possible}. The smaller the granularity $r$ the more elements the partition has, and vice versa. In the implementation for each state \state the value $r \cdot i$ of $\propfct(\state)$ is directly determined using rounding. The formalization as in the definition above was chosen, because it conveys the notion more clearly.
+With this \viewN a partition on the image of \propfct is built, based on the granularity $r$. 
+%The partition $Z$ is finite since the image of \propfct is finite because \mdpsN in this thesis are assumed finite as \redcomment{in practice model checking for infinite \mdpsN is not possible}. 
+The smaller the granularity $r$ the more elements the partition has, and vice versa. In the implementation for each state \state the value $r \cdot i$ of $\propfct(\state)$ is directly determined using rounding. The formalization as in the definition above was chosen, because it clearly formalizes the rounding behavior.
+
 \redcomment{Ideas that came, when writing this part now: Disjunctive composition! Has}
-\redcomment{Discussion Euquivalence classes and Example missing}
-\redcomment{four cluster}
+
+Two states $\state_1, \state_2$ are grouped if $\gfctprop(\state_1) = \gfctprop(\state_2) \neq \remelem$. Hence, the obtained equivalence classes are
+\begin{align*}
+	\eqclassv &= \{\state' \in \states \mid \gfctprop(\state') = \gfctprop(\state) =: r \cdot i\} \\
+	&= \{\state' \in \states \mid \propfct(\state), \propfct(\state') \in Z_i\}
+\end{align*}
+
+According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewprop.
+
 \begin{figure}[h]
 	\begin{minipage}{.6\textwidth}
 		%		\hspace{5mm}
 		\input{./04/images/property/propBefore}
 	\end{minipage}%
 	\begin{minipage}{.5\textwidth}
-		\input{./04/images/ap/apIdentAfter}
+		\input{./04/images/property/propAfter}
 	\end{minipage}
-	\caption{Simplified representations of \mdp (left) and the \viewN \viewatomicprops on it (right)}
+	\caption{Simplified representations of \mdp (left) and the \viewN $\viewprop(0.4)$ on it (right)}
 	\label{fig:PropBeforeAfter}  
 \end{figure}
-
-Two states $\state_1, \state_2$ are grouped if $\gfctprop(\state_1) = \gfctprop(\state_2) \neq \remelem$. Hence, the obtained equivalence classes are
-\begin{align*}
-	\eqclassv &= \{\state' \in \states \mid \gfctprop(\state') = \gfctprop(\state) =: r \cdot i\} \\
-	&= \{\state' \in \states \mid \propfct{\state}, \propfct{\state'} \in Z_i =: [r \cdot i - \frac{r}{2}, r \cdot i + \frac{r}{2})\}
-\end{align*}
-
-According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewprop.
-
+In Figure \ref{fig:PropBeforeAfter} we observe the \viewN $\viewprop(0.4)$ on \chgph. The by $r=0.4$ partition is $Z = \bigcup_{i \in \integers} Z_i$ where
+\[
+Z_i = 
+\begin{cases}
+	[i \cdot 0.4 -  0.2, i \cdot 0.4 +  0.2) \:\!= [0.4i - 0.2, 0.4i + 0.2) , &\text{if } i > 0 \\
+	(i \cdot 0.4 -  0.2, i \cdot 0.4 +  0.2) = (-0.2, 0.2), &\text{if } i = 0 \\
+	(i \cdot 0.4 -  0.2, i \cdot 0.4 +  0.2] \:\!= (0.4i - 0.2, 0.4i + 0.2], &\text{if } i < 0 \\
+\end{cases}
+\]
+It is 
+\begin{alignat*}{3}
+	\propfct(\state_4)=-0.6, \propfct(\state_8)=-0.95, \propfct(\state_9) = -0.99 &\in Z_{-2} &&= [-1.8, -2.2) \\
+%	[0.4 \cdot (-2) - 0.2, 0.4 \cdot (-2) + 0.2) =  \\
+	\propfct(\state_1)=0.1, \propfct(\state_{10})=0.15 &\in Z_0 &&= (-0.2, 0.2)\\
+	\propfct(\state_2)=0.2, \propfct(\state_3)=0.41, \propfct(\state_6) = 0.59 &\in Z_1 &&= [0.2, 0.6) \\
+%	= [0.4 \cdot 1 - 0.2, 0.4 \cdot 1 + 0.2) \\
+	\propfct(\state_5)=0.93, \propfct(\state_{7})=2.06 &\in Z_5 &&= [1.8, 2.2) \\
+%	= [0.4 \cdot 5 - 0.2, 0.4 \cdot 5 + 0.2) = [1.8, 2.2)\\	
+\end{alignat*}
+Hence it is
+\begin{alignat*}{3}
+ 	\gfctprop(\state_4) = \gfctprop(\state_{8}) = \gfctprop(\state_{9}) &= 0.4\cdot(-2) &&= -0.8 \\
+ 	\gfctprop(\state_1) = \gfctprop(\state_{10}) &= 0.4\cdot0 &&= 0 \\
+ 	\gfctprop(\state_2) = \gfctprop(\state_{3}) = \gfctprop(\state_{6}) &= 0.4\cdot1 &&= 0.4 \\
+ 	\gfctprop(\state_5) = \gfctprop(\state_{7}) &= 0.4\cdot5 &&= 2 \\
+\end{alignat*}
+and states are grouped as displayed in the simplified representation of \viewprop.
 
 \subsection{Utilizing the MDP Graphstructure}
 \subsubsection{Distance}

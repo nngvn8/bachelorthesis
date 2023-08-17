@@ -28,19 +28,19 @@ Each view is represented by a Java class. While individual views often have thei
 
 \lstdefinestyle{javaStyle}{
 	language=Java,
-	basicstyle=\small\ttfamily,
+	basicstyle=\smaller\ttfamily,
 	keywordstyle=\color{blue}\bfseries,
 	commentstyle=\commentcolor,
 	stringstyle=\color{purple},
-	numbers=left,
-	numberstyle=\tiny\color{gray},
-	stepnumber=1,
-	numbersep=8pt,
-	backgroundcolor=\color{gray!10},
+%	numbers=left,
+%	numberstyle=\tiny\color{gray},
+%	stepnumber=1,
+%	numbersep=8pt,
+%	backgroundcolor=\color{gray!10},
 	showspaces=false,
 	showstringspaces=false,
 	showtabs=false,
-	frame=single,
+	frame=lines,
 	tabsize=4,
 	captionpos=b,
 	breaklines=true,
@@ -49,44 +49,12 @@ Each view is represented by a Java class. While individual views often have thei
 	escapechar=\~
 }
 
-%
-%\lstdefinestyle{intellij}{
-%	backgroundcolor=\color{intellijbg},
-%	basicstyle=\ttfamily\small,
-%	commentstyle=\color{intellijcomment},
-%	keywordstyle=\color{intellijkeyword},
-%	stringstyle=\color{intellijstring},
-%	frame=single,
-%	framerule=0pt,
-%	showstringspaces=false,
-%	numbers=left,
-%	numberstyle=\tiny\color{gray},
-%	breaklines=true,
-%	breakatwhitespace=true,
-%	captionpos=b,
-%	tabsize=4,
-%	columns=fullflexible,
-%	keepspaces=true,
-%	escapechar=\!
-%}
 
 
-%\lstset{
-%	tabsize = 4, %% set tab space width
-%	showstringspaces = false, %% prevent space marking in strings, string is defined as the text that is generally printed directly to the console
-%	numbers = left, %% display line numbers on the left
-%	commentstyle = \color{green}, %% set comment color
-%	keywordstyle = \color{blue}, %% set keyword color
-%	stringstyle = \color{red}, %% set string color
-%	rulecolor = \color{black}, %% set frame color to avoid being affected by text color
-%	basicstyle = \small \ttfamily , %% set listing font and size
-%	breaklines = true, %% enable line breaking
-%	numberstyle = \tiny,
-%}
 
+%\lstset{}
 
-%\begin{minipage}{.94\textwidth}
-	\begin{lstlisting}[style=javaStyle, caption={Most relevant attributes and methods of class \texttt{View}}, label={lst:classview}]
+\begin{lstlisting}[style=javaStyle, caption={Most relevant attributes and methods of class \texttt{View}}, label={lst:classview}]
 public abstract class View implements Namespace { // ~\commentcolorize{\view}~
 	
 	protected final ViewType type; // similar to identifier ~\commentcolorize{\viewppty}~
@@ -102,8 +70,8 @@ public abstract class View implements Namespace { // ~\commentcolorize{\view}~
 
 	
 	protected boolean semiGrouping = true; // ~\commentcolorize{$\remelem \in {\grpfct}[\states]$ allowed}~
-%	// true: remaining states without property grouped
-%	// false: remaining states without property NOT grouped
+	// true: remaining states without property grouped
+	// false: remaining states without property NOT grouped
 	
 	protected enum BinaryMode {SHOW, HIDE} // ~\commentcolorize{$\disregardelem \in \{\hasppty, \notppty\}$}~
 	// HIDE: Group states that have the property 
@@ -117,18 +85,10 @@ public abstract class View implements Namespace { // ~\commentcolorize{\view}~
 	public void buildView() { ~\commentcolorize{...}~ }
 		
 	protected abstract List<String> groupingFunction() throws Exception; // ~\commentcolorize{\grpfctsub}~, Def. detached grouping function
-	
-	
-
 \end{lstlisting}
-%\end{minipage}
-%\begin{minipage}{.06\textwidth}
-%\end{minipage}
-	
-%\begin{minipage}{.02\textwidth}
-%\end{minipage}
-%\begin{minipage}{.94\textwidth}
-	\begin{lstlisting}[style=javaStyle, caption={Implementation of \texttt{buildView() function}}, label={lst:buildview}]
+
+%
+	\begin{lstlisting}[style=javaStyle, caption={Implementation of \texttt{buildView()} function}, label={lst:buildview}]
 public void buildView() {
 	try {	
 		// 1. View specific checks
@@ -149,28 +109,6 @@ public void buildView() {
 }
 
 \end{lstlisting}
-
-%\end{minipage}	
-%\begin{minipage}{.06\textwidth}
-%\end{minipage}
-%	\begin{lstlisting}[language = Java , frame = trBL , firstnumber = last , escapeinside={(*@}{@*)}]
-%		public class Factorial
-%		{
-%			public static void main(String[] args)
-%			{   final int NUM_FACTS = 100;
-%				for(int i = 0; i < NUM_FACTS; i++)
-%				System.out.println( i + "! is " + factorial(i));
-%			}
-%			
-%			public static int factorial(int n)
-%			{   int result = 1;
-%				for(int i = 2; i <= n; i++) (*@\label{for}@*)
-%				result *= i;
-%				return result;
-%			}
-%		}
-%	\end{lstlisting}
-
 
 
 Creating a new view entails implementing the grouping function, the method \texttt{getCollumn()} , and any necessary private attributes. This approach matches the formal definition of \viewsN and ensures consistency in the process of generating \viewsN, given that each view is essentially defined by its grouping function.

@@ -28,16 +28,16 @@
 		%		\node [mstate,right=of s2] (s10) {$\state_{10}$};
 		\node [mstate,above=26pt of s5] (s10) {$\state_{10}$};
 		
-		\node [above right=-4pt of s1] (ls1) {$1.2$};
-		\node [above right=-6pt of s2] (ls2) {$1$};
-		\node [above right=-4pt of s3] (ls3) {$1$};
-		\node [above right=0pt and -8pt of s4] (ls4) {$1$};
-		\node [above right=-4pt of s5] (ls5) {$1$};
-		\node [below left=-4pt of s6] (ls6) {$1$};
-		\node [below left=-4pt of s7] (ls7) {$1$};
-		\node [above left=-4pt of s8] (ls8) {$1$};
-		\node [above left=-4pt of s9] (ls9) {$1$};
-		\node [above right=-4pt of s10] (ls10) {$1$};
+		\node [above right=-4pt of s1] (ls1) {$0.1$};
+		\node [above right=-6pt of s2] (ls2) {$0.2$};
+		\node [above right=-4pt of s3] (ls3) {$0.41$};
+		\node [above right=0pt and -8pt of s4] (ls4) {$-0.6$};
+		\node [above right=-4pt of s5] (ls5) {$0.93$};
+		\node [below left=-4pt of s6] (ls6) {$0.59$};
+		\node [below left=-4pt of s7] (ls7) {$2.06$};
+		\node [above left=-4pt of s8] (ls8) {$-0.95$};
+		\node [above left=-4pt of s9] (ls9) {$-0.99$};
+		\node [above right=-4pt of s10] (ls10) {$0.15$};
 		
 		
 		
@@ -59,6 +59,7 @@
 		\path [trans] (s2) edge [loop above] (s2);
 		\path [trans] (s7) edge [loop right] (s7);
 		\path [trans] (s9) edge [loop below] (s9);
+		\path [trans] (s10) edge [loop above] (s10);
 		
 	\end{tikzpicture}
 \end{document}

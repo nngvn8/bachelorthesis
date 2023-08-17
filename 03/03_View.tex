@@ -42,7 +42,7 @@ The conceptional idea of a \viewN is to group states by some criteria and struct
 The \grpfctsubN is used to formalize the behavior that groupings can also only be defined on a subset of states, while still obtaining a total function on the set of states \states. We write $M(\grpfct)$ and $M(\grpfctsub)$ to refer to the their codomain of \grpfct and \grpfctsub respectively. The identifier \viewppty normally hints the objective of the grouping function. Two states will be grouped to a new state if and only if the grouping function maps them to the same value if that value is not the unique symbol \remelem. The mapping to the symbol \remelem will be used whenever a state is supposed to be excluded from the grouping. The definition offers an easy way of creating groups of states. It is also very close to the actual implementation later on. The exact mapping depends on the desired grouping. In order to define a new set of states for the \viewN, we define an equivalence relation \eqrelview based on a given grouping function \grpfct.
 
 \begin{definition}
-	Let $\nogroupset := \{\remelem\} \cup \bigcup_{n \in \natnums} \{t \in \{\remelem\}^{n+1} \mid \exists t'\in \nogroupset : t' \in \{\remelem\}^n\}$.
+	Let $\nogroupset := \{\remelem\} \cup \bigcup_{n \in \natnums \setminus \{0\}} \{t \in \{\remelem\}^{n+1}\}$.
 \end{definition}
 
 With this definition it is $\nogroupset = \{\remelem, (\remelem, \remelem), (\remelem, \remelem, \remelem), \dots\}$ an infinite set. That is, it contains every arbitrary sized tuple only containing the symbol \remelem. This generalization to arbitrary large tuples with \remelem is needed for composition in section \ref{ch:composition}.
@@ -86,10 +86,10 @@ The definition of a \viewN is dependent on a given MDP and a \grpfctN $\grpfct$.
 				
 				\item $\initdistrib' : \eqclasssetv \to [0,1]$ with 
 				\[
-				\initdistrib'(\eqclassv) = \bbigsum{\state \in \eqrelview} \initdistrib(\state)
+				\initdistrib'(\eqclassv) = \bbigsum{\state' \in \eqclassv} \initdistrib(\state')
 				\]
 							
-				\item $\labelingfct': \states' \to \powerset{\atomicprops}, \eqclassv[\state'] \mapsto \bigcup_{\state' \in \eqclassv} \labelingfct(\state')$
+				\item $\labelingfct': \states' \to \powerset{\atomicprops}, \eqclassv[\state] \mapsto \bigcup_{\state' \in \eqclassv} \labelingfct(\state')$
 				
 			\end{itemize}
 	and \eqrelview is the equivalence relation according to Definition \ref{def:eqrelview}.
@@ -98,7 +98,7 @@ The definition of a \viewN is dependent on a given MDP and a \grpfctN $\grpfct$.
 	\label{def:view}	
 \end{definition}
 
-The identifier \viewppty is inherited from $\grpfct$ to \view. The identifier declares that $\grpfct$ is the \grpfctN of \view and thereby also uniquely determines \view. If a \viewN should take parameter and we want to talk about an instance of a \viewN with specific parameters $p_1, \dots, p_n$ we will write it as $\view(p_1, \dots, p_n)$. If we want to talk about of the \grpfctN \grpfct of \view with the parameters $p_1, \dots, p_n$. We write $\grpfct(\state \cond p_1, \dots, p_n)$, where $\state \in \states$ and \states is the state set of \chgph. The definition of $\trans'$ is as is, because in an equivalence class there may be several states with the same outgoing action. Hence, the probability values of transitions from a state in one equivalence class to a state in another equivalence class can not just be summed up. Instead they have to be normalized with the accumulated probability of outgoing transitions from states of the equivalence class with the same action. This is what the denominator does.
+The identifier \viewppty is inherited from $\grpfct$ to \view. The identifier declares that $\grpfct$ is the \grpfctN of \view and thereby also uniquely determines \view. If a \viewN takes parameters and we want to talk about an instance of a \viewN with specific parameters $p_1, \dots, p_n$ we will write it as $\view(p_1, \dots, p_n)$. If we want to talk about of the \grpfctN \grpfct of \view with the parameters $p_1, \dots, p_n$. We write $\grpfct(\state \cond p_1, \dots, p_n)$, where $\state \in \states$ and \states is the state set of \chgph. The definition of $\trans'$ is as is, because in an equivalence class there may be several states with the same outgoing action. Hence, the probability values of transitions from a state in one equivalence class to a state in another equivalence class can not just be summed up. Instead they have to be normalized with the accumulated probability of outgoing transitions from states of the equivalence class with the same action. This is what the denominator does.
 
 Note that the definition is in a most general form in the sense that if in a \viewN a property accounts to one piece of some entity the whole entity receives the property i.e. 
 \begin{itemize}	
@@ -262,7 +262,7 @@ We define the operator \pll in order to build and modify parallel composed \view
 		\item $(\grpfct[\viewppty_1] \pll \grpfct[\viewppty_2])(\state) := (\grpfct[\viewppty_1](\state),\grpfct[\viewppty_2](\state)) = \grpfct[\viewppty_1 \pll \viewppty_2](\state)$ \\
 		if it is not $\grpfct[\viewppty_1] = \grpfct[x] \pll \grpfct[y]$ or $\grpfct[\viewppty_2] = \grpfct[x] \pll \grpfct[y]$ for some \grpfctsN \grpfct[x], \grpfct[y].
 		\item $((\grpfct[\viewppty_1], \dots, \grpfct[\viewppty_n]) \pll \grpfct[\viewppty])(\state) := (\grpfct[\viewppty_1](\state), \dots, \grpfct[\viewppty_n](\state), \grpfct[\viewppty](\state)) = \grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n \pll \viewppty}](\state)$ 
-		\\ if for all $i \in \{1, \dots, n\}$ it is not $\grpfct[\viewppty_i] = \grpfct[x] \pll \grpfct[y]$ and also not $\grpfct \grpfct[x] \pll \grpfct[y]$ for some \grpfctsN \grpfct[x], \grpfct[y].
+		\\ if for all $i \in \{1, \dots, n\}$ it is not $\grpfct[\viewppty_i] = \grpfct[x] \pll \grpfct[y]$ and also not $\grpfct = \grpfct[x] \pll \grpfct[y]$ for some \grpfctsN \grpfct[x], \grpfct[y].
 	\end{enumerate}
 	
 \end{definition}

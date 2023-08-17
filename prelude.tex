@@ -37,17 +37,18 @@
 \usepackage{listings, xcolor}
 \usepackage{graphicx}
 \usepackage{subcaption}
-\usepackage[section]{placeins}
 
+\usepackage[section]{placeins} % make figures not float intoother subsection
 \let\Oldsection\section
 \renewcommand{\section}{\FloatBarrier\Oldsection}
-
 \let\Oldsubsection\subsection
 \renewcommand{\subsection}{\FloatBarrier\Oldsubsection}
 
 \usetikzlibrary{calc}
 %\usepackage{xparse} % \newDocumentCommand for multiple optional arguments
 %\usepackage{titlecaps}
+
+%\captionsetup[lstlisting]{name=Code Snippet}
 
 
 
@@ -514,6 +515,7 @@
 \newcommand{\impl}{\mt{\hspace{3mm}\Leftarrow\hspace{2mm}}}
 \newcommand{\natnums}{\mt{\mathbb{N}}} 
 \newcommand{\realnums}{\mt{\mathbb{R}}}
+\newcommand{\integers}{\mt{\mathbb{Z}}}
 \newcommand{\intmodn}[1][n]{\mt{\mathbb{Z}_{#1}}}
 \newcommand{\arbset}{\mt{M}}
 \newcommand{\bigsum}[2][]{\mt{\mathlarger{\sum}_{#2}^{#1}}}
