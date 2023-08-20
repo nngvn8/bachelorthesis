@@ -5,6 +5,7 @@
 \begin{document}
 \section{Comparison and Evaluation} \label{ch:eval}
 In this chapter we want to show how \viewsN can be utilized in three different usecases. In subsection 6.4 we will consider take consider performance aspects.
+In the usecases we will see screenshots made in \pmcvis. The blue printed labels of the states are the mapped values from the \grpfctN. These do not always exactly match the ones of the formalization. Especially it is $\texttt{\_\_BLANK\_\_} = \remelem$. If parallel composition is used in some form the values of the \grpfctsN are separated with \texttt{|} and are in the same order as they have been composed with the operator \pll.
 
 
 \subsection{Explore Modules} \label{subsec:evalmodules}
@@ -24,7 +25,7 @@ Already for only three philosophers the \mdpN has 956 states. When looking at th
 The \viewN $\viewparamvalident(\phil{1})$ groups all states that have the same value of (\phil{1}) ignoring the values of the remaining variables. That is, the values of \phil{2} and \phil{3} are hidden, which results in only showing the module of philosopher \phil{1} (Figure \ref{fig:0601var}). This may help immensely if only a specific module is of interest or the reaming modules have the same structure, as it is the case here with Dining Philosophers. After applying further views could be \viewparamvalident(\phil{1}) applied to understand or explore the module.
 %For example if in Dining Philosophers we were interested in the part of the module where \phil{1} picks their first fork we could use the \viewN \viewparamdnf with c(s) = \redcomment{missing}({Figure}).
 
-\begin{figure}
+\begin{figure}[!htb]
 	\includegraphics[width=\textwidth]{./06/images/06_01_var.png}
 	\caption{Screenshot in current version of \pmcvis of \viewN $\viewparamvalident(\phil{1})$}
 	\label{fig:0601var}
@@ -53,7 +54,7 @@ In general the views \viewparamdnf and \viewparamcnf are very powerful since the
 %	
 %\end{itemize}
 
-\subsection{Find out why illegal states is reached}
+\subsection{Investigate why illegal states is reached}
 \newcommand{\critstate}{\mt{\varstyle{2}{2}}}
 
 In this section we want to show how views can be used for debugging. In this specific case we assume that we observed unwanted behavior or model checking results. We know that some states - that is some assignment of variables - are not allowed. We will check if these states are in fact not reachable.
@@ -64,17 +65,49 @@ The state \critstate should not be reachable, since it represents the situation 
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{./06/images/06_02_Var.png}
-	\caption{Screenshot in current version of \pmcvis of \viewN $\view[\pptyparamcnf](c(\state))$}
+	\caption{Screenshot in current version of \pmcvis of \viewN $\view[\pptyparamcnf](c(\state))$ where \texttt{\mytexttilde Var} refers to \notppty.}
 	\label{fig:0602Var}
 \end{figure}
 
-We observe, that this state is reachable, because it is shown and only reachable states are shown at all in \pmcvis. The questions occurs how and why. In order to obtain this information it should be investigated by which state this critical state \critstate has been reached. One way of accomplishing that is to look into the database that stores states and transitions (Figure \ref{fig:0602database})
+We observe, that this state is reachable, because it is shown and only reachable states are shown at all in \pmcvis. The questions occurs how and why. In order to obtain this information it should be investigated by which state this critical state \critstate has been reached. One way of accomplishing that is to look into the database that stores states and transitions (Table \ref{tab:0602database})
 
-\begin{figure}
-	\includegraphics[width=\textwidth]{./06/prism/database-tpme.png}
-	\caption{Transitions table form database}
-	\label{fig:0602database}
-\end{figure}
+%\begin{figure}
+%	\includegraphics[width=\textwidth]{./06/prism/database-tpme.png}
+%	\caption{Transitions table form database}
+%	\label{fig:0602database}
+%\end{figure}
+
+\begin{table}
+	\vspace{1cm}
+	\centering
+	\resizebox{\columnwidth}{!}{
+	\begin{tabular}{|l|r|l|r|l|r|l|r|}%{|c|c|c|c|c|c|c|c|c|}
+		\hline
+		\textbf{transition\_id} & \textbf{state\_out} & \textbf{action} & \textbf{probabilityDistribution} & \textbf{property\_0} & \textbf{scheduler\_0} & \textbf{property\_1} & \textbf{scheduler\_1} \\
+		\hline
+		1 & 3 & M1 & 6:1.0 & 0.0 & 1.0 & 0.0 & 1.0 \\
+		2 & 3 & M2 & 3:0.8;4:0.2 & 0.0 & 1.0 & 0.0 & 1.0 \\
+		3 & 7 & M1 & 1:0.5;7:0.5 & 0.0 & 1.0 & 0.0 & 1.0 \\
+		4 & 7 & M2 & 6:0.5;8:0.5 & 0.0 & 1.0 & 0.0 & 1.0 \\
+		5 & 0 & M1 & 0:0.8;3:0.2 & 0.0 & 1.0 & 0.0 & 1.0 \\
+		6 & 0 & M2 & 0:0.8;1:0.2 & 0.0 & 1.0 & 0.0 & 1.0 \\
+		7 & 4 & M1 & 7:1.0 & 0.0 & 1.0 & 0.0 & 0.0 \\
+		8 & 4 & M2 & 5:1.0 & 1.0 & 0.0 & 1.0 & 1.0 \\
+		9 & 4 & M2 & 3:0.5;5:0.5 & 0.5 & 0.0 & 0.5 & 0.0 \\
+		10 & 8 & M1 & 2:0.5;8:0.5 & 0.0 & 1.0 & 0.0 & 1.0 \\
+		11 & 1 & M1 & 1:0.8;4:0.2 & 0.0 & 1.0 & 0.0 & 1.0 \\
+		12 & 1 & M2 & 2:1.0 & 0.0 & 1.0 & 0.0 & 1.0 \\
+		13 & 1 & M2 & 0:0.5;2:0.5 & 0.0 & 1.0 & 0.0 & 1.0 \\
+		14 & 2 & M1 & 2:0.8;5:0.2 & 0.2 & 1.0 & 0.2 & 1.0 \\
+		15 & 6 & M1 & 0:0.5;6:0.5 & 0.0 & 1.0 & 0.0 & 1.0 \\
+		16 & 6 & M2 & 6:0.8;7:0.2 & 0.0 & 1.0 & 0.0 & 1.0 \\
+		\hline
+	\end{tabular}
+}
+	\caption{Transitions table form the database}
+	\label{tab:0602database}
+	\vspace{2cm}
+\end{table}
 
 An even better approach is to look in the model file (Figure \ref{lst:0602prismbefore})
 
@@ -134,7 +167,7 @@ Firstly we will use the view \viewdistance from that state on (Figure \ref{fig:0
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{./06/images/06_02_Var+Dist.png}
-	\caption{Screenshot in current version of \pmcvis of \viewN $\view[\pptyparamcnf](c(\state)) \pll \viewdistance$}
+	\caption{Screenshot in current version of \pmcvis of \viewN $\view[\pptyparamcnf](c(\state)) \pll \viewdistance$ where \texttt{\mytexttilde Var} refers to \notppty.}
 	\label{fig:0602Var+Dist}
 \end{figure}
 
@@ -151,7 +184,7 @@ We will use partial application with $ \view[\pptyparamcnf](c(\state)) \compsele
 
 \begin{figure}
 	\centering \includegraphics[width=\textwidth]{./06/images/06_02_Var+Dist+Id.png}
-	\caption{Screenshot in current version of \pmcvis of \viewN $\viewNC \view[\pptyparamcnf](c(\state)) \pll \viewdistance \compselect \viewident$ where $\compselectset = \{(\gfctdistance,1)\}$}
+	\caption{Screenshot in current version of \pmcvis of \viewN $\view[\pptyparamcnf](c(\state)) \pll$ $\viewdistance \compselect \viewident$ where $\compselectset = \{(\gfctdistance,1)\}$ and \texttt{\mytexttilde Var} refers to \notppty. \redcomment{Ugly Linebreak}}
 	\label{fig:0602Var+Dist+Id}
 \end{figure}
 
@@ -178,7 +211,7 @@ When now looking at the prism file (Figure \ref{fig:0602prismbefore}) we can see
 
 \subsection{Understand and Debug \chgphN}
 
-In this subsection we want to take a look at a more complex usecase how views might help us to understand and fix a given \mdpN. We refer to the \mdpN \redcomment{appendix}.
+In this subsection we want to take a look at a more complex usecase how views might help us to understand and fix a given \mdpN. We refer to the \mdpN with as described by the prism file in Listing \ref{lst:0603sccloopsbefore}.
 
 %\begin{figure}[!htb]
 %	\centering \includegraphics[width=\textwidth, height=20cm,

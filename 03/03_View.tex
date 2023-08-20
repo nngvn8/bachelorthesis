@@ -63,7 +63,7 @@ The definition of a \viewN is dependent on a given MDP and a \grpfctN $\grpfct$.
 
 \begin{definition}
 	
-	Let \chgph = \chgphtuple be \chgphN and $\grpfct$ a \grpfctN. A \emph{\viewN} is \chgphN $\view = \chgphtupledist$ that is derived from \mdp with the \grpfctN $\grpfct$ where
+	Let \chgph = \chgphtuple be \chgphN, $\smstates \subseteq \states$ and $\grpfct$ a \grpfctN where $\grpfctsub : \smstates \to \imggrp$ it its detached \grpfctN. A \emph{\viewN} is \achgphN $\view = \chgphtupledist$ that is derived from \mdp with the \grpfctN $\grpfct$ where
 	
 	\begin{itemize}
 				\item $\states' = \{ \eqclass{\state}{\eqrelview} \mid \state \in \states \} = \eqclasssetv$
@@ -78,7 +78,10 @@ The definition of a \viewN is dependent on a given MDP and a \grpfctN $\grpfct$.
 				\probtfunc'(\eqclassv[\state_1], \action, \eqclassv[\state_2]) = 
 				\frac
 				{\bbigsum{\substack{\state_a \in \eqclassv[\state_1], \\ \state_b \in \eqclassv[\state_2]}}\probtfunc(\state_a, \action, \state_b) }
-				{\bbigsum{\state_x \in \eqclassv[\state_1], \state_y \in \states} \probtfunc(\state_x, \action, \state_y)}
+				{
+%					\bbigsum{\state_x \in \eqclassv[\state_1], \state_y \in \states} \probtfunc(\state_x, \action, \state_y)
+					\max\{|\{\state \in \eqclassv[\state_1] \mid \outacts(\state) = \action\}|, 1\}
+					}
 				\]
 				
 				%\{\eqclassv[\state'] \in \states' \mid \exists \state \in \eqclassv[\state'] : \state \in \init \}$
@@ -97,7 +100,9 @@ The definition of a \viewN is dependent on a given MDP and a \grpfctN $\grpfct$.
 	\label{def:view}	
 \end{definition}
 
-The identifier \viewppty is inherited from $\grpfct$ to \view. The identifier declares that $\grpfct$ is the \grpfctN of \view and thereby also uniquely determines \view. If a \viewN takes parameters and we want to talk about an instance of a \viewN with specific parameters $p_1, \dots, p_n$ we will write it as $\view(p_1, \dots, p_n)$. If we want to talk about of the \grpfctN \grpfct of \view with the parameters $p_1, \dots, p_n$. We write $\grpfct(\state \cond p_1, \dots, p_n)$, where $\state \in \states$ and \states is the state set of \chgph. The definition of $\trans'$ is as is, because in an equivalence class there may be several states with the same outgoing action. Hence, the probability values of transitions from a state in one equivalence class to a state in another equivalence class can not just be summed up. Instead they have to be normalized with the accumulated probability of outgoing transitions from states of the equivalence class with the same action. This is what the denominator does.
+The identifier \viewppty is inherited from $\grpfct$ to \view. The identifier declares that $\grpfct$ is the \grpfctN of \view and thereby also uniquely determines \view. If \smstates is not provided when instantiating a view it is assumed $\smstates = \states$. If a \viewN takes parameters and we want to talk about an instance of a \viewN with specific parameters $p_1, \dots, p_n$ we will write it as $\view(p_1, \dots, p_n)$. If we want to talk about the \grpfctN \grpfct of \view with the parameters $p_1, \dots, p_n$. We write $\grpfct(\state \cond p_1, \dots, p_n)$, where $\state \in \states$ and \states is the state set of \chgph. 
+
+The definition of $\trans'$ is as is, because a state in a \viewN is an equivalence class and it may be that in it there are several states with the same outgoing action. Hence, summing up the probabilities for two given equivalence classes and action \action may yield a value greater than one (no probability anymore). This is why the sum of  probabilities has to be normalized, by dividing by the number of states that have the action \action outgoing. 
 
 Note that the definition is in a most general form in the sense that if in a \viewN a property accounts to one piece of some entity the whole entity receives the property i.e. 
 \begin{itemize}	
@@ -146,9 +151,9 @@ in \view it is $\labelingfct'(\{\state_1, \state_3\}) = \labelingfct(\state_1) \
 
 Because there are no other other outgoing transitions from $\state_1$ or $\state_3$ with action \actionb in \view it is 
 \begin{alignat*}{4}
-	\trans'(\eqclassv[\state_1], \actionb, \eqclassv[\state_1]) &= \frac{\trans(\state_3,\actionb,\state_3)}{0.6+1+0.4} &&= \frac{0.4}{2} &= 0.2\\
-	\trans'(\eqclassv[\state_1], \actionb, \eqclassv[\state_2]) &= \frac{\trans(\state_3,\actionb,\state_2)}{0.6+1+0.4} &&= \frac{0.6}{2} &= 0.3\\
-	\trans'(\eqclassv[\state_1], \actionb, \eqclassv[\state_4]) &= \frac{\trans(\state_1,\actionb,\state_4)}{0.6+1+0.4} &&= \;\:\frac{1}{2} &= 0.5
+	\trans'(\eqclassv[\state_1], \actionb, \eqclassv[\state_1]) &= \frac{\trans(\state_3,\actionb,\state_3)}{|\{\state \in \eqclassv[\state_1] \mid \outacts(\state) = \actionb\}|} &&= \frac{0.4}{2} &= 0.2\\
+	\trans'(\eqclassv[\state_1], \actionb, \eqclassv[\state_2]) &= \frac{\trans(\state_3,\actionb,\state_2)}{|\{\state \in \eqclassv[\state_1] \mid \outacts(\state) = \actionb\}|} &&= \frac{0.6}{2} &= 0.3\\
+	\trans'(\eqclassv[\state_1], \actionb, \eqclassv[\state_4]) &= \frac{\trans(\state_1,\actionb,\state_4)}{|\{\state \in \eqclassv[\state_1] \mid \outacts(\state) = \actionb\}|} &&= \;\:\frac{1}{2} &= 0.5
 \end{alignat*}
 
 because $\eqclassv[\state_1] = \{\state_1, \state_3\}, \eqclassv[\state_2] = \{\state_2\}, \eqclassv[\state_4] = \{\state_4\}$ and each time there is only one transition with that action and \redcomment{direction} \redcomment{(undefined! ..should define our intuitive?)} between the equivalence classes. The transition $\trans(\state_1,\action,\state_3) = 0.5$ is interesting because it is within an equivalence class. This causes a loop on the state $\{\state_1,\state_3\}$ in the view \view with the transition $\trans(\eqclassv[\state_1],\action,\eqclassv[\state_3]) = 0.5$. The value remains unchanged as $\trans(\eqclassv[\state_1],\action,\eqclassv[\state_3]) = 0.5$ is the only other transition with action \action outgoing from one of the states $\state_1,\state_3$. Hence the denominator of $\trans'$ in Definition \ref{def:view} is one.
@@ -217,7 +222,7 @@ In essence views are a simplification generated from \chgphN. It seems rather ob
 \subsubsection{\parllcompNCC} 
 In this section we will introduce the concept of parallel composition. The most apparent idea is to group states that match in the function value of all given \grpfctsN. This idea is parallel in the sense that a set of \grpfctN is combined to a new \grpfctN in one single step.
 
-\begin{definition}
+\begin{definition} \label{def:pllcompviewandgfct}
 	Let $\view[\viewppty_1], \view[\viewppty_2], \dots, \view[\viewppty_n]$ be \viewsN, and $\grpfct[\viewppty_1], \grpfct[\viewppty_2], \dots, \grpfct[\viewppty_n]$ be their corresponding \grpfctsN. The \grpfctN $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n}]: \states \to \arbset(\grpfct[\viewppty_1]) \times \dots \times \arbset(\grpfct[\viewppty_n])$ is defined with
 	\[
 	\state \mapsto (\grpfct[\viewppty_1](\state), \grpfct[\viewppty_2](\state), \dots, \grpfct[\viewppty_n](\state))
@@ -253,26 +258,46 @@ Note that for $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n
 	because $(a, b) = (x, y) \iff a = x \,\, \land \,\, b = y \iff (b, a) = (y, x)$.
 \end{proof}
 
-We define the operator \pll in order to build and modify parallel composed \viewsN. 
+We assume that whenever a \viewN or \grpfctN is parallel composed this is notated as declared in Definition \ref{def:pllcompviewandgfct}. That is, \iffN there is the operator \pll in the subsrcipt of a \viewN or \grpfctN it is parallel composed. We define the operator \pll in order to construct parallel composed \grpfctsN and \viewsN. 
 
+%\begin{definition}
+%	The operator \pll maps two \grpfctsN to a new \grpfctN. It is defined recursively.
+%	\begin{enumerate}
+%		\item $(\grpfct[\viewppty_1] \pll \grpfct[\viewppty_2])(\state) := (\grpfct[\viewppty_1](\state),\grpfct[\viewppty_2](\state)) = \grpfct[\viewppty_1 \pll \viewppty_2](\state)$ \\
+%		if it is not $\grpfct[\viewppty_1] = \grpfct[x] \pll \grpfct[y]$ or $\grpfct[\viewppty_2] = \grpfct[x] \pll \grpfct[y]$ for some \grpfctsN \grpfct[x], \grpfct[y].
+%		\item $((\grpfct[\viewppty_1], \dots, \grpfct[\viewppty_n]) \pll \grpfct[\viewppty])(\state) := (\grpfct[\viewppty_1](\state), \dots, \grpfct[\viewppty_n](\state), \grpfct[\viewppty](\state)) = \grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n \pll \viewppty}](\state)$ 
+%		\\ if for all $i \in \{1, \dots, n\}$ it is not $\grpfct[\viewppty_i] = \grpfct[x] \pll \grpfct[y]$ and also not $\grpfct = \grpfct[x] \pll \grpfct[y]$ for some \grpfctsN \grpfct[x], \grpfct[y].
+%	\end{enumerate}
+%	
+%\end{definition}
 \begin{definition}
-	The operator \pll maps two \grpfctsN to a new \grpfctN. It is defined recursively.
+	The operator \pll maps two \grpfctsN to a new \grpfctN. It is defined inductively.
 	\begin{enumerate}
-		\item $(\grpfct[\viewppty_1] \pll \grpfct[\viewppty_2])(\state) := (\grpfct[\viewppty_1](\state),\grpfct[\viewppty_2](\state)) = \grpfct[\viewppty_1 \pll \viewppty_2](\state)$ \\
-		if it is not $\grpfct[\viewppty_1] = \grpfct[x] \pll \grpfct[y]$ or $\grpfct[\viewppty_2] = \grpfct[x] \pll \grpfct[y]$ for some \grpfctsN \grpfct[x], \grpfct[y].
-		\item $((\grpfct[\viewppty_1], \dots, \grpfct[\viewppty_n]) \pll \grpfct[\viewppty])(\state) := (\grpfct[\viewppty_1](\state), \dots, \grpfct[\viewppty_n](\state), \grpfct[\viewppty](\state)) = \grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n \pll \viewppty}](\state)$ 
-		\\ if for all $i \in \{1, \dots, n\}$ it is not $\grpfct[\viewppty_i] = \grpfct[x] \pll \grpfct[y]$ and also not $\grpfct = \grpfct[x] \pll \grpfct[y]$ for some \grpfctsN \grpfct[x], \grpfct[y].
+		\item $(\grpfct[\viewppty_1] \pll \grpfct[\viewppty_2])(\state) := \grpfct[{\viewppty_1 \pll \viewppty_2}](\state)$
+		\item $(\grpfct[{\viewppty_1 \pll \dots \pll \viewppty_n}] \pll \grpfct)(\state) := \grpfct[{\viewppty_1 \pll \dots \pll \viewppty_n \pll \viewppty}](\state)$ \quad where $n \in \natnums$
+		\item $(\grpfct \pll \grpfct[{\viewppty_1 \pll \dots \pll \viewppty_n}])(\state) := \grpfct[{\viewppty \pll \viewppty_1 \pll \dots \pll \viewppty_n}](\state)$ \quad where $n \in \natnums$
 	\end{enumerate}
 	
 \end{definition}
 
+\begin{proposition}
+	The operator \pll is associative.
+\end{proposition}
+
+\begin{proof}
+	Let	$\grpfct[\viewppty_1], \grpfct[\viewppty_2], \grpfct[\viewppty_3]$ be \grpfctsN. For simplicity we omit the parameter (state \state).
+	\[
+		\grpfct[\viewppty_1] \pll (\grpfct[\viewppty_2] \pll \grpfct[\viewppty_3]) = \grpfct[\viewppty_1] \pll \grpfct[{\viewppty_2 \pll \viewppty_3}] = \grpfct[{\viewppty_1 \pll \viewppty_2 \pll \viewppty_3}] = \grpfct[{\viewppty_1 \pll \viewppty_2}] \pll \grpfct[\viewppty_3] = (\grpfct[\viewppty_1] \pll \grpfct[\viewppty_2]) \pll \grpfct[\viewppty_3]
+	\]
+	The proof is analogous if one or several of the \grpfctsN are parallel composed.
+	
+%	(\grpfct[\viewppty_1](\state) \pll (\grpfct[\viewppty_2](\state) \pll \grpfct[\viewppty_3]))(\state) = \grpfct[\viewppty_1](\state) \pll \grpfct[{\viewppty_2 \pll \viewppty_3}](\state) = \grpfct[{\viewppty_1 \pll \viewppty_2 \pll \viewppty_3}] = \grpfct[{\viewppty_1 \pll \viewppty_2}](\state) \pll \grpfct[\viewppty_3](\state) = (\grpfct[\viewppty_1](\state) \pll \grpfct[\viewppty_2])(\state) \pll \grpfct[\viewppty_3](\state)
+\end{proof}
 
 We write $\view[\viewppty_1] \pll \view[\viewppty_2]$ for $\view[\viewppty_1 \pll \viewppty_2]$ defined by the grouping function \grpfctN $\grpfct[\viewppty_1] \pll \grpfct[\viewppty_2] = \grpfct[\viewppty_1 \pll \viewppty_2]$.
 %The operator \pll used in the definition is inspired from the operator used in electric circuits, when the respective elements are connected in parallel. 
-
-
 %If we want to speak about this grouping function in a general way, where it is only of importance that we refer to this type of composition and the given \grpfctsN are of no importance, we will denote a \emph{\parllcompN \grpfctN} with \gfctpll.
-
+%
 %The operator \pll in \gfctpll is associative with respect to the grouped states. That is exactly the same states are grouped no matter where parenthesis are put.
 %\begin{proposition}
 %	Let $\grpfct[u], \grpfct[v], \grpfct[w]$ be \grpfctsN and \states a set of states. For all $\state_1, \state_2 \in \states$ it holds that
@@ -326,8 +351,9 @@ We write $\view[\viewppty_1] \pll \view[\viewppty_2]$ for $\view[\viewppty_1 \pl
 %	\iff \quad &(a, (b, c)) = (x, (y, z))
 %\end{align*}
 %\end{proof}
-
-Note that the operator \pll is not associative, because it is not defined for expressions of the form $\grpfct[\viewppty] \pll (\grpfct[\viewppty_1], \dots, \grpfct[\viewppty_n])$. For the same reason \pll is in general not commutative (only for the base case). These are no issues since parallel composed \grpfctsN defy order. 
+%
+%Note that the operator \pll is not associative, because it is not defined for expressions of the form $\grpfct[\viewppty] \pll (\grpfct[\viewppty_1], \dots, \grpfct[\viewppty_n])$. For the same reason \pll is in general not commutative (only for the base case). These are no issues since parallel composed \grpfctsN defy order. 
+Note that the operator \pll is obviously not commutative, but as parallel composed \grpfctsN defy order, the absence of this property will not have any effect on the resulting grouping.
 
 \begin{definition}
 	Let $\grpfct[\viewppty_1 \pll \dots \pll \viewppty_n]$ be a parallel composed grouping function. The operator \pllrev is defined as
@@ -340,8 +366,6 @@ The operator \pllrev is the reversing operator to \pll. Given a parallel compose
 
 \subsubsection{Selective Composition} \label{subsec:selecitvecomp}
 Selective composition is a variant of parallel composition. It aims for application of the grouping function only on certain states, where the other composing functions have a certain value.
-
-\redcomment{change Definition!}
 
 \begin{definition}
 	Let $\view[\viewppty_1 \pll \viewppty_2 \pll \dots \pll 
@@ -361,13 +385,13 @@ Selective composition is a variant of parallel composition. It aims for applicat
 	\label{def:compositionselective}
 \end{definition}
 
-The set \compselectset determines on which states the \viewN \view shall take effect, by restricting the state set \smstates of the detached grouping function to those states, that meet the requirement. Every state that is not in \smstates then by Definition \ref{def:grpfct} mapped to \remelem. If we consider $\compselectset = \{(\grpfct[\viewppty_1], a_1),(\grpfct[\viewppty_1], b_1), (\grpfct[\viewppty_2], a_2)\}$ induces that \view only takes effect if 
+The set \compselectset determines on which states the \viewN \view shall take effect, by restricting the state set \smstates of the detached grouping function to those states, that meet the requirement. Every state that is not in \smstates then by Definition \ref{def:grpfct} is mapped to \remelem. Considering $\compselectset = \{(\grpfct[\viewppty_1], a_1),(\grpfct[\viewppty_1], b_1), (\grpfct[\viewppty_2], a_2)\}$ it induces that \view only takes effect on a state \state of \mdp if 
 
 \[
-	((\grpfct[\viewppty_1] = a_1) \lor (\grpfct[\viewppty_1] = b_1)) \land (\grpfct[\viewppty_2] = a_2)
+	((\grpfct[\viewppty_1](\state) = a_1) \lor (\grpfct[\viewppty_1](\state) = b_1)) \land (\grpfct[\viewppty_2](\state) = a_2)
 \]
 
-That is, if this boolean expression is false the last entry in the tuple is \remelem and only otherwise it is $\grpfct(\state)$. Note that the Definition \ref{def:compositionselective} is the same as declaring $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n}] \compselect \grpfct$ through $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n} \pll \viewppty]: \states \to \arbset$ with
+That is, if this boolean expression is false the last entry in the mapped tuple in Definition \ref{def:compositionselective} equals \remelem and only otherwise equals $\grpfct(\state)$. Note that Definition \ref{def:compositionselective} is the same as declaring $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n}] \compselect \grpfct$ through $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n} \pll \viewppty]: \states \to \arbset$ with
 \[
 \state \mapsto
 \begin{cases}
@@ -375,7 +399,7 @@ That is, if this boolean expression is false the last entry in the tuple is \rem
 	(\grpfct[\viewppty_1](\state), \dots, \grpfct[\viewppty_n](\state),  \remelem),          	& \text{otherwise}
 \end{cases}
 \]
-In the original Definition the set of states \smstates is restricted which causes the remaining elements to be mapped to \remelem, whereas in the equivalent proposed definition here the grouping function only is applied if the requirement is met and otherwise the element \remelem is mapped. Although the latter proposed definition may seem more intuitive the the actual Definition \ref{def:compositionselective} was chosen because it better matches the implementation.
+In the original definition the set of states \smstates is restricted which causes the remaining elements to be mapped to \remelem. In the equivalent proposed definition here the grouping function is applied only if the requirement is met and otherwise the element \remelem is mapped. Hence, the effect is the same: Whenever the requirement is met the last entry of the tuple is $\grpfct(\state)$ otherwise it is \remelem. Although the latter proposed definition may seem more intuitive the the actual Definition \ref{def:compositionselective} was chosen because it matches the implementation better.
 
 
 \end{document}

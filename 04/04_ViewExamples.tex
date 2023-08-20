@@ -33,7 +33,7 @@ One of the least involved approaches to create a view is to base it on the atomi
 The grouping function is exactly the labeling function i.e. for all $\state \in \states$ it is $\gfctatomicprops(\state) := \labelingfct(\state)$. So it is $\gfctatomicprops(\state_1) = \gfctatomicprops(\state_2) \iff \labelingfct(\state_1) = \labelingfct(\state_2)$. According to Definition \ref{def:eqrelview} for $\smstate \in \states$ it is $\eqclassv[\smstate] = \{\state \in \states \mid \labelingfct(\state) = \labelingfct(\smstate)\}$.
 %$\forall \state_1, \state_2 \in \states :
 
-By this we obtain the \viewN $\viewatomicprops$ for a given \chgphN \chgph where: $\states' = \bigcup_{\state \in \states} \{\eqclassv\} =  \bigcup_{a \in \atomicprops} \{\{\state \in \states \mid \labelingfct(\state) = a\}\}$. All other components are constructed as in Definition \ref{def:view}. \redcomment{Add atomic propositions to simplified graphical representation of view}
+By this we obtain the \viewN $\viewatomicprops$ for a given \chgphN \chgph where: $\states' = \bigcup_{\state \in \states} \{\eqclassv\} =  \bigcup_{a \in \atomicprops} \{\{\state \in \states \mid \labelingfct(\state) = a\}\}$. All other components are constructed as in Definition \ref{def:view}.
 
 \begin{figure}[h]
 	\begin{minipage}{.6\textwidth}
@@ -757,7 +757,7 @@ Analogously a \viewN based on a conjunctive normal formal can be defined that ma
 	where $\imggrp := \imggrpbinview$.
 \end{definition}
 
-The only difference from the \viewN \viewparamcnf to the \viewN \viewparamdnf is whether the respective formulae is in conjunctive or disjunctive normal form.\redcomment{CITATION} Since each formulae in conjunctive normal form can be transformed to a formulae in disjunctive normal form and vice versa neither on of the \viewsN can perform an action the other can not. Hence there is no difference in expressivity, but there may be one in size. Therefore both views have been implemented and formalized. For finite \chgphsN they present an interface to performing arbitrary groupings on the state set utilizing parameter values. Equality, equivalence classes and the new state set behave and are constructed analogously to the \viewN \viewparamdnf.
+The only difference from the \viewN \viewparamcnf to the \viewN \viewparamdnf is whether the respective formulae is in conjunctive or disjunctive normal form. Since each formulae in conjunctive normal form can be transformed to a formulae in disjunctive normal form and vice versa \redcomment{CITATION??} neither on of the \viewsN can perform an action the other can not. Hence there is no difference in expressivity, but there may be one in size. Therefore both views have been implemented and formalized. For finite \chgphsN they present an interface to performing arbitrary groupings on the state set utilizing parameter values. Equality, equivalence classes and the new state set behave and are constructed analogously to the \viewN \viewparamdnf.
 
 The views discussed before reduce the \chgphN in a very precise but also manual manner, because it not only dictates the variable but also its value. A more general approach is to stipulate only the variable but not its value. This way states will be grouped that have the same value for that variable with no regard to the actual value of that variable. 
 %This idea could be achieved with a \viewN based on the \grpfctN $\grpfct[\varval_1 ]$%\pll \dots \pll \gfctparamvalueseqopt[\varval_n]]$ with $\redcomment{\vareval(\states, \var)} = \{\varval_1, \dots, \varval_n\}$ and $|\vareval(\states,\var)| = n$. This grouping function just groups on every possible value for the variable \var. Since this is \redcomment{not very practical} we define a \viewN that achieves this result in a more direct and more efficient way.
@@ -790,7 +790,9 @@ According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in 
 
 In Figure \ref{fig:varValIdent} we can observe the view of $\viewparamvalident$ on \chgph. States are grouped in which $x$ has the same value. It is $x \in \{0, 1, 2\}$. Hence, the states $\varstyle{0}{0}, \varstyle{0}{1},\varstyle{0}{2}$ are grouped because in all of them it is $x=0$. For the same reason $\varstyle{1}{0}, \varstyle{1}{1},\varstyle{1}{2}$ grouped with $x=1$ and $\varstyle{2}{0}, \varstyle{2}{1},\varstyle{2}{2}$ with $x=2$.
 \subsubsection{Property Values and Model Checking Results}
-Apart from direct and indirect components of an \mdpN there are other values linked to states. These can be given by a reward structure or results from model checking. A reward structure simply assigns values to each state. Results from model checking are also available statewisely. Although we do not want to go into detail with model checking in this thesis values determined by it are minimal and maximal probabilities or expected values (e.g. of rewards). We abstract from the exact type of value or its origin and formalize this notion with an arbitrary function that assigns a value to each state and utilize it to define a \viewN. Note that there might be several such functions (e.g.reward structure and several model checking results) for an \chgphN.
+Apart from direct and indirect components of an \mdpN there are other values linked to states. These can be given by a reward structure or results from model checking. A reward structure simply assigns values to each state. Results from model checking are also available statewisely. 
+%Although we do not want to go into detail with model checking in this thesis values determined by it are minimal and maximal probabilities or expected values (e.g. of rewards). 
+We abstract from the exact type of value or its origin and formalize this notion with an arbitrary function that assigns a value to each state and utilize it to define a \viewN. Note that there might be several such functions (e.g.reward structure and several model checking results) for an \chgphN.
 
 \begin{definition}
 	The function $\propfct : \states \to \realnums$ is called \emph{property function} (generated by a model checker). It maps each state to a property value.
@@ -826,8 +828,6 @@ Apart from direct and indirect components of an \mdpN there are other values lin
 With this \viewN a partition on the image of \propfct is built, based on the granularity $r$. 
 %The partition $Z$ is finite since the image of \propfct is finite because \mdpsN in this thesis are assumed finite as \redcomment{in practice model checking for infinite \mdpsN is not possible}. 
 The smaller the granularity $r$ the more elements the partition has, and vice versa. In the implementation for each state \state the value $r \cdot i$ of $\propfct(\state)$ is directly determined using rounding. The formalization as in the definition above was chosen, because it clearly formalizes the rounding behavior.
-
-\redcomment{Ideas that came, when writing this part now: Disjunctive composition! Has}
 
 Two states $\state_1, \state_2$ are grouped if $\gfctprop(\state_1) = \gfctprop(\state_2) \neq \remelem$. Hence, the obtained equivalence classes are
 \begin{align*}
@@ -987,7 +987,7 @@ Thereby the obtained set of states $\states'$ of \viewparamvalueseq is the union
 	\begin{minipage}{.20\textwidth}
 		\input{./04/images/distance/distForwAfter}
 	\end{minipage}
-	\hspace{-2mm}
+	\hspace{-6pt}
 	\begin{minipage}{.35\textwidth}
 %		\hspace{30mm}
 %		\vspace{1.5mm}

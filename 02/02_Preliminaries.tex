@@ -127,7 +127,9 @@ The disadvantage of Markov Chains is that they do not enable process intercommun
 
 An \mdpN is called \emph{finite} if \states, \actions and \atomicprops are finite.The transition probabilities $\probtfunc(\state, \action, t)$ can be arbitrary real numbers in $[0,1]$ (that sum up to 1 or 0 for fixed \state and \action). For algorithmic purposes they are assumed to be rational.  The unique initial distribution \initdistrib could be generalized to set of \initdistrib with nondeterministic choice at the beginning. For sake of simplicity there is just one single distribution. The operational behavior is as follows. A starting state $\state_0$ yielded by \initdistrib with $\initdistrib(\state_0) > 0$. From there on nondeterministic choice of enabled action takes place followed by a probabilistic choice of a state. The action fixed in the step of nondeterministic selection. Any Markov chain is an \mdpN in which for every state \state, $\actions(\state)$ is a singleton set. Conversely an \mdpN with the property of $\outacts(\state) = 1$ is a Markov chain. Thus Markov chains are a proper subset of Markov decision processes.
 
-We define $\outacts(\state) := \{\action \mid (\state,\action,\smstate) \in \trans\}$ for $\state \in \states$. For $\state \in \states$ we call an element of $\outacts(\state)$ outgoing action of \state. We use analogous definition and terminology for incoming actions \inacts. For convenience for $\state_1, \state_2 \in \states$ and $\action \in \actions$ we will write $(\state_1, \action, \state_2) \in \probtfunc$ \iffN $\probtfunc(\state_1, \action, \state_2) > 0$, that is to say if there is a non-zero probability of evolving from state $\state_1$ to state $\state_2$ with action \action. Analogously we will write $\state \in \initdistrib$ \iffN is an initial state ($\initdistrib(\state) > 0$). 
+
+For convenience for $\state_1, \state_2 \in \states$ and $\action \in \actions$ we will write $(\state_1, \action, \state_2) \in \probtfunc$ \iffN $\probtfunc(\state_1, \action, \state_2) > 0$, that is to say if there is a non-zero probability of evolving from state $\state_1$ to state $\state_2$ with action \action. Analogously we will write $\state \in \initdistrib$ \iffN is an initial state ($\initdistrib(\state) > 0$). 
+We define $\outacts(\state) := \{\action \mid (\state,\action,\smstate) \in \trans\}$ for $\state \in \states$. For $\state \in \states$ we call an element of $\outacts(\state)$ outgoing action of \state. We say a state has an outgoing action \action if $\action \in \outacts(\state)$. We use analogous definition and terminology for incoming actions \inacts. 
 
 \begin{exmp}
 In Figure \ref{fig:exampleMdp} we see an graphical representation of an \mdpN. For this \mdpN it is $\states = \{\state_1, \state_2, \state_3, \state_4, \state_5, \state_6\}$, $\actions = \{\action, \actionb, \actionc\}$, $\atomicprops = \{a,b\}$. In Table \ref{tab:atomicpropsandlabelingfunction} we see the values for \labelingfct, \initdistrib and \trans.
@@ -186,7 +188,7 @@ We will declare \mdpsN by only providing its graphical representation. For this 
 \end{figure}
 \end{exmp}
 
-In the implementation and evaluation we will refer to \prism (PRobabilistIc Symbolic Model checker), which is why we will give a brief introduction on it. \prism is a model checker that can be used to define models and check them in an automated manner. In \prism a model is defined with modules, which interact with each other. A module consists of variables and commands. The (current) values of all the variables in the module define the (current) local state of the module. The global state of the model is defined by the local state of all modules.
+In the implementation and evaluation in chapters \ref{ch:viewimpl} and \ref{ch:eval} we will refer to \prism (PRobabilistIc Symbolic Model checker), which is why we will give a brief introduction on it. \prism is a model checker that can be used to define models and check them in an automated manner. In \prism a model is defined with modules, which interact with each other. A module consists of variables and commands. The (current) values of all the variables in the module define the (current) local state of the module. The global state of the model is defined by the local state of all modules.
 %	\item Let in the following $x_1, \dots, x_l$ be variables of a module and $n_i$ the (current) value of $x_i$. The state of a module is defined by the value of its variables $(n_1, \dots, n_l)$
 %	\item Let $\{y_1, \dots y_m\} \subseteq \{x_1, \dots, x_l\}$
 A command in a module is of the form 
@@ -199,10 +201,10 @@ An \texttt{update} represents a transition in the model which normally reflects 
 \[
 \text{\texttt{(x\_1'=1) \& (x\_2'=true) \& (x\_3'=0)}}
 \]
-It assigns \texttt{1} to \texttt{x\_1}, \texttt{true} to \texttt{x\_2} and \texttt{0} to \texttt{x\_3}. In an update a variable is written in primed form (with ') to indicate that this will be the new value of that variable. Each assignment has to be in parentheses and separated with \texttt{\&} from other assignments.
-The \texttt{action} can be included optionally for labeling the command or for synchronization purposes. 
+This update assigns \texttt{1} to \texttt{x\_1}, \texttt{true} to \texttt{x\_2} and \texttt{0} to \texttt{x\_3}. In an update a variable is written in primed form (with $'$) to indicate that this will be the new value of that variable. Each assignment has to be in parentheses and separated with \texttt{\&} from other assignments.
+The \texttt{action} can be included optionally for labeling the command or for synchronization purposes. In Listing \ref{lst:exmpprism} the model file for the \mdpN \mdp from Figure \ref{fig:exampleMdp} is shown. 
 \begin{figure}
-	\begin{lstlisting}[language=prism, caption={\prism model file for the \mdpN \mdp given by Figure \ref{fig:exampleMdp}. This example has only one variable representing the six states in \mdp and the actions \texttt{a}, \texttt{b} and \texttt{c} referring to \action, \actionb, and \actionc in \mdp, which are only used for labeling here.},label={lst:exmpprism}]
+	\begin{lstlisting}[language=prism, caption={\prism model file for the \mdpN \mdp given by Figure \ref{fig:exampleMdp} \redcomment{initials not by probability!}. This example has only one variable representing the six states in \mdp and the actions \texttt{a}, \texttt{b} and \texttt{c} referring to \action, \actionb, and \actionc in \mdp, which are only used for labeling here.},label={lst:exmpprism}]
 		mdp
 		
 		module onlymodule
@@ -229,7 +231,7 @@ The \texttt{action} can be included optionally for labeling the command or for s
 	\end{lstlisting}
 \end{figure}
 
-Actions cause synchronization when included in several modules. If for example \texttt{action1} is included in two commands in distinct modules these will be chosen simultaneously. If the guard of one of the commands with \texttt{action1} is not true neither of the commands can be chosen\cite{Kwiatkowska2000, Kwiatkowska2011}.
+Actions cause synchronization when included in several modules. If for example \texttt{action1} is included in two commands, which are in distinct modules these will be chosen simultaneously. If the guard of one of the commands with \texttt{action1} is not true, neither of the commands can be chosen\cite{Kwiatkowska2000, Kwiatkowska2011}.
 
 
 %\redcomment{not sure if I should: $I := \initdistrib$ thereby meaning the underlying set}
