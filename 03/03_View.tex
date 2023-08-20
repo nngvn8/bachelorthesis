@@ -30,8 +30,7 @@ The conceptional idea of a \viewN is to group states by some criteria and struct
 	\begin{cases}
 		\tilde\grpfct(s),				& \text{if } \state \in \smstates \\ 		\remelem,          	& \text{otherwise}
 	\end{cases}
-	\]
-	
+	\]	
 	is called \emph{\grpfctN}. The symbol \viewppty is an unique identifier.
 	
 	\label{def:grpfct}
@@ -163,7 +162,7 @@ In this section we categorize views in two view types. We will present views of 
 	A \viewN \view is called \emph{binary} if for every \chgphN $\chgph = \chgphtuple$ it is ${\grpfct}[\states] \in \{\{\hasppty, \notppty\}, \{\remelem, \notppty\}, \{\hasppty\, \remelem\}\}$. 
 	
 	\noindent
-	A \viewN \view is called categorizing if it is $\hasppty, \notppty \notin M(\grpfct)$.%holds $|M(\grpfct)| \geq 2$.
+	A \viewN \view is called categorizing if for every \chgphN $\chgph = \chgphtuple$ it is $\hasppty, \notppty \in {\grpfct}[\states]$. 
 	\label{def:viewtypes}
 \end{definition}
 

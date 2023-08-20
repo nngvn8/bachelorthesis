@@ -7,66 +7,6 @@
 In this chapter we want to show how \viewsN can be utilized in three different usecases. In subsection 6.4 we will consider take consider performance aspects.
 
 
-\lstdefinelanguage{CustomC}{
-	sensitive=true,
-	morecomment=[l]{//},
-	morecomment=[s]{/*}{*/},
-	morestring=[b]",
-	morekeywords={
-		auto, break, case, char, const, continue, default, do, double, else,
-		enum, extern, float, for, goto, if, int, long, register, return, short,
-		signed, sizeof, static, struct, switch, typedef, union, unsigned, void,
-		volatile, while
-	},
-	keywordstyle=\color{RoyalBlue}\bfseries,
-	commentstyle=\color{green}\itshape,
-	stringstyle=\color{purple},
-	numberstyle=\tiny\color{gray},
-	identifierstyle=\color{black},
-	basicstyle=\ttfamily\small,
-	showstringspaces=false,
-	%	breaklines=true, % avoids closing parenthesis from being colored
-	frame=lines,
-	framesep=5pt,	
-	%	backgroundcolor=\color{gray!10},
-	tabsize=4,
-	%	numbers=left,
-	captionpos=b,
-	literate={
-		{[}{{\textcolor{CarnationPink}{[}}}1
-		{]}{{\textcolor{CarnationPink}{]}}}1
-		{)}{{\textcolor{CarnationPink}{)}}}1
-		{(}{{\textcolor{CarnationPink}{(}}}1
-		{=}{{\textcolor{CarnationPink}{=}}}1
-		{*}{{\textcolor{CarnationPink}{*}}}1
-		{+}{{\textcolor{CarnationPink}{+}}}1
-		{;}{{\textcolor{CarnationPink}{;}}}1
-		{.}{{\textcolor{CarnationPink}{.}}}1
-		{->}{{\textcolor{CarnationPink}{->}}}2
-		{0}{{\textcolor{Tan}{0}}}1
-		{1}{{\textcolor{Tan}{1}}}1
-		{2}{{\textcolor{Tan}{2}}}1
-		{3}{{\textcolor{Tan}{3}}}1
-		{4}{{\textcolor{Tan}{4}}}1
-		{5}{{\textcolor{Tan}{5}}}1
-		{6}{{\textcolor{Tan}{6}}}1
-		{7}{{\textcolor{Tan}{7}}}1
-		{8}{{\textcolor{Tan}{8}}}1
-		{9}{{\textcolor{Tan}{9}}}1
-		{re1}{{\textcolor{black}{\hspace{-3pt}re1}}}3
-		{re2}{{\textcolor{black}{\hspace{-3pt}re2}}}3
-		{ig1}{{\textcolor{black}{\hspace{-3pt}ig1}}}3
-		{ig2}{{\textcolor{black}{\hspace{-3pt}ig2}}}3
-		{M1}{{\textcolor{black}{\hspace{-3pt}M1}}}2
-		{M2}{{\textcolor{black}{\hspace{-3pt}M2}}}2
-		{true}{{\textbf{true}}}4
-		%		{c_max_time}{{\textcolor{Tan}{c_max_time}}}10			
-	}
-}
-
-
-
-
 \subsection{Explore Modules} \label{subsec:evalmodules}
 \newcommand{\phil}[1]{\texttt{p#1}}
 
@@ -145,7 +85,7 @@ An even better approach is to look in the model file (Figure \ref{lst:0602prismb
 %\end{figure}
 
 \begin{figure}
-	\begin{lstlisting}[language=CustomC, caption={PRISM model file, where modules define the two systems mentioned in the text},label={lst:0602prismbefore}]
+	\begin{lstlisting}[language=prism, caption={PRISM model file, where modules define the two systems mentioned in the text},label={lst:0602prismbefore}]
 		mdp
 		
 		module M1
@@ -249,7 +189,7 @@ In this subsection we want to take a look at a more complex usecase how views mi
 
 
 \begin{figure}
-	\begin{lstlisting}[language=CustomC, caption={PRISM model file},label={lst:0603sccloopsbefore}]
+	\begin{lstlisting}[language=prism, caption={PRISM model file},label={lst:0603sccloopsbefore}]
 mdp
 
 const int c_max_time = 5;
@@ -371,7 +311,7 @@ Such behavior of infinite \maxexpreward is often caused by cycles. A feasible id
 %\end{figure}
 
 \begin{figure}
-	\begin{lstlisting}[language=CustomC, caption={Fixed model file},label={lst:0603sccloopsafter}]
+	\begin{lstlisting}[language=prism, caption={Fixed model file},label={lst:0603sccloopsafter}]
 mdp
 
 const int c_max_time = 5;

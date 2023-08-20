@@ -50,6 +50,63 @@
 
 %\captionsetup[lstlisting]{name=Code Snippet}
 
+\lstdefinelanguage{prism}{
+	sensitive=true,
+	morecomment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	morestring=[b]",
+	morekeywords={
+		auto, break, case, char, const, continue, default, do, double, else,
+		enum, extern, float, for, goto, if, int, long, register, return, short,
+		signed, sizeof, static, struct, switch, typedef, union, unsigned, void,
+		volatile, while
+	},
+	keywordstyle=\color{RoyalBlue}\bfseries,
+	commentstyle=\color{green}\itshape,
+	stringstyle=\color{purple},
+	numberstyle=\tiny\color{gray},
+	identifierstyle=\color{black},
+	basicstyle=\ttfamily\small,
+	showstringspaces=false,
+	%	breaklines=true, % avoids closing parenthesis from being colored
+	frame=lines,
+	framesep=5pt,	
+	%	backgroundcolor=\color{gray!10},
+	tabsize=4,
+	%	numbers=left,
+	captionpos=b,
+	literate={
+		{[}{{\textcolor{CarnationPink}{[}}}1
+		{]}{{\textcolor{CarnationPink}{]}}}1
+		{)}{{\textcolor{CarnationPink}{)}}}1
+		{(}{{\textcolor{CarnationPink}{(}}}1
+		{=}{{\textcolor{CarnationPink}{=}}}1
+		{*}{{\textcolor{CarnationPink}{*}}}1
+		{+}{{\textcolor{CarnationPink}{+}}}1
+		{;}{{\textcolor{CarnationPink}{;}}}1
+		{.}{{\textcolor{CarnationPink}{.}}}1
+		{->}{{\textcolor{CarnationPink}{->}}}2
+		{0}{{\textcolor{Tan}{0}}}1
+		{1}{{\textcolor{Tan}{1}}}1
+		{2}{{\textcolor{Tan}{2}}}1
+		{3}{{\textcolor{Tan}{3}}}1
+		{4}{{\textcolor{Tan}{4}}}1
+		{5}{{\textcolor{Tan}{5}}}1
+		{6}{{\textcolor{Tan}{6}}}1
+		{7}{{\textcolor{Tan}{7}}}1
+		{8}{{\textcolor{Tan}{8}}}1
+		{9}{{\textcolor{Tan}{9}}}1
+		{re1}{{\textcolor{black}{\hspace{-3pt}re1}}}3
+		{re2}{{\textcolor{black}{\hspace{-3pt}re2}}}3
+		{ig1}{{\textcolor{black}{\hspace{-3pt}ig1}}}3
+		{ig2}{{\textcolor{black}{\hspace{-3pt}ig2}}}3
+		{M1}{{\textcolor{black}{\hspace{-3pt}M1}}}2
+		{M2}{{\textcolor{black}{\hspace{-3pt}M2}}}2
+		{true}{{\textbf{true}}}4
+		%		{c_max_time}{{\textcolor{Tan}{c_max_time}}}10			
+	}
+}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% THEOREMSTYLES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -151,6 +208,7 @@
 \newcommand{\bsccN}{\nm{BSCC}}
 \newcommand{\bsccsN}{\nm{BSCCs}}
 \newcommand{\jgrapht}{\nm{jGraphtT}}
+\newcommand{\prism}{\nm{{PRISM}}}
 
 \newcommand{\outactident}{\nm{OutActionsIdent}}
 

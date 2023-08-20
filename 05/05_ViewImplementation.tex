@@ -54,7 +54,8 @@ Each view is represented by a Java class. While individual views often have thei
 
 %\lstset{}
 
-\begin{lstlisting}[style=javaStyle, caption={Most relevant attributes and methods of class \texttt{View}}, label={lst:classview}]
+\begin{figure}[!htb]
+	\begin{lstlisting}[style=javaStyle, caption={Most relevant attributes and methods of class \texttt{View}}, label={lst:classview}]
 public abstract class View implements Namespace { // ~\commentcolorize{\view}~
 	
 	protected final ViewType type; // similar to identifier ~\commentcolorize{\viewppty}~
@@ -86,8 +87,9 @@ public abstract class View implements Namespace { // ~\commentcolorize{\view}~
 		
 	protected abstract List<String> groupingFunction() throws Exception; // ~\commentcolorize{\grpfctsub}~, Def. detached grouping function
 \end{lstlisting}
+\end{figure}
 
-%
+\begin{figure}[!htb]
 	\begin{lstlisting}[style=javaStyle, caption={Implementation of \texttt{buildView()} function}, label={lst:buildview}]
 public void buildView() {
 	try {	
@@ -109,6 +111,7 @@ public void buildView() {
 }
 
 \end{lstlisting}
+\end{figure}
 
 
 Creating a new view entails implementing the grouping function, the method \texttt{getCollumn()} , and any necessary private attributes. This approach matches the formal definition of \viewsN and ensures consistency in the process of generating \viewsN, given that each view is essentially defined by its grouping function.

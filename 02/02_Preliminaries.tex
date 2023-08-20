@@ -179,17 +179,60 @@ In Figure \ref{fig:exampleMdp} we see an graphical representation of an \mdpN. F
 
 We will declare \mdpsN by only providing its graphical representation. For this the sets $\states, \actions, \atomicprops$ are assumed to be minimal. That is, they contain no more elements than displayed in the graphical representation. Mostly we will use simplified graphical representations of \mdpsN. In these we will omit information. If actions are omitted, it is assumed that each transition $t \in \trans$ has a distinct action. If probabilities are omitted for each state it is assumed the uniform distribution on each set of outgoing transitions with the same action. If the initial distribution is omitted, it is assumed to be the uniform distribution. If atomic propositions are omitted it is assumed that the set of atomic propositions is empty and every state is mapped to the empty set by the labeling function. The purpose of simplified representations is to focus on and only show relevant information. The remaining information is considered irrelevant in these cases.
 
-
-%\redcomment{not sure if I should: $I := \initdistrib$ thereby meaning the underlying set}
-
-\begin{figure}[t]
+\begin{figure}[!htb]
 	\centering \input{./02/images/exampleMdp}
 	\caption{Simplified representation of \mdp (left) and the \viewN \viewinitstates on it(left)}
 	\label{fig:exampleMdp}  
 \end{figure}
 \end{exmp}
 
-\redcomment{Basic Prism, inteleaved behavior? -> for evaluation}
+In the implementation and evaluation we will refer to \prism (PRobabilistIc Symbolic Model checker), which is why we will give a brief introduction on it. \prism is a model checker that can be used to define models and check them in an automated manner. In \prism a model is defined with modules, which interact with each other. A module consists of variables and commands. The (current) values of all the variables in the module define the (current) local state of the module. The global state of the model is defined by the local state of all modules.
+%	\item Let in the following $x_1, \dots, x_l$ be variables of a module and $n_i$ the (current) value of $x_i$. The state of a module is defined by the value of its variables $(n_1, \dots, n_l)$
+%	\item Let $\{y_1, \dots y_m\} \subseteq \{x_1, \dots, x_l\}$
+A command in a module is of the form 
+\[
+\text{\texttt{[action] guard -> p\_1\!\;:\!\;update\_1\space+\space\dots\;\,+\space p\_m\!\;:\!\;update\_m;}} 
+\]
+where \texttt{p\_1, \dots\;\,, p\_m > 0} and \texttt{p\_1 + \dots\;\,+ p\_m = 1}.
+The \texttt{guard} is a predicate on all variables of the model (including those of other modules). It may include operators such as negation (\texttt{!}), conjunction (\texttt{\&}) disjunction (\texttt{|}), arithmetic operators (\texttt{+}, \texttt{-}, \texttt{*}, \texttt{/}) or relational operators (\texttt{<}, \texttt{<=}, \texttt{>=}, \texttt{>}, \texttt{!=}, \texttt{=}, \texttt{=>}, \texttt{<=>}) as well as predefined functions.
+An \texttt{update} represents a transition in the model which normally reflects a change of state. As a state is defined by the value of all the variables an update is specified by the assignment of new values to the variables of the module, possibly as a function of variables from other modules. The value of a variable remains unchanged, if it is not assigned a new value in an update. An update could look as follows:
+\[
+\text{\texttt{(x\_1'=1) \& (x\_2'=true) \& (x\_3'=0)}}
+\]
+It assigns \texttt{1} to \texttt{x\_1}, \texttt{true} to \texttt{x\_2} and \texttt{0} to \texttt{x\_3}. In an update a variable is written in primed form (with ') to indicate that this will be the new value of that variable. Each assignment has to be in parentheses and separated with \texttt{\&} from other assignments.
+The \texttt{action} can be included optionally for labeling the command or for synchronization purposes. 
+\begin{figure}
+	\begin{lstlisting}[language=prism, caption={\prism model file for the \mdpN \mdp given by Figure \ref{fig:exampleMdp}. This example has only one variable representing the six states in \mdp and the actions \texttt{a}, \texttt{b} and \texttt{c} referring to \action, \actionb, and \actionc in \mdp, which are only used for labeling here.},label={lst:exmpprism}]
+		mdp
+		
+		module onlymodule
+		
+		x : [1..6];
+		
+		[a] x=1 -> 0.5:(x'=2) + 0.5:(x'=3);
+		[b] x=1 -> (x'=4);
+		[b] x=2 -> 0.6:(x'=2) + 0.4:(x'=6);
+		[c] x=2 -> (x'=1);
+		[b] x=3 -> 0.4:(x'=3) + 0.6:(x'=2);
+		[c] x=3 -> 0.8:(x'=1) + 0.2:(x'=4);
+		[a] x=4 -> 0.5:(x'=4) + 0.5:(x'=3);
+		[c] x=4 -> (x'=4);
+		[b] x=5 -> (x'=5);
+		[a] x=6 -> (x'=6);
+		
+		endmodule
+		
+		
+		init
+			x=1 | x=3 | x=4
+		endinit		
+	\end{lstlisting}
+\end{figure}
+
+Actions cause synchronization when included in several modules. If for example \texttt{action1} is included in two commands in distinct modules these will be chosen simultaneously. If the guard of one of the commands with \texttt{action1} is not true neither of the commands can be chosen\cite{Kwiatkowska2000, Kwiatkowska2011}.
+
+
+%\redcomment{not sure if I should: $I := \initdistrib$ thereby meaning the underlying set}
 
 
 
