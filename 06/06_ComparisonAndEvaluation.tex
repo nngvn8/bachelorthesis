@@ -5,7 +5,7 @@
 \begin{document}
 \section{Comparison and Evaluation} \label{ch:eval}
 In this chapter we want to show how \viewsN can be utilized in three different usecases. In subsection 6.4 we will consider take consider performance aspects.
-In the usecases we will see screenshots made in \pmcvis. The blue printed labels of the states are the mapped values from the \grpfctN. These do not always exactly match the ones of the formalization. Especially it is $\texttt{\_\_BLANK\_\_} = \remelem$. If parallel composition is used in some form the values of the \grpfctsN are separated with \texttt{|} and are in the same order as they have been composed with the operator \pll.
+In the usecases we will see screenshots made in the to this time current version \pmcvis. The blue printed labels of the states are the mapped values from the \grpfctN. These do not always exactly match the ones of the formalization. Especially it is to note that $\texttt{\_\_BLANK\_\_} = \remelem$. If parallel composition is used in some form the values of the \grpfctsN are separated with \texttt{|} and are in the same order as they have been composed with the operator \pll.
 
 
 \subsection{Explore Modules} \label{subsec:evalmodules}
@@ -18,7 +18,7 @@ Already for only three philosophers the \mdpN has 956 states. When looking at th
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{./06/images/06_01_pure_zoomhalf.png}
-	\caption{Screenshot in current version of \pmcvis of approximately half the \mdpN \mdp}
+	\caption{Screenshot in \pmcvis of approximately half the \mdpN \mdp}
 	\label{fig:0601Pure}
 \end{figure}
 
@@ -27,15 +27,15 @@ The \viewN $\viewparamvalident(\phil{1})$ groups all states that have the same v
 
 \begin{figure}[!htb]
 	\includegraphics[width=\textwidth]{./06/images/06_01_var.png}
-	\caption{Screenshot in current version of \pmcvis of \viewN $\viewparamvalident(\phil{1})$}
+	\caption{Screenshot in \pmcvis of \viewN $\viewparamvalident(\phil{1})$}
 	\label{fig:0601var}
 \end{figure}
 
-It is also possible to use the view \viewparamvalident to see the interleaved behavior of two or more modules. To see the interleaved behavior of \phil{1} and \phil{2}, we use parallel composition $\viewparamvalident(\phil{1}) \pll \viewparamvalident(\phil{2})$. This results in states $\state_1, \state_2$ being grouped where $(\gfctparamvalident (\state_1 \cond \phil{1}), \gfctparamvalident(\state_1 \cond \phil{2})) = (\gfctparamvalident(\state_2 \cond \phil{1}), \gfctparamvalident(\state_2 \cond \phil{2}))$. Hence only the value of \phil{3} is hidden which results exactly in the desired \redcomment{interleaved model} (Figure \ref{fig:0601var+var}).
+It is also possible to use the view \viewparamvalident to see the interleaved behavior of two or more modules. To see the interleaved behavior of \phil{1} and \phil{2}, we use parallel composition $\viewparamvalident(\phil{1}) \pll \viewparamvalident(\phil{2})$. This results in states $\state_1, \state_2$ being grouped where $(\gfctparamvalident (\state_1 \cond \phil{1}), \gfctparamvalident(\state_1 \cond \phil{2})) = (\gfctparamvalident(\state_2 \cond \phil{1}), \gfctparamvalident(\state_2 \cond \phil{2}))$. Hence only the value of \phil{3} is hidden which results exactly in the desired interleaved model (Figure \ref{fig:0601var+var}).
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{./06/images/06_01_var+var.png}
-	\caption{Screenshot in current version of \pmcvis of \viewN $\viewparamvalident(\phil{1}) \pll \viewparamvalident(\phil{2})$}
+	\caption{Screenshot in \pmcvis of \viewN $\viewparamvalident(\phil{1}) \pll \viewparamvalident(\phil{2})$}
 	\label{fig:0601var+var}
 \end{figure}
 
@@ -54,7 +54,7 @@ In general the views \viewparamdnf and \viewparamcnf are very powerful since the
 %	
 %\end{itemize}
 
-\subsection{Investigate why illegal states is reached}
+\subsection{Investigate why illegal states can be reached}
 \newcommand{\critstate}{\mt{\varstyle{2}{2}}}
 
 In this section we want to show how views can be used for debugging. In this specific case we assume that we observed unwanted behavior or model checking results. We know that some states - that is some assignment of variables - are not allowed. We will check if these states are in fact not reachable.
@@ -65,7 +65,7 @@ The state \critstate should not be reachable, since it represents the situation 
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{./06/images/06_02_Var.png}
-	\caption{Screenshot in current version of \pmcvis of \viewN $\view[\pptyparamcnf](c(\state))$ where \texttt{\mytexttilde Var} refers to \notppty.}
+	\caption{Screenshot in \pmcvis of \viewN $\view[\pptyparamcnf](c(\state))$ where \texttt{\mytexttilde Var} refers to \notppty.}
 	\label{fig:0602Var}
 \end{figure}
 
@@ -148,7 +148,7 @@ Firstly we will use the view \viewdistance from that state on (Figure \ref{fig:0
 %%	\begin{subfigure}
 %	\centering \includegraphics[width=.95\linewidth]{./06/images/06_02_Var+Dist.png}
 %	\label{fig:0602Var+Dist}
-%%	\caption{Screenshot in current version of \pmcvis of \viewN $\view[\pptyparamcnf](c(\state)) \pll \viewdistance$}
+%%	\caption{Screenshot in \pmcvis of \viewN $\view[\pptyparamcnf](c(\state)) \pll \viewdistance$}
 %%\end{subfigure}
 %\end{minipage}
 %\begin{minipage}{.5\textwidth}
@@ -156,18 +156,18 @@ Firstly we will use the view \viewdistance from that state on (Figure \ref{fig:0
 %	\hspace{10mm}
 %	\centering \includegraphics[width=\linewidth]{./06/images/06_02_Var+Dist+Id.png}
 %	\label{fig:0602Var+Dist+Id}
-%%	\caption{Screenshot in current version of \pmcvis of \viewN $\viewNC \view[\pptyparamcnf](c(\state)) \pll \viewdistance \pll \viewident$}
+%%	\caption{Screenshot in \pmcvis of \viewN $\viewNC \view[\pptyparamcnf](c(\state)) \pll \viewdistance \pll \viewident$}
 %%\end{subfigure}
 
 	
 %\end{minipage}
 %\label{fig:0602VarDistIdDouble}
-%%\caption{Screenshot in current version of \pmcvis of \viewN $\view[\pptyparamcnf](c(\state)) \pll \viewdistance$ on the left and \viewN $\view[\pptyparamcnf](c(\state)) \pll \viewdistance \pll \viewident$}
+%%\caption{Screenshot in \pmcvis of \viewN $\view[\pptyparamcnf](c(\state)) \pll \viewdistance$ on the left and \viewN $\view[\pptyparamcnf](c(\state)) \pll \viewdistance \pll \viewident$}
 %\end{figure}
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{./06/images/06_02_Var+Dist.png}
-	\caption{Screenshot in current version of \pmcvis of \viewN $\view[\pptyparamcnf](c(\state)) \pll \viewdistance$ where \texttt{\mytexttilde Var} refers to \notppty.}
+	\caption{Screenshot in \pmcvis of \viewN $\view[\pptyparamcnf](c(\state)) \pll \viewdistance$ where \texttt{\mytexttilde Var} refers to \notppty.}
 	\label{fig:0602Var+Dist}
 \end{figure}
 
@@ -184,11 +184,11 @@ We will use partial application with $ \view[\pptyparamcnf](c(\state)) \compsele
 
 \begin{figure}
 	\centering \includegraphics[width=\textwidth]{./06/images/06_02_Var+Dist+Id.png}
-	\caption{Screenshot in current version of \pmcvis of \viewN $\view[\pptyparamcnf](c(\state)) \pll$ $\viewdistance \compselect \viewident$ where $\compselectset = \{(\gfctdistance,1)\}$ and \texttt{\mytexttilde Var} refers to \notppty. \redcomment{Ugly Linebreak}}
+	\caption{Screenshot in \pmcvis of \viewN $\view[\pptyparamcnf](c(\state)) \pll$ $\viewdistance \compselect \viewident$ where $\compselectset = \{(\gfctdistance,1)\}$ and \texttt{\mytexttilde Var} refers to \notppty. \redcomment{Ugly Linebreak}}
 	\label{fig:0602Var+Dist+Id}
 \end{figure}
 
-When now looking at the prism file (Figure \ref{fig:0602prismbefore}) we can see why this is the case. In last line of the second module when $y=1$ there is a 50 percent chance to enter $y=2$. This line originally was intended for termination of the transmission. From $y=1$ it should not be possible to enter $y=2$ if $x=2$. After fixing this, the state no longer appears after the application of $\viewparamdnf(c(\state))$.
+When now looking at the prism file (Listing \ref{lst:0602prismbefore}) we can see why this is the case. In last line of the second module when $y=1$ there is a 50 percent chance to enter $y=2$. This line originally was intended for termination of the transmission. From $y=1$ it should not be possible to enter $y=2$ if $x=2$. After fixing this, the state no longer appears after the application of $\viewparamdnf(c(\state))$.
 
 	
 %\begin{itemize}
@@ -275,7 +275,7 @@ endrewards
 \end{lstlisting}
 
 \end{figure}
-Firstly, we will gather some understanding of the model. We already saw in chapter ch that variables can help a lot with understanding an \chgphN. When applying $\viewparamvalident(\texttt{time})$ we see that the \chgphN has a limited timed behavior (Figure \ref{fig:0603timeandphases} left). When applying $\viewparamvalident(\texttt{phases})$ we observe that the system is operating in phases (Figure \ref{fig:0603timeandphases} right). If we consider $\viewparamvalident(\texttt{time}) \pll \viewparamvalident(\texttt{phases})$ we see that the phases are repeated for each iteration of time (Figure \ref{fig:0603time+phases} right). However, we still don not have any information about the behavior of the system in these phases. Since this model has actions we will consider the \viewN \viewweakoutactident (Figure \ref{fig:0603act}). We obtain that we have sets of states which only have transitions with the action \texttt{[reconfigure]} outgoing, the action \texttt{[working]} outgoing, the actions \texttt{[configure1]} outgoing, \texttt{[configure2]}, \texttt{[end\_reconfigure]}, the action \texttt{[working]} outgoing or the action \texttt{[end]} outgoing \redcomment{Figure}. By interpreting the name of the actions we see that this system seems to have a configuration phase a working phase a reconfiguring phase and an end phase. The grouping appears to be very similar to \viewparamvalident(\texttt{phases}). Hence, we consider $\viewweakoutactident \pll \viewparamvalident(\texttt{phases})$ (Figure \ref{fig:0603act+phases}). Indeed the enumeration coincides with the grouping of outgoing actions, with the exception of \texttt{[end]} and \texttt{[reconfigure]} \redcomment{timed behavior?}
+Firstly, we will gather some understanding of the model. We already saw in section 6.1 that variables can help a lot with understanding an \chgphN. When applying $\viewparamvalident(\texttt{time})$ we see that the \chgphN has a limited timed behavior (Figure \ref{fig:0603timeandphases} left). When applying $\viewparamvalident(\texttt{phases})$ we observe that the system is operating in phases (Figure \ref{fig:0603timeandphases} right). If we consider $\viewparamvalident(\texttt{time}) \pll \viewparamvalident(\texttt{phases})$ we see that the phases are repeated for each iteration of time (Figure \ref{fig:0603time+phases} right). However, we still don not have any information about the behavior of the system in these phases. Since this model has actions we will consider the \viewN \viewweakoutactident (Figure \ref{fig:0603act}). We obtain that we have sets of states which only have transitions with the action \texttt{[reconfigure]} outgoing, the action \texttt{[working]} outgoing, the actions \texttt{[configure1]}, \texttt{[configure2]}, \texttt{[end\_reconfigure]} outgoing, the action \texttt{[working]} outgoing or the action \texttt{[end]} outgoing. By interpreting the name of the actions we see that this system seems to have a configuration phase a working phase a reconfiguring phase and an end phase. The grouping appears to be very similar to \viewparamvalident(\texttt{phases}). Hence, we consider $\viewweakoutactident \pll \viewparamvalident(\texttt{phases})$ (Figure \ref{fig:0603act+phases}). Indeed the enumeration coincides with the grouping of outgoing actions, with the exception of \texttt{[end]} and \texttt{[reconfigure]} \redcomment{timed behavior?}
 
 \begin{figure}[!htb]
 	\begin{minipage}{.5\textwidth}
@@ -284,33 +284,33 @@ Firstly, we will gather some understanding of the model. We already saw in chapt
 		\includegraphics[width=\textwidth]{./06/images/06_03_time.png}
 		\vfill
 %		\label{fig:0601time}
-%		\caption{Screenshot in current version of \pmcvis of \viewN $\viewNC \view[\pptyparamcnf](c(\state)) \pll \viewdistance \compselect \viewident$ where $\compselectset = \{(\gfctdistance,1)\}$}
+%		\caption{Screenshot in \pmcvis of \viewN $\viewNC \view[\pptyparamcnf](c(\state)) \pll \viewdistance \compselect \viewident$ where $\compselectset = \{(\gfctdistance,1)\}$}
 	\end{minipage}
 	\hfill
 	\begin{minipage}{.5\textwidth}
 		\centering \includegraphics[width=\textwidth]{./06/images/06_03_phases.png}
 %		\label{fig:0601phases}
-%		\caption{Screenshot in current version of \pmcvis of \viewN $\viewNC \view[\pptyparamcnf](c(\state)) \pll \viewdistance \compselect \viewident$ where $\compselectset = \{(\gfctdistance,1)\}$}
+%		\caption{Screenshot in \pmcvis of \viewN $\viewNC \view[\pptyparamcnf](c(\state)) \pll \viewdistance \compselect \viewident$ where $\compselectset = \{(\gfctdistance,1)\}$}
 	\end{minipage}
-	\caption{Screenshot in current version of \pmcvis of \viewN $\viewparamvalident(\texttt{time})$ (left) and \viewN $\viewparamvalident(\texttt{phases})$ (right)}
+	\caption{Screenshot in \pmcvis of \viewN $\viewparamvalident(\texttt{time})$ (left) and \viewN $\viewparamvalident(\texttt{phases})$ (right)}
 	\label{fig:0603timeandphases}
 \end{figure}
 
 \begin{figure}[!htb]
 	\centering \includegraphics[width=\textwidth]{./06/images/06_03_time+phases.png}
-	\caption{Screenshot in current version of \pmcvis of \viewN $\viewparamvalident(\texttt{time}) \pll \viewparamvalident(\texttt{phases})$}
+	\caption{Screenshot in \pmcvis of \viewN $\viewparamvalident(\texttt{time}) \pll \viewparamvalident(\texttt{phases})$}
 	\label{fig:0603time+phases}
 \end{figure}
 
 \begin{figure}
 	\centering \includegraphics[width=\textwidth]{./06/images/06_03_act.png}
-	\caption{Screenshot in current version of \pmcvis of \viewN \viewweakoutactident}
+	\caption{Screenshot in \pmcvis of \viewN \viewweakoutactident}
 	\label{fig:0603act}
 \end{figure}
 
 \begin{figure}[!htb]
 	\centering \includegraphics[width=\textwidth]{./06/images/06_03_act+phases.png}
-	\caption{Screenshot in current version of \pmcvis of \viewN $\viewparamvalident(\texttt{time}) \pll \viewparamvalident(\texttt{phases})$}
+	\caption{Screenshot in \pmcvis of \viewN $\viewparamvalident(\texttt{time}) \pll \viewparamvalident(\texttt{phases})$}
 	\label{fig:0603act+phases}
 \end{figure}
 
@@ -326,13 +326,13 @@ Such behavior of infinite \maxexpreward is often caused by cycles. A feasible id
 
 \begin{figure}[!htb]
 	\centering \includegraphics[width=\textwidth]{./06/images/06_03_scc.png}
-	\caption{Screenshot in current version of \pmcvis of \viewN \viewscc}
+	\caption{Screenshot in \pmcvis of \viewN \viewscc}
 	\label{fig:0603scc}
 \end{figure}
 
 \begin{figure}[!htb]
 	\centering \includegraphics[width=\textwidth]{./06/images/06_03_scc+act.png}
-	\caption{Screenshot in current version of \pmcvis of \viewN $\viewscc \pll \viewweakoutactident$}
+	\caption{Screenshot in \pmcvis of \viewN $\viewscc \pll \viewweakoutactident$}
 	\label{fig:0603scc+act}
 \end{figure}
 

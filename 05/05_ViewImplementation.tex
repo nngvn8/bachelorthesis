@@ -21,7 +21,7 @@ Information such as property values are stored in dedicated columns in the respe
 
 Views are implemented within the server on the backend side in the 
 %\lstinline[breaklines=true]{prism.core.views} 
-\texttt{prism.core.views} package \redcomment{lstinline doesnt work for some reason}. 
+\texttt{prism.core}\texttt{.views} package.
 Each view is represented by a Java class. While individual views often have their own dedicated class, sometimes multiple similar views are implemented within a single class. All views inherit from the abstract class \texttt{View}. This abstract class contains common attributes and methods required by all views. Many of these are used for testing and I/O. In listing \ref{lst:classview} an overview of relevant attributes and methods is shown. The method is \texttt{buildView()} is of particular importance as it computes the mappings of the grouping function and updates the corresponding state table in the database. The process involves 1) checking prerequisites, 2) creating a new column for storing grouping results, 3) applying the grouping function, which returns the mapped values in the form of a list of SQL queries and 4) executing these SQL queries to insert the computed values (see listing listing \ref{lst:buildview}).
 \newcommand{\commentcolor}{\color{green!60!black}}
 \newcommand{\commentcolorize}[1]{{\commentcolor#1}}
@@ -126,14 +126,14 @@ The implementation of views utilizes an internal graph structure that was partic
 
 To maintain a lightweight graph, nodes and vertices are represented as long values, referring to state and transition IDs. Information about states and transitions is accessible via hashmaps within the \texttt{MdpGraph} class. These hashmaps facilitate modular access to essential information for view functionalities.
 
-Apart from implementation of \viewsN and by them required classes and data structures, several functionalities have been implemented to allow the following actions at runtime without restarting the server: \redcomment{based on code, link to artefact}
+Apart from implementation of \viewsN and by them required classes and data structures, several functionalities have been implemented to allow the following actions at runtime without restarting the server:
 \begin{itemize}
 	\item Display current \viewN information (Parameter values etc.) and built views
 	\item Rebuild \viewN with new parameters
 	\item Remove views by providing id or name		
 \end{itemize}
 
-These rely on several string parsing methods that have been implemented.
+These rely on several string parsing methods that have been implemented. The latest version of the project \pmcvis is available at \url{https://imld.com/pmc-vis}. The latest artifact of the project is available at \url{https://zenodo.org/record/8172531}.
 
 
 

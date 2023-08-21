@@ -38,13 +38,13 @@ The conceptional idea of a \viewN is to group states by some criteria and struct
 
 
 
-The \grpfctsubN is used to formalize the behavior that groupings can also only be defined on a subset of states, while still obtaining a total function on the set of states \states. We write $M(\grpfct)$ and $M(\grpfctsub)$ to refer to the their codomain of \grpfct and \grpfctsub respectively. The identifier \viewppty normally hints the objective of the grouping function. Two states will be grouped to a new state if and only if the grouping function maps them to the same value if that value is not the unique symbol \remelem. The mapping to the symbol \remelem will be used whenever a state is supposed to be excluded from the grouping. The definition offers an easy way of creating groups of states. It is also very close to the actual implementation later on. The exact mapping depends on the desired grouping. In order to define a new set of states for the \viewN, we define an equivalence relation \eqrelview based on a given grouping function \grpfct.
+The \grpfctsubN is used to formalize the behavior that groupings can also only be defined on a subset of states, while still obtaining a total function on the set of states \states. We write $M(\grpfct)$ and $M(\grpfctsub)$ to refer to the their codomain of \grpfct and \grpfctsub respectively. The identifier \viewppty normally hints the objective of the grouping function. Two states will be grouped to a new state if and only if the grouping function maps them to the same value if that value is not the unique symbol \remelem. The mapping to the symbol \remelem will be used whenever a state is supposed to be excluded from the grouping. The definition offers an easy way of creating groups of states. The exact mapping depends on the desired grouping. In order to define a new set of states for the \viewN, we define an equivalence relation \eqrelview based on a given grouping function \grpfct.
 
 \begin{definition}
 	Let $\nogroupset := \{\remelem\} \cup \bigcup_{n \in \natnums \setminus \{0\}} \{t \in \{\remelem\}^{n+1}\}$.
 \end{definition}
 
-With this definition it is $\nogroupset = \{\remelem, (\remelem, \remelem), (\remelem, \remelem, \remelem), \dots\}$ an infinite set. That is, it contains every arbitrary sized tuple only containing the symbol \remelem. This generalization to arbitrary large tuples with \remelem is needed for composition in section \ref{ch:composition}.
+With this definition it is $\nogroupset = \{\remelem, (\remelem, \remelem), (\remelem, \remelem, \remelem), \dots\}$ an infinite set. That is, it contains every arbitrary sized tuple only containing the symbol \remelem.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN and \grpfct a grouping function. We define the equivalence relation $\eqrelview :=\{ (\state_1, \state_2) \in \states \times \states \mid \grpfct(\state_1) = \grpfct(\state_2) \notin \nogroupset\} \cup \{(\state, \state)  \mid \state \in \states\}$
@@ -80,7 +80,7 @@ The definition of a \viewN is dependent on a given MDP and a \grpfctN $\grpfct$.
 				{\bbigsum{\substack{\state_a \in \eqclassv[\state_1], \\ \state_b \in \eqclassv[\state_2]}}\probtfunc(\state_a, \action, \state_b) }
 				{
 %					\bbigsum{\state_x \in \eqclassv[\state_1], \state_y \in \states} \probtfunc(\state_x, \action, \state_y)
-					\max\{|\{\state \in \eqclassv[\state_1] \mid \outacts(\state) = \action\}|, 1\}
+					\max\{|\{\state \in \eqclassv[\state_1] \mid \action \in \outacts(\state) = \action\}|, 1\}
 					}
 				\]
 				
@@ -118,7 +118,7 @@ To clarify the concept we will consider a \viewN \view on the \mdpN \mdp with $\
 \begin{table}[h]
 	\centering
 	\begin{tabular}{c|c}
-		States & $\grpfct(\state_i)$\\
+		States & $\grpfctsub(\state_i)$\\
 		\hline
 		$\state_1$ & $1$\\
 		$\state_3$ & $1$\\
@@ -141,7 +141,7 @@ in \view it is $\initdistrib'(\{\state_1,\state_3\}) = 0.7 + 0.3 = 0.9$ and $\in
 	$\labelingfct(\state_3) = \{a,b\}$ & \quad\quad & $\labelingfct(\state_5) = \{a\}$\\
 	\end{tabular}
 \end{center}
-in \view it is $\labelingfct'(\{\state_1, \state_3\}) = \labelingfct(\state_1) \cup \labelingfct(\state_3) = \{a,b\}$ and $\labelingfct'(\{\state_4, \state_5\}) = \labelingfct(\state_4) \cup \labelingfct(\state_5) = \{a,b\}$. Since $\state_2$ and $\state_6$ have not been grouped, they are mapped to same values with $\initdistrib'$ and $\labelingfct'$ in \view as with $\initdistrib$ and \labelingfct in \chgph. When considering trans we will only look at some interesting outgoing actions for some states. In \chgph it is 
+in \view it is $\labelingfct'(\{\state_1, \state_3\}) = \labelingfct(\state_1) \cup \labelingfct(\state_3) = \{a,b\}$ and $\labelingfct'(\{\state_4, \state_5\}) = \labelingfct(\state_4) \cup \labelingfct(\state_5) = \{a,b\}$. Since $\state_2$ and $\state_6$ have not been grouped, they are mapped to same values with $\initdistrib'$ and $\labelingfct'$ in \view as with $\initdistrib$ and \labelingfct in \chgph. When considering \trans we will only look at some interesting outgoing actions for some states. In \chgph it is 
 \begin{center}
 	\begin{tabular}{lcl}
  $\trans(\state_1,\action,\state_3) = 0.5$& \quad\quad &	$\trans(\state_3,\actionb,\state_2) = 0.6$ \\
@@ -151,12 +151,12 @@ in \view it is $\labelingfct'(\{\state_1, \state_3\}) = \labelingfct(\state_1) \
 
 Because there are no other other outgoing transitions from $\state_1$ or $\state_3$ with action \actionb in \view it is 
 \begin{alignat*}{4}
-	\trans'(\eqclassv[\state_1], \actionb, \eqclassv[\state_1]) &= \frac{\trans(\state_3,\actionb,\state_3)}{|\{\state \in \eqclassv[\state_1] \mid \outacts(\state) = \actionb\}|} &&= \frac{0.4}{2} &= 0.2\\
-	\trans'(\eqclassv[\state_1], \actionb, \eqclassv[\state_2]) &= \frac{\trans(\state_3,\actionb,\state_2)}{|\{\state \in \eqclassv[\state_1] \mid \outacts(\state) = \actionb\}|} &&= \frac{0.6}{2} &= 0.3\\
-	\trans'(\eqclassv[\state_1], \actionb, \eqclassv[\state_4]) &= \frac{\trans(\state_1,\actionb,\state_4)}{|\{\state \in \eqclassv[\state_1] \mid \outacts(\state) = \actionb\}|} &&= \;\:\frac{1}{2} &= 0.5
+	\trans'(\eqclassv[\state_1], \actionb, \eqclassv[\state_1]) &= \frac{\trans(\state_3,\actionb,\state_3)}{|\{\state \in \eqclassv[\state_1] \mid \outacts(\state) = \actionb\}|} &&= \frac{0.4}{|\{\state_1,\state_3\}|} &= 0.2\\
+	\trans'(\eqclassv[\state_1], \actionb, \eqclassv[\state_2]) &= \frac{\trans(\state_3,\actionb,\state_2)}{|\{\state \in \eqclassv[\state_1] \mid \outacts(\state) = \actionb\}|} &&= \frac{0.6}{|\{\state_1,\state_3\}|} &= 0.3\\
+	\trans'(\eqclassv[\state_1], \actionb, \eqclassv[\state_4]) &= \frac{\trans(\state_1,\actionb,\state_4)}{|\{\state \in \eqclassv[\state_1] \mid \outacts(\state) = \actionb\}|} &&= \frac{1}{|\{\state_1,\state_3\}|} &= 0.5
 \end{alignat*}
 
-because $\eqclassv[\state_1] = \{\state_1, \state_3\}, \eqclassv[\state_2] = \{\state_2\}, \eqclassv[\state_4] = \{\state_4\}$ and each time there is only one transition with that action and \redcomment{direction} \redcomment{(undefined! ..should define our intuitive?)} between the equivalence classes. The transition $\trans(\state_1,\action,\state_3) = 0.5$ is interesting because it is within an equivalence class. This causes a loop on the state $\{\state_1,\state_3\}$ in the view \view with the transition $\trans(\eqclassv[\state_1],\action,\eqclassv[\state_3]) = 0.5$. The value remains unchanged as $\trans(\eqclassv[\state_1],\action,\eqclassv[\state_3]) = 0.5$ is the only other transition with action \action outgoing from one of the states $\state_1,\state_3$. Hence the denominator of $\trans'$ in Definition \ref{def:view} is one.
+because $\eqclassv[\state_1] = \{\state_1, \state_3\}, \eqclassv[\state_2] = \{\state_2\}, \eqclassv[\state_4] = \{\state_4\}$ and each time there is only one transition with action \actionb outgoing from a state in \eqclassv[{\state_1}] and incoming to a state in \eqclassv[{\state_1}], \eqclassv[{\state_2}] or \eqclassv[{\state_4}] respectively. The transition $\trans(\state_1,\action,\state_3) = 0.5$ is interesting because it is between states in the same equivalence class. This causes a loop on the state $\{\state_1,\state_3\}$ in the view \view with the transition $\trans(\eqclassv[\state_1],\action,\eqclassv[\state_3]) = 0.5$. The value remains unchanged as in $\state_1,\state_3$ only $\state_1$ has \action outgoing, but $\state_3$ has not. Hence the denominator of $\trans'$ in Definition \ref{def:view} is one.
 \end{exmp}
 
 \subsection{View Types and Disregarding Views}
@@ -164,10 +164,10 @@ In this section we categorize views in two view types. We will present views of 
 
 \begin{definition}
 	\sloppy
-	A \viewN \view is called \emph{binary} if for every \chgphN $\chgph = \chgphtuple$ it is ${\grpfct}[\states] \in \{\{\hasppty, \notppty\}, \{\remelem, \notppty\}, \{\hasppty\, \remelem\}\}$. 
+	A \viewN \view is called \emph{binary} if for every \chgphN $\chgph = \chgphtuple$ it holds ${\grpfct}[\states] \in \{\{\hasppty, \notppty\}, \{\remelem, \notppty\}, \{\hasppty\, \remelem\}\}$. 
 	
 	\noindent
-	A \viewN \view is called categorizing if for every \chgphN $\chgph = \chgphtuple$ it is $\hasppty, \notppty \in {\grpfct}[\states]$. 
+	A \viewN \view is called categorizing if for every \chgphN $\chgph = \chgphtuple$ it holds $\hasppty, \notppty \notin {\grpfct}[\states]$. 
 	\label{def:viewtypes}
 \end{definition}
 
@@ -217,10 +217,10 @@ Similarly $\view$ can be obtained from $\view^\notppty$ and $\view^\hasppty$ fro
 %These have the advantage of being revertible, even if only the detached disregarding \grpfctN is available. This is because if $\grpfctsub^\disregardelem(\state) = \remelem$ we know $\grpfctsub(\state) = \disregardelem$. If $n > 1$ for $\grpfctsub^\disregardelements(\state) = \remelem$ the value $\grpfct(\state)$ is ambigous. When choosing $n = 1$
 
 \subsection{Composition of Views} \label{ch:composition}
-In essence views are a simplification generated from \chgphN. It seems rather obvious that the composition of views is a very practical feature, in order to combine simplifications. Therefore in this chapter we will introduce, formalize and discuss different notions of compositions. All variants will ensure that the effect caused by each partaking views also takes effect in the composed view. Moreover it is to be generated in a way that the effect of each individual view can be reverted from the composed one. There may be restrictions in the order of removal.
+In essence views are a simplification generated from \chgphN. It seems rather obvious that the composition of views is a very practical feature, in order to combine simplifications. Therefore in this chapter we will introduce, formalize and discuss two different notions of compositions. All variants will ensure that the effect caused by each partaking view also takes effect in the composed view. Moreover it is to be generated in a way that the effect of each individual view can be reverted from the composed one.
 
-\subsubsection{\parllcompNCC} 
-In this section we will introduce the concept of parallel composition. The most apparent idea is to group states that match in the function value of all given \grpfctsN. This idea is parallel in the sense that a set of \grpfctN is combined to a new \grpfctN in one single step.
+%\subsubsection{\parllcompNCC} 
+The fundamental concept for composition, which we will introduce, is \emph{parallel composition}. Its notion is to group states that match in the function value of all given \grpfctsN. This idea is parallel in the sense that a set of \grpfctN is combined to a new \grpfctN in one single step.
 
 \begin{definition} \label{def:pllcompviewandgfct}
 	Let $\view[\viewppty_1], \view[\viewppty_2], \dots, \view[\viewppty_n]$ be \viewsN, and $\grpfct[\viewppty_1], \grpfct[\viewppty_2], \dots, \grpfct[\viewppty_n]$ be their corresponding \grpfctsN. The \grpfctN $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n}]: \states \to \arbset(\grpfct[\viewppty_1]) \times \dots \times \arbset(\grpfct[\viewppty_n])$ is defined with
@@ -294,7 +294,7 @@ We assume that whenever a \viewN or \grpfctN is parallel composed this is notate
 %	(\grpfct[\viewppty_1](\state) \pll (\grpfct[\viewppty_2](\state) \pll \grpfct[\viewppty_3]))(\state) = \grpfct[\viewppty_1](\state) \pll \grpfct[{\viewppty_2 \pll \viewppty_3}](\state) = \grpfct[{\viewppty_1 \pll \viewppty_2 \pll \viewppty_3}] = \grpfct[{\viewppty_1 \pll \viewppty_2}](\state) \pll \grpfct[\viewppty_3](\state) = (\grpfct[\viewppty_1](\state) \pll \grpfct[\viewppty_2])(\state) \pll \grpfct[\viewppty_3](\state)
 \end{proof}
 
-We write $\view[\viewppty_1] \pll \view[\viewppty_2]$ for $\view[\viewppty_1 \pll \viewppty_2]$ defined by the grouping function \grpfctN $\grpfct[\viewppty_1] \pll \grpfct[\viewppty_2] = \grpfct[\viewppty_1 \pll \viewppty_2]$.
+We write $\view[\viewppty_1] \pll \view[\viewppty_2]$ for $\view[\viewppty_1 \pll \viewppty_2]$ defined by the \grpfctN $\grpfct[\viewppty_1] \pll \grpfct[\viewppty_2] = \grpfct[\viewppty_1 \pll \viewppty_2]$.
 %The operator \pll used in the definition is inspired from the operator used in electric circuits, when the respective elements are connected in parallel. 
 %If we want to speak about this grouping function in a general way, where it is only of importance that we refer to this type of composition and the given \grpfctsN are of no importance, we will denote a \emph{\parllcompN \grpfctN} with \gfctpll.
 %
@@ -364,42 +364,67 @@ Note that the operator \pll is obviously not commutative, but as parallel compos
 
 The operator \pllrev is the reversing operator to \pll. Given a parallel composed view and an in it contained grouping function it removes this view. We write $\view[\viewppty_1 \pll \dots \pll \viewppty_n] \pllrev \view[\viewppty_i]$ for the view defined by the \grpfctN $\grpfct[\viewppty_1 \pll \dots \pll \viewppty_{i-1} \pll \viewppty_{i+1} \pll \dots \pll \viewppty_n]$.
 
-\subsubsection{Selective Composition} \label{subsec:selecitvecomp}
-Selective composition is a variant of parallel composition. It aims for application of the grouping function only on certain states, where the other composing functions have a certain value.
+%\subsubsection{Selective Composition} \label{subsec:selecitvecomp}
+A variant of parallel composition is \emph{selective composition}. It aims for application of the grouping function only on certain states, where the other composing functions have a certain value.
+
+
 
 \begin{definition}
 	Let $\view[\viewppty_1 \pll \viewppty_2 \pll \dots \pll 
 	\viewppty_n]$ be a parallel composed view with its \grpfctN $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n}]$, where $n$ might be 1 and let \view be another view with its \grpfctN \grpfct. 
 	We write $\imggrp_i$ for the image of $\grpfct[\viewppty_i]$. 
-	Given a set $\compselectset \subseteq \{ (\grpfct[\viewppty_i], a) \mid a \in \imggrp_i, i \in \{1, \dots, n\}\}$ the operator \compselectpure is defined as $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n}] \compselect \grpfct := \grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n} \pll \viewppty]: \states \to \arbset$ with
+	Given a set $\compselectset \subseteq \{ (\grpfct[\viewppty_i], a) \mid a \in \imggrp_i, i \in \{1, \dots, n\}\}$ the operator \compselectpure is defined as $\grpfct[{\viewppty_1 \pll \dots \pll \viewppty_n}] \compselect \grpfct := \grpfct[{\viewppty_1 \pll \dots \pll \viewppty_n} \pll \viewppty]: \states \to \arbset$ with
 	\[
-	\state \mapsto (\grpfct[\viewppty_1](\state), \dots, \grpfct[\viewppty_n]'(\state))
+	\state \mapsto
+	\begin{cases}
+		(\grpfct[\viewppty_1](\state), \dots, \grpfct[\viewppty_n](\state),  \grpfct[\viewppty](\state))				& \text{if } \forall i \in \{1, \dots, n\} : (\grpfct[\viewppty_i], \grpfct[\viewppty_i](\state)) \in \compselectset \\ 		
+		(\grpfct[\viewppty_1](\state), \dots, \grpfct[\viewppty_n](\state),  \remelem),          	& \text{otherwise}
+	\end{cases}
 	\]
-	where $\grpfct' : \states \to \imggrp$ with $\grpfctsub' : \smstates \to \imggrp, \state \to \grpfct(\state)$ and $\smstates := \{\state \in \states \mid \forall i \in \{1, \dots, n\} : (\grpfct[\viewppty_i], \grpfct[\viewppty_i](\state)) \in \compselectset\}$.
-	
-	
-	
-	\noindent
-	Then $\view[\viewppty_1 \pll \viewppty_2 \pll \dots \pll 
-	\viewppty_n \pll \viewppty]$ is a parallel composed \viewN with $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n} \pll \viewppty]$ being its parallel composed \grpfctN.
-	\label{def:compositionselective}
+\noindent
+Then $\view[\viewppty_1 \pll \dots \pll 
+\viewppty_n \pll \viewppty]$ is a parallel composed \viewN with $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n} \pll \viewppty]$ being its parallel composed \grpfctN.
+%\label{def:compositionselective}
 \end{definition}
-
-The set \compselectset determines on which states the \viewN \view shall take effect, by restricting the state set \smstates of the detached grouping function to those states, that meet the requirement. Every state that is not in \smstates then by Definition \ref{def:grpfct} is mapped to \remelem. Considering $\compselectset = \{(\grpfct[\viewppty_1], a_1),(\grpfct[\viewppty_1], b_1), (\grpfct[\viewppty_2], a_2)\}$ it induces that \view only takes effect on a state \state of \mdp if 
-
+The set \compselectset determines on which states the \viewN \view shall take effect. For instance, $\compselectset = \{(\grpfct[\viewppty_1], a_1),(\grpfct[\viewppty_1], b_1), (\grpfct[\viewppty_2], a_2)\}$ induces that \view only takes effect if 
 \[
-	((\grpfct[\viewppty_1](\state) = a_1) \lor (\grpfct[\viewppty_1](\state) = b_1)) \land (\grpfct[\viewppty_2](\state) = a_2)
+((\grpfct[\viewppty_1] = a_1) \lor (\grpfct[\viewppty_1] = b_1)) \land (\grpfct[\viewppty_2] = a_2)
 \]
+That is, if this boolean expression is false the last entry in the tuple is \remelem and only otherwise it is $\grpfct(\state)$.
 
-That is, if this boolean expression is false the last entry in the mapped tuple in Definition \ref{def:compositionselective} equals \remelem and only otherwise equals $\grpfct(\state)$. Note that Definition \ref{def:compositionselective} is the same as declaring $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n}] \compselect \grpfct$ through $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n} \pll \viewppty]: \states \to \arbset$ with
-\[
-\state \mapsto
-\begin{cases}
-	(\grpfct[\viewppty_1](\state), \dots, \grpfct[\viewppty_n](\state),  \grpfct[\viewppty](\state))				& \text{if } \forall i \in \{1, \dots, n\} : (\grpfct[\viewppty_i], \grpfct[\viewppty_i](\state)) \in \compselectset \\ 		
-	(\grpfct[\viewppty_1](\state), \dots, \grpfct[\viewppty_n](\state),  \remelem),          	& \text{otherwise}
-\end{cases}
-\]
-In the original definition the set of states \smstates is restricted which causes the remaining elements to be mapped to \remelem. In the equivalent proposed definition here the grouping function is applied only if the requirement is met and otherwise the element \remelem is mapped. Hence, the effect is the same: Whenever the requirement is met the last entry of the tuple is $\grpfct(\state)$ otherwise it is \remelem. Although the latter proposed definition may seem more intuitive the the actual Definition \ref{def:compositionselective} was chosen because it matches the implementation better.
+%\begin{definition}
+%	Let $\view[\viewppty_1 \pll \viewppty_2 \pll \dots \pll 
+%	\viewppty_n]$ be a parallel composed view with its \grpfctN $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n}]$, where $n$ might be 1 and let \view be another view with its \grpfctN \grpfct. 
+%	We write $\imggrp_i$ for the image of $\grpfct[\viewppty_i]$. 
+%	Given a set $\compselectset \subseteq \{ (\grpfct[\viewppty_i], a) \mid a \in \imggrp_i, i \in \{1, \dots, n\}\}$ the operator \compselectpure is defined as $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n}] \compselect \grpfct := \grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n} \pll \viewppty]: \states \to \arbset$ with
+%	\[
+%	\state \mapsto (\grpfct[\viewppty_1](\state), \dots, \grpfct[\viewppty_n]'(\state))
+%	\]
+%	where $\grpfct' : \states \to \imggrp$ with $\grpfctsub' : \smstates \to \imggrp, \state \to \grpfct(\state)$ and $\smstates := \{\state \in \states \mid \forall i \in \{1, \dots, n\} : (\grpfct[\viewppty_i], \grpfct[\viewppty_i](\state)) \in \compselectset\}$.
+%	
+%	
+%	
+%	\noindent
+%	Then $\view[\viewppty_1 \pll \dots \pll 
+%	\viewppty_n \pll \viewppty]$ is a parallel composed \viewN with $\grpfct[{\viewppty_1 \pll \dots \pll \viewppty_n} \pll \viewppty]$ being its parallel composed \grpfctN.
+%	\label{def:compositionselective}
+%\end{definition}
+%
+%The set \compselectset determines on which states the \viewN \view shall take effect, by restricting the state set \smstates of the detached grouping function to those states, that meet the requirement. Every state that is not in \smstates then by Definition \ref{def:grpfct} is mapped to \remelem. Considering $\compselectset = \{(\grpfct[\viewppty_1], a_1),(\grpfct[\viewppty_1], b_1), (\grpfct[\viewppty_2], a_2)\}$ it induces that \view only takes effect on a state \state of \mdp if 
+%
+%\[
+%	((\grpfct[\viewppty_1](\state) = a_1) \lor (\grpfct[\viewppty_1](\state) = b_1)) \land (\grpfct[\viewppty_2](\state) = a_2)
+%\]
+%
+%That is, if this boolean expression is false the last entry in the mapped tuple in Definition \ref{def:compositionselective} equals \remelem and only otherwise equals $\grpfct(\state)$. Note that Definition \ref{def:compositionselective} is the same as declaring $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n}] \compselect \grpfct$ through $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n} \pll \viewppty]: \states \to \arbset$ with
+%\[
+%\state \mapsto
+%\begin{cases}
+%	(\grpfct[\viewppty_1](\state), \dots, \grpfct[\viewppty_n](\state),  \grpfct[\viewppty](\state))				& \text{if } \forall i \in \{1, \dots, n\} : (\grpfct[\viewppty_i], \grpfct[\viewppty_i](\state)) \in \compselectset \\ 		
+%	(\grpfct[\viewppty_1](\state), \dots, \grpfct[\viewppty_n](\state),  \remelem),          	& \text{otherwise}
+%\end{cases}
+%\]
+%In the original definition the set of states \smstates is restricted which causes the remaining elements to be mapped to \remelem. In the equivalent proposed definition here the grouping function is applied only if the requirement is met and otherwise the element \remelem is mapped. Hence, the effect is the same: Whenever the requirement is met the last entry of the tuple is $\grpfct(\state)$ otherwise it is \remelem. Although the latter proposed definition may seem more intuitive the the actual Definition \ref{def:compositionselective} was chosen because it matches the implementation better.
 
 
 \end{document}

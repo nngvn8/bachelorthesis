@@ -7,10 +7,11 @@
 \section{View Examples} \label{ch:viewexmp}
 In this chapter we will introduce and discuss some \viewN examples created by the author. Their purpose is to understand the idea and concept of a \viewN and get to know some views that might be useful in real world applications. \\
 When considering \viewsN we only want to take into account those that utilize properties of MDPs or that do computations that are also feasible on normal graphs but are of explicit relevance MDPs.
-\subsection{Views Utilizing MDP Components}
+\subsection{Views Utilizing MDP Characteristics}
 In this subsection we will introduce some views the are purely based on the components of an \mdpN. Their will neither be computations on the graph-structure of an MDP nor computations using the result vector.
 \subsubsection{Atomic Propositions}
-One of the least involved approaches to create a view is to base it on the atomic propositions that are assigned to each state by the labeling function. The notion is to group states that were assigned the same set of atomic propositions. \redcomment{Why useful?, currently no "has AP" $\to$ maybe should be added}
+One of the least involved approaches to create a view is to base it on the atomic propositions that are assigned to each state by the labeling function. Atomic Propositions are of relevance because in they are the base tools to identify states with certain notable properties. The notion is to group states that were assigned the same set of atomic propositions.
+%\redcomment{Why useful?, currently no "has AP" $\to$ maybe should be added}
 
 
 %\begin{figure}[h]
@@ -97,8 +98,7 @@ In Figure \ref{fig:initStatesExmp} we can observe the effect of \viewinitstates.
 \subsubsection{Outgoing Actions}
 Another crucial component of \achgphN is its set of actions \actions. Actions are used for interprocesscommunication und synchronization. In this subsection we will provide and discuss some views utilizing actions on transitions that are outgonig from a state. 
 %For simplicity we will write "outgoing action \action" short for "transition with outgoing action \action" analogously we will write "incoming action \action" short for "transition with incoming action \action". We
-We will write a state \state has an outgoing action \action if there exists a state $\state'$ with $(\state, \action, \state') \in \trans$. For a state \state, we say it has an incoming action \action if there exist a state $\state'$ with $(\state', \action, \state) \in \trans$.
-
+%We will write a state \state has an outgoing action \action if there exists a state $\state'$ with $(\state, \action, \state') \in \trans$. For a state \state, we say it has an incoming action \action if there exist a state $\state'$ with $(\state', \action, \state) \in \trans$.
 The most apparent notion to group states is to group states that \emph{have} a given outgoing action.
 
 \begin{definition}
@@ -308,7 +308,7 @@ In Figure \ref{fig:outActSpan} we can observe the view of $\viewspanoutaction(1,
 
 %The \viewsN above can be combined with \parllcompN. The thereby obtained \viewN requires that the respective conditions of all the combined \viewsN are met. In this sense it is a conjunctive combination.
 
-Instead of making requirements about states and group them based on whether they meet these requirements it also possible to group states that are very similar or even identical in regard to their outaction. We consider this idea with the \emph{\outactident \viewNC} in two variants: \outactidentstrong and \outactidentweak (idententiy). Firstly we will consider the variant of strong identity.
+Instead of making requirements about states and group them based on whether they meet these requirements it also possible to group states that are very similar or even identical in regard to their outgoing action. Firstly we will consider the case where the set of outgoing actions and their quantity is identical.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The \viewN \viewstrongoutactident is defined by its \grpfctN \gfctstrongoutactident where $\gfctsubstrongoutactident : \smstates \to \imggrp$ with
@@ -360,10 +360,10 @@ For \viewstrongoutactident it is \gfctstrongoutactident :
 
 because these are number of corresponding outgoing actions from each state. We see that the sets are equal for $\state_1$ and $\state_2$ and for $\state_5$ and $\state_6$. Hence, these two pairs are each grouped to a new to new states. The remaining states are not grouped with another state. The equivalences classes containing them are singleton sets.
 
-As mentioned earlier a \outactidentweak variant of the \outactident \viewN is also conceivable. To ease readability for $\state \states$ we write $\outacts(\state)$ for the set $\{\action \in \actions \mid \exists \state' \in \states : (\state, \action, \state') \in \trans\}$
+As mentioned earlier a \outactidentweak variant of the \outactident \viewN is also conceivable. To ease readability for $\state \in \states$ we write $\outacts(\state)$ for the set $\{\action \in \actions \mid \exists \state' \in \states : (\state, \action, \state') \in \trans\}$
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The \viewN \viewweakoutactident is defined by its \grpfctN \gfctweakoutactident where $\gfctsubweakoutactident : \smstates \to \imggrp$ with
+	Let $\chgph = \chgphtuple$ be \achgphN and $\smstates \subseteq \states$. The \viewN \viewweakoutactident is defined by its \grpfctN \gfctweakoutactident where $\gfctsubweakoutactident : \smstates \to \imggrp$ with
 	\[
 	\state \mapsto \outacts(\state)
 	\]
@@ -408,7 +408,7 @@ For \viewweakoutactident it is \gfctweakoutactident :
 \end{minipage}
 because these are the corresponding outgoing actions from each state. We see that the sets are equal for $\state_1,\state_2$ and $\state_3$ and for $\state_5$ and $\state_6$. Hence, the state set of the \viewN \viewweakoutactident on \chgph has the state set $\{\{\state_1, \state_2, \state_3\}, \{\state_4\}, \{\state_5, \state_5\}\}$.
 
-Apart from the option of directly considering one or a set of outgoing actions with possible quantities it is also possible to only consider the quantity of outgoing actions without regarding the any specific action.
+Apart from the option of directly considering one or a set of outgoing actions with possible quantities it is also possible to only consider the quantity of outgoing actions without regarding any specific action.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The \viewN \viewoutactsetsize is defined by its \grpfctN \gfctoutactsetsize where $\gfctsuboutactsetsize : \smstates \to \imggrp$ with
@@ -443,7 +443,7 @@ In Figure \ref{fig:outActSetSize} we can observe the view of $\viewoutactsetsize
 
 The notion of the \viewN \viewoutactsetsize is similar to utilize the outdegree, with the difference being here that ougoing transitions with the same action are considered as one single edge. This reflects on the options available for nondeterminism in this state.
 
-The sepcialcase of there only being one single ougoing action is worth a distinct view, since it hides all nondeterministic choices, but nothing more.
+The sepcialcase of there only being one single ougoing action is worth a distinct view, since it hides all not nondeterministic choices, but nothing more.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The \viewN \viewoutactsingle is defined by its \grpfctN \gfctoutactsingle where $\gfctsuboutactsingle : \smstates \to \imggrp$ with
@@ -593,7 +593,7 @@ Analogously to Outgoing Actions views of utilizing incoming actions are feasable
 \subsubsection{Variables}
 The concept of variables is not part of the definitions of neither \tsN, MCs or \mdpsN even though, it is of great importance in practice. We will introduce and discuss this concept before utilizing it for \viewsN.
 
-Since states describe some information about a system at a certain moment of its behavior the information carried is usually not atomic but rather consists of several pieces. For instance when considering a computer program at a given moment during execution all its currently available variables will have some value, the stack will have a certain structure and the program counter points to a specific instruction. Systems in general at a certain moment of their behavior have several properties that in total pose the current state of the system. That is in practice each state is actually derived from a possible variable assertion. Choosing the respective variable assertion as state representation would result in rather complex state objects. Therefore the values of the variables are usually stored in a separate data structure and a simple identifier like an integer represents the actual state. When formalizing this in practice used approach several options com into consideration. Available \mdpN components like atomic propositions or the set of states could be used to contain this information. There could be a subset of atomic propositions that declares that a certain variable has a certain value. There had to be taken care that for each variable in each state there is only one atomic proposition declaring its value. The set of states could be used in the sense that the states itself are complex objects containing the information. Both of these options are rather tedious but possible. A third option is to define a set of variables and an evaluation function that are induced by the \mdpN.
+Since states describe some information about a system at a certain moment of its behavior the information carried is usually not atomic but rather consists of several pieces. For instance when considering a computer program at a given moment during execution all its currently available variables will have some value, the stack will have a certain structure and the program counter points to a specific instruction. Systems in general at a certain moment of their behavior have several properties that in total pose the current state of the system. That is in practice each state is actually derived from a possible variable assertion. Choosing the respective variable assertion as state representation would result in rather complex state objects. Therefore the values of the variables are usually stored in a separate data structure and a simple identifier like an integer represents the actual state. When formalizing this in practice used approach several options come into consideration. Available \mdpN components like atomic propositions or the set of states could be used to contain this information. There could be a subset of atomic propositions that declares that a certain variable has a certain value. There had to be taken care of that for each variable in each state there is only one atomic proposition declaring its value. The set of states could be used in the sense that the states itself are complex objects containing the information. A third option is to define a set of variables and an evaluation function that are induced by the \mdpN.
 %Firstly there is the option of declaring the states as complex objects that contain this information. This would be possible because the set of states is not further specified. Accessing this information stored within a state would be rather tedious because there is no already existing entity to properly accomplishing the access. Hence this option was not further explored. The second option is to require that all possible assertions of all variables are included in the atomic propositions. The labeling function would then assert exactly one atomic proposition for each variable for each state, that specifies what the current value of that variable is. Although this would be possible, for simplicity we chose that variables and its values are provided in addition to the \mdpN. Obviously they are to be understood as derived and therefore dependent on the  system, that the \mdpN has been derived from. By no means the set of variables and its evaluation are arbitrary.
 
 
@@ -613,7 +613,9 @@ Since states describe some information about a system at a certain moment of its
 	Let $\mdp = \mdptuple$ be an \mdpN and \varevalimgset be an arbitrary set. The by im induced function $\vareval : \states \times \vars \to \varevalimgset$ is called \emph{variable evaluation function}.
 \end{definition} 
 
-Most of the time we will use \vareval to refer to the variable evaluation function. When we speak about the value of a variable in a state we refer to the image of $\vareval$ for that state and variable. The set \varevalimgset is arbitrary so that arbitrary values can be assigned to a variable. Speaking in terms of computer science and programming this loosens as an example the restriction of only being able to assign numbers and no booleans.
+For this thesis \vars refers to the set of variables declared in the \prism file.
+%Most of the time we will use \vareval to refer to the variable evaluation function. 
+When we speak about the value of a variable in a state we refer to the image of $\vareval$ for that state and variable. The set \varevalimgset is arbitrary so that arbitrary values can be assigned to a variable. Speaking in terms of computer science and programming this loosens as an example the restriction of only being able to assign numbers and no booleans.
 
 The most apparent idea for a \viewN utilizing variables is to group states that meet some requieent regarding the values of the variables.
 
@@ -790,7 +792,7 @@ According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in 
 
 In Figure \ref{fig:varValIdent} we can observe the view of $\viewparamvalident$ on \chgph. States are grouped in which $x$ has the same value. It is $x \in \{0, 1, 2\}$. Hence, the states $\varstyle{0}{0}, \varstyle{0}{1},\varstyle{0}{2}$ are grouped because in all of them it is $x=0$. For the same reason $\varstyle{1}{0}, \varstyle{1}{1},\varstyle{1}{2}$ grouped with $x=1$ and $\varstyle{2}{0}, \varstyle{2}{1},\varstyle{2}{2}$ with $x=2$.
 \subsubsection{Property Values and Model Checking Results}
-Apart from direct and indirect components of an \mdpN there are other values linked to states. These can be given by a reward structure or results from model checking. A reward structure simply assigns values to each state. Results from model checking are also available statewisely. 
+Apart from direct and indirect components of an \mdpN there are other values linked to states. These can be given by a reward structure or results from model checking. A reward structure simply assigns values to each state. Results from model checking are also available statewise. 
 %Although we do not want to go into detail with model checking in this thesis values determined by it are minimal and maximal probabilities or expected values (e.g. of rewards). 
 We abstract from the exact type of value or its origin and formalize this notion with an arbitrary function that assigns a value to each state and utilize it to define a \viewN. Note that there might be several such functions (e.g.reward structure and several model checking results) for an \chgphN.
 
@@ -878,9 +880,7 @@ and states are grouped as displayed in the simplified representation of \viewpro
 
 \subsection{Utilizing the MDP Graphstructure}
 \subsubsection{Distance}
-Considering distances in a graph can be very helpful to get an overview of a graph. Likewise it helps a lot with understanding the structure of \achgphN. In order to consider the distance between nodes we will need to formalize it.
-
-\redcomment{definition is very similar to execution fragments! Citation?}
+Considering distances in a graph can be very helpful to get an overview of a graph. Likewise it helps a lot with understanding the structure of \achgphN. In order to consider the distance between nodes we will need to formalize it. For this we will introduces \emph{paths} which conceptually are very similar to execution fragments \cite[Def. 2.4.]{Baier2008}.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN. A (simple and finite) \emph{path} \path is a sequence \pathsecfull alternating between states and actions where $n \in \natnums, \{\state_1, \dots, \state_{n}\} \subseteq \states$ is a set of distinct states,  $\{\action_1, \dots, \action_{n}\} \subseteq \actions$ and for all $i \in \{1, \dots, n\}$ it is $(\state_i,\action_i, \state_{i+1}) \in \trans$. 
@@ -1063,11 +1063,6 @@ Again, because the only difference of \viewdistancebi to \viewdistance is that \
 	\caption{Simplified representations of the \viewsN $\viewdistancerev(\{\state_1, \state_6\}, 1)$ (middle) and $\viewdistancebi(\{\state_1, \state_9\}, 1)$ (right) on the \chgph from Figure \ref{fig:Distance}.} 
 	\label{fig:DistanceRevBi}  
 \end{figure}
-
-\redcomment{Explanation could be added}
-
-
-
 %\subsubsection{Double Directed Edges with same Action}
 %\redcomment{NOT SURE IF SHOULD BE INCLUDED}
 %\begin{definition}
@@ -1083,7 +1078,7 @@ Formalizing \viewsN based on cycles requires some formalization of the concept c
 	Let $\chgph = \chgphtuple$ be \achgphN. A (simple) \emph{cycle} \cycle in \chgph is a sequence \cyclesecfull alternating between states and actions where $n \in \natnums, \{\state_0, \dots, \state_{n-1}\} \subseteq \states$ is a set of distinct states,  $\{\action_0, \dots, \action_{n-1}\} \subseteq \actions$ and for all $i \in \{0, \dots, n-1\}$ it is $(\state_i,\action_i, \state_{i+1 \text{ mod }n}) \in \trans$.
 \end{definition}
 
-When the actions in the cycle are of no further importance, we will omit them only writing a sequence of states. In the following let $\cycle = \cyclesecfull$ be a cycle. For conveniences we will write $\state \in \cycle$ if the state is contained in the cycle \cycle and $\action \in \cycle$ if the action is contained in in the cycle \cycle. \redcomment{only if??} In words we will both write a state or action is \emph{on} or \emph{in} the cycle. Let $\cycle_1$ and $\cycle_2$ be cycles. $\cycle_1 \cup \cycle_2 := \{\state \in \states \mid \state \in \cycle_1 \text{ or } \state \in \cycle_2\}$.
+When the actions in the cycle are of no further importance, we will omit them only writing a sequence of states. In the following let $\cycle = \cyclesecfull$ be a cycle. For conveniences we will write $\state \in \cycle$ if the state is contained in the cycle \cycle and $\action \in \cycle$ if the action is contained in in the cycle \cycle. In words we will both write a state or action is \emph{on} or \emph{in} the cycle. Let $\cycle_1$ and $\cycle_2$ be cycles. $\cycle_1 \cup \cycle_2 := \{\state \in \states \mid \state \in \cycle_1 \text{ or } \state \in \cycle_2\}$.
 
 \begin{definition}
 	Let \cycle be an cycle in \chgph and \states be the states set of \chgph. The number $|\{\state \in \states \mid \state \in \cycle\}| =: \lencycle(\cycle)$ is called the \emph{length} of a cycle. 
@@ -1095,7 +1090,7 @@ When the actions in the cycle are of no further importance, we will omit them on
 
 In practice there exist several cycle finding algorithms. The function $\fctfindcycles(\chgph, n)$ is an abstraction for one of these algorithms being used. The actual implementation relys on algorithms of the Java library \jgrapht \cite{Michail2020} namely the \redcomment{Algorithm Szwarcfiter and Lauer - $O(V+EC)$ and Tiernan - $O(V.constV)$ CITATION!!}
 
-With the formalization done we will introduce some views utilizing the concept cycles. For one we will combine the notion cycle with domain specific knowledge for the other we will consider how and why cycles in MDPs are in general of relevance. We will begin with the latter. Cycles in general are of interest because in many cases they are unwanted as they lead to lead to infinite values for model checking results. While it depends on the actual model in many cases infinite values in model checking often are unwanted and due to faulty construction of the model. Finding cycles hence may help in debug \achgphN. Therefore a \viewN that simply finds existing cycles is feasible.
+With the formalization done we will introduce some views utilizing the concept cycles. For one we will combine the notion cycle with domain specific knowledge for the other we will consider how and why cycles in MDPs are in general of relevance. We will begin with the latter. Cycles in general are of interest because in unintended cycles in many cases may lead to infinite values for model checking results. While it depends on the actual model in many cases infinite values in model checking are unwanted and caused to faulty construction of the model. Finding cycles hence may help in debug \achgphN. Therefore a \viewN that simply finds existing cycles is feasible.
 
 
 \begin{definition}
@@ -1158,9 +1153,7 @@ Two states $\state_1, \state_2$ are grouped if $\gfctexactcycle(\state_1) = \gfc
 
 According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewexactcycle.
 
-\redcomment{GREEDY APPROACHES (STATE ON SINGLE CYCLE), AND SET APPROACH s $\to$ $C_1 \cup C_2$ omitted because not sure if needed}
-
-The \viewN above might be useful when having found cycles to see what cycles specifically exist. It might be interesting to find cycles that consist only of transitions of the same action. The following \viewN accomplishes that.
+%\redcomment{GREEDY APPROACHES (STATE ON SINGLE CYCLE), AND SET APPROACH s $\to$ $C_1 \cup C_2$ omitted because not sure if needed}
 
 \begin{figure}[h]
 	\begin{minipage}{.5\textwidth}
@@ -1185,7 +1178,7 @@ In Figure \ref{fig:cycleAfterExtact} we can observe the \viewsN of $\viewexactcy
 	\cycle_6 &= (\state_3, \action, \state_7, \actionb, \state_3)
 \end{align*}
 
-\viewNC $\viewexactcycle(3)$ results as displayed as in the simplified representation on the left because because the following states are contained in exactly these cycles
+\viewNC $\viewexactcycle(2)$ results as displayed as in the simplified representation on the left because because the following states are contained in exactly these cycles
 
 \begin{align*}
 	\state_1, \state_2, \state_8 &\text{ in } \cycle_1, \cycle_2, \cycle_5 \\
@@ -1203,6 +1196,8 @@ and $\state_{12}$ and $\state_{13}$ are contained in no cycle of size at least t
 	\state_4, \state_5, \state_6 &\text{ in } \cycle_1, \cycle_3 \\
 \end{align*}
 and $\gfctexactcycle(\state) = \emptyset$ for all remaining states \state.
+
+The \viewN above might be useful when having found cycles to see what cycles specifically exist. It might be interesting to find cycles that consist only of transitions of the same action. The following \viewN accomplishes that.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $n \in \natnums$. The \viewN \viewexactactcycle is defined by its \grpfctN \gfctexactactcycle where $\gfctsubexactactcycle : \smstates \to \imggrp$ with

@@ -294,7 +294,7 @@
 \newcommand{\pptyexactcycle}{\mt{\{\cycle_n\}}}
 \newcommand{\pptyscc}{\mt{scc}}
 \newcommand{\pptybscc}{\mt{bscc}}
-\newcommand{\pptyprop}{\mt{\redcomment{?}}}
+\newcommand{\pptyprop}{\mt{f}}
 \newcommand{\pptyident}{id}
 
 
@@ -451,9 +451,9 @@
 \newcommand{\predmininact}[1][\numinact]{\mt{Q_{#1\leq\inact}(\state,\state_1, \dots, \state_{#1})}}
 
 \newcommand{\outact}[1][\action]{\mt{\overrightarrow{#1}}}
-\newcommand{\outacts}{\mt{\overrightarrow{\actions}}}
+\newcommand{\outacts}{\mt{\mbox{\smaller[2]$\overrightarrow{\actions}$}}}
 \newcommand{\inact}{\mt{\overleftarrow{\action}}}
-\newcommand{\inacts}[1][\action]{\mt{\overleftarrow{#1}}}
+\newcommand{\inacts}[1][\action]{\mt{\mbox{\smaller[2]$\overleftarrow{#1}$}}}
 
 %%Parameters
 \newcommand{\vars}[1][\mdp]{\mt{V\!ar_{#1}}}
@@ -509,8 +509,8 @@
 \newcommand{\pathset}{\mt{\path_\chgph}}
 \newcommand{\pathbiset}{\mt{\pathbi_\chgph}}
 \newcommand{\distpath}{\mt{\mbox{\smaller[2]$\overrightarrow{dist}$}}}
-\newcommand{\distpathrev}{\mt{\overleftarrow{dist}}}
-\newcommand{\distpathbi}{\mt{\overline{dist}}}
+\newcommand{\distpathrev}{\mt{\mbox{\smaller[2]$\overleftarrow{dist}$}}}
+\newcommand{\distpathbi}{\mt{\mbox{\smaller[2]$\overline{dist}$}}}
 %Cycles
 \newcommand{\cyclesecfull}{\mt{(\state_0, \action_0, \state_1, \action_1, \dots, \action_{n-1}, \state_0)}}
 \newcommand{\fctfindcycles}{\mt{findCycles}}

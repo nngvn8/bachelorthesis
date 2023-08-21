@@ -10,7 +10,7 @@
 %\subsection{Transition Systems}
 \viewsNC will be defined on \chgphsN. Instead of directly providing the definition of \achgphN we will consider less powerful classes of models to represent systems that are extended by \chgphsN.
 
-Firstly we will consider transition systems. Transition systems are basically digraphs consisting of \emph{states} and \emph{transitions} in place of nodes and edges. A state describes some information about a system at a certain moment of its behavior, a transition the evolution from one state to another. We will use transition systems with \emph{action names} and \emph{atomic propositions} for states as in \cite{Baier2008}.
+Firstly we will consider \emph{transition systems}. Transition systems are basically digraphs consisting of \emph{states} and \emph{transitions} in place of nodes and edges. A state describes some information about a system at a certain moment of its behavior, a transition the evolution from one state to another. We will use transition systems with \emph{action names} and \emph{atomic propositions} for states as in \cite{Baier2008}.
 
 \begin{definition}[\!{\cite{Baier2008}, Definition 2.1.}]
 	A \emph{transition system} TS is a tuple \transitionsystem where
@@ -32,7 +32,7 @@ A transition system is called \emph{finite} if \states, \atomicprops and \labeli
 
 The intuitive behavior of transition systems is as follows. The evolution of a transition system starts in some state $\state \in \initstates$. If the set of \initstates of initial states is empty the transition system has no behavior at all. From the initial state the transition system evolves according to the transition relation \transitionrel. The evolution ends in a state that has no outgoing transitions. For every state there may be several possible transitions to be taken. The choice of which one is take is done nondeterministically. That is the outcome of the selection can not be know a priori. It is especially not following any probability distribution. Hence there can not be made any statement about the likelihood of a transition being selected.
 
-In contrast with Markov Chains this nondeterministic behavior is replaced with a probabilistic one. That is for every state there exists a probability distribution that describes the chance of a transition of being selected. There are no actions and no nondeterminism in Markov Chains.
+In contrast with \emph{Markov Chains} this nondeterministic behavior is replaced with a probabilistic one. That is for every state there exists a probability distribution that describes the chance of a transition being selected. There are no actions and there is no nondeterminism in Markov Chains.
 %\redcomment{NOTES BEGIN}
 %\begin{itemize}
 %	\item Markov Chain (MC)
@@ -62,7 +62,7 @@ A Markov Chain (MC) \autm is called \emph{finite} if \states and \atomicprops ar
 
 %It is important to note that Markov Chains are memoryless in the sense that the system evolution is not dependent on the history of only on the current state. That is the evolution of the system does not depend on the sequence of so far traversed states with the transitions. 
 
-The probability function \probtfunc specifies for each state \state the probability $\probtfunc(\state,\state')$ of moving from \state to \state' in one step. The constraint put on \probtfunc in the second item ensures that \probtfunc is a probability distribution. The value $\initdistrib(\state)$ specifies the likelihood that the system evolution starts in \state. All states \state with $\initdistrib(\state) > 0$ are  considered \emph{initial states}. States \state' with $\probtfunc(\state, \state') > 0$ are viewed as possible successors of the state \state. The operational behavior is as follows. A initial state $\state_0$ with $\initdistrib(\state_0) > 0$ is yielded. Afterwards in each state a transition is yielded at random according to the probability distribution \probtfunc in that state. \redcomment{The evolution of a Markov chain ends in a state \state \iffN $\probtfunc(\state, \state) = 1$}.
+The probability function \probtfunc specifies for each state \state the probability $\probtfunc(\state,\state')$ of moving from \state to \state' in one step. The constraint put on \probtfunc in the second item ensures that \probtfunc is a probability distribution. The value $\initdistrib(\state)$ specifies the likelihood that the system evolution starts in \state. All states \state with $\initdistrib(\state) > 0$ are  considered \emph{initial states}. States \state' with $\probtfunc(\state, \state') > 0$ are viewed as possible successors of the state \state. The operational behavior is as follows. An initial state $\state_0$ is yielded by the initial distribution \initdistrib. Afterwards in each state a transition is yielded at random according to the probability distribution \probtfunc in that state.
 %\begin{itemize}
 %	\redcomment{\item has no actions \\ "As compositional approaches for Markov models are outside the scope of this monograph,
 %	actions are irrelevant in this chapter and are therefore omitted."}
@@ -85,7 +85,7 @@ The probability function \probtfunc specifies for each state \state the probabil
 %\subsection{Markov Decision Process} 
 
 %\redcomment{NOTES BEGIN}
-The disadvantage of Markov Chains is that they do not enable process intercommunication and do not permit nondeterminism, but only probabilistic evolution. Markov Decision Processes (\mdpsN) permit both probabilistic and nondeterministic choices. An \mdpN thereby is a model that somewhat merges the concept of transition systems with the concept of Markov chains. 
+The disadvantage of Markov Chains is that they do not enable process intercommunication and do not permit nondeterminism, but only probabilistic evolution. \emph{Markov Decision Processes} (\mdpsN) permit both probabilistic and nondeterministic choices. An \mdpN thereby is a model that somewhat merges the concept of transition systems with the concept of Markov chains. 
 %\begin{itemize}
 %	\item probabilistic choices: possible outcomes for of randomized actions -> requires statistical experiments to obtain adequate distributions that model average behavior of the environment
 %	\item information not available or guarantee about system properties is required -> nondeterminism
