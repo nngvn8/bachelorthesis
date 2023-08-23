@@ -1,11 +1,16 @@
 \documentclass[tikz,preview]{standalone}
 %\usepackage{prelude}
 \input{prelude}
+%\input{/home/martin/Desktop/Bachelor Thessis/document/prelude}
+
+
+\pgfdeclarelayer{bg}    % declare background layer
+\pgfsetlayers{bg,main} 
 
 \begin{document}
 	\begin{tikzpicture}
 		\newcommand{\backendheight}{6}
-		\newcommand{\backendwidth}{9}
+		\newcommand{\backendwidth}{9.5}
 		\newcommand{\backendvertpos}{0}
 		\newcommand{\backendhorpos}{0}
 		\newcommand{\frontendvertpos}{3.25}
@@ -17,45 +22,84 @@
 		\newcommand{\prismvertposrelativebackend}{4.5}
 		\newcommand{\prismhorposrelativebackend}{.25}
 		\newcommand{\javavertposrelativebackend}{4.5}
-		\newcommand{\javahorposrelativebackend}{5.5}		
+		\newcommand{\javahorposrelativebackend}{6}		
 		\newcommand{\jsonvertposrelativebackend}{4.5}		
 		\newcommand{\jsonhorposrelativebackend}{0}		
 		\newcommand{\dbvertposrelativebackend}{.25}		
-		\newcommand{\dbhorposrelativebackend}{4}
+		\newcommand{\dbhorposrelativebackend}{4.5}
 		\newcommand{\dbheight}{2}
 		\newcommand{\dbwidth}{3}
 		\newcommand{\labeldbdistline}{.1}
-		\newcommand{\statevertposrelativedb}{1.05}
+		\newcommand{\statevertposrelativedb}{1.13}
 		\newcommand{\statehorposrelativedb}{.4}
-		\newcommand{\transvertposrelativedb}{.4}
+		\newcommand{\transvertposrelativedb}{.48}
 		\newcommand{\transhorposrelativedb}{.4}
 		\newcommand{\dbhorpos}{\backendhorpos+\dbhorposrelativebackend}		
 		\newcommand{\dbvertpos}{\backendvertpos+\dbvertposrelativebackend}		
+		\newcommand{\descriptdbhorposrelbackend}{1}		
+		\newcommand{\descriptdbvertposrelbackend}{1.8}		
+		
+		
+		% Rectangles Frontend, Backend 
 		\draw[thick] (\backendhorpos, \backendhorpos) rectangle (\backendhorpos+\backendwidth, \backendvertpos+\backendheight);
 		\draw[thick] (\frontendhorpos,\frontendvertpos) rectangle (\frontendhorpos+\frontendwidth,\frontendvertpos+\frontendheight);
+		
+		% Rectangle/Node Database	
+		\node (db) [draw,rectangle,minimum size=5pt,minimum width=90pt, minimum height=60pt,fill=white] at (\backendhorpos+\dbhorposrelativebackend+\dbwidth/2, \backendhorpos+\dbvertposrelativebackend+\dbheight/2) {};
+		
+		% Labels Frontend, Backend
 		\node[minimum height=.8, anchor=north west] at (\backendhorpos+\labelbackenddistline,\backendvertpos+\backendheight-\labelbackenddistline) {Backend};
 		\node[minimum height=.8, anchor=north west] at (\frontendhorpos+\labelfrontenddistline,\frontendvertpos+\frontendheight-\labelfrontenddistline) {Frontend};
-		\node [gstate, anchor= west] (prism)at (\backendhorpos+\prismhorposrelativebackend, \backendvertpos+\prismvertposrelativebackend) {Prism Model};
-		\node [gstate] (java) at (\backendhorpos+\javahorposrelativebackend, \backendvertpos+\javavertposrelativebackend) {Java Server};
-		\node [gstate, fill=white] (json) at (\backendhorpos+\backendwidth+\jsonhorposrelativebackend, \backendvertpos+\jsonvertposrelativebackend) {JSON};
-		\draw[thick] (\backendhorpos+\dbhorposrelativebackend, \backendhorpos+\dbvertposrelativebackend) rectangle (\backendhorpos+\dbhorposrelativebackend+\dbwidth, \backendvertpos+\dbvertposrelativebackend+\dbheight);
-%		\node [gstate, minimum height=7, minimum width=4] (db) at (\dbhorposrelativebackend, \dbvertposrelativebackend) {};
 		
-
-		\node (db) at (\javahorposrelativebackend, \backendvertpos+\dbvertposrelativebackend+\dbheight) {};
-		
-		\path [trans] (prism) edge node [midway] (prismjava) {} (java);
-		\path [trans] (json) edge node [midway] (jsonfrontend) {}  ++(right:\frontendhorpos-\backendhorpos-\backendwidth);
-		\path [trans] (java) edge node [midway,above,text width=.7cm] (jsonfrontend) {\scriptsize create if requested} (json);
-%		\path [bendtrans] (java) edge ++(down:\javavertposrelativebackend-\backendvertpos-\dbvertposrelativebackend-\dbheight-0.4); % 0.4 because minsize gstate=0.8
-		\path [->, bend left] (java) edge node [midway] {} (db.center);
-		\path [->, bend left] (db.center) edge node [midway] {} (java);
-		
-		\node [anchor=north west] at (\backendhorpos+\dbhorposrelativebackend+\labeldbdistline,\backendvertpos+\dbvertposrelativebackend+\dbheight-\labeldbdistline) {Database};
+		% Database Labels
+		\node [below right = 2pt and 2pt of db.north west, anchor=north west] {Database};
 		\node [draw, minimum size=.6, anchor=west] at (\dbhorpos+\statehorposrelativedb,\dbvertpos+\statevertposrelativedb) {\small State};
 		\node [draw, minimum size=.6, anchor=west] at (\dbhorpos+\transhorposrelativedb,\dbvertpos+\transvertposrelativedb) {\small Transition};
 		
+		% Nodes and Labes PRISM, Java, JSON		
+		\node [gstate, anchor= west] (prism)at (\backendhorpos+\prismhorposrelativebackend, \backendvertpos+\prismvertposrelativebackend) {Prism Model};
+		\node [gstate] (java) at (\backendhorpos+\javahorposrelativebackend, \backendvertpos+\javavertposrelativebackend) {Java Server};
+		\node [gstate, fill=white] (json) at (\backendhorpos+\backendwidth+\jsonhorposrelativebackend, \backendvertpos+\jsonvertposrelativebackend) {JSON};
+
+		% Target node for database edges
+		\node (db2) at (\backendhorpos+\dbhorposrelativebackend+\dbwidth/2, \backendhorpos+\dbvertposrelativebackend+\dbheight/2+.7) {};%	
+		\node (frontend2) at (\frontendhorpos, \frontendvertpos+\frontendheight-.3) {};
+		
+		% all edges
+		\path [trans] (prism) edge node [midway] (prismjava) {} (java);
+		\path [trans] (json) edge node [midway] (jsonfrontend) {}  ++(right:\frontendhorpos-\backendhorpos-\backendwidth);
+		\path [trans] (java) edge node (prismjava) [midway,above, align=left, text width=.7cm] (javajson) {} (json);
+		\path [bendtrans, shorten >=7pt] (java) edge node (javadb)[midway] {} (db2);
+		\path [bendtrans, shorten <=7pt] (db2) edge node (dbjava) [midway] {} (java);
+		\path [->, out=170, in=30] (frontend2.center) edge node [near start, above right] {\scriptsize request JSON, other requests} (java.north);
+		
+		% Edge labeling
+		\node (prismjavalabel) [above right=-5.5pt and -31pt of prismjava,font=\scriptsize, text width=1.7cm]  {\baselineskip=0pt parse once \& create DB\par};
+		\node (javajsonlabel) [above right=-10pt and -36pt of javajson,font=\scriptsize, text width=1.5cm]  {\baselineskip=0pt create if requested\par};
+		\node (jsonfrontendlabel) [above right=-5pt and -27pt of jsonfrontend,font=\scriptsize, text width=1.5cm] {\baselineskip=0pt provide\par};
+%		\node [above right=8pt and 0pt of javadb,font=\scriptsize, text width=2cm] {\baselineskip=0pt \mdpN-structure\par};
+		\node [above right=-5pt and 0pt of javadb,font=\scriptsize, text width=2cm] {\baselineskip=0pt write\par};
+		\node [above left=-5pt and -40pt of dbjava,font=\scriptsize, text width=2cm] {\baselineskip=0pt read\par};
+%		\node [above right=-22pt and 0pt of javadb,font=\scriptsize, text width=2.3cm] {\baselineskip=0pt \grpfctN values\par};
+		
+		% label database
+		\node [font=\scriptsize, text width=2cm,anchor=west] at (\backendhorpos+\descriptdbhorposrelbackend,\backendvertpos+\descriptdbvertposrelbackend){\baselineskip=0pt \mdpN-structure\par};
+		\node [font=\scriptsize, text width=2cm,anchor=west] at (\backendhorpos+\descriptdbhorposrelbackend,\backendvertpos+\descriptdbvertposrelbackend-.45) {\baselineskip=0pt property values\par};
+		\node [font=\scriptsize, text width=2.3cm,anchor=west] at (\backendhorpos+\descriptdbhorposrelbackend,\backendvertpos+\descriptdbvertposrelbackend-1) {\baselineskip=0pt \grpfctN values\par};
+		
+		\draw [decorate,decoration={brace,amplitude=10pt},xshift=-4pt,yshift=0pt]
+		(\dbhorpos-.1,\dbvertpos) -- (\dbhorpos-.1,\dbvertpos+\dbheight); %node [black,midway,xshift=9pt] {\footnotesize $P_2$};
+		
+			
+		
+
+		
+
+		
+		
 %		\node at (\backendhorpos, \dbvertpos) at ()
+		
+		
 		
 		
 	\end{tikzpicture}
