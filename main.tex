@@ -1,6 +1,7 @@
 \documentclass[a4paper,12pt,leqno]{article}
 %\usepackage{prelude}
 \input{prelude}
+\usepackage{geometry}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% PERSONAL INFORMATION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -22,17 +23,21 @@
 \selectlanguage{english}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TITLEPAGE AND TOC %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{titlepage}
 
+\newgeometry{right=2.5cm,left=2.5cm}
 \thispagestyle{empty}
 
 \begin{center}
-{\Large Technische Universit\"{a}t Dresden\hspace{2pt}\textbullet\hspace{4pt}Faculty of Computer Science}
 
-\vfil
+	
+{\Large Technische Universit\"{a}t Dresden $\mid$ Faculty of Computer Science}
+
+\vfil\vfil
 
 {\bfseries\Huge\thema}
 
-\vfil
+\vfil\vfil
 %{\LARGE
 %Bachelorarbeit \\[\bigskipamount]
 %zur Erlangung des ersten Hochschulgrades\\[\bigskipamount]
@@ -47,6 +52,8 @@ Bachelor's thesis for obtaining the first university degree \\[\bigskipamount]
 
 \vfil
 
+\vspace{1cm}
+
 submitted by
 \\[\bigskipamount]
 \textsc{\vorname\ } \MakeUppercase{\name}
@@ -56,7 +63,9 @@ submitted by
 Date of Submission: \datum
 \\[\bigskipamount]
 \betreuer\ (\institut)
+\vspace{-2cm}
 \end{center}
+\end{titlepage}
 %\begin{center}
 %{\Large Technische Universit\"{a}t Dresden\  \ \textbullet\ \ Fakult\"{a}t Informatik}
 %
@@ -89,6 +98,7 @@ Date of Submission: \datum
 %\\[\bigskipamount]
 %\betreuer\ (\institut)
 %\end{center}
+
 
 \cleardoublepage
 
