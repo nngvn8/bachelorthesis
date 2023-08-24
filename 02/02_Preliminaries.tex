@@ -30,9 +30,9 @@ Firstly we will consider \emph{transition systems}. Transition systems are basic
 
 A transition system is called \emph{finite} if \states, \atomicprops and \labelingfct are finite. Actions are used for communication between processes. We denote them with Greek letters ($\alpha, \beta, \gamma, \dots$). Atomic propositions are simple facts about states. For instance "x is greater than 20" or "red and yellow light are on" could be atomic propositions. We will denote atomic propositions with arabic letters ($a,b,c,\dots$). They are assigned to a state by a labeling function \labelingfct.
 
-The intuitive behavior of transition systems is as follows. The evolution of a transition system starts in some state $\state \in \initstates$. If the set of \initstates of initial states is empty the transition system has no behavior at all. From the initial state the transition system evolves according to the transition relation \transitionrel. The evolution ends in a state that has no outgoing transitions. For every state there may be several possible transitions to be taken. The choice of which one is take is done nondeterministically. That is the outcome of the selection can not be know a priori. It is especially not following any probability distribution. Hence there can not be made any statement about the likelihood of a transition being selected.
+The intuitive behavior of transition systems is as follows. The evolution of a transition system starts in some state $\state \in \initstates$. If the set of \initstates of initial states is empty the transition system has no behavior at all. From the initial state the transition system evolves according to the transition relation \transitionrel. The evolution ends in a state that has no outgoing transitions. For every state there may be several possible transitions to be taken. The choice of which one to take is made nondeterministically. That is, the outcome of the selection can not be known a priori. It is especially not following any probability distribution. Hence, there can not be made any statement about the likelihood of a transition being selected.
 
-In contrast with \emph{Markov Chains} this nondeterministic behavior is replaced with a probabilistic one. That is for every state there exists a probability distribution that describes the chance of a transition being selected. There are no actions and there is no nondeterminism in Markov Chains.
+This stands in contrast to \emph{Markov Chains} where nondeterministic behavior is replaced by a probabilistic one. That is, for every state there exists a probability distribution, that describes the chance of a transition being selected. There are no actions and there is no nondeterminism in Markov Chains.
 %\redcomment{NOTES BEGIN}
 %\begin{itemize}
 %	\item Markov Chain (MC)
@@ -43,7 +43,7 @@ In contrast with \emph{Markov Chains} this nondeterministic behavior is replaced
 %\end{itemize}
 %
 %\redcomment{NOTES END}
-
+%\newpage
 \begin{definition}[\!{\cite{Baier2008}, Definition 10.1.}]
 	A \emph{(discrete-time) Markov chain} is a tuple $\autm = (\states, \probtfunc, \initdistrib, \atomicprops, \labelingfct)$ where 
 	\begin{itemize}
@@ -58,11 +58,10 @@ In contrast with \emph{Markov Chains} this nondeterministic behavior is replaced
 	\end{itemize}
 \end{definition}
 
-A Markov Chain (MC) \autm is called \emph{finite} if \states and \atomicprops are finite. \redcomment{For finite \autm, the \emph{size} of \autm, denoted \emph{size}(\autm),  is the number of states plus the number of pairs $(\state, \state') \in \states \times \states$ with $\probtfunc(\state, \state') > 0.$ OMIT??}
-
+A Markov Chain (MC) \autm is called \emph{finite} if \states and \atomicprops are finite. 
+%\redcomment{For finite \autm, the \emph{size} of \autm, denoted \emph{size}(\autm),  is the number of states plus the number of pairs $(\state, \state') \in \states \times \states$ with $\probtfunc(\state, \state') > 0.$ OMIT??}
 %It is important to note that Markov Chains are memoryless in the sense that the system evolution is not dependent on the history of only on the current state. That is the evolution of the system does not depend on the sequence of so far traversed states with the transitions. 
-
-The probability function \probtfunc specifies for each state \state the probability $\probtfunc(\state,\state')$ of moving from \state to \state' in one step. The constraint put on \probtfunc in the second item ensures that \probtfunc is a probability distribution. The value $\initdistrib(\state)$ specifies the likelihood that the system evolution starts in \state. All states \state with $\initdistrib(\state) > 0$ are  considered \emph{initial states}. States \state' with $\probtfunc(\state, \state') > 0$ are viewed as possible successors of the state \state. The operational behavior is as follows. An initial state $\state_0$ is yielded by the initial distribution \initdistrib. Afterwards in each state a transition is yielded at random according to the probability distribution \probtfunc in that state.
+The probability function \probtfunc specifies for each state \state the probability $\probtfunc(\state,\state')$ of moving from \state to \state' in one step. The constraint put on \probtfunc in the second item ensures that \probtfunc is a probability distribution. The value $\initdistrib(\state)$ specifies the likelihood that the system evolution starts in \state. All states \state with $\initdistrib(\state) > 0$ are  considered \emph{initial states}. States \state' with $\probtfunc(\state, \state') > 0$ are viewed as possible successors of the state \state. The operational behavior is as follows. The initial distribution \initdistrib yields a state $\state_0$. Afterwards, in each state a transition is yielded at random according to the probability distribution \probtfunc in that state.
 %\begin{itemize}
 %	\redcomment{\item has no actions \\ "As compositional approaches for Markov models are outside the scope of this monograph,
 %	actions are irrelevant in this chapter and are therefore omitted."}
@@ -125,15 +124,15 @@ The disadvantage of Markov Chains is that they do not enable process intercommun
 
 %It adds probabilistic choices to transition systems or add nondeterminism to Markov chains. Probabilistic choices may be used to model the (probabilistic) behavior of the environment. But to do so statistical experiments are required to obtain adequate distributions that model the average behavior of the environment. If this information is not available too hard to obtain, or a guarantee about system properties is required nondeterminism is the natural option for modeling in these cases. Further usecases of \mdpsN are randomized distributed algorithms and abstraction in Markov chains. Randomized distributed algorithms are nondeterministic because there is a nondeterministic choice which process performs the next step and randomized because they have rather restricted set of actions that have a random nature. Abstraction in Markov chains can be feasible if states have been grouped by \atomicprops and and have a wide range of transition probabilities. If that is the case selection of a transition is rather non deterministic and thereby can be abstracted with an \mdpN by replacing the probabilities with nondeterminism.
 
-An \mdpN is called \emph{finite} if \states, \actions and \atomicprops are finite.The transition probabilities $\probtfunc(\state, \action, t)$ can be arbitrary real numbers in $[0,1]$ (that sum up to 1 or 0 for fixed \state and \action). For algorithmic purposes they are assumed to be rational.  The unique initial distribution \initdistrib could be generalized to set of \initdistrib with nondeterministic choice at the beginning. For sake of simplicity there is just one single distribution. The operational behavior is as follows. A starting state $\state_0$ yielded by \initdistrib with $\initdistrib(\state_0) > 0$. From there on nondeterministic choice of enabled action takes place followed by a probabilistic choice of a state. The action fixed in the step of nondeterministic selection. Any Markov chain is an \mdpN in which for every state \state, $\actions(\state)$ is a singleton set. Conversely an \mdpN with the property of $\outacts(\state) = 1$ is a Markov chain. Thus Markov chains are a proper subset of Markov decision processes.
+An \mdpN is called \emph{finite} if \states, \actions and \atomicprops are finite. The transition probabilities $\probtfunc(\state, \action, t)$ can be arbitrary real numbers in $[0,1]$ (that sum up to 1 or 0 for fixed \state and \action). For algorithmic purposes they are assumed to be rational.  The unique initial distribution \initdistrib could be generalized to set of \initdistrib with nondeterministic choice at the beginning. For sake of simplicity there is just one single distribution. The operational behavior is as follows. A starting state $\state_0$ yielded by \initdistrib with $\initdistrib(\state_0) > 0$. From there on firstly a nondeterministic choice of an enabled action takes place followed by a probabilistic choice of a state. The action is fixed in the step of nondeterministic selection. Any Markov chain is an \mdpN in which for every state \state, $\actions(\state)$ is a singleton set. Conversely an \mdpN with the property of $\outacts(\state) = 1$ is a Markov chain. Thus Markov chains are a proper subset of Markov decision processes.
 
-
-For convenience for $\state_1, \state_2 \in \states$ and $\action \in \actions$ we will write $(\state_1, \action, \state_2) \in \probtfunc$ \iffN $\probtfunc(\state_1, \action, \state_2) > 0$, that is to say if there is a non-zero probability of evolving from state $\state_1$ to state $\state_2$ with action \action. Analogously we will write $\state \in \initdistrib$ \iffN is an initial state ($\initdistrib(\state) > 0$). 
-We define $\outacts(\state) := \{\action \mid (\state,\action,\smstate) \in \trans\}$ for $\state \in \states$. For $\state \in \states$ we call an element of $\outacts(\state)$ outgoing action of \state. We say a state has an outgoing action \action if $\action \in \outacts(\state)$. We use analogous definition and terminology for incoming actions \inacts. 
+For convenience we will write $(\state_1, \action, \state_2) \in \probtfunc$ if $\probtfunc(\state_1, \action, \state_2) > 0$, where for $\state_1, \state_2 \in \states$ and $\action \in \actions$. That is to say, we write $(\state_1, \action, \state_2) \in \probtfunc$, if there is a non-zero probability of evolving from state $\state_1$ to state $\state_2$ with action \action.
+We define $\outacts(\state) := \{\action \mid (\state,\action,\smstate) \in \trans\}$ for $\state \in \states$. For $\state \in \states$ we call an element of $\outacts(\state)$ outgoing action of \state. We say a state \state "has an outgoing action \action" or "\action is outgoing from \state", if $\action \in \outacts(\state)$. We use analogous definition and terminology for incoming actions \inacts. 
 
 \begin{exmp}
 In Figure \ref{fig:exampleMdp} we see an graphical representation of an \mdpN. For this \mdpN it is $\states = \{\state_1, \state_2, \state_3, \state_4, \state_5, \state_6\}$, $\actions = \{\action, \actionb, \actionc\}$, $\atomicprops = \{a,b\}$. In Table \ref{tab:atomicpropsandlabelingfunction} we see the values for \labelingfct, \initdistrib and \trans.
 
+%\begin{figure}
 \begin{table}[h!]
 	\parbox{.45\linewidth}{
 		\begin{center}
@@ -175,10 +174,11 @@ In Figure \ref{fig:exampleMdp} we see an graphical representation of an \mdpN. F
 			\end{tabular}
 		\end{center}
 	}
-	\caption{Labeling Function, initial distribution and transition probability function of \mdpN in Figure \ref{fig:exampleMdp}. Omitted values of $\trans(t)$ are meant to be zero.}
+	\caption{Labeling Function, initial distribution (left) and transition probability function (right) of the \mdpN in Figure \ref{fig:exampleMdp}. Omitted values of $\trans(t)$ are meant to be zero.}
 	\label{tab:atomicpropsandlabelingfunction}
 \end{table}
 
+%\end{figure}
 We will declare \mdpsN by only providing its graphical representation. For this the sets $\states, \actions, \atomicprops$ are assumed to be minimal. That is, they contain no more elements than displayed in the graphical representation. Mostly we will use simplified graphical representations of \mdpsN. In these we will omit information. If actions are omitted, it is assumed that each transition $t \in \trans$ has a distinct action. If probabilities are omitted for each state it is assumed the uniform distribution on each set of outgoing transitions with the same action. If the initial distribution is omitted, it is assumed to be the uniform distribution. If atomic propositions are omitted it is assumed that the set of atomic propositions is empty and every state is mapped to the empty set by the labeling function. The purpose of simplified representations is to focus on and only show relevant information. The remaining information is considered irrelevant in these cases.
 
 \begin{figure}[!htb]
@@ -201,15 +201,17 @@ An \texttt{update} represents a transition in the model which normally reflects 
 \[
 \text{\texttt{(x\_1'=1) \& (x\_2'=true) \& (x\_3'=0)}}
 \]
-This update assigns \texttt{1} to \texttt{x\_1}, \texttt{true} to \texttt{x\_2} and \texttt{0} to \texttt{x\_3}. In an update a variable is written in primed form (with $'$) to indicate that this will be the new value of that variable. Each assignment has to be in parentheses and separated with \texttt{\&} from other assignments.
-The \texttt{action} can be included optionally for labeling the command or for synchronization purposes. In Listing \ref{lst:exmpprism} the model file for the \mdpN \mdp from Figure \ref{fig:exampleMdp} is shown. 
+This update assigns \texttt{1} to \texttt{x\_1}, \texttt{true} to \texttt{x\_2} and \texttt{0} to \texttt{x\_3}. In an update a variable is written in primed form (with \texttt{'}) to indicate that this will be the new value of that variable. Each assignment has to be in parentheses and separated with \texttt{\&} from other assignments.
+The \texttt{action} can be included optionally for labeling the command or for synchronization purposes. In Listing \ref{lst:exmpprism} the model file for the \mdpN \mdp from Figure \ref{fig:exampleMdp} is shown.
 \begin{figure}
-	\begin{lstlisting}[language=prism, caption={\prism model file for the \mdpN \mdp given by Figure \ref{fig:exampleMdp} \redcomment{initials not by probability!}. This example has only one variable representing the six states in \mdp and the actions \texttt{a}, \texttt{b} and \texttt{c} referring to \action, \actionb, and \actionc in \mdp, which are only used for labeling here.},label={lst:exmpprism}]
+	\begin{lstlisting}[language=prism, caption={\prism model file for the \mdpN \mdp given by Figure \ref{fig:exampleMdp}. This example has only one variable representing the six states in \mdp and the actions \texttt{a}, \texttt{b} and \texttt{c} referring to \action, \actionb, and \actionc in \mdp, which are only used for labeling here. The initial distribution has to be realized with an additional state (\texttt{x=0}).},label={lst:exmpprism}]
 		mdp
 		
 		module onlymodule
 		
-		x : [1..6];
+		x : [0..6] init 0;
+		
+		[]  x=0 -> 0.7:(x'=1) + 0.2:(x'=3) + 0.1:(x'=4);
 		
 		[a] x=1 -> 0.5:(x'=2) + 0.5:(x'=3);
 		[b] x=1 -> (x'=4);
@@ -222,12 +224,7 @@ The \texttt{action} can be included optionally for labeling the command or for s
 		[b] x=5 -> (x'=5);
 		[a] x=6 -> (x'=6);
 		
-		endmodule
-		
-		
-		init
-			x=1 | x=3 | x=4
-		endinit		
+		endmodule	
 	\end{lstlisting}
 \end{figure}
 

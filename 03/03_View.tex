@@ -8,9 +8,9 @@
 	
 \section{View}  \label{ch:view}
 
-In this chapter we will introduce the core concept of this thesis, which will be called view. The notion of a view is to obtain a simplification of a given \mdpN. It is an independent \mdpN derived from a given \mdpN and represents a (simplified) view on the given one - hence the name. Thereby the original \mdpN is retained.
+In this chapter we will introduce the core concept of this thesis, which will be called \emph{view}. The notion of a view is to obtain a simplification of a given \mdpN. It is an independent \mdpN derived from a given \mdpN and represents a (simplified) view on the given one - hence the name. Thereby the original \mdpN is retained.
 
-In the preliminaries transition systems and Markov Chains were listed as simpler version of \mdpsN. Roughly speaking transition systems and \mdpsN are special \mdpsN namely that have no probability distribution in each state for each action or no actions. When defining \viewsN it seems feasible to do so for the most general system of the ones of consideration.That is why we will define views on \mdpsN. Only for specific views and their implementation it is to be kept in mind that if they regard an action or the probability distribution of an action in a state it is not applicable to transitions systems or MCs respectively.
+In the preliminaries transition systems and Markov Chains were listed as simpler version of \mdpsN. Roughly speaking transition systems and \mdpsN are special \mdpsN namely that have no probability distribution in each state for each action or no actions. When defining \viewsN it seems feasible to do so for the most general system of the ones of consideration. That is why we will define views on \mdpsN. Only for specific views and their implementation it is to be kept in mind that, if they regard an action or the probability distribution of an action in a state, it is not applicable to transitions systems or MCs respectively.
 
 \subsection{Grouping Function}
 The conceptional idea of a \viewN is to group states by some criteria and structure the rest of the system accordingly. To formalize the grouping we define a dedicated function.
@@ -38,13 +38,13 @@ The conceptional idea of a \viewN is to group states by some criteria and struct
 
 
 
-The \grpfctsubN is used to formalize the behavior that groupings can also only be defined on a subset of states, while still obtaining a total function on the set of states \states. We write $M(\grpfct)$ and $M(\grpfctsub)$ to refer to the their codomain of \grpfct and \grpfctsub respectively. The identifier \viewppty normally hints the objective of the grouping function. Two states will be grouped to a new state if and only if the grouping function maps them to the same value if that value is not the unique symbol \remelem. The mapping to the symbol \remelem will be used whenever a state is supposed to be excluded from the grouping. The definition offers an easy way of creating groups of states. The exact mapping depends on the desired grouping. In order to define a new set of states for the \viewN, we define an equivalence relation \eqrelview based on a given grouping function \grpfct.
+The \grpfctsubN is used to formalize the behavior that groupings can also be defined only on a subset of states, while still obtaining a total function on the set of states \states. We write $M(\grpfct)$ and $M(\grpfctsub)$ to refer to the codomain of \grpfct and \grpfctsub respectively. The identifier \viewppty normally hints the objective of the grouping function. Two states will be grouped to a new state if and only if the grouping function maps them to the same value, if that value is not the unique symbol \remelem. The mapping to the symbol \remelem will be used whenever a state is supposed to be excluded from the grouping. The definition offers an easy way of declaring groups of states. The exact mapping depends on the desired grouping. We generalize the concept of the symbol \remelem to tuples of it. 
 
 \begin{definition}
 	Let $\nogroupset := \{\remelem\} \cup \bigcup_{n \in \natnums \setminus \{0\}} \{t \in \{\remelem\}^{n+1}\}$.
 \end{definition}
 
-With this definition it is $\nogroupset = \{\remelem, (\remelem, \remelem), (\remelem, \remelem, \remelem), \dots\}$ an infinite set. That is, it contains every arbitrary sized tuple only containing the symbol \remelem.
+With this definition it is $\nogroupset = \{\remelem, (\remelem, \remelem), (\remelem, \remelem, \remelem), \dots\}$ an infinite set. That is, it contains every arbitrary sized tuple only containing the symbol \remelem. In order to define a new set of states for the \viewN, we define an equivalence relation \eqrelview based on a given grouping function \grpfct.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN and \grpfct a grouping function. We define the equivalence relation $\eqrelview :=\{ (\state_1, \state_2) \in \states \times \states \mid \grpfct(\state_1) = \grpfct(\state_2) \notin \nogroupset\} \cup \{(\state, \state)  \mid \state \in \states\}$
@@ -52,7 +52,7 @@ With this definition it is $\nogroupset = \{\remelem, (\remelem, \remelem), (\re
 	\label{def:eqrelview}
 \end{definition}
 
-\eqrelview is an equivalence relation because it is reflexive, transitive and symmetric. \eqrelview is reflexive because $\{(\state, \state)  \mid \state \in \states\} \subseteq \eqrelview$. Thus for all states \state it is $(\state, \state) \in \eqrelview$. Therefore for the properties transitivity and symmetry we only consider distinct $\state_1, \state_2 \in \states$. Consider $(\state_1, \state_2) \in \states \times \states$. If $\grpfct(\state_1) \in \nogroupset$, then it is either $\grpfct(\state_2) = \grpfct(\state_1) \in \nogroupset$ or $\grpfct(\state_2) \neq \grpfct(\state_1)$. In both cases it follows from definition of \eqrelview that $(\state_1, \state_2) \notin \eqrelview$. If $\grpfct(\state_2) \in \nogroupset$ it directly follow from the definition of \eqrelview that $(\state_1, \state_2) \notin \eqrelview$. So for  $\grpfct(\state_1) \in \nogroupset$ or  $\grpfct(\state_2) \in \nogroupset$ it follows that $(\state_1, \state_2) \notin \eqrelview$. Hence when considering transitivity and symmetry we assume $\grpfct(\state_1), \grpfct(\state_2) \notin \nogroupset$. If $\grpfct(\state_1) = \grpfct(\state_2)$ it is obviously also $\grpfct(\state_2) = \grpfct(\state_1)$, which means if $(\state_1, \state_2) \in \eqrelview$ it follows that $(\state_2, \state_1) \in \eqrelview$. Hence \eqrelview is symmetric. The property directly conveyed from equality. In the same way transitivity directly conveys from the equality relation to \eqrelview.
+The definition states that $(\state_1, \state_2() \in \eqrelview$ \iffN $\grpfct(\state_1) = \grpfct(\state_2)$ and $\grpfct(\state_2) \notin \nogroupset$. \eqrelview is an equivalence relation because it is reflexive, transitive and symmetric. \eqrelview is reflexive because $\{(\state, \state)  \mid \state \in \states\} \subseteq \eqrelview$. Thus, for all states \state it is $(\state, \state) \in \eqrelview$. Therefore, for the properties transitivity and symmetry we only consider distinct $\state_1, \state_2 \in \states$. Consider $(\state_1, \state_2) \in \states \times \states$. If $\grpfct(\state_1) \in \nogroupset$, then it is either $\grpfct(\state_1) = \grpfct(\state_2) \in \nogroupset$ or $\grpfct(\state_1) \neq \grpfct(\state_2)$. In both cases it follows from definition of \eqrelview that $(\state_1, \state_2) \notin \eqrelview$. If $\grpfct(\state_2) \in \nogroupset$, it directly follows from the definition of \eqrelview that $(\state_1, \state_2) \notin \eqrelview$. So for  $\grpfct(\state_1) \in \nogroupset$ or  $\grpfct(\state_2) \in \nogroupset$ it follows that $(\state_1, \state_2) \notin \eqrelview$. Hence, when considering transitivity and symmetry we assume $\grpfct(\state_1), \grpfct(\state_2) \notin \nogroupset$. If $\grpfct(\state_1) = \grpfct(\state_2)$ it is obviously also $\grpfct(\state_2) = \grpfct(\state_1)$, which means if $(\state_1, \state_2) \in \eqrelview$ it follows that $(\state_2, \state_1) \in \eqrelview$. Hence \eqrelview is symmetric. The property directly conveyed from equality. In the same way transitivity directly conveys from the equality relation to \eqrelview.
 
 We observe that two states $\state_1, \state_2$ are grouped to a new state if and only if $(\state_1, \state_2) \in \eqrelview$. This is the case if and only if $\state_1, \state_2 \in \eqclassv[\state_1] = \eqclassv[\state_2]$ where $\eqclassv[\state_i]$ for $i \in \natnums$ denotes the respective equivalence class of \eqrelview, i.e. $\eqclassv[\smstate] := \{\state \in \states \mid (\state,\smstate) \in \eqrelview\}$. \eqclasssetv denotes the set of all equivalence classes of \eqrelview, i.e. $\eqclasssetv := \bigcup_{\state \in \states}\{\eqclassv\}$.
 
@@ -63,7 +63,7 @@ The definition of a \viewN is dependent on a given MDP and a \grpfctN $\grpfct$.
 
 \begin{definition}
 	
-	Let \chgph = \chgphtuple be \chgphN, $\smstates \subseteq \states$ and $\grpfct$ a \grpfctN where $\grpfctsub : \smstates \to \imggrp$ it its detached \grpfctN. A \emph{\viewN} is \achgphN $\view = \chgphtupledist$ that is derived from \mdp with the \grpfctN $\grpfct$ where
+	Let \chgph = \chgphtuple be \chgphN, $\smstates \subseteq \states$ and $\grpfct$ a \grpfctN where $\grpfctsub : \smstates \to \imggrp$ is its detached \grpfctN. A \emph{\viewN} is \achgphN $\view = \chgphtupledist$ that is derived from \mdp with the \grpfctN $\grpfct$ where
 	
 	\begin{itemize}
 				\item $\states' = \{ \eqclass{\state}{\eqrelview} \mid \state \in \states \} = \eqclasssetv$
@@ -80,7 +80,7 @@ The definition of a \viewN is dependent on a given MDP and a \grpfctN $\grpfct$.
 				{\bbigsum{\substack{\state_a \in \eqclassv[\state_1], \\ \state_b \in \eqclassv[\state_2]}}\probtfunc(\state_a, \action, \state_b) }
 				{
 %					\bbigsum{\state_x \in \eqclassv[\state_1], \state_y \in \states} \probtfunc(\state_x, \action, \state_y)
-					\max\{|\{\state \in \eqclassv[\state_1] \mid \action \in \outacts(\state) = \action\}|, 1\}
+					\max\{1,|\{\state \in \eqclassv[\state_1] \mid \action \in \outacts(\state)\}|\}
 					}
 				\]
 				
@@ -100,11 +100,11 @@ The definition of a \viewN is dependent on a given MDP and a \grpfctN $\grpfct$.
 	\label{def:view}	
 \end{definition}
 
-The identifier \viewppty is inherited from $\grpfct$ to \view. The identifier declares that $\grpfct$ is the \grpfctN of \view and thereby also uniquely determines \view. If \smstates is not provided when instantiating a view it is assumed $\smstates = \states$. If a \viewN takes parameters and we want to talk about an instance of a \viewN with specific parameters $p_1, \dots, p_n$ we will write it as $\view(p_1, \dots, p_n)$. If we want to talk about the \grpfctN \grpfct of \view with the parameters $p_1, \dots, p_n$. We write $\grpfct(\state \cond p_1, \dots, p_n)$, where $\state \in \states$ and \states is the state set of \chgph. 
+The identifier \viewppty is inherited from $\grpfct$ to \view. The identifier declares that $\grpfct$ is the \grpfctN of \view and thereby also uniquely determines \view. If \smstates is not provided when instantiating a view, it is assumed $\smstates = \states$. If a \viewN takes parameters and we want to talk about an instance of a \viewN with specific parameters $p_1, \dots, p_n$, we will write it as $\view(p_1, \dots, p_n)$. If we want to talk about the \grpfctN \grpfct of \view with the parameters $p_1, \dots, p_n$, we will write $\grpfct(\state \cond p_1, \dots, p_n)$, where $\state \in \states$ and \states is the state set of \chgph. 
 
-The definition of $\trans'$ is as is, because a state in a \viewN is an equivalence class and it may be that in it there are several states with the same outgoing action. Hence, summing up the probabilities for two given equivalence classes and action \action may yield a value greater than one (no probability anymore). This is why the sum of  probabilities has to be normalized, by dividing by the number of states that have the action \action outgoing. 
+The definition of $\trans'$ is as is, because a state in a \viewN is an equivalence class and it may be that, in it, there are several states with the same outgoing action. Hence, summing up the probabilities for two given equivalence classes and action \action may yield a value greater than one (no probability anymore). This is why the sum of  probabilities has to be normalized with the number of states that have the action \action outgoing. The maximum in the denominator ensures no division by zero in case an action is not outgoing from any states in the equivalence class.
 
-Note that the definition is in a most general form in the sense that if in a \viewN a property accounts to one piece of some entity the whole entity receives the property i.e. 
+Note that the definition is in a most general form in the sense that if in a \viewN a property accounts to one piece of some entity, the whole entity receives the property i.e. 
 \begin{itemize}	
 	\item $(\state_1, \action, \state_2) \in \trans \impr (\eqclassv[\state_1], \action, \eqclassv[\state_2]) \in \trans'$
 	\item $\state \in \init \impr \eqclassv \in \initdistrib'$
@@ -113,7 +113,7 @@ Note that the definition is in a most general form in the sense that if in a \vi
 \end{itemize}
 
 \begin{exmp}
-To clarify the concept we will consider a \viewN \view on the \mdpN \mdp with $\states = \{\state_1, \dots, \state_6\}$ in Figure \ref{fig:exampleMdp}. The \view \viewN is defined by its grouping function \grpfct where $\grpfctsub : \smstates \to \imggrp$ with 
+To clarify the concept we will consider a \viewN \view (Figure \ref{fig:exampleView}) on the \mdpN \mdp with $\states = \{\state_1, \dots, \state_6\}$ in Figure \ref{fig:exampleMdp}. The \viewN \view is defined by its grouping function \grpfct where $\grpfctsub : \smstates \to \imggrp$ with 
 
 \begin{table}[h]
 	\centering
@@ -127,14 +127,17 @@ To clarify the concept we will consider a \viewN \view on the \mdpN \mdp with $\
 		$\state_6$ & $\remelem$\\
 	\end{tabular}
 \end{table}
-where $\smstates = \states \setminus \{\state_2\}$ and $\imggrp = \{1,2,\remelem\}$. We obtain $\eqclasssetv = \{\{\state_1, \state_3\}, \{\state_4, \state_5\}, \{\state_2\}, \{\state_6\}\}$, because $\grpfct(\state_1) = \grpfct(\state_3)$, $\grpfct(\state_4) = \grpfct(\state_5)$ and $\grpfct(\state_2) = \grpfct(\state_6) = \remelem \in \nogroupset$. Because in \chgph it is 
+where $\smstates = \states \setminus \{\state_2\}$ and $\imggrp = \{1,2,\remelem\}$. We obtain $\eqclasssetv = \{\{\state_1, \state_3\}, \{\state_4, \state_5\}, \{\state_2\}, \{\state_6\}\}$, because $\grpfct(\state_1) = \grpfct(\state_3)$, $\grpfct(\state_4) = \grpfct(\state_5)$ and $\grpfct(\state_2) = \grpfct(\state_6) = \remelem \in \nogroupset$. It is $\grpfct(\state_2) = \remelem$ due to Definition \ref{def:grpfct}. 
+Because in \chgph it is 
 \begin{center}
 	\begin{tabular}{lcl}
 		$\initdistrib(\state_1) = 0.7$ & \quad\quad & $\initdistrib(\state_4) = 0.1$\\
 		$\initdistrib(\state_3) = 0.2$ & \quad\quad & $\initdistrib(\state_5) = 0$\\
 	\end{tabular}
 \end{center}
-in \view it is $\initdistrib'(\{\state_1,\state_3\}) = 0.7 + 0.3 = 0.9$ and $\initdistrib'(\state_4, \state_5) = 0.1 + 0 = 0.1$. Because in \chgph it is
+in \view it is $\initdistrib'(\{\state_1,\state_3\}) = 0.7 + 0.3 = 0.9$ and $\initdistrib'(\state_4, \state_5) = 0.1 + 0 = 0.1$. \pagebreak
+
+\noindent Because in \chgph it is
 \begin{center}
 	\begin{tabular}{lcl}
 	$\labelingfct(\state_1) = \emptyset$& \quad\quad & $\labelingfct(\state_4) = \{b\}$\\
@@ -149,39 +152,39 @@ in \view it is $\labelingfct'(\{\state_1, \state_3\}) = \labelingfct(\state_1) \
 	\end{tabular}
 \end{center}
 
-Because there are no other other outgoing transitions from $\state_1$ or $\state_3$ with action \actionb in \view it is 
+Because $\eqclassv[\state_1] = \{\state_1, \state_3\}, \eqclassv[\state_2] = \{\state_2\}, \eqclassv[\state_4] = \{\state_4\}$ and each time there is only one transition with action \actionb from a state in \eqclassv[{\state_1}] and to a state in \eqclassv[{\state_1}], \eqclassv[{\state_2}] or \eqclassv[{\state_4}] respectively, in \view it is 
 \begin{alignat*}{4}
 	\trans'(\eqclassv[\state_1], \actionb, \eqclassv[\state_1]) &= \frac{\trans(\state_3,\actionb,\state_3)}{|\{\state \in \eqclassv[\state_1] \mid \outacts(\state) = \actionb\}|} &&= \frac{0.4}{|\{\state_1,\state_3\}|} &= 0.2\\
 	\trans'(\eqclassv[\state_1], \actionb, \eqclassv[\state_2]) &= \frac{\trans(\state_3,\actionb,\state_2)}{|\{\state \in \eqclassv[\state_1] \mid \outacts(\state) = \actionb\}|} &&= \frac{0.6}{|\{\state_1,\state_3\}|} &= 0.3\\
 	\trans'(\eqclassv[\state_1], \actionb, \eqclassv[\state_4]) &= \frac{\trans(\state_1,\actionb,\state_4)}{|\{\state \in \eqclassv[\state_1] \mid \outacts(\state) = \actionb\}|} &&= \frac{1}{|\{\state_1,\state_3\}|} &= 0.5
 \end{alignat*}
 
-because $\eqclassv[\state_1] = \{\state_1, \state_3\}, \eqclassv[\state_2] = \{\state_2\}, \eqclassv[\state_4] = \{\state_4\}$ and each time there is only one transition with action \actionb outgoing from a state in \eqclassv[{\state_1}] and incoming to a state in \eqclassv[{\state_1}], \eqclassv[{\state_2}] or \eqclassv[{\state_4}] respectively. The transition $\trans(\state_1,\action,\state_3) = 0.5$ is interesting because it is between states in the same equivalence class. This causes a loop on the state $\{\state_1,\state_3\}$ in the view \view with the transition $\trans(\eqclassv[\state_1],\action,\eqclassv[\state_3]) = 0.5$. The value remains unchanged as in $\state_1,\state_3$ only $\state_1$ has \action outgoing, but $\state_3$ has not. Hence the denominator of $\trans'$ in Definition \ref{def:view} is one.
+The transition $\trans(\state_1,\action,\state_3) = 0.5$ is interesting because it is between states in the same equivalence class. This causes a loop on the state $\{\state_1,\state_3\}$ in the view \view with the transition $\trans(\eqclassv[\state_1],\action,\eqclassv[\state_3]) = 0.5$. The value remains unchanged as in $\state_1,\state_3$ only $\state_1$ has \action outgoing, but $\state_3$ has not. Hence the denominator of $\trans'$ in Definition \ref{def:view} is one.
+
+\begin{figure}[!htb]
+	\centering \input{./03/images/exampleView}
+	\caption{\viewNC \view on \chgphN \chgph from Figure \ref{fig:exampleMdp}}
+	\label{fig:exampleView}  
+\end{figure}
 \end{exmp}
 
 \subsection{View Types and Disregarding Views}
-In this section we categorize views in two view types. We will present views of two types: binary and categorizing. Given a \grpfctN $\grpfct : \states \to \imggrp$ or a detached \grpfctN $\grpfctsub : \smstates \to \imggrp$
+In this section we categorize views in two view types. We will present views of two types: binary and categorizing.
 
 \begin{definition}
 	\sloppy
 	A \viewN \view is called \emph{binary} if for every \chgphN $\chgph = \chgphtuple$ it holds ${\grpfct}[\states] \in \{\{\hasppty, \notppty\}, \{\remelem, \notppty\}, \{\hasppty\, \remelem\}\}$. 
 	
 	\noindent
-	A \viewN \view is called categorizing if for every \chgphN $\chgph = \chgphtuple$ it holds $\hasppty, \notppty \notin {\grpfct}[\states]$. 
+	A \viewN \view is called \emph{categorizing} if for every \chgphN $\chgph = \chgphtuple$ it holds $\hasppty, \notppty \notin {\grpfct}[\states]$. 
 	\label{def:viewtypes}
 \end{definition}
 
-\begin{figure}[t]
-	\centering \input{./03/images/exampleView}
-	\caption{\viewNC \view on \chgphN \chgph from Figure \ref{fig:exampleMdp}}
-	\label{fig:exampleView}  
-\end{figure}
+The notion of a binary view is that it maps each state to whether or not it has a certain property. The symbol \hasppty shall be used if it has the property and the symbol \notppty shall be used if it does not have the property. The symbol \remelem can either be used to not group states that have the property or to not group state states that do not have the property. The case of ${\grpfct}[\states] = \{\hasppty, \notppty\}$ may seem of rather little benefit, since the resulting view only contains two states. In the actual implementation such a view might be very useful, as at the tier of visualization there will be the feature of expanding grouped states and show the states they contain. Hence, at runtime it can be decided which states are to be shown, rather than in the phase of preprocessing.
 
-The notion of a binary view is that it maps each state to whether or not it has a certain property. The symbol \hasppty shall be used if it has the property and the symbol \notppty shall be used if it does not have the property. The symbol \remelem can either be used to not group states that have the property or to not group state states that do not have the property. The case of $\grpfct[\states] = \{\hasppty, \notppty\}$ may seem of rather little benefit, since the resulting view only contains two states. In the actual implementation such a view might be very useful, as at the tier of visualization there will be the feature of expanding grouped states and show the ones they contain. Hence, at runtime it can be decided which states are to be shown, rather than in the phase of preprocessing.
+The notion of a categorizing \viewN is that it categorizes states to groups, which have the same value with respect to a certain trait. One could argue that binary \viewsN as well categorize states in two groups that have in common to share having or not having a certain property. We defined categorizing \viewsN as in Definition \ref{def:viewtypes} so that a view either is binary or categorizing to distinguish between the intention of a \viewN.
 
-The notion of a categorizing \viewN is that categorizes states to groups, which have a certain property. One could argue that binary \viewsN as well categorize states in two groups that have in common to share having or not having a certain property. We defined categorizing \viewsN as in Definition \ref{def:viewtypes} so that a view either is binary or categorizing to distinguish between the intention of a \viewN.
-
-For binary \view we already presented three cases in which a view is called binary. We will now further elaborate on those cases and generalize the concept and also enable it with categorizing views. When looking at the Elements of the set $\{\{\hasppty, \notppty\}, \{\remelem, \notppty\}, \{\hasppty\, \remelem\}\}$ we observe that for distinct $s,t$ in the set it is $|s|-|s \; \cap \; t| = 1$, i.e. $s$ and $t$ only differ in one element. We declare the case when $\remelem \in M(\grpfct)$ a special case, because instead of assignment of \hasppty or \notppty, the symbol \remelem is assigned, to avoid grouping on states with this property. In general it may be that grouping on states that would be mapped to a certain value should not be grouped. To accomplish this we define disregarding \viewsN.
+For binary \viewsN we already presented three cases in which a view is called binary. We will now further elaborate on those cases and generalize the concept and also enable it with categorizing views. When looking at the Elements of the set $\{\{\hasppty, \notppty\}, \{\remelem, \notppty\}, \{\hasppty\, \remelem\}\}$ we observe that for distinct $s,t$ in the set it holds $|s|-|s \; \cap \; t| = 1$, i.e. $s$ and $t$ only differ in one element. We declare the case when $\remelem \in {\grpfct}[\states]$ a special case, because instead of assignment of \hasppty or \notppty, the symbol \remelem is assigned, to avoid grouping on states with this property. In general it may be that states that would be mapped to a certain value should not be grouped. To accomplish this we define disregarding \viewsN.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN and $\grpfctsub : \smstates \to \imggrp$ a detached grouping function where $\smstates \subseteq \states$. The \viewN $\view^\disregardelements$ is defined by its grouping function $\grpfct^\disregardelements : \states \to \imggrp$ where it is $\grpfctsub^\disregardelements : \smstates \to \imggrp$ with
@@ -194,7 +197,7 @@ For binary \view we already presented three cases in which a view is called bina
 	Its \grpfctN $\grpfct^\disregardelements$ is called \grpfct \emph{disregarding} \disregardelements and the respective \viewN $\view^\disregardelements$ is called \view \emph{disregarding} \disregardelements. 
 \end{definition}
 
-With a disregarding \viewN grouping is avoided if its detached \grpfctN would map to any of the values \disregardelements. That is when reading $\view^\disregardelements$ we know that no grouping occurs on states with one of the properties \disregardelements. In a sense states with these properties are shown - maybe amongst others if $\smstates \subset \states$. For this thesis we will only consider disregarding views for $n = 1$. Normally we will define binary views as the disregarding $\view^\hasppty$ and perceive them as filters that show use states that have that property. 
+With a disregarding \viewN grouping is avoided if its detached \grpfctN would map to any of the values \disregardelements. That is, when reading $\view^\disregardelements$ we know that no grouping occurs on states with one of the properties \disregardelements. In a sense states with these properties are shown - maybe amongst others if $\smstates \subset \states$. For this thesis we will only consider disregarding views for $n = 1$.  
 For $n = 1$ $\view$ can be obtained from $\view^\hasppty$ with 
 \[
 \grpfctsub(\state) = 
@@ -212,15 +215,15 @@ and $\view^\notppty$ from $\view$ with
 \end{cases}
 \]
 
-Similarly $\view$ can be obtained from $\view^\notppty$ and $\view^\hasppty$ from $\view$. Hence it suffices to give one Definition for binary view. For categorizing views we normally wont use disregarding views.
+Similarly $\view$ can be obtained from $\view^\notppty$ and $\view^\hasppty$ from $\view$. Hence, for a binary view it suffices to give a Definition for one of $\view^\notppty$, $\view^\hasppty$ and $\view$. Normally we will define binary views as views disregarding \hasppty (i.e. $\view^\hasppty$) and perceive them as filters that show use states that have some property. For categorizing views we wont use disregarding views.
 
 %These have the advantage of being revertible, even if only the detached disregarding \grpfctN is available. This is because if $\grpfctsub^\disregardelem(\state) = \remelem$ we know $\grpfctsub(\state) = \disregardelem$. If $n > 1$ for $\grpfctsub^\disregardelements(\state) = \remelem$ the value $\grpfct(\state)$ is ambigous. When choosing $n = 1$
 
 \subsection{Composition of Views} \label{ch:composition}
-In essence views are a simplification generated from \chgphN. It seems rather obvious that the composition of views is a very practical feature, in order to combine simplifications. Therefore in this chapter we will introduce, formalize and discuss two different notions of compositions. All variants will ensure that the effect caused by each partaking view also takes effect in the composed view. Moreover it is to be generated in a way that the effect of each individual view can be reverted from the composed one.
+In essence views are a simplification generated from \chgphN. It seems rather obvious that the composition of views is a very practical feature, in order to combine simplifications. Therefore, in this chapter we will introduce, formalize and discuss two different notions of compositions. All variants will ensure that the effect caused by each partaking view also takes effect in the composed view. Moreover it is to be generated in a way that the effect of each individual view can be reverted from the composed one.
 
 %\subsubsection{\parllcompNCC} 
-The fundamental concept for composition, which we will introduce, is \emph{parallel composition}. Its notion is to group states that match in the function value of all given \grpfctsN. This idea is parallel in the sense that a set of \grpfctN is combined to a new \grpfctN in one single step.
+The fundamental concept for composition, which we will introduce, is \emph{parallel composition}. Its notion is to group states that match in the function value of all given \grpfctsN. This idea is parallel in the sense that is has no sequential characteristic.
 
 \begin{definition} \label{def:pllcompviewandgfct}
 	Let $\view[\viewppty_1], \view[\viewppty_2], \dots, \view[\viewppty_n]$ be \viewsN, and $\grpfct[\viewppty_1], \grpfct[\viewppty_2], \dots, \grpfct[\viewppty_n]$ be their corresponding \grpfctsN. The \grpfctN $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n}]: \states \to \arbset(\grpfct[\viewppty_1]) \times \dots \times \arbset(\grpfct[\viewppty_n])$ is defined with
@@ -231,7 +234,7 @@ The fundamental concept for composition, which we will introduce, is \emph{paral
 	The corresponding parallel composed view is denoted as $\view[\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n]$.
 \end{definition}
 
-Note that for $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n}]$ if $\grpfct[\viewppty_1](\state) = \grpfct[\viewppty_2](\state) = \dots = \grpfct[\viewppty_n](\state) = \remelem$ the state \state will not be grouped with any other state due to Definition \ref{def:eqrelview} of \eqrelview. An important property of parallel composed \grpfctsN is, that they defy order. That is, with regard to the impact on grouping the order of the included \grpfctsN does not matter.
+Note that for $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n}]$ if $\grpfct[\viewppty_1](\state) = \grpfct[\viewppty_2](\state) = \dots = \grpfct[\viewppty_n](\state) = \remelem$ the state \state will not be grouped with any other state due to Definition \ref{def:eqrelview} of \eqrelview. An important property of parallel composed \grpfctsN is, that they defy order. That is, with regard to the impact on the grouping the order of the included \grpfctsN does not matter.
 
 \begin{proposition}
 	Let $\grpfct[u]$ and $\grpfct[v]$ be non parallel composed \grpfctsN and \states a set of states. For all $\state_1, \state_2 \in \states$ it holds that
@@ -255,10 +258,10 @@ Note that for $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n
 	\[
 	\grpfct[u \pll v](\state_1) = \grpfct[u \pll v](\state_2) \iff \grpfct[v \pll u](\state_1) = \grpfct[v \pll u](\state_2)
 	\]
-	because $(a, b) = (x, y) \iff a = x \,\, \land \,\, b = y \iff (b, a) = (y, x)$.
+	because $(a, b) = (x, y) \iff (a = x) \,\, \land \,\, (b = y) \iff (b, a) = (y, x)$.
 \end{proof}
 
-We assume that whenever a \viewN or \grpfctN is parallel composed this is notated as declared in Definition \ref{def:pllcompviewandgfct}. That is, \iffN there is the operator \pll in the subsrcipt of a \viewN or \grpfctN it is parallel composed. We define the operator \pll in order to construct parallel composed \grpfctsN and \viewsN. 
+We assume that whenever a \viewN or \grpfctN is parallel composed this is notated as declared in Definition \ref{def:pllcompviewandgfct}. That is, \iffN there is the operator \pll in the subsrcipt of a \viewN or \grpfctN, it is parallel composed. We define the operator \pll in order to construct parallel composed \grpfctsN and \viewsN. 
 
 %\begin{definition}
 %	The operator \pll maps two \grpfctsN to a new \grpfctN. It is defined recursively.
@@ -362,7 +365,7 @@ Note that the operator \pll is obviously not commutative, but as parallel compos
 	\]
 \end{definition}
 
-The operator \pllrev is the reversing operator to \pll. Given a parallel composed view and an in it contained grouping function it removes this view. We write $\view[\viewppty_1 \pll \dots \pll \viewppty_n] \pllrev \view[\viewppty_i]$ for the view defined by the \grpfctN $\grpfct[\viewppty_1 \pll \dots \pll \viewppty_{i-1} \pll \viewppty_{i+1} \pll \dots \pll \viewppty_n]$.
+The operator \pllrev is the reversing operator to \pll. Given a parallel composed view and an in it contained grouping function, it removes this view. We write $\view[\viewppty_1 \pll \dots \pll \viewppty_n] \pllrev \view[\viewppty_i]$ for the view defined by the \grpfctN $\grpfct[\viewppty_1 \pll \dots \pll \viewppty_{i-1} \pll \viewppty_{i+1} \pll \dots \pll \viewppty_n]$.
 
 %\subsubsection{Selective Composition} \label{subsec:selecitvecomp}
 A variant of parallel composition is \emph{selective composition}. It aims for application of the grouping function only on certain states, where the other composing functions have a certain value.
@@ -370,9 +373,8 @@ A variant of parallel composition is \emph{selective composition}. It aims for a
 
 
 \begin{definition}
-	Let $\view[\viewppty_1 \pll \viewppty_2 \pll \dots \pll 
-	\viewppty_n]$ be a parallel composed view with its \grpfctN $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n}]$, where $n$ might be 1 and let \view be another view with its \grpfctN \grpfct. 
-	We write $\imggrp_i$ for the image of $\grpfct[\viewppty_i]$. 
+	Let $\view[\viewppty_1 \pll \dots \pll 
+	\viewppty_n]$ be a parallel composed view with its \grpfctN $\grpfct[{\viewppty_1 \pll \dots \pll \viewppty_n}]$, where $n$ might be 1 and let \view be another view with its \grpfctN \grpfct. We write $\imggrp_i$ for the image of $\grpfct[\viewppty_i]$.
 	Given a set $\compselectset \subseteq \{ (\grpfct[\viewppty_i], a) \mid a \in \imggrp_i, i \in \{1, \dots, n\}\}$ the operator \compselectpure is defined as $\grpfct[{\viewppty_1 \pll \dots \pll \viewppty_n}] \compselect \grpfct := \grpfct[{\viewppty_1 \pll \dots \pll \viewppty_n} \pll \viewppty]: \states \to \arbset$ with
 	\[
 	\state \mapsto
@@ -386,11 +388,11 @@ Then $\view[\viewppty_1 \pll \dots \pll
 \viewppty_n \pll \viewppty]$ is a parallel composed \viewN with $\grpfct[{\viewppty_1 \pll \viewppty_2 \pll \dots \pll \viewppty_n} \pll \viewppty]$ being its parallel composed \grpfctN.
 %\label{def:compositionselective}
 \end{definition}
-The set \compselectset determines on which states the \viewN \view shall take effect. For instance, $\compselectset = \{(\grpfct[\viewppty_1], a_1),(\grpfct[\viewppty_1], b_1), (\grpfct[\viewppty_2], a_2)\}$ induces that \view only takes effect if 
+The set \compselectset determines on which states the \viewN \view shall take effect. For instance, $\compselectset = \{(\grpfct[\viewppty_1], a_1),(\grpfct[\viewppty_1], b_1), (\grpfct[\viewppty_2], a_2)\}$ induces that \view only takes effect on a state \state if 
 \[
-((\grpfct[\viewppty_1] = a_1) \lor (\grpfct[\viewppty_1] = b_1)) \land (\grpfct[\viewppty_2] = a_2)
+((\grpfct[\viewppty_1](\state) = a_1) \lor (\grpfct[\viewppty_1](\state) = b_1)) \land (\grpfct[\viewppty_2](\state) = a_2)
 \]
-That is, if this boolean expression is false the last entry in the tuple is \remelem and only otherwise it is $\grpfct(\state)$.
+That is, if this boolean expression is false, the last entry in the tuple is \remelem and only otherwise it is $\grpfct(\state)$.
 
 %\begin{definition}
 %	Let $\view[\viewppty_1 \pll \viewppty_2 \pll \dots \pll 

@@ -6,11 +6,11 @@
 \begin{document} 
 \section{View Examples} \label{ch:viewexmp}
 In this chapter we will introduce and discuss some \viewN examples created by the author. Their purpose is to understand the idea and concept of a \viewN and get to know some views that might be useful in real world applications. \\
-When considering \viewsN we only want to take into account those that utilize properties of MDPs or that do computations that are also feasible on normal graphs but are of explicit relevance MDPs.
+When considering \viewsN, we only want to take into account those that utilize properties of MDPs or that do computations that are also feasible on normal graphs, but are of explicit relevance MDPs.
 \subsection{Views Utilizing MDP Characteristics}
 In this subsection we will introduce some views the are purely based on the components of an \mdpN. Their will neither be computations on the graph-structure of an MDP nor computations using the result vector.
 \subsubsection{Atomic Propositions}
-One of the least involved approaches to create a view is to base it on the atomic propositions that are assigned to each state by the labeling function. Atomic Propositions are of relevance because in they are the base tools to identify states with certain notable properties. The notion is to group states that were assigned the same set of atomic propositions.
+One of the least involved approaches to create a view is to base it on the atomic propositions, that are assigned to each state by the labeling function. Atomic Propositions are of relevance because in they are the base tools to identify states with certain notable properties. The notion is to group states that were assigned the same set of atomic propositions.
 %\redcomment{Why useful?, currently no "has AP" $\to$ maybe should be added}
 
 
@@ -48,15 +48,15 @@ By this we obtain the \viewN $\viewatomicprops$ for a given \chgphN \chgph where
 	\label{fig:apIdentBeforeAfter}  
 \end{figure}
 
-In Figure \ref{fig:apIdentBeforeAfter} we can observe the effect of \viewatomicprops. In the simplified representation on the left the assigned set of atomic propositions of each state are noted next to them. There are four different sets of atomic propositions: $\{\}, \{a\}, \{b\} \text{ and } \{a,b\}$. In the view on the right the states with the same set of atomic propositions have been grouped.
+In Figure \ref{fig:apIdentBeforeAfter} we can observe the view \viewatomicprops on \chgph. In the simplified representation on the left the assigned set of atomic propositions of each state are noted next to them. There are four different sets of atomic propositions: $\{\}, \{a\}, \{b\} \text{ and } \{a,b\}$. In the view on the right the states with the same set of atomic propositions have been grouped.
 
-Although this view might seem rather simple because essentially it only performs $\gfctatomicprops := \labelingfct$ it is the most powerful one. This is because every view presented in the following is reducible to this one. That is because a \grpfctN essentially asserts an atomic proposition to every state, namely the value with respect to the considered property of a given \viewN. The reduction can be realized by replacing the labeling function with the grouping function of the resepective \viewN. That is $\labelingfct := \grpfct$ and $\atomicprops := {\grpfct}[\states]$ for some \grpfctN \grpfct. While this works it alters the underlying \chgphN.
+Although this view might seem rather simple, because essentially it only performs $\gfctatomicprops := \labelingfct$ it is the most powerful one. This is because every view presented in the following is reducible to this one. That is because a \grpfctN assigns a value to each state. This value could be interpreted as atomic proposition. The reduction can be realized by replacing the labeling function with the grouping function of the resepective \viewN. That is $\labelingfct := \grpfct$ and $\atomicprops := {\grpfct}[\states]$ for some \grpfctN \grpfct. While this works it alters the underlying \chgphN.
 
 \subsubsection{Initial States}
-An a little more involved idea than directly using a given function is to utilize the set of initial states. We can group states that have a probability greater zero, that they are started from. In practice this might be useful to quickly find all initial states.
+An a little more involved idea than directly using a given function is to utilize the support of initial distribution $\{\state \in \states  \mid \initdistrib(\state) > 0\}$. We can group states that have a probability greater zero, that they are started from. In practice this might be useful to quickly find all initial states.
 
 \begin{definition}
-	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\initstates := \{\state \in \states \mid \state \in \init\}$. The \viewN \viewinitstates is defined by its \grpfctN \gfctinitstates where $\gfctsubinitstates : \smstates \to \imggrp$ with 
+	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\initstates := \{\state \in \states \mid \initdistrib(\state) > 0\}$. The \viewN \viewinitstates is defined by its \grpfctN \gfctinitstates where $\gfctsubinitstates : \smstates \to \imggrp$ with 
 	
 	\[
 	\gfctsubinitstates(\state) =
@@ -92,13 +92,11 @@ All other components are constructed as in Definition \ref{def:view}.
 	\label{fig:initStatesExmp}  
 \end{figure}
 
-In Figure \ref{fig:initStatesExmp} we can observe the effect of \viewinitstates. In the simplified representation of \achgphN on the left the states $\state_1$ and $\state_3$ are marked as initial states ($\state_1, \state_3 \in \initstates$). Hence these two are not grouped whereas the remaining two are grouped.
+In Figure \ref{fig:initStatesExmp} we can observe the effect of \viewinitstates. In the simplified representation of \achgphN on the left the states $\state_1$ and $\state_3$ are marked as initial states ($\state_1, \state_3 \in \initstates$). Hence, these two are not grouped whereas the remaining two are grouped.
 
 
 \subsubsection{Outgoing Actions}
-Another crucial component of \achgphN is its set of actions \actions. Actions are used for interprocesscommunication und synchronization. In this subsection we will provide and discuss some views utilizing actions on transitions that are outgonig from a state. 
-%For simplicity we will write "outgoing action \action" short for "transition with outgoing action \action" analogously we will write "incoming action \action" short for "transition with incoming action \action". We
-%We will write a state \state has an outgoing action \action if there exists a state $\state'$ with $(\state, \action, \state') \in \trans$. For a state \state, we say it has an incoming action \action if there exist a state $\state'$ with $(\state', \action, \state) \in \trans$.
+Another crucial component of \achgphN is its set of actions \actions. Actions are used for interprocesscommunication und synchronization. In this subsection we will provide and discuss some views utilizing action outgoing from a state. 
 The most apparent notion to group states is to group states that \emph{have} a given outgoing action.
 
 \begin{definition}

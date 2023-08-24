@@ -23,13 +23,13 @@
 	
 %		midway, at start, near start, very near start, at end, near end, very near end
 		
-		\path [trans] (s-1) -- (s-2) node [midway, above] () {}; 
-		\path [trans] (s-1) -- (s-4);
-		\path [trans] (s-3) -- (s-2);
-		\path [trans] (s-3) -- (s-4);
-		\path [trans] (s-1-in) -- (s-1);
-		\path [trans] (s-3-in) -- (s-3);
-		\path [trans] (s-3-in) -- (s-3);
+		\path [trans] (s-1) edge (s-2) node [midway, above] () {}; 
+		\path [trans] (s-1) edge (s-4);
+		\path [trans] (s-3) edge (s-2);
+		\path [trans] (s-3) edge (s-4);
+		\path [trans] (s-1-in) edge (s-1);
+		\path [trans] (s-3-in) edge (s-3);
+		\path [trans] (s-3-in) edge (s-3);
 		
 %		\foreach \x [count=\i] in {midway, at start, near start, very near start, at end, near end, very near end} {
 %			\draw (0,-\i) .. controls ++(1,1) and ++(-1,1) .. ++(4,0) node [\x, sloped, fill=white] () {\x};}
