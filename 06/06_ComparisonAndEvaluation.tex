@@ -4,17 +4,17 @@
 
 \begin{document}
 \section{Comparison and Evaluation} \label{ch:eval}
-In this chapter we want to show how \viewsN can be utilized in three different usecases. In subsection 6.4 we will consider performance aspects.
-In the usecases we will see screenshots made in the to this time current version \pmcvis. (Grouped) States are represented by grey rectangles. The blue labels on them are the mapped values from the \grpfctN. These do not always exactly match the ones of the formalization. Especially it is to note that $\texttt{\_\_BLANK\_\_} = \remelem$. If parallel composition is used in some form, the values of the \grpfctsN in the label are separated with \texttt{|} and are in the same order as they have been composed with the operator \pll. If we formally have $\view[\viewppty_1]\pll\view[\viewppty_2] = \view[\viewppty_1\pll\viewppty_2]$ and for some grouped states \smstates it holds for all of them $\view[\viewppty_1\pll\viewppty_2](\smstate) = (a,b)$  where $\smstate \in \smstates$, then in the screenshot of \pmcvis the grouped state of the view receives the label {\color{RoyalBlue}\texttt{a|b}}.
+In this chapter we want to show how \viewsN can be used in three different usecases. In Section 6.4 we will consider performance aspects.
+In the usecases we will see screenshots made in the current version of \pmcvis. (Grouped) states are represented by gray rectangles. The blue labels on them are the mapped values from \grpfctN. These are not always exactly the same as in the formalization. Especially note that $\texttt{\_\_BLANK\_\_} = \remelem$. When parallel composition is used in any form, the values of \grpfctsN in the label are separated with \texttt{|} and are in the same order as they were composed with the \pll operator. For instance, if we formally had $\view[\viewppty_1]\pll\view[\viewppty_2] = \view[\viewppty_1\pll\viewppty_2]$ and for some grouped states \smstates it were true for all of them $\view[\viewppty_1\pll\viewppty_2](\smstate) = (a, b)$,  where $\smstate \in \smstates$, then in the screenshot of \pmcvis the grouped state of the view would receives the label {\color{RoyalBlue}\texttt{a|b}}.
 
 
 \subsection{Explore Modules} \label{subsec:evalmodules}
 \newcommand{\phil}[1]{\texttt{p#1}}
 
 
-One Purpose of \viewsN is to simplify \mdpsN to make them better understandable. Due to the state explosion problem already rather simple systems can become very hard to oversee. As an example consider the concurrency problem Dining Philosophers, where n philosophers have to share n-1 forks and each of them needs two to eat. They are sitting on a round table with forks between them. Each of them only has access to fork to their left and right, if it is not already occupied. When representing the problem with an \mdpN the choice of which fork the philosopher tries to pick is made at random with an uniform distribution. The respective prism File is shown in the appendix (\ref{lst:0601diningphilosophersfull}).
+One purpose of \viewsN is to simplify \mdpsN to make them easier to understand. Due to the state explosion problem, even fairly simple systems can become very hard to oversee. As an example consider the concurrency problem Dining Philosophers, where n philosophers have to share n-1 forks and each of them needs two to eat. They sit at a round table with forks between them. Each of them has access only to the fork to his left and to his right, if it is not already occupied. When representing the problem with an \mdpN the choice of which fork the philosopher tries to pick is made at random with an uniform distribution. The corresponding \prism file is shown in the appendix (\ref{lst:0601diningphilosophersfull}).
 
-Already for only three philosophers the \mdpN has 956 states. When looking at the graphical representation from \pmcvis in Figure \ref{fig:0601Pure} it appears to be little helpful for understanding and exploring the graph due to its sheer size. Although the graph is large, this \mdpN is still rather small. With already five philosophers the MDP has about 100 000 states and with 10 philosophers the resulting MDP has more than 8 billion states. The \viewN \viewparamvalident can help to only show the behavior of some Philosophers and hiding the behavior of the remaining ones. 
+Already for three philosophers the \mdpN has 956 states. Looking at the graphical representation of \pmcvis in Figure \ref{fig:0601Pure}, it seems to be of little help in understanding and exploring the graph due to its sheer size. Although the graph is large, this \mdpN is still rather small. With already five philosophers, the MDP has about 100,000 states, and with 10 philosophers, the resulting MDP has more than 8 billion states. The \viewN \viewparamvalident can help to show only the behavior of some philosophers and hide the behavior of the remaining ones. 
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{./06/images/06_01_pure_zoomhalf.png}
@@ -22,7 +22,7 @@ Already for only three philosophers the \mdpN has 956 states. When looking at th
 	\label{fig:0601Pure}
 \end{figure}
 
-The \viewN $\viewparamvalident(\phil{1})$ groups all states that have the same value of (\phil{1}) ignoring the values of the remaining variables. That is, the values of \phil{2} and \phil{3} are hidden, which results in only showing the module of philosopher \phil{1} (Figure \ref{fig:0601var}). This may help immensely if only a specific module is of interest or the reaming modules have the same structure, as it is the case here with Dining Philosophers. 
+The \viewN $\viewparamvalident(\phil{1})$ groups all states that have the same value of (\phil{1}), ignoring the values of the remaining variables. That is, the values of \phil{2} and \phil{3} are hidden, resulting in only the module of philosopher \phil{1} being shown (figure \ref{fig:0601var}). This can be very helpful if only one specific module is of interest, or if the modules have the same structure, as is the case here with Dining Philosophers. 
 %Further views could be \viewparamvalident(\phil{1}) applied to understand or explore the module.
 %For example if in Dining Philosophers we were interested in the part of the module where \phil{1} picks their first fork we could use the \viewN \viewparamdnf with c(s) = \redcomment{missing}({Figure}).
 %\redcomment{picking could be added}
@@ -33,7 +33,7 @@ The \viewN $\viewparamvalident(\phil{1})$ groups all states that have the same v
 	\label{fig:0601var}
 \end{figure}
 
-It is also possible to use the view \viewparamvalident to see the interleaved behavior of two or more modules. To see the interleaved behavior of \phil{1} and \phil{2}, we use parallel composition $\viewparamvalident(\phil{1}) \pll \viewparamvalident(\phil{2})$. This results in states $\state_1, \state_2$ being grouped if $(\gfctparamvalident (\state_1 \cond \phil{1}), \gfctparamvalident(\state_1 \cond \phil{2})) = (\gfctparamvalident(\state_2 \cond \phil{1}), \gfctparamvalident(\state_2 \cond \phil{2}))$. Hence, only the value of \phil{3} is hidden which results exactly in the desired interleaved model (Figure \ref{fig:0601var+var}).
+It is also possible to use the view \viewparamvalident to see the interleaved behavior of two or more modules. To see the interleaved behavior of \phil{1} and \phil{2}, we use the parallel composition $\viewparamvalident(\phil{1}) \pll \viewparamvalident(\phil{2})$. This results in the states $\state_1, \state_2$ being grouped if $(\gfctparamvalident (\state_1 \cond \phil{1}), \gfctparamvalident(\state_1 \cond \phil{2})) = (\gfctparamvalident(\state_2 \cond \phil{1}), \gfctparamvalident(\state_2 \cond \phil{2}))$. Hence, only the value of \phil{3} is hidden which results exactly in the desired interleaved model (Figure \ref{fig:0601var+var}).
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{./06/images/06_01_var+var.png}
@@ -41,7 +41,7 @@ It is also possible to use the view \viewparamvalident to see the interleaved be
 	\label{fig:0601var+var}
 \end{figure}
 
-In general the views \viewparamdnf and \viewparamcnf are very powerful since they allow to perform every possible operation on variables, because the state space is finite, for \mdpsN in practice.
+In general, the \viewparamdnf and \viewparamcnf views are very powerful because they allow you to perform any possible operation on variables, since the state space is finite, for \mdpsN checked in practice.
 
 %\begin{itemize}
 %	\item USE: dinging Philosopher
@@ -59,11 +59,11 @@ In general the views \viewparamdnf and \viewparamcnf are very powerful since the
 \subsection{Investigate why illegal states can be reached}
 \newcommand{\critstate}{\mt{\varstyle{2}{2}}}
 
-In this section we want to show how views can be used for debugging. In this specific case we assume that we observed unwanted behavior or model checking results. We know that some states - that is some assignment of variables - are not allowed. We will check if these states are in fact not reachable.
+In this section we want to show how views can be used for debugging. In this particular case, we assume that we have observed some unwanted behavior or model checking results. We know that some states - that is, some variable assignments - are not allowed. We will check if these states are indeed inaccessible.
 
-We will consider a small \mdpN, that we have been given the \prism file for. It represents two systems that intend to send information via a unshareable medium. With a probability of $0.8$ a system can establish a connection and with probability of $0.2$ establishing a connection will fail. After an established connection access to the medium shall only be granted, if it is not occupied by the other system. If the medium is not occupied the system starts sending, otherwise it waits until the medium is free. The termination of the transmission is modeled with probabilities. There is 50 percent chance of terminating the transmission and a 50 percent chances of continuing. The number 0 represents that a system is trying to establish a connection, the number 1 represents that a system established the connection, the number 2 represents that the system is sending.
+We will consider a small \mdpN for which we were given the \prism file. It represents two systems that intend to send information over an unshareable medium. With a probability of $0.8$ a system can establish a connection and with probability of $0.2$ establishing a connection will fail. Once a connection is established, access to the medium is granted only if it is not occupied by the other system. If the medium is not occupied, the system starts sending, otherwise it waits until the medium is free. Transmission termination is modeled with probabilities. There is a 50 percent chance that the transmission will be aborted, and a 50% chance that the transmission will continue. The number 0 indicates that a system is trying to establish a connection, the number 1 indicates that a system has established the connection, the number 2 indicates that the system is sending.
 
-The state \critstate should not be reachable, since it represents the situation of the two systems occupying the unshareable medium at the same time. We will check if this state in fact is not reachable by using the $\view[\pptyparamcnf](c(\state))$ where $c(\state) := (x=2) \land (y=2)$ (Figure \ref{fig:0602Var}). Note that we are not using \viewN \emph{not} in disregarding form.
+The \critstate state should be unreachable, since it represents the situation where both systems occupy the unshareable medium at the same time. We will verify that this state is indeed unreachable by using the $\view[\pptyparamcnf](c(\state))$ where $c(\state) := (x=2) \land (y=2)$ (Figure \ref{fig:0602Var}). Note that we do not use \viewN \emph{not} in the disregarding form.
 
 \begin{figure}[!htb]
 	\centering
@@ -72,7 +72,7 @@ The state \critstate should not be reachable, since it represents the situation 
 	\label{fig:0602Var}
 \end{figure}
 
-We observe, that this state is reachable, because it is shown and only reachable states are shown at all in \pmcvis. The question is how and why. To get this information, it should be investigated by which state this critical state \critstate has been reached. One way of accomplishing that is to look into the database that stores states and transitions (Table \ref{tab:0602database}). For this very simple \mdpN, this already seems to be of little help.
+We observe that this state is reachable because it is shown, and only reachable states are shown in \pmcvis. The question is how and why. To get this information, we should investigate which state has reached this critical state \critstate. One way to do this is to look at the database that stores states and transitions (table \ref{tab:0602database}). For this very simple \mdpN, this seems like a rather tedious approach.
 
 %\begin{figure}
 %	\includegraphics[width=\textwidth]{./06/prism/database-tpme.png}
@@ -134,7 +134,7 @@ We observe, that this state is reachable, because it is shown and only reachable
 	\end{lstlisting}
 \end{figure}
 
-A better approach might be to look at the \prism model file (figure \ref{lst:0602prismbefore}). People experienced in working with prism models may be able to find the problem quickly, especially since this is a rather small \mdpN. With less experienced people, and especially with larger and more complicated models, finding a problem becomes much more difficult. So let us see how views can help us.
+A better approach might be to look at the \prism model file (figure \ref{lst:0602prismbefore}). People experienced in working with prism models may be able to find the problem quickly, especially since this is a fairly small \mdpN. With less experienced people, and especially with larger and more complicated models, finding a problem becomes much more difficult. So let us see how views can help us.
 
 First, we will use the view \viewdistancerev from this state (Figure \ref{fig:0602Var+Dist} (left)). This shows the structure of the \mdpN in terms of how this state is reached. That is, states are grouped that require the same number of transitions to reach the critical state \critstate. The natural number indicates the number of transitions needed to reach it. The state \texttt{\mytexttilde Var|1} represents a group of states that can reach \critstate with a single transition. We are interested in which states it contains, so that we know which state of the original \mdpN reaches \critstate. Since the current version of the project does not yet implement expanding grouped states to their contained states on a visual level, we will use a custom \viewN that emulates this feature.
 
@@ -176,7 +176,7 @@ First, we will use the view \viewdistancerev from this state (Figure \ref{fig:06
 \end{definition}
 
 \sloppy
-We will use partial application with $\view[\pptyparamcnf](c(\state)) \compselect \viewident$ where $\compselectset = \{(\gfctdistance,1)\}$ to expand this state. The MDP graph then looks like in \ref{fig:0602Var+Dist+Id}. It can be seen that the state contains only one state with the id seven. In the current version of the implementation it is not possible to get the parameter values. With the database file we obtain that this is the state where $x=2$ and $y=1$. Since $x=2$ means that system 1 is sending and system 2 is waiting, we see that it is possible for the second system to start sending on the medium although it is already occupied by the first system!
+We will use a partial application with $\view[\pptyparamcnf](c(\state)) \compselect \viewident$ where $\compselectset = \{(\gfctdistance,1)\}$ to expand this state. The MDP graph then looks like in \ref{fig:0602Var+Dist+Id}. It can be seen that the state contains only one state with the id seven. In the current version of the implementation it is not possible to get the parameter values. With the database file we obtain that this is the state where $x=2$ and $y=1$. Since $x=2$ means that system 1 is sending and system 2 is waiting, we see that it is possible for the second system to start sending on the medium even though it is already occupied by the first system!
 
 \begin{figure}[!htb]
 	\centering \includegraphics[width=.8\textwidth]{./06/images/06_02_Var+Dist+Id.png}

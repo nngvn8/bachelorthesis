@@ -135,6 +135,8 @@ The most apparent notion to group states is to group states that \emph{have} a g
 
 Since actions are a very important part of \chgphsN and TS, it seems useful to further enhance this \viewN and look at variants of it. Instead of only showing states that \emph{have} an action outgoing action we could quantify the amount of times that action should be outgoing. For example we could require that a given action has to be outgoing a minimum amount of times. 
 
+\pagebreak
+
 \begin{definition}	
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The \viewN \viewminoutaction is defined by its \grpfctN \gfctminoutaction where $\gfctsubminoutaction : \smstates \to \imggrp$ with
 
@@ -224,6 +226,8 @@ The predicate \predmaxoutact ensures that there are at most \numoutact actions \
 	\caption{Simplified representations of \mdp (left) and the \viewN $\viewmaxoutaction(\action,1)$ on it (right)}
 	\label{fig:outActMaxAfter} 
 \end{figure}
+
+\pagebreak
 
 \begin{exmp}
 	In Figure \ref{fig:outActMaxAfter} we can observe the \viewN $\viewmaxoutaction(\action,1)$ on \chgph. In the simplified representation of \achgphN on the left the action \action is outgoing zero times from $\state_5, \state_6$, one time from $\state_3, \state_4$ and two times from $\state_1, \state_2$. Hence, $\state_3, \dots, \state_6$ are not grouped but shown, and states $\state_1$ and $\state_2$ are grouped.
@@ -638,6 +642,8 @@ By Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \stat
 	\label{fig:varsValEq} 
 \end{figure}
 
+\pagebreak
+
 \begin{exmp}
 	In Figure \ref{fig:varsValEq} we can observe the \viewN of $\viewparamvalueseq(y=1)$ on \chgph, in which states with $y=1$ are not grouped, but all the remaining ones.
 \end{exmp}
@@ -767,6 +773,8 @@ By Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \
 	\label{fig:varValIdent} 
 \end{figure}
 
+\pagebreak
+
 \begin{exmp}
 	In Figure \ref{fig:varValIdent} we can observe the \viewN of $\viewparamvalident$ on \chgph. States are grouped in which $x$ has the same value. It is $x \in \{0, 1, 2\}$. The states $\varstyle{0}{0}, \varstyle{0}{1},\varstyle{0}{2}$ are mapped to the pair $(x,0)$, because in all of them it is $x=0$. In the same way $\varstyle{1}{0}, \varstyle{1}{1},\varstyle{1}{2}$ are grouped due to $x=1$ and $\varstyle{2}{0}, \varstyle{2}{1},\varstyle{2}{2}$ due to $x=2$.
 \end{exmp}
@@ -825,7 +833,7 @@ The smaller the granularity $r$, the more elements the partition has, and vice v
 	\caption{Simplified representations of \mdp (left) and the \viewN $\viewprop(0.4)$ on it (right)}
 	\label{fig:PropBeforeAfter} 
 \end{figure}
-\pagebreak
+
 \begin{exmp}
 	In Figure \ref{fig:PropBeforeAfter} we observe the \viewN $\viewprop(0.4)$ on \chgph. The by $r=0.4$ partition is $Z = \bigcup_{i \in \integers} Z_i$ where
 \[
@@ -1026,6 +1034,8 @@ The only difference of \viewdistancebi to \viewdistance is that \distpathbi is u
 
 In the implementation, a simple breadth-first search is used to determine the distance values from a given state set to each state. There is no need for an algorithm like Dijkstra, since the weights on the edges are probabilities, not values that can be interpreted as cost or distance. The implementation ensures that for each state $\state$ there is a pair $(\state, \distval)$ in \fctdistdefault, i.e. $\infty$ if there is no path to a given state. The Java code of the grouping function for the \viewsN based on distance can be found in the appendix (\ref{apx:distancejava}). All three views are implemented in a single Java class and thus share their grouping function. The results of which grouping function are computed, depends on the value of the enum \texttt{direction}. It is set when an instance of the view is created.
 
+\pagebreak
+
 \subsubsection{Cycles}
 A cycle is a structure that can exist in any graph. The concept of cycles is not limited to \chgphsN or related models used in model checking. The goal of this thesis is to discuss \viewsN that use domain-specific knowledge or general concepts that are of particular relevance when exploring \achgphN. In general, cycles are worth exploring because they can lead to unwanted infinite results in model checking. In addition, when exploring \viewsN, the concept of cycles can be adapted to include \mdpsN properties. To formalize \viewsN based on cycles, we need to formalize the cycle concept itself. We will define it in a way that best suits our specific domain.
 
@@ -1067,6 +1077,8 @@ This \viewN groups all states that are contained in a cycle with a length of at 
 	\eqclassv &= \{\state \in \states \mid \gfcthascycle(\state) = \notppty\} &&\text{otherwise}
 \end{alignat*}
 
+\pagebreak
+
 \noindent The set of states $\states'$ of \viewhascycle is the union of the equivalence classes of \eqrelview. It is $\states' = \bigcup_{\state \in \states} \eqclassv =: \states_1 \cup \states_2$ where
 
 \begin{align*}
@@ -1088,6 +1100,8 @@ This \viewN groups all states that are contained in a cycle with a length of at 
 	\caption{Simplified representations of the \viewN \viewhascycle on \chgph from Figure \ref{fig:cyclesBefore}. The states $\state_{12}$ and $\state_{13}$ are grouped since they are the only states not on a cycle.}
 	\label{fig:cycleAfterHas} 
 \end{figure}
+
+\pagebreak
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $n \in \natnums$. The \viewN \viewexactcycle is defined by its \grpfctN \gfctexactcycle where $\gfctsubexactcycle : \smstates \to \imggrp$ with
