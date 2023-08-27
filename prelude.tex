@@ -62,7 +62,7 @@
 		volatile, while
 	},
 	keywordstyle=\color{RoyalBlue}\bfseries,
-	commentstyle=\color{green}\itshape,
+	commentstyle=\color{gray}\itshape,
 	stringstyle=\color{purple},
 	numberstyle=\tiny\color{gray},
 	identifierstyle=\color{black},
@@ -102,11 +102,47 @@
 		{ig2}{{\textcolor{black}{\hspace{-3pt}ig2}}}3
 		{M1}{{\textcolor{black}{\hspace{-3pt}M1}}}2
 		{M2}{{\textcolor{black}{\hspace{-3pt}M2}}}2
+		{p1}{{\textcolor{black}{\hspace{-3pt}p1}}}2
+		{p2}{{\textcolor{black}{\hspace{-3pt}p2}}}2
+		{p3}{{\textcolor{black}{\hspace{-3pt}p3}}}2
+		{(got}{{\textcolor{gray}{(got\hspace{-4pt}}}}4
+		{left)}{{\textcolor{gray}{left)}}}5
+		{right)}{{\textcolor{gray}{right)}}}6
+		{forks)}{{\textcolor{gray}{forks)}}}6		
+%		{(got right)}{{\textcolor{gray}{\hspace{-5pt}(got right)}}}11
+%		{(got forks)}{{\textcolor{gray}{\hspace{-5pt}(got forks)}}}11
+%		{t)}{{\textcolor{gray}{\hspace{-20pt}t)}}}4
 		{true}{{\textbf{true}}}4
 		%		{c_max_time}{{\textcolor{Tan}{c_max_time}}}10			
 	}
 }
 
+
+\newcommand{\commentcolor}{\color{green!60!black}}
+\newcommand{\commentcolorize}[1]{{\commentcolor#1}}
+
+\lstdefinestyle{javaStyle}{
+	language=Java,
+	basicstyle=\smaller\ttfamily,
+	keywordstyle=\color{blue}\bfseries,
+	commentstyle=\commentcolor,
+	stringstyle=\color{purple},
+	%	numbers=left,
+	%	numberstyle=\tiny\color{gray},
+	%	stepnumber=1,
+	%	numbersep=8pt,
+	%	backgroundcolor=\color{gray!10},
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	frame=lines,
+	tabsize=4,
+	captionpos=b,
+	breaklines=true,
+	breakatwhitespace=false,
+	%	escapeinside={\%*}{*)}
+	escapechar=\~
+}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% THEOREMSTYLES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -254,12 +290,6 @@
 \newcommand{\disregardelements}{\mt{{\disregardelem_1, \dots, \disregardelem_n}}}
 
 
-
-%\newcommand{\mdp}{def}\mdp
-%\newcommand{\mdpdef}
-
-
-
 % EXAMPLE VIEWS
 \newcommand{\pptyatomicprops}{\mt{\atomicprops}}
 \newcommand{\pptyinitstates}{\mt{\initstates}}
@@ -285,7 +315,7 @@
 \newcommand{\pptyparamcnf}{\mt{VarCNF}}
 \newcommand{\pptyparamvalueseqopt}{\mt{\var = \varval}}
 \newcommand{\pptyparamvalident}{\mt{Var:\varval}}
-\newcommand{\pptydistance}{\mt{\distpath}}
+\newcommand{\pptydistance}{\mt{\overrightarrow\distpath}}
 \newcommand{\pptydistancerev}{\mt{\distpathrev}}
 \newcommand{\pptydistancebi}{\mt{\distpathbi}}
 \newcommand{\pptyhascycle}{\mt{\exists\cycle}}
@@ -407,37 +437,6 @@
 \newcommand{\viewprop}{\mt{\view[\pptyprop]}}
 \newcommand{\viewident}{\mt{\view[\pptyident]}}
 
-%\newcommand{\viewatomicprops}{\mt{\view[\atomicprops]}}
-%\newcommand{\viewinitstates}{\mt{\view[\initstates]}}
-%\newcommand{\viewhasoutaction}{\mt{\view[\pptyhasoutact]}}
-%\newcommand{\viewminoutaction}{\mt{\view[\pptyminoutact{\numoutact}{\outact}]}}
-%\newcommand{\viewmaxoutaction}{\mt{\view[\pptymaxoutact{\numoutact}{\outact}]}}
-%\newcommand{\viewspanoutaction}{\mt{\view[\pptyspanoutact{\numoutactb}{\outact}{\numoutact}]}}
-%\newcommand{\viewoutactsetsize}{\mt{\view[\pptyoutactsetsize]}}
-%\newcommand{\viewoutactsingle}{\mt{\view[\pptyoutactsingle]}}
-%\newcommand{\viewstrongoutactident}{\mt{\view[\outacts(\state)_=]}}
-%\newcommand{\viewweakoutactident}{\mt{\view[\outacts(\state)_\approx]}}
-%\newcommand{\viewhasinaction}{\mt{\view[\pptyhasinact]}}
-%\newcommand{\viewmininaction}{\mt{\view[\pptymininact{\numinact}{\inact}]}}
-%\newcommand{\viewmaxinaction}{\mt{\view[\pptymaxinact{\numinact}{\inact}]}}
-%\newcommand{\viewspaninaction}{\mt{\view[\pptyspaninact{\numinactb}{\inact}{\numinact}]}}
-%\newcommand{\viewinactsetsize}{\mt{\view[\pptyinactsetsize]}}
-%\newcommand{\viewinactsingle}{\mt{\view[\pptyinactsingle]}}
-%\newcommand{\viewstronginactident}{\mt{\view[\inacts(\state)_=]}}
-%\newcommand{\viewweakinactident}{\mt{\view[\inacts(\state)_\approx]}}
-%\newcommand{\viewparamvalueseq}{\mt{\view[\var = \varval]}}
-%\newcommand{\viewparamvaluesneq}{\mt{\view[\var \neq \varval]}}
-%\newcommand{\viewparamdnf}{\mt{\view[VarDNF]}}
-%\newcommand{\viewparamcnf}{\mt{\view[VarCNF]}}
-%\newcommand{\viewparamvalident}{\mt{\view[\pptyparamvalident]}}
-%\newcommand{\viewdistance}{\mt{\view[\pptydistance]}}
-%\newcommand{\viewhascycle}{\mt{\view[\exists\cycle]}}
-%\newcommand{\viewexactcycle}{\mt{\view[\pptyexactcycle]}}
-%\newcommand{\viewcycleset}{\mt{\view[\pptycycleset]}}
-%\newcommand{\viewexactactcycle}{\mt{\view[\pptyexactactcycle]}}
-%\newcommand{\viewscc}{\mt{\view[scc]}}
-%\newcommand{\viewbscc}{\mt{\view[bscc]}}
-
 %actions
 \newcommand{\numoutact}{\mt{n}}
 \newcommand{\numoutactb}{\mt{m}}
@@ -502,15 +501,17 @@
 \let\path\oldpath
 \newcommand{\path}{\mt{P}}
 \newcommand{\pathbi}{\mt{\bar{\path}}}
-\newcommand{\pathsecfull}{\mt{(\state_0, \action_0, \state_1, \action_1, \dots, \action_{n}, \state_{n+1})}}
+\newcommand{\pathsecfull}{\mt{(\state_1, \action_1, \state_2, \action_2, \dots, \action_{n}, \state_{n+1})}}
 \newcommand{\lenpath}{\mt{len}}
 \newcommand{\pfirst}{\mt{first}}
 \newcommand{\plast}{\mt{last}}
 \newcommand{\pathset}{\mt{\path_\chgph}}
 \newcommand{\pathbiset}{\mt{\pathbi_\chgph}}
-\newcommand{\distpath}{\mt{\mbox{\smaller[2]$\overrightarrow{dist}$}}}
+%\newcommand{\distpath}{\mt{\mbox{\smaller[2]$\overrightarrow{dist}$}}}
+\newcommand{\distpath}{\mt{dist}}
 \newcommand{\distpathrev}{\mt{\mbox{\smaller[2]$\overleftarrow{dist}$}}}
-\newcommand{\distpathbi}{\mt{\mbox{\smaller[2]$\overline{dist}$}}}
+%\newcommand{\distpathbi}{\mt{\mbox{\smaller[2]$\overline{dist}$}}}
+\newcommand{\distpathbi}{\mt{\overline{dist}}}
 %Cycles
 \newcommand{\cyclesecfull}{\mt{(\state_0, \action_0, \state_1, \action_1, \dots, \action_{n-1}, \state_0)}}
 \newcommand{\fctfindcycles}{\mt{findCycles}}
