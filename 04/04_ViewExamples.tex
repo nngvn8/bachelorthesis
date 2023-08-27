@@ -5,33 +5,19 @@
 
 \begin{document} 
 \section{View Examples} \label{ch:viewexmp}
-In this chapter we will introduce and discuss some \viewN examples created by the author. Their purpose is to understand the idea and concept of a \viewN and get to know some \viewsN that might be useful in real world applications. \\
-When considering \viewsN, we only want to take into account those that utilize properties of MDPs or that do computations that are also feasible on normal graphs, but are of explicit relevance MDPs.
+In this chapter we will introduce and discuss some \viewN examples created by the author. Their purpose is to understand the idea and concept of a \viewN and to get to know some \viewsN that might be useful in real world applications. \\
+When considering \viewsN, we want to consider only those that exploit properties of MDPs, or that perform computations that are also feasible on normal graphs, but are of explicit relevance to MDPs.
 \subsection{Views Utilizing MDP Characteristics}
-In this section we will introduce some \viewsN the are purely based on the characteristics of an \mdpN. This includes \viewsN utilizing elements of the tuple from the definition of \chgphsN ("\chgph components"), but also information that is attached to it, such as variables, reward or cost structure and model checking results.
+In this section, we will introduce some \viewsN that are purely based on the properties of an \mdpN. This includes \viewsN that leverage elements of the tuple from the definition of \chgphsN ("\chgph components"), but also information associated with it, such as variables, reward or cost structure, and model checking results.
 \subsubsection{Atomic Propositions}
-One of the least involved approaches to create a \viewN is to base it on the atomic propositions, that are assigned to each state by the labeling function. Atomic Propositions are of relevance because in they are the base tools to identify states with certain notable properties. The notion is to group states that were assigned the same set of atomic propositions.
+One of the least involved approaches to create a \viewN is to base it on the atomic propositions assigned to each state by the labeling function. Atomic Propositions are of relevance because in they are the base tools to identify states with certain notable properties. The notion is to group states that were assigned the same set of atomic propositions.
 %\redcomment{Why useful?, currently no "has AP" $\to$ maybe should be added}
-
-
-%\begin{figure}[!htb]
-%	\begin{minipage}{.6\textwidth}
-%		%		\hspace{5mm}
-%		\input{./04/images/ap/apBefore}
-%	\end{minipage}%
-%	\begin{minipage}{.5\textwidth}
-%		\input{./04/images/ap/apHasAfter}
-%	\end{minipage}
-%	\caption{Simplified representations of \mdp (left) and the \viewN \viewatomicprops on it (right)}
-%	\label{fig:apHasBeforeAfter} 
-%\end{figure}
-
 
 \begin{definition}	
 	Let $\chgph = \chgphtuple$ be \achgphN and $\smstates \subseteq \states$. The \viewN \viewatomicprops is defined by its \grpfctN \gfctatomicprops where $\gfctsubatomicprops : \smstates \to \imggrp, {\state}\mapsto{\labelingfct(\state)}$ with $\imggrp = \atomicprops \cup \remset$.
 \end{definition}
 
-The grouping function is exactly the labeling function i.e. for all $\state \in \states$ it is $\gfctatomicprops(\state) := \labelingfct(\state)$. So it is $\gfctatomicprops(\state_1) = \gfctatomicprops(\state_2)$ \iffN $\labelingfct(\state_1) = \labelingfct(\state_2)$. According to Definition \ref{def:eqrelview} for $\smstate \in \states$ it is $\eqclassv[\smstate] = \{\state \in \states \mid \labelingfct(\state) = \labelingfct(\smstate)\}$.
+The grouping function is exactly the labeling function i.e. for all $\state \in \states$ it is $\gfctatomicprops(\state) := \labelingfct(\state)$. So it is $\gfctatomicprops(\state_1) = \gfctatomicprops(\state_2)$ \iffN $\labelingfct(\state_1) = \labelingfct(\state_2)$. By Definition \ref{def:eqrelview} for $\smstate \in \states$ it is $\eqclassv[\smstate] = \{\state \in \states \mid \labelingfct(\state) = \labelingfct(\smstate)\}$.
 %$\forall \state_1, \state_2 \in \states :
 
 Thereby we obtain the \viewN $\viewatomicprops$ for a given \chgphN \chgph where: $\states' = \bigcup_{\state \in \states} \{\eqclassv\} = \bigcup_{a \in \atomicprops} \{\{\state \in \states \mid \labelingfct(\state) = a\}\}$. All other components are constructed as in Definition \ref{def:view}.
@@ -52,10 +38,10 @@ Thereby we obtain the \viewN $\viewatomicprops$ for a given \chgphN \chgph where
 	In Figure \ref{fig:apIdentBeforeAfter} we can observe the \viewN \viewatomicprops on \chgph. In the simplified representation on the left the assigned set of atomic propositions of each state are noted next to them. There are four different sets of atomic propositions: $\{\}, \{a\}, \{b\} \text{ and } \{a,b\}$. In the \viewN on the right the states with the same set of atomic propositions have been grouped.
 \end{exmp}
 
-Although this \viewN might seem rather simple, because essentially it only performs $\gfctatomicprops := \labelingfct$ it is the most powerful one. This is because every \viewN presented in the following is reducible to this one. That is because a \grpfctN assigns a value to each state. This value could be interpreted as atomic proposition. The reduction can be realized by replacing the labeling function with the grouping function of the resepective \viewN. That is $\labelingfct := \grpfct$ and $\atomicprops := {\grpfct}[\states]$ for some \grpfctN \grpfct. While this works it alters the underlying \chgphN.
+Although this \viewN may seem rather simple, since it essentially only performs $\gfctatomicprops := \labelingfct$, it is the most powerful. This is because every \viewN presented below is reducible to this one. This is because a \grpfctN assigns a value to each state. This value could be interpreted as an atomic proposition. The reduction can be realized by replacing the labeling function with the grouping function of the respective \viewN. That is, $\labelingfct := \grpfct$ and $\atomicprops := {\grpfct}[\states]$ for some \grpfctN \grpfct. While this works, it alters the underlying \chgphN.
 
 \subsubsection{Initial States}
-An a little more involved idea than directly using a given function is to utilize the support of initial distribution $\{\state \in \states \mid \initdistrib(\state) > 0\}$. We can group states that have a probability greater zero, that they are started from. In practice this might be useful to quickly find all initial states.
+A slightly more complicated idea than directly using a given function is to use the support of the initial distribution $\{\state \in \states \mid \initdistrib(\state) > 0\}$. We can group states that have a probability greater than zero to start from. In practice, this may be useful to quickly find all initial states.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\initstates := \{\state \in \states \mid \initdistrib(\state) > 0\}$. The \viewN \viewinitstates is defined by its \grpfctN \gfctinitstates where $\gfctsubinitstates : \smstates \to \imggrp$ with 
@@ -71,7 +57,7 @@ An a little more involved idea than directly using a given function is to utiliz
 \end{definition}
 
 %For $\state_1,\state_2 \in \states$ it is $\gfctinitstates(\state_1) = \gfctinitstates(\state_2)$ \iffN $\state_1, \state_2 \notin \initstates$ or $\state_1 = \state_2$.
-\noindent According to Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \states are 
+\noindent By Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \states are 
 \begin{alignat*}{3}
 	\eqclassv &= \{\state \in \states \mid \gfctinitstates(\state) = \remelem\} = \{\state\} \quad\quad\quad\quad\quad\quad &&\text{for } \state \in \initstates \\
 	\eqclassv &= \{\state \in \states \mid \gfctinitstates(\state) = \notppty \} &&\text{otherwise}
@@ -96,7 +82,7 @@ An a little more involved idea than directly using a given function is to utiliz
 \end{exmp}
 
 \subsubsection{Outgoing Actions}
-Another crucial component of \achgphN is its set of actions \actions. Actions are used for interprocesscommunication und synchronization. In this subsection we will provide and discuss some \viewsN utilizing action outgoing from a state. 
+Another crucial component of \achgphN is its set of actions \actions. Actions are used for interprocess communication and synchronization. In this subsection we will provide and discuss some \viewsN that utilize outgoing actions from a state. 
 The most apparent notion to group states is to group states that \emph{have} a given outgoing action.
 
 \begin{definition}
@@ -116,7 +102,7 @@ The most apparent notion to group states is to group states that \emph{have} a g
 %For $\state_1,\state_2 \in \states$ it is $\gfcthasoutaction(\state_1) = \gfcthasoutaction(\state_2)$ \iffN 
 %there exist $\state_{a},\state_{b} \in \states$ with 
 %$(\state_1, \action, \state_{a}), (\state_2, \action, \state_{b}) \in \trans$ (i.e. they have \action as outgoing action). 
-\noindent According to Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \states are 
+\noindent By Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \states are 
 \begin{alignat*}{3}
 	\eqclassv &= \{\state \in \states \mid \gfcthasoutaction(\state) = \remelem\} = \{s\} \quad\quad\quad\quad\quad &&\text{if }\exists\state' \in \states : (\state, \action, \state') \in \trans \\
 	\eqclassv &= \{\state \in \states \mid \gfcthasoutaction(\state) = \notppty\} \quad\quad\quad\quad\quad &&\text{otherwise}
@@ -171,7 +157,7 @@ Since actions are a very important part of \chgphsN and TS, it seems useful to f
 
 The predicate \predminoutact requires that there are transitions with action \action to \numoutact distinct states, but would also be satisfied, if there were more.
 %For $\state_1,\state_2 \in \states$ it is $\gfctminoutaction(\state_1) = \gfctminoutaction(\state_2) \neq \remelem$ \iffN there do not exist distinct $\state_{a_1}, \dots, \state_{a_\numoutact} \in \states$ and distinct $\state_{b_1}, \dots, \state_{b_\numoutact} \in \states$ so that $(\state_1, \action, \state_{a_1}), \dots, (\state_1, \action, \state_{a_\numoutact}) \in \trans$ and $(\state_2, \action, \state_{b_1}), \dots, (\state_2, \action, \state_{b_\numoutact}) \in \trans$. 
-\noindent According to Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \states are 
+\noindent By Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \states are 
 \begin{alignat*}{3}
 	\eqclassv &= \{\state \in \states \mid \gfctminoutaction(\state) = \remelem\} = \{\state\} \quad\quad\quad &&\text{if } \exists \state_1, \dots, \state_\numoutact \in \states: \predminoutact \\ 
 	\eqclassv &= \{\state \in \states \mid \gfctminoutaction(\state) = \notppty\} &&\text{otherwise}
@@ -202,7 +188,7 @@ The predicate \predminoutact requires that there are transitions with action \ac
 	In Figure \ref{fig:outActMinAfter} we can observe the \viewN $\viewminoutaction(\action,2)$ on \chgph. In the simplified representation of \achgphN on the left the action \action is outgoing zero times from $\state_5, \state_6$, one time from $\state_3, \state_4$ and two times from $\state_1, \state_2$. Hence, $\state_1$ and $\state_2$ are not grouped but shown, and states $\state_3, \dots, \state_6$ are grouped.
 \end{exmp}
 
-\noindent In a similar fashion we define \viewN that groups states where at most a certain number of times a given action is outgoing. 
+\noindent In a similar fashion we define \viewN, which groups states where a given action occurs at most a certain number of times. 
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The \viewN \viewmaxoutaction is defined by its \grpfctN \gfctmaxoutaction where $\gfctsubmaxoutaction : \smstates \to \imggrp$ with
@@ -224,7 +210,7 @@ The predicate \predminoutact requires that there are transitions with action \ac
 	\label{def:viewmaxoutaction}
 \end{definition}
 
-The predicate \predmaxoutact ensures that there are at most \numoutact actions \action outgoing, by requiring that if there exist more than \numoutact transitions outgoing with action \action, at least two of them are the same. It does so by enforcing that the states where the transitions end are in fact the same. The reasoning about the equality of the \grpfctN values, the obtained equivalence classes and the resulting set of states $\states'$ of the \viewN is analogous to \viewminoutaction.
+The predicate \predmaxoutact ensures that there are at most \numoutact actions \action outgoing, by requiring that if there exist more than \numoutact transitions outgoing with action \action, at least two of them are the same. It does so by enforcing that the states in which the transitions end are in fact the same. The reasoning about the equality of the \grpfctN values, the obtained equivalence classes, and the resulting set of states $\states'$ of \viewN is analogous to \viewminoutaction.
 
 \begin{figure}[!htb]
 	\begin{minipage}{.5\textwidth}
@@ -243,7 +229,7 @@ The predicate \predmaxoutact ensures that there are at most \numoutact actions \
 	In Figure \ref{fig:outActMaxAfter} we can observe the \viewN $\viewmaxoutaction(\action,1)$ on \chgph. In the simplified representation of \achgphN on the left the action \action is outgoing zero times from $\state_5, \state_6$, one time from $\state_3, \state_4$ and two times from $\state_1, \state_2$. Hence, $\state_3, \dots, \state_6$ are not grouped but shown, and states $\state_1$ and $\state_2$ are grouped.
 \end{exmp}
 
-Since we already defined \grpfctsN and hence \viewsN for a required minimal and maximal amount of times an action has to be outgoing it is now easily possible to define a \viewN that groups states where the amount of outgoing actions is at least \numoutact and at most \numoutactb. 
+Since we have already defined \grpfctsN and hence \viewsN for a required minimum and maximal amount of times an action has to be outgoing it is now easily possible to define a \viewN that groups states where the amount of outgoing actions is at least \numoutact and at most \numoutactb. 
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The \viewN 
@@ -256,25 +242,23 @@ Since we already defined \grpfctsN and hence \viewsN for a required minimal and 
 			\notppty,     	& \text{otherwise}
 		\end{cases}
 	\]
-	where $\imggrp := \imggrpbinview$
-%	\actions \cup \remset$ 
-	and $\numoutactb, \numoutact \in \natnums$ are the minimal and maximal number of transitions with action \action in order for state to be grouped. The predicates \predminoutact and \predmaxoutact are the predicates from Definition \ref{def:minoutaction} and Definition \ref{def:viewmaxoutaction} respectively.
+	and $\numoutactb, \numoutact \in \natnums$ are the minimum and maximum number of transitions with action \action for a state to be grouped. The predicates \predminoutact and \predmaxoutact are the predicates from Definition \ref{def:minoutaction} and Definition \ref{def:viewmaxoutaction} respectively.
 \end{definition}
 
-For a given $\state \in \states$ the expressions $\exists \state_1, \dots, \state_\numoutact \in \states: \predminoutact$ and $\forall \state_1, \dots, \state_{\numoutactb+1} \in \states: \predmaxoutact[\numoutactb]$ from Definition \ref{def:minoutaction} and Definition \ref{def:viewmaxoutaction} require that \state has minimal and maximal amount of outgoing transitions with an action \action respectively. Hence, the conjunction will be true for states where the amount of outgoing transitions with action \action is element of the set $\{\numoutactb, \numoutact+1, \dots, \numoutact-1, \numoutact\}$. We will write for this that the number of outgoing actions is \emph{in the span}. For a given state \state and action \action for convenience we set
+For a given $\state \in \states$, the expressions $\exists \state_1, \dots, \state_\numoutact \in \states: \predminoutact$ and $\forall \state_1, \dots, \state_{\numoutactb+1} \in \states: \predmaxoutact[\numoutactb]$ from Definition \ref{def:minoutaction} and Definition \ref{def:viewmaxoutaction} require that \state has a minimum and maximum amount of outgoing transitions with an action \action. Hence, the conjunction will be true for states where the amount of outgoing transitions with action \action is element of the set $\{\numoutactb, \numoutact+1, \dots, \numoutact-1, \numoutact\}$. We will write that the number of outgoing actions is \emph{in the span}. For a given state \state and action \action, for convenience we set
 
 \begin{align*}
 	\formoutact:= &\;\exists \state_1, \dots, \state_\numoutactb \in \states: \predminoutact[\numoutactb] \\
 	&\land \forall \state_1, \dots, \state_{\numoutact+1} \in \states: \predmaxoutact
 \end{align*}
 
-\formoutact is true \iffN the number of outgoing actions is in the span. For $\state_1, \state_2 \in \states$ it is $\gfctspanoutaction(\state_1) = \gfctspanoutaction(\state_2)$ \iffN $\formoutact[\state_1] \land \formoutact[\state_2]$ or $\state_1 = \state_2$. According to Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \states are 
+\formoutact is true \iffN the number of outgoing actions is in the span. For $\state_1, \state_2 \in \states$ it is $\gfctspanoutaction(\state_1) = \gfctspanoutaction(\state_2)$ \iffN $\formoutact[\state_1] \land \formoutact[\state_2]$ or $\state_1 = \state_2$. By Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \states are 
 \begin{alignat*}{3}
 	\eqclassv &= \{\state \in \states \mid \gfctspanoutaction(\state) = \remelem\} = \{\state\} \quad\quad\quad\quad\quad &&\text{if } \formoutact \text{ true} \\
 	\eqclassv &= \{\state \in \states \mid \gfctspanoutaction(\state) = \notppty\} &&\text{otherwise}	
 \end{alignat*}
 
-The new set of states $\states'$ of the \viewN \viewspanoutaction is the union of the equivalence classes of equivalence relation \eqrelview on the set of states \states of the original \chgphN. Hence, it is $\states' = \bigcup_{\state \in \states} \eqclassv =: \states_1 \cup \states_2$ where
+The new set of states $\states'$ of the \viewN \viewspanoutaction is the union of the equivalence classes of the equivalence relation \eqrelview on the set of states \states of the original \chgphN. Hence it is $\states' = \bigcup_{\state \in \states} \eqclassv =: \states_1 \cup \states_2$ where
 \begin{align*}
 	\states_1 &:= \{\{\state\} \mid \state \in \states, \, \formoutact \text{ true}\} \\
 	&\;= \{\{\state\} \mid \state \in \states, \, \gfctspanoutaction(\state) = \remelem\} = \nogroupstates \\
@@ -294,13 +278,13 @@ The new set of states $\states'$ of the \viewN \viewspanoutaction is the union o
 	\label{fig:outActSpan}
 \end{figure}
 \begin{exmp}
-	In Figure \ref{fig:outActSpan} we can observe the \viewN $\viewspanoutaction(1, \action, 1)$ on \mdp. It shows states that have the action \action at least one time outgoing and at most 1 one time. Hence, it does not group states, where the action \action is outgoing exactly once. All all remaining states are grouped. In the simplified representation of \achgphN on the left the action \action is outgoing zero times from $\state_5, \state_6$, one time from $\state_3, \state_4$ and two times from $\state_1, \state_2$. Hence, $\state_4, \dots, \state_5$ are not grouped but shown, and the remaining states $\state_1, \state_2, \state_5, \state_6$ are grouped.
+	In Figure \ref{fig:outActSpan} we can observe the \viewN $\viewspanoutaction(1, \action, 1)$ on \mdp. It shows states that have the action \action at least one time outgoing and at most 1 one time. Hence, it does not group states, where the action \action is outgoing exactly once. All all remaining states are grouped. In the simplified representation of \achgphN on the left, the action \action is outgoing zero times from $\state_5, \state_6$, one time from $\state_3, \state_4$ and two times from $\state_1, \state_2$. Hence, $\state_4, \dots, \state_5$ are not grouped but shown, and the remaining states $\state_1, \state_2, \state_5, \state_6$ are grouped.
 \end{exmp}
 
 
 %The \viewsN above can be combined with \parllcompN. The thereby obtained \viewN requires that the respective conditions of all the combined \viewsN are met. In this sense it is a conjunctive combination.
 
-Instead of making requirements about states and group them based on whether they meet these requirements it also possible to group states that are very similar or even identical with regard to their outgoing action. Firstly we will consider the case where the outgoing actions and their quantity are identical.
+Instead of making requirements on states and grouping them based on whether they meet those requirements, it is also possible to group states that are very similar or even identical with respect to their outgoing actions. First, we will consider the case where the outgoing actions and their set are identical.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN and $\smstates \subseteq \states$. The \viewN \viewstrongoutactident is defined by its \grpfctN \gfctstrongoutactident where $\gfctsubstrongoutactident : \smstates \to \imggrp$ with
@@ -311,13 +295,13 @@ Instead of making requirements about states and group them based on whether they
 	and $\imggrp := \actions \times \natnums \cup \remset$.
 \end{definition}
 
-The \grpfctN assigns to each state a set of pairs. A pair for each action in \actions is included, declaring the amount of times the action is outgoing from that state. Note that $n$ is zero if an action is not outgoing from a state.
+The \grpfctN assigns a set of pairs to each state. For each action in \actions, one pair is contained, declaring the number of times the action is outgoing from that state. Note that $n$ is zero if an action is not outgoing from a state.
 %Note that a pair is contained in the set for each action $\action \in \actions$. In case there is no outgoing transition from state \state with an action \action it is $(\action, 0) \in \gfctstrongoutactident$. For $\state_1, \state_2 \in \states$ it is $\gfctstrongoutactident(\state_1) = \gfctstrongoutactident(\state_2)$ \iffN $\state_1$ and $\state_2$ are mapped to the same set of pairs. 
-According to Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \states are 
+By Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \states are 
 \[
 	\eqclassv := \{\state' \in \states \mid \gfctstrongoutactident(\state') = \gfctstrongoutactident(\state) = \{(\action_1, \numoutact_1), \dots, (\action_l, \numoutact_l)\}\} \text{ where } l = |\actions|
 \]
-According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewstrongoutactident. All other components of \viewstrongoutactident are as usual structured in accordance with the Definition \ref{def:view}.
+By Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewstrongoutactident. All other components of \viewstrongoutactident are structured as usual according to the definition \ref{def:view}.
 
 \begin{figure}[!htb]
 	\begin{minipage}{.5\textwidth}
@@ -342,7 +326,7 @@ For \viewstrongoutactident it is \gfctstrongoutactident :
 	&\state_2 \mapsto \{(\action,2), (\actionb,1), (\actionc,1)\} \quad\quad\quad\quad && \state_5 \mapsto \{(\action,0), (\actionb,0), (\actionc,1)\} \\
 	&\state_3 \mapsto \{(\action,1), (\actionb,1), (\actionc,1)\} \quad\quad\quad\quad && \state_6 \mapsto \{(\action,0), (\actionb,0), (\actionc,1)\}	
 \end{alignat*}
-because these are number of corresponding outgoing actions from each state. We see that the sets are equal for $\state_1$ and $\state_2$ and for $\state_5$ and $\state_6$. Hence, these two pairs are each grouped to a new to new states. The remaining states are not grouped with another state. The equivalences classes containing them are singleton sets.
+because these are number of corresponding outgoing actions from each state. We see that the sets are equal for $\state_1$ and $\state_2$ and for $\state_5$ and $\state_6$. So these two pairs are grouped into new states each. The remaining states are not grouped with any other state. The equivalence classes containing them are singleton sets.
 %\begin{minipage}{.45\textwidth}
 %\begin{align*}
 %	\state_1 &\mapsto \{(\action,2), (\actionb,1), (\actionc,1)\} \\
@@ -359,7 +343,7 @@ because these are number of corresponding outgoing actions from each state. We s
 %\end{minipage}
 \end{exmp}
 
-The \viewN \viewstrongoutactident, as well as \viewminoutaction, \viewmaxoutaction, \viewspanoutaction were initially motivated by transition systems in which there exist no probabilities but several actions outgoing from a single state may occur. As \mdpsN can model transition systems they were included. For \mdpsN with proper probability distributions, counting outgoing actions may help less. Instead one could disregard the amount of times an action is outgoing and only be interested in states that have the same options for the nondeterministic choice, before the probabilistic one.
+The \viewN \viewstrongoutactident, as well as \viewminoutaction, \viewmaxoutaction, \viewspanoutaction were originally motivated by transition systems in which there are no probabilities, but multiple actions starting from a single state may occur. Since \mdpsN can model transition systems, they were included. For \mdpsN with proper probability distributions, counting outgoing actions may be less helpful. Instead, one could disregard the amount of times an action is outgoing and only be interested in states that have the same options for the nondeterministic choice before the probabilistic one.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN and $\smstates \subseteq \states$. The \viewN \viewweakoutactident is defined by its \grpfctN \gfctweakoutactident where $\gfctsubweakoutactident : \smstates \to \imggrp$ with
@@ -373,7 +357,7 @@ For $\state_1, \state_2 \in \states$ it is $\gfctweakoutactident(\state_1) = \gf
 \[
 	\eqclassv = \{ \state' \in \states \mid \gfctweakoutactident(\state') = \gfctweakoutactident(\state) =: \{\action_1, \dots, \action_l\}\} \text{ where } l \leq |\actions|.
 \]
-According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewweakoutactident.
+By Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewweakoutactident.
 
 \begin{figure}[!htb]
 	\begin{minipage}{.5\textwidth}
@@ -396,7 +380,6 @@ For \viewweakoutactident it is \gfctweakoutactident :
 	&\state_2 \mapsto \{\action, \actionb, \actionc\} &&\state_5 \mapsto \{\actionc\}\\
 	&\state_3 \mapsto \{\action, \actionb, \actionc\} &&\state_6 \mapsto \{\actionc\}
 \end{alignat*}
-
 because these are the corresponding outgoing actions from each state. We see that the sets are equal for $\state_1,\state_2$ and $\state_3$ and for $\state_5$ and $\state_6$. Hence, the state set of the \viewN \viewweakoutactident on \chgph has the state set $\{\{\state_1, \state_2, \state_3\}, \{\state_4\}, \{\state_5, \state_5\}\}$.
 \end{exmp}
 Apart from the option of directly considering one or a set of outgoing actions with possible quantities it is also possible to only consider the quantity of outgoing actions without regarding any specific action.
@@ -411,12 +394,12 @@ Apart from the option of directly considering one or a set of outgoing actions w
 
 %For $\state_1, \state_2 \in \states$ it is $\gfctoutactsetsize(\state_1) = \gfctoutactsetsize(\state_2)$ \iffN they are mapped to the same set of actions. 
 
-\noindent According to Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \states are 
+\noindent By Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \states are 
 \begin{align*}
 	\eqclassv[\state] = \{ \state \in \states \mid \gfctoutactsetsize(\state') = \gfctoutactsetsize(\state)\} = \{ \state \in \states \mid \outacts(\state') = \outacts(\state)\}
 \end{align*}
 
-\noindent According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewweakoutactident.
+\noindent By Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewweakoutactident.
 
 \begin{figure}[!htb]
 	\begin{minipage}{.5\textwidth}
@@ -432,12 +415,12 @@ Apart from the option of directly considering one or a set of outgoing actions w
 \end{figure}
 
 \begin{exmp}
-	In Figure \ref{fig:outActSetSize} we can observe the \viewN $\viewoutactsetsize$ on \chgph. In the simplified representation of \achgphN on the states $\state_1, \state_2, \state_3$ have the outgoing actions $\action, \actionb, \actionc$, the state $\state_4$ has the outgoing action \action and the state $\state_5, \state_6$ have the outgoing action \actionc. Hence, the number of outgoing actions for $\state_1, \state_2, \state_3$ is three and for $\state_4, \state_5, \state_6$ is one. This is why each of these states become a new single state in the \viewN \viewoutactsetsize.
+	In Figure \ref{fig:outActSetSize} we can observe the \viewN $\viewoutactsetsize$ on \chgph. In the simplified representation of \achgphN on the states $\state_1, \state_2, \state_3$ have the outgoing actions $\action, \actionb, \actionc$, the state $\state_4$ has the outgoing action \action and the state $\state_5, \state_6$ have the outgoing action \actionc. Hence, the number of outgoing actions for $\state_1, \state_2, \state_3$ is three and for $\state_4, \state_5, \state_6$ is one. Therefore, each of these states becomes a new single state in the \viewN \viewoutactsetsize.
 \end{exmp}
 
 The notion of the \viewN \viewoutactsetsize is similar to utilize the outdegree, with the difference being here that ougoing transitions with the same action are considered as one single edge. This reflects on the options available for nondeterminism in this state.
 
-The sepcialcase of there only being one single ougoing action is worth a distinct view, since it hides all not nondeterministic choices, but nothing more.
+The special case where there is only a single outgoing action is worth a distinct \viewN, since it hides all non-deterministic choices, but nothing more.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The \viewN \viewoutactsingle is defined by its \grpfctN \gfctoutactsingle where $\gfctsuboutactsingle : \smstates \to \imggrp$ with
@@ -451,9 +434,9 @@ The sepcialcase of there only being one single ougoing action is worth a distinc
 	and $\imggrp := \natnums \cup \remset$.
 \end{definition}
 
-Note that this \viewN is disregarding \notppty and hence groups states \emph{have} the property. This version was chosen because the intention of the \viewN is to hide \states in which there is no nondeterministic selection of an action. 
+Note that this \viewN is disregarding \notppty and hence groups states that \emph{have} the property. This version was chosen because the intention of the \viewN is to hide \states in which there is no nondeterministic choice of an action. 
 
-\noindent According to Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \states are
+\noindent By Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \states are 
 %Two states $\state_1, \state_2 \in \states$ are grouped \iffN $\gfctoutactsingle(\state_1) = \gfctoutactsingle(\state_2)$. Hence the the equivalence classes of \eqrelview are:
 \begin{align*}
 	\eqclassv &= \{\state \in \states \mid \gfctspanoutaction(\state) = \remelem\} = \{\state\} &\text{if } |\outacts(\state)|=1 \\
@@ -484,7 +467,7 @@ Note that this \viewN is disregarding \notppty and hence groups states \emph{hav
 \end{exmp}
 
 \subsubsection{Incoming Actions}
-Analogously to Outgoing Actions \viewsN of utilizing incoming actions are feasable. Since there is no difference apart from the definitions itself, we only provide the definitions.
+Analogous to outgoing actions, \viewsN utilzing incoming actions are feasible. Since there is no difference other than the definitions themselves, we only provide the definitions.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $\action \in \actions$. The \viewN \viewhasinaction is defined by its \grpfctN \gfcthasinaction where $\gfctsubhasinaction : \smstates \to \imggrp$ with
@@ -530,7 +513,7 @@ Analogously to Outgoing Actions \viewsN of utilizing incoming actions are feasab
 	\]	
 	where $\imggrp := \imggrpbinview$
 %	$\numinact \in \natnums$ 
-	 is the maximal number of times a transition with action \action may be incoming and 
+	 is the maximum number of times a transition with action \action may be incoming and 
 	\[
 	\predmaxinact := ((\state_1, \action, \state), \dots, (\state_{\numinact+1}, \action, \state) \in \trans) \implies \bigvee_{\mathclap{\substack{i,j \in \{1,\dots, \numinact+1\} \\ i < j}}} \state_i = \state_j
 	\]
@@ -549,7 +532,7 @@ Analogously to Outgoing Actions \viewsN of utilizing incoming actions are feasab
 	\]
 	where $\imggrp := \imggrpbinview$
 %	\actions \cup \remset$ 
-	and $\numinactb, \numinact \in \natnums$ are the minimal and maximal number of transitions with action \action in order for state to be grouped. The predicates \predmininact and \predmaxinact are the predicates from Definition \ref{def:mininaction} and Definition \ref{def:viewmaxinaction} respectively.
+	and $\numinactb, \numinact \in \natnums$ are the minimum and maximum number of transitions with action \action in order for state to be grouped. The predicates \predmininact and \predmaxinact are the predicates from Definition \ref{def:mininaction} and Definition \ref{def:viewmaxinaction} respectively.
 \end{definition}
 
 \begin{definition}
@@ -590,9 +573,9 @@ Analogously to Outgoing Actions \viewsN of utilizing incoming actions are feasab
 \end{definition}
 
 \subsubsection{Variables}
-The concept of variables is not part of the definitions of neither \tsN, MCs or \mdpsN even though, it is of great importance in practice. We will introduce and discuss this concept before utilizing it for \viewsN.
+The concept of variables is not part of the definitions of neither \tsN, MCs or \mdpsN even though, it is of great relevance in practice. We will introduce and discuss this concept before utilizing it for \viewsN.
 
-Since states describe some information about a system at a certain moment of its behavior the information carried is usually not atomic but rather consists of several pieces. For instance when considering a computer program at a given moment during execution all its currently available variables will have some value, the stack will have a certain structure and the program counter points to a specific instruction. Systems in general at a certain moment of their behavior have several properties that in total pose the current state of the system. That is, in practice each state is actually derived from a possible variable assignment. Choosing the respective variable assignment as state representation would result in rather complex state objects. Therefore the values of the variables are usually stored in a separate data structure and a simple identifier like an integer represents the actual state. When formalizing this in practice used approach several options come into consideration. Available \mdpN components like atomic propositions or the set of states could be used to contain this information. There could be a subset of atomic propositions that declares that a certain variable has a certain value. In order to achieve unambiguous variables values it had to be taken care that for each variable in each state there is only one atomic proposition declaring its value. The set of states could be used in the sense that the states itself are complex objects containing the information. We will formalize the variables with a set of variables and an evaluation function that are induced by the \mdpN.
+Since states describe some information about a system at a certain moment of its behavior, the information they carry is usually not atomic, but rather consists of several pieces. For instance when considering a computer program at a given moment during execution all of its currently available variables will have some value, the stack will have a certain structure and the program counter will point to a certain instruction. Systems in general have several properties at a given moment of their behavior, which together constitute the current state of the system. That is, in practice, each state is actually derived from a possible variable assignment. Choosing the respective variable assignment as state representation would result in rather complex state objects. Therefore, the values of the variables are usually stored in a separate data structure and a simple identifier such as an integer represents the actual state. When formalizing this in practice used approach several options come into consideration. Available \mdpN components such as atomic propositions or the set of states could be used to hold this information. There could be a subset of atomic propositions whose elements declare that a certain variable has a certain value. To achieve unambiguous variable values, care had to be taken that for each variable in each state there was only one atomic proposition declaring its value. The set of states could be used in the sense that the states themselves are complex objects containing the information. We will formalize the variables with a set of variables and an evaluation function induced by the \mdpN. Although this approach is not based on \mdpN components, it is practical and convenient to work with.
 %Firstly there is the option of declaring the states as complex objects that contain this information. This would be possible because the set of states is not further specified. Accessing this information stored within a state would be rather tedious because there is no already existing entity to properly accomplishing the access. Hence this option was not further explored. The second option is to require that all possible assignments of all variables are included in the atomic propositions. The labeling function would then assert exactly one atomic proposition for each variable for each state, that specifies what the current value of that variable is. Although this would be possible, for simplicity we chose that variables and its values are provided in addition to the \mdpN. Obviously they are to be understood as derived and therefore dependent on the system, that the \mdpN has been derived from. By no means the set of variables and its evaluation are arbitrary.
 
 
@@ -630,7 +613,7 @@ When we speak about the value of a variable in a state we refer to the image of 
 
 \noindent The \viewN \viewparamvalueseq shows states where a given variable has a given value. 
 %For $\state_1, \state_2$ it is $\gfctparamvalueseq(\state_1) = \gfctparamvalueseq(\state_2)$ \iffN $\vareval(\state_1, \var) = \vareval(\state_2, \var)$ or $\state_1 = \state_2$. The obtained equivalence classes are
-According to Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \states are
+By Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \states are
 \begin{alignat*}{3}
 	\eqclassv &= \{\state \in \states \mid \gfctparamvalueseq(\state) = \remelem\} = \{\state\} \quad\quad\quad\quad &&\text{if \vareval(\state, \var) = \varval} \\
 	\eqclassv &= \{\state \in \states \mid \gfctparamvalueseq(\state) = \notppty\} &&\text{otherwise}
@@ -673,7 +656,7 @@ According to Definition \ref{def:eqrelview} the equivalence classes of \eqrelvie
 %	where $\imggrp := \imggrpbinview$.
 %\end{definition}
 
-If states are to be grouped with the requirement of several variables equaling or not equaling specified values this can be achieved by using \parllcompN. To allow even more flexibility a \viewN can be used that also allows a combination of requirements on variables in a disjunctive manner. To extend this idea to its full potential we will define a \viewN that allows requirements using a disjunctive normal formal (DNF). To formalize this \viewN more efficiently we will write $\varstate[,i]$ short for $\vareval(\state, \var_i)$ where $x_i \in \vars$ and $i \in \natnums$. We define the symbol \eqorneq to be an element of the set $\{=,\neq\}$. That is to say, whenever it is used each time written it is a representative for either the symbol $=$ or $\neq$. It allows to write one symbol whenever $=$ and $\neq$ could or should be possible. Moreover for this context we consider $(\varstate[,i] = \varval)$ as a literal and $(\varstate[,i] \neq \varval)$ as its negation. We write $(\varstate[,i] \eqorneq \varval)$ for a literal that could be negated or not negated.
+If states are to be grouped with a requirement that multiple variables be equal to or not equal to specified values, this can be accomplished by using \parllcompN. For even more flexibility, a \viewN may be employed, which also allows a combination of requirements on variables in a disjunctive manner. To extend this idea to its full potential, we will define a \viewN that allows requirements to be expressed using a disjunctive normal formal (DNF). To formalize this \viewN more efficiently, we will write $\varstate[,i]$, short for $\vareval(\state, \var_i)$, where $x_i \in \vars$ and $i \in \natnums$. We define the symbol \eqorneq to be an element of the set $\{=,\neq\}$. That is, whenever it is used, each time it is written, it is a substitute for either the symbol $=$ or $\neq$. It allows to write one symbol whenever $=$ and $\neq$ could or should be possible. Furthermore, for this context we consider $(\varstate[,i] = \varval)$ as a literal and $(\varstate[,i] \neq \varval)$ as its negation. We write $(\varstate[,i] \eqorneq \varval)$ for a literal that may or may not be negated.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and 
@@ -700,11 +683,10 @@ If states are to be grouped with the requirement of several variables equaling o
 	where $\imggrp := \{\group, \remelem\}$.
 \end{definition}
 
-
-The DNF allows us to specify a requirement in disjunctive normal form about variables. States are mapped to the same value depending on whether they meet this requirement.
+The DNF allows us to specify a constraint on variables in a disjunctive normal form. States are mapped to the same value depending on whether they satisfy this constraint.
 %The \viewN \viewparamdnf groups states that share the same value for a given variable. For $\state_1, \state_2$ it is $\gfctparamdnf(\state_1) = \gfctparamdnf(\state_2)$ \iffN $\vareval(\state_1, \var) = \vareval(\state_2, \var)$ or $\state_1 = \state_2$. 
 %The obtained equivalence classes are
-According to Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \states are
+By Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \states are
 \begin{align*}
 	\eqclassv &= \{\state \in \states \mid \gfctparamdnf(\state) = \remelem\} = \{\state\} &\text{if } d(s) \text{ true} \\
 	\eqclassv &= \{\state \in \states \mid \gfctparamdnf(\state) = \notppty\} &\text{otherwise}
@@ -727,7 +709,7 @@ According to Definition \ref{def:eqrelview} the equivalence classes of \eqrelvie
 	\label{fig:varsDnf} 
 \end{figure}
 
-\noindent Analogously a \viewN based on a conjunctive normal formal can be defined that may be more convenient, depending on the requirement/restriction.
+\noindent Similarly, a \viewN based on a conjunctive normal formal can be defined that may be more convenient, depending on the requirement/restriction.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and 
@@ -754,9 +736,9 @@ According to Definition \ref{def:eqrelview} the equivalence classes of \eqrelvie
 	where $\imggrp := \imggrpbinview$.
 \end{definition}
 
-The only difference from the \viewN \viewparamcnf to the \viewN \viewparamdnf is whether the respective formulae is in conjunctive or disjunctive normal form. Since each formulae in conjunctive normal form can be transformed to a formulae in disjunctive normal form and vice versa \cite[Theorem 4.12]{Baier2011} neither on of the \viewsN can perform an action the other can not. Hence there is no difference in expressivity, but there may be one in size. Therefore both \viewsN have been implemented and formalized. For finite \chgphsN they present an interface to performing arbitrary groupings on the state set utilizing parameter values. Equality, equivalence classes and the new state set behave and are constructed analogously to the \viewN \viewparamdnf.
+The only difference between the \viewN \viewparamcnf and the \viewN \viewparamdnf is whether the respective formulas are in conjunctive or disjunctive normal form. Since any formula in conjunctive normal form can be transformed into a formula in disjunctive normal form, and vice versa \cite[Theorem 4.12]{Baier2011}, neither of the \viewsN can perform an action that the other cannot. Thus there is no difference in expressiveness, but there may be a difference in size. Therefore, both \viewsN have been implemented and formalized. For finite \chgphsN they provide an interface to perform any possible grouping on the state set using parameter values. Equality, equivalence classes, and the new state set behave and are constructed analogously to the \viewN \viewparamdnf.
 
-The \viewsN discussed before reduce the \chgphN in a very precise but also manual manner, because it not only dictates the variable but also its value. A more general approach is to stipulate only the variable but not its value. This way states will be grouped that have the same value for that variable with no regard to the actual value of that variable. 
+The \viewsN discussed above reduce the \chgphN in a very precise but also manual manner, because it not only dictates the variable but also its value. A more general approach is to specify only the variable but not its value. This way states will be grouped that have the same value for that variable, but without any specification about the value for that variable.
 %This idea could be achieved with a \viewN based on the \grpfctN $\grpfct[\varval_1 ]$%\pll \dots \pll \gfctparamvalueseqopt[\varval_n]]$ with $\redcomment{\vareval(\states, \var)} = \{\varval_1, \dots, \varval_n\}$ and $|\vareval(\states,\var)| = n$. This grouping function just groups on every possible value for the variable \var. Since this is \redcomment{not very practical} we define a \viewN that achieves this result in a more direct and more efficient way.
 
 \begin{definition}
@@ -771,7 +753,7 @@ This grouping function maps each state to a pair containing the given variable a
 \[
 \eqclassv = \{ \state' \in \states \mid \vareval(\state') = \vareval(\state)\}.
 \]
-According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewparamvalident.
+By Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewparamvalident.
 
 \begin{figure}[!htb]
 	\begin{minipage}{.6\textwidth}
@@ -789,9 +771,9 @@ According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in 
 	In Figure \ref{fig:varValIdent} we can observe the \viewN of $\viewparamvalident$ on \chgph. States are grouped in which $x$ has the same value. It is $x \in \{0, 1, 2\}$. The states $\varstyle{0}{0}, \varstyle{0}{1},\varstyle{0}{2}$ are mapped to the pair $(x,0)$, because in all of them it is $x=0$. In the same way $\varstyle{1}{0}, \varstyle{1}{1},\varstyle{1}{2}$ are grouped due to $x=1$ and $\varstyle{2}{0}, \varstyle{2}{1},\varstyle{2}{2}$ due to $x=2$.
 \end{exmp}
 \subsubsection{Property Values and Model Checking Results}
-Apart from direct and indirect components of an \mdpN there are other values linked to states. These can be given by a reward structure or results from model checking. A reward structure simply assigns values to each state. Results from model checking are also available statewise. 
+Apart from direct and indirect components of an \mdpN there are other values associated with states. These can be given by a reward structure or be results of model checking. A reward structure simply assigns values to each state. Model checking results are also available per state. 
 %Although we do not want to go into detail with model checking in this thesis values determined by it are minimal and maximal probabilities or expected values (e.g. of rewards). 
-We abstract from the exact type of value or its origin and formalize this notion with an arbitrary function that assigns a value to each state and utilize it to define a \viewN. Note that there might be several such functions (e.g.reward structure and several model checking results) for an \chgphN.
+We abstract from the exact type of value or its origin and formalize this notion with an arbitrary function that assigns a value to each state and utilizes it to define a \viewN. Note that there can be multiple such functions (e.g., a reward structure and multiple model checking results) for an \chgphN.
 
 \begin{definition}
 	The function $\propfct : \states \to \realnums$ is called \emph{property function}. It maps each state to a property value.
@@ -824,13 +806,13 @@ We abstract from the exact type of value or its origin and formalize this notion
 	and $\imggrp = \realnums \cup \remset$.
 \end{definition}
 
-The smaller the granularity $r$ the more elements the partition has, and vice versa. In the implementation for each state \state the value $r \cdot i$ of $\propfct(\state)$ is directly determined using rounding. The formalization as in the definition above was chosen, because it clearly formalizes the rounding behavior. Two states $\state_1, \state_2$ are grouped if $\gfctprop(\state_1) = \gfctprop(\state_2)$. Hence, the obtained equivalence classes are
+The smaller the granularity $r$, the more elements the partition has, and vice versa. In the implementation, for each state \state, the value $r \cdot i$ of $\propfct(\state)$ is determined directly by rounding. The formalization as in the definition above was chosen because it clearly formalizes the rounding behavior. Two states $\state_1, \state_2$ are grouped if $\gfctprop(\state_1) = \gfctprop(\state_2)$. Thus, the resulting equivalence classes are
 \begin{align*}
 	\eqclassv &= \{\state' \in \states \mid \gfctprop(\state') = \gfctprop(\state) =: r \cdot i\} \\
 	&= \{\state' \in \states \mid \propfct(\state), \propfct(\state') \in Z_i\}
 \end{align*}
 
-\noindent According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewprop.
+\noindent By Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewprop.
 
 \begin{figure}[!htb]
 	\begin{minipage}{.6\textwidth}
@@ -874,9 +856,9 @@ Hence it is
 and states are grouped as displayed in the simplified representation of \viewprop.
 \end{exmp}
 
-\subsection{Utilizing the MDP Graphstructure}
+\subsection{Views Utilizing the MDP Graphstructure}
 \subsubsection{Distance}
-Considering distances in a graph can be very helpful to get an overview of a graph. Likewise it helps a lot with understanding the structure of \achgphN. In order to consider the distance between states in a \achgphN we will need to formalize it. For this we will introduces \emph{paths} which conceptually are very similar to execution fragments \cite[Def. 2.4.]{Baier2008}.
+Looking at distances in a graph can be very helpful to get an overview of a graph. Likewise it helps a lot with understanding the structure of \achgphN. In order to consider the distance between states in a \achgphN we need to formalize it. For this we will introduce \emph{paths}, which are conceptually very similar to execution fragments \cite[Def. 2.4.]{Baier2008}.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN. A (simple and finite) \emph{path} \path is a sequence \pathsecfull alternating between states and actions where $n \in \natnums, \{\state_1, \dots, \state_{n}\} \subseteq \states$ is a set of distinct states, $\{\action_1, \dots, \action_{n}\} \subseteq \actions$ and for all $i \in \{1, \dots, n\}$ it is $(\state_i,\action_i, \state_{i+1}) \in \trans$. 
@@ -940,8 +922,8 @@ Considering distances in a graph can be very helpful to get an overview of a gra
 	If $\states_1 \cap \states_2 \neq \emptyset$, it is $\distpathbi(\chgph, \states_1, \states_2) := 0$.
 \end{definition}
 
-For a given \chgphN \chgph with state set \states and $\state \in \states, \smstates \subseteq \states$ we write $\distpath(\mdp, \smstates, \state)$ short for $\distpath(\mdp, \smstates, \{\state\})$ and $\distpath(\mdp, \state, \smstates)$ short for $\distpath(\mdp, \{\state\}, \smstates)$. We do so in the same way for \distpathbi. The symbol $\infty$ is used to indicate there that there is no path and hence the distance is "infinite". We will compare against the symbol with equality to rule out whether there exists a path from one state state set to another.
-To apply the notion of distance to the whole \mdpN graph with a view, it has to be in a way where some value related to a distance is computed for each state. Hence, some set of states is needed, from which on the distance is measure for the remaining states. Such set could for example be the set of initial states or any other set of interest. In each \viewN utilizing distance it is denoted with $\bar{\states}$. Moreover, we will take a granularity $\grandist \in \natnums$ to account. The following \viewN groups states that are reachable with the same amount of transitions $\bar{\states} \subseteq \states$ considering the granularity \grandist.
+For a given \chgphN \chgph with state set \states and $\state \in \states, \smstates \subseteq \states$ we write $\distpath(\mdp, \smstates, \state)$ for $\distpath(\mdp, \smstates, \{\state\})$ and $\distpath(\mdp, \state, \smstates)$ for $\distpath(\mdp, \{\state\}, \smstates)$. We do the same for \distpathbi. The symbol $\infty$ is used to indicate that there is no path and therefore the distance is "infinite". We will compare against the symbol with equality to rule out whether there is a path from one set of states to the other.
+To apply the notion of distance to the entire \mdpN graph with a view, it must be done in a way where a distance is computed for each state. Therefore, some set of states is needed, from which the distance for the remaining states is measured. Such a set could be for example the set of initial states or any other set of interest. In each \viewN using distance it is denoted by $\bar{\states}$. We will also consider a granularity $\grandist \in \natnums$. The following \viewN groups states that are reachable with the same number of transitions $\bar{\states} \subseteq \states$ considering the granularity \grandist.
 
 \begin{definition}
 		Let $\chgph = \chgphtuple$ be \achgphN, $\bar{\states} \subseteq \smstates \subseteq \states$ and $n \in \natnums$. The \viewN \viewdistance is defined by its \grpfctN \gfctdistance where $\gfctsubdistance : \smstates \to \imggrp$ with 
@@ -955,10 +937,10 @@ To apply the notion of distance to the whole \mdpN graph with a view, it has to 
 		where $\distval = \distpath(\chgph,\bar{\states}, \state)$ and $\imggrp = \natnums \cup \{\infty\} \cup \remset$.
 \end{definition}
 
-The number $n$ from the definition is the granularity of the distance cluster. If for example if the granularity is two ($n = 2$) the expression $d - (d \text { mod } n)$ for $d = 0$ evaluates to $0 - 0 = 0$, for $d = 1$ evaluates to $1 - 1 = 0$, for $d = 2$ evaluates to $2 - 0 = 2$ and for $d = 3$ evaluates to $3 - 1 = 2$ where each time the subtrahend is $d \text{ mod } 2$. We see that, \gfctdistance maps $\distpath(\chgph,\smstates, \state)$, if not infinity, to next smaller natural number that is dividable by $n$, which means the granularity causes that $\gfctdistance(\state)$ is a multiple of $n$.
+The number $n$ from the definition is the granularity of the distance cluster. For example, if the granularity is two ($n = 2$), the expression $d - (d \text { mod } n)$ evaluates to $0 - 0 = 0$ for $d = 0$, to $1 - 1 = 0$ for $d = 1$, to $2 - 0 = 2$ for $d = 2$, and to $3 - 1 = 2$ for $d = 3$, where the subtrahend is $d \text { mod } 2$. We see that \gfctdistance maps $\distpath(\chgph,\smstates, \state)$, if not infinite, to the next smaller natural number divisible by $n$, which means that the granularity causes $\gfctdistance(\state)$ to be a multiple of $n$.
 
 %In \viewdistance two states $\state_1, \state_2 \in \states$ are grouped \iffN $\gfctdistance(\state_1) = \gfctdistance(\state_2)$. Hence the equivalence classes in \eqrelview are 
-According to Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \states are
+By Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \states are
 \begin{alignat*}{3}
 	\eqclassv &= \{\state' \in \states \mid \gfctdistance(\state') = \gfctdistance(\state) = \tilde{d} \in \natnums\} \quad\quad\quad &&\text{if } \distpath(\chgph, \bar{\states}, \state) \neq \infty \\
 	\eqclassv &= \{\state \in \states \mid \gfctdistance(\state) = \infty\} &&\text{otherwise } 
@@ -994,10 +976,10 @@ Thereby the obtained set of states $\states'$ of \viewparamvalueseq is the union
 	\distpath(\chgph, \{\state_1, \state_6\}, \state_i) &= 0 \text{ for } i \in \{1,6\}, \quad &&\distpath(\chgph, \{\state_1, \state_6\}, \state_i) = 1 \text{ for } i \in \{2,3,7,8\},\\
 	\distpath(\chgph, \{\state_1, \state_6\}, \state_i) &= 2 \text{ for } i = 4, \quad &&\distpath(\chgph, \{\state_1, \state_6\}, \state_i) = \infty \text{ for } i \in \{5,9,10\}
 \end{alignat*}
-This is how we obtain, the set of states of $\viewdistance(\{\state_1, \state_6\}, 1)$ as displayed in the figure. For $\viewdistance(\{\state_1, \state_6\}, 2)$ (right) the states $\{\state_1, \state_6\}$ and $\{\state_2, \state_3, \state_7, \state_8\}$ of $\viewdistance(\{\state_1, \state_6\}, 1)$ (middle) merge into one, as $\gfctdistance(\state_i) = 0 - (0 \text{ mod } 2) = 0 = 1 - (1 \text{ mod } 2) = \gfctdistance(\state_j)$ for $j \in \{1,6\}$ and $i \in \{2,3,7,8\}$.
+This is how we obtain, the set of states of $\viewdistance(\{\state_1, \state_6\}, 1)$ as displayed in the figure. For $\viewdistance(\{\state_1, \state_6\}, 2)$ (right) the states $\{\state_1, \state_6\}$ and $\{\state_2, \state_3, \state_7, \state_8\}$ of $\viewdistance(\{\state_1, \state_6\}, 1)$ (middle) merge into one, as $\gfctdistance(\state_i) = 0 - (0 \text{ mod } 2) = 0 = 1 - (1 \text{ mod } 2) = \gfctdistance(\state_j)$ for $j \in \{1,6\}$ and $i \in \{2,3,7,8\}$. displayed in the figure. For $\viewdistance(\{\state_1, \state_6\}, 2)$ (right) the states $\{\state_1, \state_6\}$ and $\{\state_2, \state_3, \state_7, \state_8\}$ of $\viewdistance(\{\state_1, \state_6\}, 1)$ (middle) merge into one, as $\gfctdistance(\state_i) = 0 - (0 \text{ mod } 2) = 0 = 1 - (1 \text{ mod } 2) = \gfctdistance(\state_j)$ for $j \in \{1,6\}$ and $i \in \{2,3,7,8\}$.
 \end{exmp}
 
-A probable use case of a \viewN is to find out how a certain state is or was reached. For this we define a \viewN that groups states that have the same distance from a given state, when only traversing transitions backwards.
+The \viewN \viewdistance groups states that are reachable with the same number of transitions from a given set of states. It can be used to give a perspective on the structure of an \mdpN, but cannot be used to deduce how a state or set of states was reached. How a given state was reached is a common case of interest, since there are states in a system that should be reached and others that should not or even must not be reached. To provide an aid to investigating how a state was reached, we define a \viewN that groups states that have the same distance from a given state when traversing transitions backwards.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\bar{\states} \subseteq \smstates \subseteq \states$ and $n \in \natnums$. The \viewN \viewdistancerev is defined by its \grpfctN \gfctdistancerev where $\gfctsubdistancerev : \smstates \to \imggrp$ with 
@@ -1011,9 +993,9 @@ A probable use case of a \viewN is to find out how a certain state is or was rea
 	where $\distval = \distpath(\chgph,\state,\bar{\states})$ and $\imggrp = \natnums \cup \{\infty\} \cup \remset$.
 \end{definition}
 
-Note that the only difference of \viewdistancerev to \viewdistance is that it is $\distpath(\chgph,\state,\bar{\states})$ instead of $\distpath(\chgph,\bar{\states}, \state)$. According to Definition \ref{def:distance} this declares that paths from \state to $\bar{\states}$ are considered instead of a paths from $\bar{\states}$ to \state. Hence, the distance from set $\bar{\states}$ is measured with traversing transitions backwards. This causes states reaching $\bar{\states}$ with the same amount of transitions being grouped. Even though on a formal level, equality, equivalence classes and the new state set behave and are constructed analogously to the \viewN \viewdistance.
+Note that the only difference between \viewdistancerev and \viewdistance is that it is $\distpath(\chgph,\state,\bar{\states})$ instead of $\distpath(\chgph,\bar{\states}, \state)$. By definition \ref{def:distance} this declares that paths from \state to $\bar{\states}$ are considered instead of paths from $\bar{\states}$ to \state. Thus, the distance from the set $\bar{\states}$ is measured by traversing transitions backwards. This causes states that reach $\bar{\states}$ with the same number of transitions to be grouped together. Nevertheless, on a formal level, equality, equivalence classes, and the new state set behave and are constructed analogously to the \viewN \viewdistance.
 
-For cases where the direction of transitions is of no further importance we define a \viewN \viewdistancebi utilizing \distpathbi.
+For cases where the direction of transitions is of no further importance we define a \viewN \viewdistancebi utilizing \distpathbi. This, causes that the direction of that transitions regularly have is ignored.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\bar{\states} \subseteq \smstates \subseteq \states$ and $n \in \natnums$. The \viewN \viewdistancebi is defined by its \grpfctN \gfctdistancebi where $\gfctsubdistancebi : \smstates \to \imggrp$ with 
@@ -1042,10 +1024,10 @@ The only difference of \viewdistancebi to \viewdistance is that \distpathbi is u
 	\label{fig:DistanceRevBi} 
 \end{figure}
 
-In the implementation, a simple breadth first search is used to determine the distance values from a given state set to each state. There is no algorithm such as Dijkstra needed as the weights on edges are probabilities and thereby no value interpretable as cost or distance. The implementation ensures that for every state $\state$ there exists a pair $(\state, \distval)$ in \fctdistdefault, i.e. $\infty$ if there exists no path to a given state. The algorithm in java code using functional programming can be found in the appendix.
+In the implementation, a simple breadth-first search is used to determine the distance values from a given state set to each state. There is no need for an algorithm like Dijkstra, since the weights on the edges are probabilities, not values that can be interpreted as cost or distance. The implementation ensures that for each state $\state$ there is a pair $(\state, \distval)$ in \fctdistdefault, i.e. $\infty$ if there is no path to a given state. The Java code of the grouping function for the \viewsN based on distance can be found in the appendix (\ref{apx:distancejava}). All three views are implemented in a single Java class and thus share their grouping function. The results of which grouping function are computed, depends on the value of the enum \texttt{direction}. It is set when an instance of the view is created.
 
 \subsubsection{Cycles}
-A cycle is a structure that can exist in every graph. The concept of cycles is not limited to \chgphsN or related models used in model checking. The thesis aims to discuss \viewsN that utilize domain specific knowledge or general concepts that are of special relevance when exploring \achgphN. In general cycles are worth exploring because they may lead to unwanted infinite results in model checking. Additionally, when seeking \viewsN, the main cycle idea can be adjusted to include \mdpsN characteristics. To formalize \viewsN based on cycles, we need to formalize the cycle concept itself. We'll define it in a way that suits our specific domain the best.
+A cycle is a structure that can exist in any graph. The concept of cycles is not limited to \chgphsN or related models used in model checking. The goal of this thesis is to discuss \viewsN that use domain-specific knowledge or general concepts that are of particular relevance when exploring \achgphN. In general, cycles are worth exploring because they can lead to unwanted infinite results in model checking. In addition, when exploring \viewsN, the concept of cycles can be adapted to include \mdpsN properties. To formalize \viewsN based on cycles, we need to formalize the cycle concept itself. We will define it in a way that best suits our specific domain.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN. A (simple) \emph{cycle} \cycle in \chgph is a sequence \cyclesecfull alternating between states and actions where $n \in \natnums, \{\state_0, \dots, \state_{n-1}\} \subseteq \states$ is a set of distinct states, $\{\action_0, \dots, \action_{n-1}\} \subseteq \actions$ and for all $i \in \{0, \dots, n-1\}$ it is $(\state_i,\action_i, \state_{i+1 \text{ mod }n}) \in \trans$.
@@ -1077,9 +1059,9 @@ With the formalization now complete, we will proceed to introduce several \views
 	and $\imggrp = \{\group, \remelem\}$.
 \end{definition}
 
-This \viewN groups all states that are contained in a cycle with a length of at least $n$. Hence, this \viewN can also finds self loops for $n \in \natnums$. It is to note that the affinity of a state to one or several respective cycles is lost. 
+This \viewN groups all states that are contained in a cycle with a length of at least $n$. Thus, this \viewN can also find self-loops for $n \in \natnums$. Note that the affinity of a state to one or more corresponding cycles is lost. 
 %For $\state_1, \state_2$ they are grouped $\gfcthascycle(\state_1) = \gfcthascycle(\state_2) \neq \remelem$. Hence, the obtained equivalence classes are
-\noindent According to Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \states are
+\noindent By Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \states are
 \begin{alignat*}{3}
 	\eqclassv &= \{\state \in \states \mid \gfcthascycle(\state) = \remelem\} = \{\state\} \quad\quad\quad\quad&&\text{if } \exists \cycle \in \cycleset : \state \in \cycle \\
 	\eqclassv &= \{\state \in \states \mid \gfcthascycle(\state) = \notppty\} &&\text{otherwise}
@@ -1120,11 +1102,11 @@ This \viewN groups all states that are contained in a cycle with a length of at 
 This \viewN groups states that have the same set of cycles they are contained in. Thus if $\cycle_1$ and $\cycle_2$ are distinct cycles and $\state_1, \state_2 \in \cycle_1$ and $\state_1 \in \cycle_2$ but $\state_2 \notin \cycle_2$ they are not grouped. It suffices that a state is on one cycle that the other one is not on, in order for the states not being grouped. In graphs with many cycles this can lead to little grouping.
 
 %Two states $\state_1, \state_2$ are grouped if $\gfctexactcycle(\state_1) = \gfctexactcycle(\state_2) \neq \remelem$. Hence, the obtained equivalence classes are
-\noindent According to Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \states are
+\noindent By Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \states are
 \begin{align*}
 	\eqclassv &= \{\state' \in \states \mid \gfctexactcycle(\state') = \gfctexactcycle(\state) = \{\cycle_1, \dots, \cycle_n\} \subseteq \cycleset\}
 \end{align*}
-\noindent According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewexactcycle.
+\noindent By Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewexactcycle.
 
 %\redcomment{GREEDY APPROACHES (STATE ON SINGLE CYCLE), AND SET APPROACH s $\to$ $C_1 \cup C_2$ omitted because not sure if needed}
 
@@ -1168,7 +1150,7 @@ and $\state_{12}$ and $\state_{13}$ are contained in no cycle of size at least t
 and $\gfctexactcycle(\state) = \emptyset$ for all remaining states \state.
 \end{exmp}
 
-The \viewN above might be useful when having found cycles to see what cycles specifically exist. It might be interesting to find cycles that consist only of transitions of the same action. The following \viewN accomplishes that.
+The above \viewN might be useful when having found cycles to see what cycles specifically exist. It may be interesting to find cycles consisting only of transitions of the same action. The following \viewN accomplishes that.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $n \in \natnums$. The \viewN \viewexactactcycle is defined by its \grpfctN \gfctexactactcycle where $\gfctsubexactactcycle : \smstates \to \imggrp$ with
@@ -1199,7 +1181,7 @@ The \viewN specializes the \viewN from Definition \ref{def:exactcycleview} in th
 and for all remaining states \states it is $\gfctexactactcycle(\state) = \emptyset$.
 \end{exmp}
 
-When discussing definition \ref{def:exactcycleview} we stated that little grouping can occur when mapping on the set of cycles in all of which the state is contained. Hence we provide the definition and implementation of a \viewN that groups states even though their set of cycles is not equal, but there is sufficient similarity in the cycles they are on. This might be useful to find clusters of cycles.
+When discussing the \viewN \viewexactcycle from the Definition \ref{def:exactcycleview}, we noted that little grouping can occur when mapping to the set of cycles in which the state is contained. Therefore, we provide the definition and implementation of a \viewN that groups states even if their set of cycles is not the same, but there is enough similarity in the cycles they are on. This may be useful for finding clusters of cycles.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $n \in \natnums$. The \viewN \viewcycleset is defined by its \grpfctN \gfctcycleset where $\gfctsubcycleset : \smstates \to \imggrp$ with
@@ -1208,11 +1190,11 @@ When discussing definition \ref{def:exactcycleview} we stated that little groupi
 	\]
 	and $\imggrp = \states \cup \remset.$
 \end{definition}
-With this \viewN each state \state is mapped to the set of states. The set contains all the states from cycles, where the state \state is contained. According to Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \states are
+With this \viewN each state \state is mapped to the set of states. The set contains all the states from cycles, where the state \state is contained. By Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \states are By Definition \ref{def:eqrelview} the equivalence classes of \eqrelview on \states are
 \begin{align*}
 	\eqclassv &= \{\state' \in \states \mid \gfctexactcycle(\state') = \gfctexactcycle(\state) = \{\state_1, \dots, \state_n\} \subseteq \{\cycle_1, \dots, \cycle_n\} \subseteq \cycleset\}
 \end{align*}
-\noindent According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewexactcycle.
+\noindent By Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewexactcycle.
 \begin{figure}[!htb]
 	\centering
 	\input{./04/images/cycles/cyclesAfterSet0}
@@ -1225,10 +1207,10 @@ With this \viewN each state \state is mapped to the set of states. The set conta
 For $i \in \{1, \dots, 8\}$ it is $\gfctcycleset(\state_i) \subseteq \{\state_1, \dots, \state_8\}$, because they are all on cycle $\cycle_1$. For $\state \in \{\state_1, \dots, \state_8\} \setminus \{\state_7\}$ there is no cycle containing any other state than $\{\state_1, \dots, \state_8\}$. Thus, for $i \in \{1, \dots, 8\}$ it is $\gfctcycleset(\state_i) = \{\state_1, \dots, \state_8\}$. For the state $\state_7$ it is $\gfctcycleset(\state_7) = \states \setminus \{\state_{12}, \state_{13}\}$ because of $\state_7 \in \cycle_1,\cycle_4$ and $\state_{12}, \state_{13}$ are contained in no cycle of length at least two. Also because $\state_{12}, \state_{13}$ are contained in no cycle of length at least two it is $\gfctcycleset(\state_{12}) = \gfctcycleset(\state_{13}) = \emptyset$. Obviously for $\state_9, \state_{10}, \state_{11}$ it is $\gfctcycleset(\state_i) = \{\state_7, \state_9, \state_{10}, \state_{11}\}$ because it is only $\state_9, \state_{10}, \state_{11} \in \cycle_4$ as $\state_7$ denies them being on any other (\emph{simple}) cycle. Thereby the grouping results in a \viewN as depicted as simplified representation in Figure \ref{fig:cycleAfterSet0}.
 \end{exmp}
 
-In practice there exist several cycle finding algorithms, to determine the set $\cycleset_{\chgph,0}$. The actual implementation relies on algorithms of the Java library \jgrapht \cite{Michail2020} namely the Algorithm Szwarcfiter and Lauer \cite{Szwarcfiter1976}. It has a theoretical complexity of $O(V+EC)$. If in $\cycleset_{\chgph,n}$ $n$ was greater one, the found cycles are then filtered, retaining those with a minimal length of $n$.
+In practice, there are several cycle-finding algorithms to determine the set $\cycleset_{\chgph,0}$. The actual implementation is based on algorithms of the Java library \jgrapht \cite{Michail2020}, namely the Szwarcfiter and Lauer algorithm \cite{Szwarcfiter1976}. It has a theoretical complexity of $O(V+EC)$. If in $\cycleset_{\chgph,n}$ $n$ was greater than one, then the cycles found are filtered, keeping those with a minimum length of $n$.
 
 \subsubsection{Strongly Connected Components}
-Strongly connect components (\sccsN) are are interesting when exploring \achgphN because they group states where may happen some complex operation. Moreover, finding strongly connected components is way more efficient than finding cycles. Since every cycle also is a strongly connected component finding strongly connected components can be seen as finding a set that contains cycles. Therefore it is feasible to consider a \viewN utilizing strongly connected components. Deviating from most definitions we will define \sccN not as a subgraph but only as the set of its nodes. Moreover the definition is written in the terms of \achgphN.
+Strongly connected components (\sccsN) are interesting when exploring \achgphN because they group states where some complex operation may happen. Moreover, finding strongly connected components is much more efficient than finding cycles. Since every cycle is also a strongly connected component, finding strongly connected components can be seen as finding a set containing cycles. Therefore, we want to consider a \viewN that uses strongly connected components. Contrary to most definitions, we will not define \sccN as a subgraph, but only as the set of its nodes - specifically, in our context, a set of states. The definition is written in terms of \achgphN.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN and $\smstates \subseteq \states$. A set $\scc \subseteq \states$ is called \emph{strongly connected component} if for all $\state, \state' \in \scc$ either it holds
@@ -1246,10 +1228,10 @@ Strongly connect components (\sccsN) are are interesting when exploring \achgphN
 %	\end{align*}
 %	That is for every state in the set there has to exist a sequence of transitions to every other state of the set. The state itself is always considered a reachable by itself, i.e. there does not need to exist a self loop. In consequence, each state is contained in stronlgy connected component namely at least in the one that only contains the state. 
 	\noindent
-	The set of all strongly connected components of \chgph, that contain at least $n$ states, is denoted with \setscc.
+	The set of all strongly connected components of \chgph containing at least $n$ states is denoted by \setscc.
 \end{definition}
 
-Since the strong connection is an equivalence relation, the \sccsN are equivalence classes and hence disjoint. To find \sccsN Tarjan's and Sahir's algorithm is the classic \cite{Sharir1981}. In the implementation an improved variant from Gabow \cite{Gabow2000} is used supplied by the \jgrapht library.
+Since the strong connection is an equivalence relation, the \sccsN are equivalence classes and thus disjoint. To find \sccsN, Tarjan and Sahir's algorithm is the classic \cite{Sharir1981}. It has a theoretical complexity of $O(n)$. The implementation uses an improved variant of Gabow's \cite{Gabow2000}, provided by the \jgrapht library.
 
 \begin{definition}
 	Let $\chgph = \chgphtuple$ be \achgphN, $\smstates \subseteq \states$ and $n \in \natnums$. The \viewN \viewscc is defined by its \grpfctN \gfctscc where $\gfctsubscc : \smstates \to \imggrp$ with
@@ -1259,11 +1241,11 @@ Since the strong connection is an equivalence relation, the \sccsN are equivalen
 	and $\imggrp = \setscc \cup \remset$.
 \end{definition}
 
-This \viewN groups all states together that are in the same \sccN. Note that for all states \state, \gfctscc(\state) is a singleton set because \sccsN are disjoint. That is, each state is mapped to the set only containing its strongly connected component or to the empty set if its \sccN has less than $n$ elements. In the \viewN \viewscc two states $\state_1, \state_2 \in \states$ are grouped if $\gfctscc(\state_1) = \gfctscc(\state_2) \neq \remelem$. Hence the equivalence classes are:
+This \viewN groups all states together that are in the same \sccN. Note that for all states \state, \gfctscc(\state) is a singleton set because \sccsN are disjoint. That is, each state is mapped to the set only containing only its strongly connected component, or to the empty set if its \sccN has less than $n$ elements. In the \viewN \viewscc two states $\state_1, \state_2 \in \states$ are grouped if $\gfctscc(\state_1) = \gfctscc(\state_2) \neq \remelem$. Hence the equivalence classes are:
 \begin{align*}
 	\eqclassv &= \{\state' \in \states \mid \gfctscc(\state') = \gfctscc(\state) =: \scc \in \setscc\} \quad\quad\quad \text{for } \state \in \scc
 \end{align*}
-According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewexactcycle.
+By Definition \ref{def:view} the set $\states' := \bigcup_{\state \in \states} \eqclassv$ is the set of states of \viewexactcycle.
 
 \begin{figure}[!htb]
 	\begin{minipage}{.55\textwidth}
@@ -1282,7 +1264,7 @@ According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in 
 	\sloppy In Figure \ref{fig:sccMin2} the simplified representation of $\viewscc(2)$ (right) on \chgph (left) can be observed.. The \sccsN in \chgph are $\{\state_1\}, \{\state_2, \state_3, \state_4, \state_5\}, \{\state_6, \state_7, \state_8, \state_9\}, \{\state_{10}, \state_{11}, \state_{12}\}$ and $\{\state_{13}\}$. Because the \sccN of state $\state_{13}$ has not cardinality two but one it is mapped to the empty set and would be grouped with any other \state whoms strongly connected component has less than two elements.
 \end{exmp}
 
-\noindent A special kind of strongly connected components is the the bottom strongly connected component. Thus, they can be interesting for deadlock detection and liveness analysis.
+\noindent A special kind of strongly connected components are the bottom strongly connected components. They can be interesting for deadlock detection and liveness analysis.
 
 \begin{definition}
 	Let \scc be a \sccN. A \emph{bottom strongly connected component} (\bsccN) is a \sccN where it holds that:
@@ -1305,7 +1287,7 @@ According to Definition \ref{def:view} the set $\states' := \bigcup_{\state \in 
 	and $\imggrp = \setbscc \cup \remset$.
 \end{definition}
 
-The \viewN \viewbscc groups all states together that are in the same \bsccN. In a sense, it is a specialization of \viewscc, because instead of all \sccsN the set is no restricted to the ones where there is no outgoing transition to another \sccN. Hence, equality, equivalence classes and the state set behave and are constructed very similarly.
+The \viewN \viewbscc groups together all states that are in the same \bsccN. In a sense, it is a specialization of \viewscc, because instead of all \sccsN, the set is restricted to those where there is no outgoing transition to another \sccN. Thus, equality, equivalence classes, and the state set behave and are constructed very similarly, and will not be discussed again here.
 
 \begin{figure}[!t]
 	\begin{minipage}{.55\textwidth}
@@ -1323,6 +1305,6 @@ The \viewN \viewbscc groups all states together that are in the same \bsccN. In 
 	\sloppy In Figure \ref{fig:bsccAfter} the simplified representation of $\viewbscc(0)$ (right) on \chgph (left) can be observed. The \sccsN in \chgph are $\{\state_1\}, \{\state_2, \state_3, \state_4, \state_5\}, \{\state_6, \state_7, \state_8, \state_9\}, \{\state_{10}, \state_{11}, \state_{12}\}$ and $\{\state_{13}\}$. The only ones where there is no state with an outgoing transition to a state in another \sccN are $\{\state_6, \state_7, \state_8, \state_9\}$ and $\{\state_{13}\}$. Hence, these two sets of states become a new state \viewbscc while all remaining states are mapped to $\emptyset$ and thereby grouped together.
 \end{exmp}
 
-In the implementation strongly connected components are determined using the algorithm of Gabow, afterwards filtering those \sccsN that have only transitions to states within the \sccN. Only the bottom strongly connected components remain.
+In the implementation, bottom strongly connected components are also determined using Gabow's algorithm, and then those \sccsN that have only transitions to states within the \sccN are filtered. Only the bottom strongly connected components remain.
 	
 \end{document} 
